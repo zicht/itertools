@@ -1,0 +1,17 @@
+{
+    "name": "zicht/itertools",
+    "description": "A collection of functions that mirror the Python itertools library",
+    "authors": [
+        {
+            "name": "Boudewijn Schoon",
+            "email": "boudewijn@zicht.nl"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "autoload": {
+        "psr-0": {"iter\\": "src/"},
+        "files": ["src/iter.php"]
+    }
+}
