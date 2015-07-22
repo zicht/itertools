@@ -1,0 +1,9 @@
+plugins: ['core', 'ci', 'svn']
+
+vcs:
+    url: svn://zon/projecten/zicht-libraries/ZichtIter
+
+tasks:
+    ci.phpunit:
+        pre: composer install
+        do: ./vendor/bin/phpunit test --verbose --coverage-text
