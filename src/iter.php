@@ -27,7 +27,7 @@ function mixedToIterator($iterable)
     if (is_array($iterable)) {
         $iterable = new ArrayIterator($iterable);
     }
-    
+
     // a string is considered iterable in Python
     if (is_string($iterable)) {
         $iterable = new StringIterator($iterable);
@@ -39,6 +39,21 @@ function mixedToIterator($iterable)
     }
 
     return $iterable;
+}
+
+function mixedToClosure($closure)
+{
+    if (is_callable($closure)) {
+        $closure = function () use($closure) {
+            return call_user_func_array($closure, func_get_args());
+        };
+    }
+
+    if (!($closure instanceof Closure)) {
+        throw new InvalidArgumentException('Argument $KEYSTRATEGY must be a Closure');
+    }
+
+    return $closure;
 }
 
 /**
@@ -67,17 +82,7 @@ function mixedToKeyStrategy($keyStrategy)
         };
     }
 
-    if (is_callable($keyStrategy)) {
-        $keyStrategy = function () use($keyStrategy) {
-            return call_user_func_array($keyStrategy, func_get_args());
-        };
-    }
-    
-    if (!($keyStrategy instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $KEYSTRATEGY must be a Closure');
-    }
-
-    return $keyStrategy;
+    return mixedToClosure($keyStrategy);
 }
 
 /**
@@ -162,7 +167,7 @@ function accumulate($iterable, $func = 'add')
     if (!($func instanceof Closure)) {
         throw new InvalidArgumentException('Argument $FUNC must be a Closure or string \'add\'');
     }
-    
+
     return new AccumulateIterator(mixedToIterator($iterable), $func);
 }
 
@@ -183,7 +188,7 @@ function accumulate($iterable, $func = 'add')
  * A B C D E F
  *
  * @param array|string|Iterator $iterable1
- * @param array|string|Iterator $iterable2 
+ * @param array|string|Iterator $iterable2
  * @param array|string|Iterator $iterableN
  * @return ChainIterator
  */
@@ -217,7 +222,7 @@ function count($start = 0, $step = 1)
     if (!(is_int($step) or is_float($step))) {
         throw new InvalidArgumentException('Argument $STEP must be an integer or float');
     }
-    
+
     return new CountIterator($start, $step);
 }
 
@@ -250,7 +255,7 @@ function cycle($iterable)
  * 3. $value[$keyStrategy], when $value is an array and $keyStrategy
  *    is an existing key,
  * 4. otherwise the key will default to null.
- * 
+ *
  * Alternatively $keyStrategy can be a closure.  In this case the
  * $keyStrategy closure is called with each value in $iterable and the
  * key will be its return value.
@@ -272,7 +277,7 @@ function keyCallback($keyStrategy, $iterable)
  * Make an iterator that applies $func to every value or $iterable.
  * If additional iterables are passed, $func must take that many
  * arguments and is applied to the values from all iterables in
- * parallel.  
+ * parallel.
  *
  * With multiple iterables, the iterator stops when the shortest
  * iterable is exhausted.
@@ -280,14 +285,14 @@ function keyCallback($keyStrategy, $iterable)
  * > $minimal = function ($value) { return min(3, $value); };
  * > map($minimal, [1, 2, 3, 4]);
  * 3 3 3 4
- * 
+ *
  * > $average = function ($value1, $value2) { return ($value1 + $value2) / 2; };
  * > map($average, [1, 2, 3], [4, 5, 6]);
  * 2.5 3.5 4.5
  *
  * @param Closure $func
  * @param array|string|Iterator $iterable1
- * @param array|string|Iterator $iterable2 
+ * @param array|string|Iterator $iterable2
  * @param array|string|Iterator $iterableN
  * @return MapIterator
  */
@@ -321,7 +326,7 @@ function repeat($mixed, $times = null)
     if (!(is_null($times) or (is_int($times) and $times >= 0))) {
         throw new InvalidArgumentException('Argument $TIMES must be null or a positive integer');
     }
-    
+
     return new RepeatIterator($mixed, $times);
 }
 /**
@@ -338,7 +343,7 @@ function repeat($mixed, $times = null)
  * 3. $value[$keyStrategy], when $value is an array and $keyStrategy
  *    is an existing key,
  * 4. otherwise the key will default to null.
- * 
+ *
  * Alternatively $keyStrategy can be a closure.  In this case the
  * $keyStrategy closure is called with each value in $iterable and the
  * key will be its return value.
@@ -366,7 +371,7 @@ function groupby($keyStrategy, $iterable)
 /**
  * Make an iterator that returns the values from $iterable sorted by
  * $keyStrategy.
- * 
+ *
  * When determining the order of two entries the $keyStrategy is used
  * twice, once for each value, and the results are used to determine
  * the order.
@@ -394,4 +399,9 @@ function sorted($keyStrategy, $iterable, $reverse = false)
         throw new InvalidArgumentException('Argument $REVERSE must be boolean');
     }
     return new SortIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable), $reverse);
+}
+
+function filter($closure, $iterable)
+{
+    return new FilterIterator(mixedToClosure($closure), mixedToIterator($iterable));
 }
