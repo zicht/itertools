@@ -4,13 +4,16 @@ namespace iter;
 
 use ArrayIterator;
 use Closure;
+use Countable;
 use Iterator;
 use IteratorIterator;
 
-class GroupedIterator extends IteratorIterator
+// todo: add unit tests for Countable interface
+
+class GroupedIterator extends IteratorIterator implements Countable
 {
     protected $key;
-    
+
     public function __construct($key, Iterator $iterable)
     {
         $this->key = $key;
@@ -21,9 +24,14 @@ class GroupedIterator extends IteratorIterator
     {
         return $this->key;
     }
+
+    public function count()
+    {
+        return iterator_count($this->getInnerIterator());
+    }
 }
 
-class GroupbyIterator extends IteratorIterator
+class GroupbyIterator extends IteratorIterator implements Countable
 {
     public function __construct(Closure $func, Iterator $iterable)
     {
@@ -49,5 +57,10 @@ class GroupbyIterator extends IteratorIterator
     public function key()
     {
         return $this->current()->getKey();
+    }
+
+    public function count()
+    {
+        return iterator_count($this->getInnerIterator());
     }
 }
