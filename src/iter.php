@@ -298,13 +298,14 @@ function keyCallback($keyStrategy, $iterable)
  */
 function map($func /* $iterable1, $iterable2, ... */)
 {
-    if (!($func instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $FUNC must be a Closure');
-    }
+//    if (!($func instanceof Closure)) {
+//        throw new InvalidArgumentException('Argument $FUNC must be a Closure');
+//    }
 
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
     $reflectorClass = new ReflectionClass('iter\MapIterator');
-    return $reflectorClass->newInstanceArgs(array_merge(array($func), $iterables));
+//    return $reflectorClass->newInstanceArgs(array_merge(array($func), $iterables));
+    return $reflectorClass->newInstanceArgs(array_merge(array(mixedToKeyStrategy($func)), $iterables));
 }
 
 /**
