@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
@@ -28,14 +28,14 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
 
         $list = array($obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C'));
 
-        $iterator = \Itertools\groupby('prop', $list);
-        $this->assertInstanceOf('\Itertools\lib\GroupbyIterator', $iterator);
+        $iterator = \Zicht\Itertools\groupby('prop', $list);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
         $this->assertTrue($iterator->valid());
         $this->assertEquals('1group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -51,7 +51,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($iterator->valid());
         $this->assertEquals('2group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -69,7 +69,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($iterator->valid());
         $this->assertEquals('1group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -87,15 +87,15 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodKeyCallback(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('\Itertools\groupby', $arguments);
-        $this->assertInstanceOf('\Itertools\lib\GroupbyIterator', $iterator);
+        $iterator = call_user_func_array('\Zicht\Itertools\groupby', $arguments);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $expectedGroup) {
             $this->assertTrue($iterator->valid());
             $this->assertEquals($key, $iterator->key());
             $groupedIterator = $iterator->current();
-            $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
+            $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
             $groupedIterator->rewind();
 
             foreach ($expectedGroup as $key => $value) {
@@ -118,7 +118,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Itertools\groupby', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\groupby', $arguments);
     }
 
     public function goodSequenceProvider()

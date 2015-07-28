@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
@@ -12,8 +12,8 @@ class CountTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodCount($start, $step, $expected)
     {
-        $iterator = \Itertools\count($start, $step);
-        $this->assertInstanceOf('\Itertools\lib\CountIterator', $iterator);
+        $iterator = \Zicht\Itertools\count($start, $step);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
 
         foreach ($expected as $key => $value) {
             $this->assertEquals($key, $iterator->key());
@@ -28,7 +28,7 @@ class CountTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($start, $step)
     {
-        $iterator = \Itertools\count($start, $step);
+        $iterator = \Zicht\Itertools\count($start, $step);
     }
 
     public function goodSequenceProvider()

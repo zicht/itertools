@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
@@ -12,8 +12,8 @@ class MapTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodMap(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('\Itertools\map', $arguments);
-        $this->assertInstanceOf('\Itertools\lib\MapIterator', $iterator);
+        $iterator = call_user_func_array('\Zicht\Itertools\map', $arguments);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\MapIterator', $iterator);
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($iterator->valid());
@@ -31,7 +31,7 @@ class MapTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Itertools\map', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\map', $arguments);
     }
 
     public function goodSequenceProvider()

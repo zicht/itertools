@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use ArrayIterator;
 use InvalidArgumentException;
@@ -13,8 +13,8 @@ class CycleTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodCycle($p, $expected)
     {
-        $iterator = \Itertools\cycle($p);
-        $this->assertInstanceOf('\Itertools\lib\CycleIterator', $iterator);
+        $iterator = \Zicht\Itertools\cycle($p);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\CycleIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
@@ -30,7 +30,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($p)
     {
-        $iterator = \Itertools\cycle($p);
+        $iterator = \Zicht\Itertools\cycle($p);
     }
 
     public function goodSequenceProvider()

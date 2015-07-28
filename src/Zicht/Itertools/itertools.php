@@ -1,20 +1,20 @@
 <?php
 
-namespace Itertools;
+namespace Zicht\Itertools;
 
 use ArrayIterator;
 use Closure;
-use Itertools\lib\AccumulateIterator;
-use Itertools\lib\ChainIterator;
-use Itertools\lib\CountIterator;
-use Itertools\lib\CycleIterator;
-use Itertools\lib\FilterIterator;
-use Itertools\lib\GroupbyIterator;
-use Itertools\lib\KeyCallbackIterator;
-use Itertools\lib\MapIterator;
-use Itertools\lib\RepeatIterator;
-use Itertools\lib\SortIterator;
-use Itertools\lib\StringIterator;
+use Zicht\Itertools\lib\AccumulateIterator;
+use Zicht\Itertools\lib\ChainIterator;
+use Zicht\Itertools\lib\CountIterator;
+use Zicht\Itertools\lib\CycleIterator;
+use Zicht\Itertools\lib\FilterIterator;
+use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\lib\KeyCallbackIterator;
+use Zicht\Itertools\lib\MapIterator;
+use Zicht\Itertools\lib\RepeatIterator;
+use Zicht\Itertools\lib\SortIterator;
+use Zicht\Itertools\lib\StringIterator;
 use ReflectionClass;
 use InvalidArgumentException;
 use Iterator;
@@ -206,7 +206,7 @@ function accumulate($iterable, $func = 'add')
 function chain(/* $iterable1, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, func_get_args());
-    $reflectorClass = new ReflectionClass('\Itertools\lib\ChainIterator');
+    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
@@ -314,7 +314,7 @@ function map($func /* $iterable1, $iterable2, ... */)
 //    }
 
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
-    $reflectorClass = new ReflectionClass('\Itertools\lib\MapIterator');
+    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\MapIterator');
 //    return $reflectorClass->newInstanceArgs(array_merge(array($func), $iterables));
     return $reflectorClass->newInstanceArgs(array_merge(array(mixedToKeyStrategy($func)), $iterables));
 }

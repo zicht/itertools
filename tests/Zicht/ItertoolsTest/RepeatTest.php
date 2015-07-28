@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
@@ -12,8 +12,8 @@ class RepeatTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodRepeat($object, $times)
     {
-        $iterator = \Itertools\repeat($object, $times);
-        $this->assertInstanceOf('\Itertools\lib\RepeatIterator', $iterator);
+        $iterator = \Zicht\Itertools\repeat($object, $times);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);
 
         for ($key=0; $key<$times; $key++) {
             $this->assertTrue($iterator->valid());
@@ -33,7 +33,7 @@ class RepeatTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($object, $times)
     {
-        $iterator = \Itertools\repeat($object, $times);
+        $iterator = \Zicht\Itertools\repeat($object, $times);
     }
 
     public function goodSequenceProvider()

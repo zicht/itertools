@@ -1,6 +1,6 @@
 <?php
 
-namespace ItertoolsTest;
+namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
@@ -25,8 +25,8 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodKeyCallback(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('\Itertools\keyCallback', $arguments);
-        $this->assertInstanceOf('\Itertools\lib\KeyCallbackIterator', $iterator);
+        $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\KeyCallbackIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
@@ -45,7 +45,7 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Itertools\keyCallback', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
     }
 
     public function goodSequenceProvider()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Itertools\lib;
+namespace Zicht\Itertools\lib;
 
 use Iterator;
 use Closure;
