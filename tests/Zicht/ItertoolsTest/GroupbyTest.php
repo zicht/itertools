@@ -1,5 +1,10 @@
 <?php
 
+namespace ItertoolsTest;
+
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class simpleObject2
 {
     public function __construct($value)
@@ -23,14 +28,14 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
 
         $list = array($obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C'));
 
-        $iterator = iter\groupby('prop', $list);
-        $this->assertInstanceOf('iter\GroupbyIterator', $iterator);
+        $iterator = \Itertools\groupby('prop', $list);
+        $this->assertInstanceOf('\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
         $this->assertTrue($iterator->valid());
         $this->assertEquals('1group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('iter\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -42,11 +47,11 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $groupedIterator->next();
         $this->assertFalse($groupedIterator->valid());
         $iterator->next();
-        
+
         $this->assertTrue($iterator->valid());
         $this->assertEquals('2group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('iter\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -64,7 +69,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($iterator->valid());
         $this->assertEquals('1group', $iterator->key());
         $groupedIterator = $iterator->current();
-        $this->assertInstanceOf('iter\GroupedIterator', $groupedIterator);
+        $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
         $this->assertEquals(0, $groupedIterator->key());
@@ -76,21 +81,21 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         // nothing left in the iterator
         $this->assertFalse($iterator->valid());
     }
-    
+
     /**
      * @dataProvider goodSequenceProvider
      */
     public function testGoodKeyCallback(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('iter\groupby', $arguments);
-        $this->assertInstanceOf('iter\GroupbyIterator', $iterator);
+        $iterator = call_user_func_array('\Itertools\groupby', $arguments);
+        $this->assertInstanceOf('\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $expectedGroup) {
             $this->assertTrue($iterator->valid());
             $this->assertEquals($key, $iterator->key());
             $groupedIterator = $iterator->current();
-            $this->assertInstanceOf('iter\GroupedIterator', $groupedIterator);
+            $this->assertInstanceOf('\Itertools\lib\GroupedIterator', $groupedIterator);
             $groupedIterator->rewind();
 
             foreach ($expectedGroup as $key => $value) {
@@ -113,7 +118,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('iter\groupby', $arguments);
+        $iterator = call_user_func_array('\Itertools\groupby', $arguments);
     }
 
     public function goodSequenceProvider()
@@ -121,7 +126,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $obj = function ($property, $title) {
             return (object)array('prop' => $property, 'title' => $title);
         };
-        
+
         return array(
             // callback
             array(

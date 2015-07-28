@@ -1,5 +1,11 @@
 <?php
 
+namespace ItertoolsTest;
+
+use ArrayIterator;
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class AccumulateTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,8 +13,8 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodAccmulate($iterable, $func, $expected)
     {
-        $iterator = iter\accumulate($iterable, $func);
-        $this->assertInstanceOf('iter\AccumulateIterator', $iterator);
+        $iterator = \Itertools\accumulate($iterable, $func);
+        $this->assertInstanceOf('\Itertools\lib\AccumulateIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
@@ -27,7 +33,7 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($iterable, $func)
     {
-        $iterator = iter\accumulate($iterable, $func);
+        $iterator = \Itertools\accumulate($iterable, $func);
     }
 
     public function goodSequenceProvider()

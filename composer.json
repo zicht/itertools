@@ -12,7 +12,10 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": {"iter\\": "src/"},
-        "files": ["src/iter.php"]
+      "psr-0": {
+        "Itertools": "src/Zicht/",
+        "ItertoolsTest": "tests/Zicht/"
+      },
+      "files": ["src/Zicht/Itertools/itertools.php"]
     }
 }

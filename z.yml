@@ -6,4 +6,4 @@ vcs:
 tasks:
     ci.phpunit:
         pre: composer install
-        do: ./vendor/bin/phpunit test --verbose --coverage-text
+        do: ./vendor/bin/phpunit tests --verbose --coverage-text

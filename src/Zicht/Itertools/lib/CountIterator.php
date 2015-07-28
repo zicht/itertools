@@ -1,13 +1,13 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 class CountIterator implements \Iterator
 {
     protected $start;
     protected $step;
     protected $key;
-    
+
     public function __construct($start, $step)
     {
         $this->start = $start;

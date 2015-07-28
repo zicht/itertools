@@ -1,9 +1,9 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 use Iterator;
-use Closure;    
+use Closure;
 
 class AccumulateIterator implements Iterator
 {

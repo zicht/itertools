@@ -1,6 +1,6 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 use ArrayIterator;
 use Closure;
@@ -15,7 +15,7 @@ class SortIterator extends IteratorIterator
         usort($data, function ($a, $b) use ($func, $reverse) {
                 $keyA = call_user_func($func, $a);
                 $keyB = call_user_func($func, $b);
-                
+
                 if ($keyA == $keyB) {
                     return 0;
                 } else if ($keyA < $keyB) {

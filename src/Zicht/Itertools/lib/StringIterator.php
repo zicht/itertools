@@ -1,12 +1,12 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 class StringIterator implements \Iterator
 {
     protected $string;
     protected $key;
-    
+
     public function __construct($string)
     {
         $this->string = $string;

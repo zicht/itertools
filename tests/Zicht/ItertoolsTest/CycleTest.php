@@ -1,5 +1,11 @@
 <?php
 
+namespace ItertoolsTest;
+
+use ArrayIterator;
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class CycleTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,8 +13,8 @@ class CycleTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodCycle($p, $expected)
     {
-        $iterator = iter\cycle($p);
-        $this->assertInstanceOf('iter\CycleIterator', $iterator);
+        $iterator = \Itertools\cycle($p);
+        $this->assertInstanceOf('\Itertools\lib\CycleIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
@@ -24,7 +30,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($p)
     {
-        $iterator = iter\cycle($p);
+        $iterator = \Itertools\cycle($p);
     }
 
     public function goodSequenceProvider()

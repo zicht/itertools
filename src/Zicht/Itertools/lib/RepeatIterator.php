@@ -1,6 +1,6 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 use Iterator;
 
@@ -9,7 +9,7 @@ class RepeatIterator implements Iterator
     private $mixed;
     private $times;
     private $key;
-    
+
     public function __construct($mixed, $times)
     {
         $this->mixed = $mixed;

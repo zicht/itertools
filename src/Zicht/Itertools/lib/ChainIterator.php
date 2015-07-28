@@ -1,6 +1,6 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 use AppendIterator;
 use InvalidArgumentException;
@@ -9,7 +9,7 @@ use Iterator;
 class ChainIterator extends AppendIterator
 {
     private $key = 0;
-    
+
     public function __construct(/* Iterator $iterable, Iterator $iterable2, ... */)
     {
         parent::__construct();

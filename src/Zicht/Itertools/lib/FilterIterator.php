@@ -1,6 +1,6 @@
 <?php
 
-namespace iter;
+namespace Itertools\lib;
 
 // todo: add tests
 

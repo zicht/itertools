@@ -1,5 +1,10 @@
 <?php
 
+namespace ItertoolsTest;
+
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class SortTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,8 +12,8 @@ class SortTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodKeyCallback(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('iter\sorted', $arguments);
-        $this->assertInstanceOf('iter\SortIterator', $iterator);
+        $iterator = call_user_func_array('\Itertools\sorted', $arguments);
+        $this->assertInstanceOf('\Itertools\lib\SortIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
@@ -27,7 +32,7 @@ class SortTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('iter\sorted', $arguments);
+        $iterator = call_user_func_array('\Itertools\sorted', $arguments);
     }
 
     public function goodSequenceProvider()
@@ -36,7 +41,7 @@ class SortTest extends PHPUnit_Framework_TestCase
             return (object)array('prop' => $property, 'title' => $title);
         };
 
-        
+
         return array(
             // callback
             array(
@@ -74,7 +79,7 @@ class SortTest extends PHPUnit_Framework_TestCase
 
             >>> def get_key(item):
             ...  return item.key
-            
+
             >>> list = [obj(1, 'first 1'), obj(2, 'first 2'), obj(2, 'second 2'), obj(1, 'second 1')]
             >>> [str(i) for i in list]
             ['1:first 1', '2:first 2', '2:second 2', '1:second 1']

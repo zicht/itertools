@@ -1,5 +1,10 @@
 <?php
 
+namespace ItertoolsTest;
+
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class ChainTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,8 +12,8 @@ class ChainTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodChain(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('iter\chain', $arguments);
-        $this->assertInstanceOf('iter\ChainIterator', $iterator);
+        $iterator = call_user_func_array('\Itertools\chain', $arguments);
+        $this->assertInstanceOf('\Itertools\lib\ChainIterator', $iterator);
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($iterator->valid());
@@ -26,7 +31,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument($iterables)
     {
-        $iterator = call_user_func_array('iter\chain', $iterables);
+        $iterator = call_user_func_array('\Itertools\chain', $iterables);
     }
 
     public function goodSequenceProvider()

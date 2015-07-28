@@ -1,5 +1,10 @@
 <?php
 
+namespace ItertoolsTest;
+
+use InvalidArgumentException;
+use PHPUnit_Framework_TestCase;
+
 class MapTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,8 +12,8 @@ class MapTest extends PHPUnit_Framework_TestCase
      */
     public function testGoodMap(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('iter\map', $arguments);
-        $this->assertInstanceOf('iter\MapIterator', $iterator);
+        $iterator = call_user_func_array('\Itertools\map', $arguments);
+        $this->assertInstanceOf('\Itertools\lib\MapIterator', $iterator);
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($iterator->valid());
@@ -26,13 +31,13 @@ class MapTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('iter\map', $arguments);
+        $iterator = call_user_func_array('\Itertools\map', $arguments);
     }
 
     public function goodSequenceProvider()
     {
         $add10 = function ($a=0, $b=0, $c=0) { return 10 + $a + $b + $c; };
-        
+
         return array(
             // single iterable
             array(
