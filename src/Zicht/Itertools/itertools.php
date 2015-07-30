@@ -417,3 +417,10 @@ function filter($closure, $iterable)
 {
     return new FilterIterator(mixedToClosure($closure), mixedToIterator($iterable));
 }
+
+function zip(/* $iterable1, $iterable2, ... */)
+{
+    $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, func_get_args());
+    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
+    return $reflectorClass->newInstanceArgs($iterables);
+}
