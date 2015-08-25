@@ -375,9 +375,11 @@ function repeat($mixed, $times = null)
  * @param array|string|Iterator $iterable
  * @return GroupbyIterator
  */
-function groupby($keyStrategy, $iterable)
+function groupby($keyStrategy, $iterable, $sort = true)
 {
-    return new GroupbyIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable));
+    return new GroupbyIterator(
+        mixedToKeyStrategy($keyStrategy),
+        $sort ? sorted($keyStrategy, $iterable) : mixedToIterator($iterable));
 }
 
 /**
