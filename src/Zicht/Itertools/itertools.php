@@ -13,6 +13,7 @@ use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\KeyCallbackIterator;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\Itertools\lib\RepeatIterator;
+use Zicht\Itertools\lib\ReversedIterator;
 use Zicht\Itertools\lib\SortIterator;
 use Zicht\Itertools\lib\StringIterator;
 use ReflectionClass;
@@ -76,20 +77,37 @@ function mixedToClosure($closure)
 function mixedToKeyStrategy($keyStrategy)
 {
     if (is_string($keyStrategy)) {
-        $keyStrategy = function ($value) use ($keyStrategy) {
-            if (is_object($value) && property_exists($value, $keyStrategy)) {
-                return $value->{$keyStrategy};
+        $keyParts = explode('.', $keyStrategy);
+        $keyStrategy = function ($value) use ($keyParts) {
+            foreach ($keyParts as $keyPart) {
+                if (is_object($value)) {
+                    // property_exists does not distinguish between public, protected, or private properties, hence we need to use reflection
+                    $reflection = new \ReflectionObject($value);
+                    if ($reflection->hasProperty($keyPart)) {
+                        $property = $reflection->getProperty($keyPart);
+                        if ($property->isPublic()) {
+                            $value = $property->getValue();
+                            continue;
+                        }
+                    }
+                }
+
+                if (is_callable(array($value, $keyPart))) {
+                    $value = call_user_func(array($value, $keyPart));
+                    continue;
+                }
+
+                if (is_array($value) && array_key_exists($keyPart, $value)) {
+                    $value = $value[$keyPart];
+                    continue;
+                }
+
+                // no match found
+                $value = null;
+                break;
             }
 
-            if (is_callable(array($value, $keyStrategy))) {
-                return call_user_func(array($value, $keyStrategy));
-            }
-
-            if (is_array($value) && array_key_exists($keyStrategy, $value)) {
-                return $value[$keyStrategy];
-            }
-
-            return null;
+            return $value;
         };
     }
 
@@ -430,4 +448,9 @@ function zip(/* $iterable1, $iterable2, ... */)
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, func_get_args());
     $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
     return $reflectorClass->newInstanceArgs($iterables);
+}
+
+function reversed($iterable)
+{
+    return new ReversedIterator(mixedToIterator($iterable));
 }
