@@ -5,7 +5,7 @@ namespace Zicht\ItertoolsTest;
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
 
-class SortTest extends PHPUnit_Framework_TestCase
+class SortedTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -13,7 +13,7 @@ class SortTest extends PHPUnit_Framework_TestCase
     public function testGoodKeyCallback(array $arguments, array $expected)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\sorted', $arguments);
-        $this->assertInstanceOf('\Zicht\Itertools\lib\SortIterator', $iterator);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {

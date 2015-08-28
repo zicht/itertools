@@ -7,7 +7,7 @@ use Closure;
 use Iterator;
 use IteratorIterator;
 
-class SortIterator extends IteratorIterator
+class SortedIterator extends IteratorIterator
 {
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {

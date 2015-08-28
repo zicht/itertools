@@ -14,7 +14,7 @@ use Zicht\Itertools\lib\KeyCallbackIterator;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\Itertools\lib\RepeatIterator;
 use Zicht\Itertools\lib\ReversedIterator;
-use Zicht\Itertools\lib\SortIterator;
+use Zicht\Itertools\lib\SortedIterator;
 use Zicht\Itertools\lib\StringIterator;
 use ReflectionClass;
 use InvalidArgumentException;
@@ -86,7 +86,7 @@ function mixedToKeyStrategy($keyStrategy)
                     if ($reflection->hasProperty($keyPart)) {
                         $property = $reflection->getProperty($keyPart);
                         if ($property->isPublic()) {
-                            $value = $property->getValue();
+                            $value = $property->getValue($value);
                             continue;
                         }
                     }
@@ -435,7 +435,7 @@ function sorted($keyStrategy, $iterable, $reverse = false)
     if (!is_bool($reverse)) {
         throw new InvalidArgumentException('Argument $REVERSE must be boolean');
     }
-    return new SortIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable), $reverse);
+    return new SortedIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable), $reverse);
 }
 
 function filter($closure, $iterable)
