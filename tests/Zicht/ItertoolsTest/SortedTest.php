@@ -41,7 +41,6 @@ class SortedTest extends PHPUnit_Framework_TestCase
             return (object)array('prop' => $property, 'title' => $title);
         };
 
-
         return array(
             // callback
             array(
@@ -62,10 +61,24 @@ class SortedTest extends PHPUnit_Framework_TestCase
             array(
                 array(function ($a) { return $a; }, array(3, 1, 2)),
                 array(1, 2, 3)),
+            // the same key value
+            array(
+                array(function ($a) { return $a; }, array(1, 2, 1)),
+                array(1, 1, 2)),
+            array(
+                array(function ($o) { return $o->prop; }, array($obj(1, 4), $obj(1, 2), $obj(1, 3))),
+                array($obj(1, 4), $obj(1, 2), $obj(1, 3))),
+            array(
+                array(function ($o) { return $o->prop; }, array($obj(1, 1), $obj(1, 3), $obj(1, 2))),
+                array($obj(1, 1), $obj(1, 3), $obj(1, 2))),
+            array(
+                array(function ($o) { return $o->prop; }, array($obj(1, 1), $obj(2, 1), $obj(1, 2))),
+                array($obj(1, 1), $obj(1, 2), $obj(2, 1))),
             // reverse
             array(
                 array(function ($a) { return $a; }, array(1, 3, 2), true),
                 array(3, 2, 1)),
+
             // todo: what happens when reverse sorting when keys are
             // the same? --> the items with the same key are *not*
             // reversed.  This is the behavior of python3, see:
