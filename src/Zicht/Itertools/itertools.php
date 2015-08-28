@@ -373,10 +373,15 @@ function repeat($mixed, $times = null)
  *
  * @param string|Closure $keyStrategy
  * @param array|string|Iterator $iterable
+ * @param boolean $sort
  * @return GroupbyIterator
  */
 function groupby($keyStrategy, $iterable, $sort = true)
 {
+    if (!is_bool($sort)) {
+        throw new InvalidArgumentException('Argument $SORT must be a boolean');
+    }
+
     return new GroupbyIterator(
         mixedToKeyStrategy($keyStrategy),
         $sort ? sorted($keyStrategy, $iterable) : mixedToIterator($iterable));

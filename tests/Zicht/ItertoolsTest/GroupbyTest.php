@@ -28,7 +28,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
 
         $list = array($obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C'));
 
-        $iterator = \Zicht\Itertools\groupby('prop', $list);
+        $iterator = \Zicht\Itertools\groupby('prop', $list, false);
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
@@ -123,21 +123,24 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
 
     public function goodSequenceProvider()
     {
-        $obj = function ($property, $title) {
-            return (object)array('prop' => $property, 'title' => $title);
-        };
-
         return array(
             // callback
             array(
-                array(function ($a) { return $a + 10; }, array(1, 2, 2, 3, 3, 3)),
+                array(function ($a) { return $a + 10; }, array(1, 2, 2, 3, 3, 3), false),
+                array(11 => array(1), 12 => array(2, 2), 13 => array(3, 3, 3))),
+            // calllback using auto-sort
+            array(
+                array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3), true),
+                array(11 => array(1), 12 => array(2, 2), 13 => array(3, 3, 3))),
+            array(
+                array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3)),
                 array(11 => array(1), 12 => array(2, 2), 13 => array(3, 3, 3))),
             // use string to identify array key
             array(
                 array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k2'))),
                 array('k1' => array(array('key' => 'k1')), 'k2' => array(array('key' => 'k2'), array('key' => 'k2')))),
             array(
-                array('key', array(array('key' => 1), array('key' => 2), array('key' => 2))),
+                array('key', array(array('key' => 1), array('key' => 2), array('key' => 2)), false),
                 array(1 => array(array('key' => 1)), 2 => array(array('key' => 2), array('key' => 2)))),
             // use string to identify object property
             array(
@@ -160,6 +163,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(array(null, array(1, 2, 3))),
+            array(array('foo', array(1, 2, 3), 'not-a-boolean')),
         );
     }
 }
