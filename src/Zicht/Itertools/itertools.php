@@ -4,6 +4,7 @@ namespace Zicht\Itertools;
 
 use ArrayIterator;
 use Closure;
+use Doctrine\ORM\PersistentCollection;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -43,6 +44,12 @@ function mixedToIterator($iterable)
     // a string is considered iterable in Python
     if (is_string($iterable)) {
         $iterable = new StringIterator($iterable);
+    }
+
+    // todo: add unit tests for PersistentCollection
+    // a doctrine PersistentCollection is also an iterator
+    if ($iterable instanceof PersistentCollection) {
+        $iterable = $iterable->getIterator();
     }
 
     // by now it should be an Iterator, otherwise throw an exception
