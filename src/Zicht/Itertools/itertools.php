@@ -4,7 +4,7 @@ namespace Zicht\Itertools;
 
 use ArrayIterator;
 use Closure;
-use Doctrine\ORM\PersistentCollection;
+use Doctrine\Common\Collections\Collection;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -46,9 +46,9 @@ function mixedToIterator($iterable)
         $iterable = new StringIterator($iterable);
     }
 
-    // todo: add unit tests for PersistentCollection
-    // a doctrine PersistentCollection is also an iterator
-    if ($iterable instanceof PersistentCollection) {
+    // todo: add unit tests for Collection
+    // a doctrine Collection (i.e. Array or Persistent) is also an iterator
+    if ($iterable instanceof Collection) {
         $iterable = $iterable->getIterator();
     }
 
