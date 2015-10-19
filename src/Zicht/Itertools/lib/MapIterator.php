@@ -43,4 +43,9 @@ class MapIterator extends \MultipleIterator
         parent::next();
         $this->key += 1;
     }
+
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
 }
