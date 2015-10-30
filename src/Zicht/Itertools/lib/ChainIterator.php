@@ -3,20 +3,23 @@
 namespace Zicht\Itertools\lib;
 
 use AppendIterator;
+use Countable;
 use InvalidArgumentException;
 use Iterator;
 
-class ChainIterator extends AppendIterator
+class ChainIterator extends AppendIterator implements Countable
 {
     private $key = 0;
+    private $count = 0;
 
     public function __construct(/* Iterator $iterable, Iterator $iterable2, ... */)
     {
         parent::__construct();
         foreach (func_get_args() as $iterable) {
             if (!$iterable instanceof Iterator) {
-                throw InvalidArgumentException(sprintf('Argument %d must be an Iterator'));
+                throw new InvalidArgumentException(sprintf('Argument %d must be an Iterator'));
             }
+            $this->count += iterator_count($iterable);
             $this->append($iterable);
         }
     }
@@ -36,5 +39,19 @@ class ChainIterator extends AppendIterator
     {
         parent::next();
         $this->key += 1;
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        return $this->count;
     }
 }
