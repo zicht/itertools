@@ -29,6 +29,11 @@ class SortedIterator extends IteratorIterator
         parent::__construct(new ArrayIterator($data));
     }
 
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
+
     /**
      * As the manual says, "If two members compare as equal, their order in the sorted array is undefined."
      * This means that the sort used is not "stable" and may change the order of elements that compare equal.

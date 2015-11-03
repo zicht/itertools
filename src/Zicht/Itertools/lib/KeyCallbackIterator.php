@@ -80,4 +80,9 @@ class KeyCallbackIterator extends IteratorIterator implements ArrayAccess
     {
         throw new \RuntimeException('It is not possible to unset iterator values');
     }
+
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
 }
