@@ -334,7 +334,7 @@ function keyCallback($keyStrategy, $iterable)
  * > map($average, [1, 2, 3], [4, 5, 6]);
  * 2.5 3.5 4.5
  *
- * @param Closure $func
+ * @param Closure|callable $func
  * @param array|string|Iterator $iterable1
  * @param array|string|Iterator $iterable2
  * @param array|string|Iterator $iterableN
