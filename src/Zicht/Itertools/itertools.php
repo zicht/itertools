@@ -76,16 +76,16 @@ function mixedToClosure($closure)
 }
 
 /**
- * Try to transforms something into a keyStrategy Closure.
+ * Try to transforms something into a Closure that gets a value from the strategy
  *
  * @param string|Closure
  * @return Closure
  */
-function mixedToKeyStrategy($keyStrategy)
+function mixedToValueGetter($strategy)
 {
-    if (is_string($keyStrategy)) {
-        $keyParts = explode('.', $keyStrategy);
-        $keyStrategy = function ($value) use ($keyParts) {
+    if (is_string($strategy)) {
+        $keyParts = explode('.', $strategy);
+        $strategy = function ($value) use ($keyParts) {
             foreach ($keyParts as $keyPart) {
                 if (is_object($value)) {
                     // property_exists does not distinguish between public, protected, or private properties, hence we need to use reflection
@@ -118,7 +118,7 @@ function mixedToKeyStrategy($keyStrategy)
         };
     }
 
-    return mixedToClosure($keyStrategy);
+    return mixedToClosure($strategy);
 }
 
 /**
@@ -304,9 +304,17 @@ function cycle($iterable)
  * @param array|string|Iterator $iterable
  * @return KeyCallbackIterator
  */
+function mapBy($keyStrategy, $iterable)
+{
+    return new KeyCallbackIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));
+}
+
+/**
+ * @deprecated use mapBy() in stead
+ */
 function keyCallback($keyStrategy, $iterable)
 {
-    return new KeyCallbackIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable));
+    return mapBy($keyStrategy, $iterable);
 }
 
 /**
@@ -341,8 +349,28 @@ function map($func /* $iterable1, $iterable2, ... */)
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
     $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\MapIterator');
 //    return $reflectorClass->newInstanceArgs(array_merge(array($func), $iterables));
-    return $reflectorClass->newInstanceArgs(array_merge(array(mixedToKeyStrategy($func)), $iterables));
+    return $reflectorClass->newInstanceArgs(array_merge(array(mixedToValueGetter($func)), $iterables));
 }
+
+
+/**
+ * Select values from the iterator by applying a function to each of the iterator values, i.e., mapping it to the
+ * value with a strategy based on the input, similar to keyCallback
+ *
+ * @param mixed $valueStrategy
+ * @param mixed $iterable
+ * @param bool $flatten
+ * @return MapIterator
+ */
+function select($valueStrategy, $iterable, $flatten = true)
+{
+    $ret = new MapIterator(mixedToValueGetter($valueStrategy), mixedToIterator($iterable));
+    if ($flatten) {
+        return array_values(iterator_to_array($ret));
+    }
+    return $ret;
+}
+
 
 /**
  * Make an iterator that returns $mixed over and over again.  Runs
@@ -408,7 +436,7 @@ function groupby($keyStrategy, $iterable, $sort = true)
     }
 
     return new GroupbyIterator(
-        mixedToKeyStrategy($keyStrategy),
+        mixedToValueGetter($keyStrategy),
         $sort ? sorted($keyStrategy, $iterable) : mixedToIterator($iterable));
 }
 
@@ -442,7 +470,7 @@ function sorted($keyStrategy, $iterable, $reverse = false)
     if (!is_bool($reverse)) {
         throw new InvalidArgumentException('Argument $REVERSE must be boolean');
     }
-    return new SortedIterator(mixedToKeyStrategy($keyStrategy), mixedToIterator($iterable), $reverse);
+    return new SortedIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable), $reverse);
 }
 
 function filter($closure, $iterable)
