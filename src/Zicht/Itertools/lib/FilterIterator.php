@@ -22,4 +22,9 @@ class FilterIterator extends BaseFilterIterator
     {
         return call_user_func($this->func, $this->current());
     }
+
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
 }

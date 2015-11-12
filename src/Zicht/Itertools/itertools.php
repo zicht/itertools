@@ -463,7 +463,7 @@ function groupby($keyStrategy, $iterable, $sort = true)
  * @param string|Closure $keyStrategy
  * @param array|string|Iterator $iterable
  * @param boolean $reverse
- * @return SortIterator
+ * @return SortedIterator
  */
 function sorted($keyStrategy, $iterable, $reverse = false)
 {
@@ -473,6 +473,11 @@ function sorted($keyStrategy, $iterable, $reverse = false)
     return new SortedIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable), $reverse);
 }
 
+/**
+ * @param $closure
+ * @param array|string|Iterator $iterable
+ * @return FilterIterator
+ */
 function filter($closure, $iterable)
 {
     return new FilterIterator(mixedToClosure($closure), mixedToIterator($iterable));
