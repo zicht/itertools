@@ -76,6 +76,11 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     {
         throw new \RuntimeException('It is not possible to unset iterator values');
     }
+
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
 }
 
 class GroupbyIterator extends IteratorIterator implements Countable
@@ -109,5 +114,12 @@ class GroupbyIterator extends IteratorIterator implements Countable
     public function count()
     {
         return iterator_count($this->getInnerIterator());
+    }
+
+    public function toArray()
+    {
+        $array = iterator_to_array($this);
+        array_walk($array, function (&$value) { $value = $value->toArray(); });
+        return $array;
     }
 }
