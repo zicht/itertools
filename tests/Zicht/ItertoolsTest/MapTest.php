@@ -44,8 +44,14 @@ class MapTest extends PHPUnit_Framework_TestCase
                 array($add10, array(1, 2, 3)),
                 array(11, 12, 13)),
             array(
-                array($add10, array('a'=>1, 'b'=>2, 'c'=>3)),
-                array(11, 12, 13)),
+                array($add10, array('a' => 1, 'b' => 2, 'c' => 3)),
+                array('a' => 11, 'b' => 12, 'c' => 13)),
+            array(
+                array($add10, array(1 => 1, 2 => 2, 3 => 3)),
+                array(1 => 11, 2 => 12, 3 => 13)),
+            array(
+                array($add10, array(1 => 1, 'b' => 2, 3 => 3)),
+                array(1 => 11, 'b' => 12, 3 => 13)),
             // multiple iterables of equal length
             array(
                 array($add10, array(1, 2, 3), array(4, 5, 6)),
@@ -63,6 +69,13 @@ class MapTest extends PHPUnit_Framework_TestCase
             array(
                 array($add10, array(1, 2, 3), array(4, 5, 6), array(7, 8)),
                 array(22, 25)),
+            // multiple with different keys
+            array(
+                array($add10, array(1 => 1, 2 => 2, 3 => 3), array(4 => 4, 5 => 5, 6 => 6)),
+                array('1:4' => 15, '2:5' => 17, '3:6' => 19)),
+            array(
+                array($add10, array('a' => 1, 'b' => 2, 'c' => 3), array(4 => 4, 5 => 5, 6 => 6)),
+                array('a:4' => 15, 'b:5' => 17, 'c:6' => 19)),
         );
     }
 

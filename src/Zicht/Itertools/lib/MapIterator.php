@@ -19,13 +19,31 @@ class MapIterator extends MultipleIterator implements Countable
         $args = func_get_args();
         $argsContainsKeyFunc = $args[1] instanceof Closure;
         $this->valueFunc = $args[0];
-        $this->keyFunc = $argsContainsKeyFunc ? $args[1] : function (/** key1, [key2, [...]]  */) { $args = func_get_args(); return count($args) == 1 ? $args[0] : join(':', array_map(function ($key) { return (string)$key; }, $args)); };
+        $this->keyFunc = $argsContainsKeyFunc ? $args[1] : function () { return $this->genericKeysToKey(func_get_args()); };
         foreach (array_slice($args, $argsContainsKeyFunc ? 2 : 1) as $iterable) {
             if (!$iterable instanceof Iterator) {
                 throw new InvalidArgumentException(sprintf('Argument %d must be an iterator'));
             }
             $this->attachIterator($iterable);
         }
+    }
+
+    protected function genericKeysToKey($keys)
+    {
+        if (count($keys) == 1) {
+            return $keys[0];
+        }
+
+        $value = $keys[0];
+        foreach ($keys as $key) {
+            if ($key !== $value) {
+                // the keys are different, we will make a new string identifying this entry
+                return join(':', array_map(function ($key) { return (string)$key; }, $keys));
+            }
+        }
+
+        // all values are the same, use it
+        return $value;
     }
 
     public function current()
