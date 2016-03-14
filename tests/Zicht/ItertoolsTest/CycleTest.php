@@ -18,8 +18,9 @@ class CycleTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
-            $this->assertEquals($key, $iterator->key());
-            $this->assertEquals($value, $iterator->current());
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
+            $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
+            $this->assertEquals($value, $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();
         }
     }

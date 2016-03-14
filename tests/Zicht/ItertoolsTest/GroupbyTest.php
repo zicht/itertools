@@ -92,16 +92,16 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         foreach ($expected as $key => $expectedGroup) {
-            $this->assertTrue($iterator->valid());
-            $this->assertEquals($key, $iterator->key());
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
+            $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
             $groupedIterator = $iterator->current();
             $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
             $groupedIterator->rewind();
 
             foreach ($expectedGroup as $key => $value) {
-                $this->assertTrue($groupedIterator->valid());
-                $this->assertEquals($key, $groupedIterator->key());
-                $this->assertEquals($value, $groupedIterator->current());
+                $this->assertTrue($groupedIterator->valid(), 'Failure in $groupedIterator->value()');
+                $this->assertEquals($key, $groupedIterator->key(), 'Failure in $groupedIterator->key()');
+                $this->assertEquals($value, $groupedIterator->current(), 'Failure in $groupedIterator->current()');
                 $groupedIterator->next();
             }
             $this->assertFalse($groupedIterator->valid());
