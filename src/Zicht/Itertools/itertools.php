@@ -474,12 +474,63 @@ function sorted($keyStrategy, $iterable, $reverse = false)
 }
 
 /**
- * @param $closure
+ * TODO: document!
+ *
+ * @param Closure $closure Optional, when not specified !empty will be used
  * @param array|string|Iterator $iterable
  * @return FilterIterator
  */
-function filter($closure, $iterable)
+function filter(/* [$closure, ] $iterable */)
 {
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 1:
+            $closure = function ($item) { return !empty($item); };
+            $iterable = mixedToIterator($args[0]);
+            break;
+
+        case 2:
+            $closure = mixedToClosure($args[0]);
+            $iterable = mixedToIterator($args[1]);
+            break;
+
+        default:
+            throw new InvalidArgumentException('filter requires either one (iterable) or two (closure, iterable) arguments');
+    }
+
+    return new FilterIterator($closure, $iterable);
+}
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @param string|Closure $keyStrategy
+ * @param Closure $closure Optional, when not specified !empty will be used
+ * @param array|string|Iterator $iterable
+ * @return FilterIterator
+ */
+function filterBy(/* $keyStrategy, [$closure, ] $iterable */)
+{
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 2:
+            $keyStrategy = mixedToValueGetter($args[0]);
+            $closure = function ($item) use ($keyStrategy) { return !empty(call_user_func($keyStrategy, $item)); };
+            $iterable = mixedToIterator($args[1]);
+            break;
+
+        case 3:
+            $keyStrategy = mixedToValueGetter($args[0]);
+            $userClosure = $args[1];
+            $closure = function ($item) use ($keyStrategy, $userClosure) { return call_user_func($userClosure, call_user_func($keyStrategy, $item)); };
+            $iterable = mixedToIterator($args[2]);
+            break;
+
+        default:
+            throw new InvalidArgumentException('filterBy requires either two (keyStrategy, iterable) or three (keyStrategy, closure, iterable) arguments');
+    }
+
     return new FilterIterator(mixedToClosure($closure), mixedToIterator($iterable));
 }
 
