@@ -122,6 +122,81 @@ function mixedToValueGetter($strategy)
 }
 
 /**
+ * Try to transform something into a Closure.
+ *
+ * @param string|$closure
+ * @return Closure
+ */
+function mixedToOperationClosure($closure)
+{
+    if (is_string($closure)) {
+        switch ($closure) {
+            case 'add':
+                $closure = function ($a, $b) {
+                    if (!is_numeric($a)) {
+                        throw new InvalidArgumentException('Argument $A must be numeric to perform addition');
+                    }
+                    if (!is_numeric($b)) {
+                        throw new InvalidArgumentException('Argument $B must be numeric to perform addition');
+                    }
+                    return $a + $b;
+                };
+                break;
+            case 'sub':
+                $closure = function ($a, $b) {
+                    if (!is_numeric($a)) {
+                        throw new InvalidArgumentException('Argument $A must be numeric to perform subtraction');
+                    }
+                    if (!is_numeric($b)) {
+                        throw new InvalidArgumentException('Argument $B must be numeric to perform subtraction');
+                    }
+                    return $a - $b;
+                };
+                break;
+            case 'mul':
+                $closure = function ($a, $b) {
+                    if (!is_numeric($a)) {
+                        throw new InvalidArgumentException('Argument $A must be numeric to perform multiplication');
+                    }
+                    if (!is_numeric($b)) {
+                        throw new InvalidArgumentException('Argument $B must be numeric to perform multiplication');
+                    }
+                    return $a * $b;
+                };
+                break;
+            case 'min':
+                $closure = function ($a, $b) {
+                    if (!is_numeric($a)) {
+                        throw new InvalidArgumentException('Argument $A must be numeric to determine minimum');
+                    }
+                    if (!is_numeric($b)) {
+                        throw new InvalidArgumentException('Argument $B must be numeric to determine minimum');
+                    }
+                    return $a < $b ? $a : $b;
+                };
+                break;
+            case 'max':
+                $closure = function ($a, $b) {
+                    if (!is_numeric($a)) {
+                        throw new InvalidArgumentException('Argument $A must be numeric to determine maximum');
+                    }
+                    if (!is_numeric($b)) {
+                        throw new InvalidArgumentException('Argument $B must be numeric to determine maximum');
+                    }
+                    return $a < $b ? $b : $a;
+                };
+                break;
+        }
+    }
+
+    if (!($closure instanceof Closure)) {
+        throw new InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "sub", etc)');
+    }
+
+    return $closure;
+}
+
+/**
  * Make an iterator that returns accumulated sums.
  *
  * If the optional $func argument is supplied, it should be a string:
@@ -135,78 +210,34 @@ function mixedToValueGetter($strategy)
  * 'one' 'onetwo' 'onetwothree'
  *
  * @param array|string|Iterator $iterable
- * @param string|Closure $func
+ * @param string|Closure $closure
  * @return AccumulateIterator
  */
-function accumulate($iterable, $func = 'add')
+function accumulate($iterable, $closure = 'add')
 {
-    if (is_string($func)) {
-        switch ($func) {
-        case 'add':
-            $func = function ($a, $b) {
-                if (!is_numeric($a)) {
-                    throw new InvalidArgumentException('Argument $A must be numeric to perform addition');
-                }
-                if (!is_numeric($b)) {
-                    throw new InvalidArgumentException('Argument $B must be numeric to perform addition');
-                }
-                return $a + $b;
-            };
-            break;
-        case 'sub':
-            $func = function ($a, $b) {
-                if (!is_numeric($a)) {
-                    throw new InvalidArgumentException('Argument $A must be numeric to perform subtraction');
-                }
-                if (!is_numeric($b)) {
-                    throw new InvalidArgumentException('Argument $B must be numeric to perform subtraction');
-                }
-                return $a - $b;
-            };
-            break;
-        case 'mul':
-            $func = function ($a, $b) {
-                if (!is_numeric($a)) {
-                    throw new InvalidArgumentException('Argument $A must be numeric to perform multiplication');
-                }
-                if (!is_numeric($b)) {
-                    throw new InvalidArgumentException('Argument $B must be numeric to perform multiplication');
-                }
-                return $a * $b;
-            };
-            break;
-        case 'min':
-            $func = function ($a, $b) {
-                if (!is_numeric($a)) {
-                    throw new InvalidArgumentException('Argument $A must be numeric to determine minimum');
-                }
-                if (!is_numeric($b)) {
-                    throw new InvalidArgumentException('Argument $B must be numeric to determine minimum');
-                }
-                return $a < $b ? $a : $b;
-            };
-            break;
-        case 'max':
-            $func = function ($a, $b) {
-                if (!is_numeric($a)) {
-                    throw new InvalidArgumentException('Argument $A must be numeric to determine maximum');
-                }
-                if (!is_numeric($b)) {
-                    throw new InvalidArgumentException('Argument $B must be numeric to determine maximum');
-                }
-                return $a < $b ? $b : $a;
-            };
-            break;
-        }
-    }
-
-    if (!($func instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $FUNC must be a Closure or string \'add\'');
-    }
-
-    return new AccumulateIterator(mixedToIterator($iterable), $func);
+    return new AccumulateIterator(mixedToIterator($iterable), mixedToOperationClosure($closure));
 }
 
+/**
+ * Reduce an iterator to a single value.
+ *
+ * > reduce([1,2,3])
+ * 6
+ *
+ * > reduce([1,2,3], 'max')
+ * 3
+ *
+ * @param array|string|Iterator $iterable
+ * @param string|Closure $closure
+ * @param mixed $default
+ * @return mixed
+ */
+function reduce($iterable, $closure = 'add', $default = null)
+{
+    $value = $default;
+    foreach (accumulate($iterable, $closure) as $value) {};
+    return $value;
+}
 
 /**
  * Make an iterator that returns elements from the first iterable
