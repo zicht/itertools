@@ -547,7 +547,7 @@ function filterBy(/* $keyStrategy, [$closure, ] $iterable */)
     switch (sizeof($args)) {
         case 2:
             $keyStrategy = mixedToValueGetter($args[0]);
-            $closure = function ($item) use ($keyStrategy) { return !empty(call_user_func($keyStrategy, $item)); };
+            $closure = function ($item) use ($keyStrategy) { $tempVarPhp54 = call_user_func($keyStrategy, $item); return !empty($tempVarPhp54); };
             $iterable = mixedToIterator($args[1]);
             break;
 
