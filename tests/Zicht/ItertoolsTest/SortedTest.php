@@ -44,17 +44,21 @@ class SortedTest extends PHPUnit_Framework_TestCase
 
         return array(
             // callback
-            // array(
-            //     array(function ($a) { return $a; }, array(1, 2, 3)),
-            //     array(0, 1, 2),
-            //     array(1, 2, 3)),
             array(
-                array(function ($a) { return $a; }, array('a' => 11, 'b' => 12, 'c' => 13)),
+                array(function ($a) { return $a; }, array(1, 2, 3)),
+                array(0, 1, 2),
+                array(1, 2, 3)),
+            array(
+                array(function ($a) { return $a; }, array('a' => 1, 'b' => 2, 'c' => 3)),
                 array('a', 'b', 'c'),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(1, 3, 2)),
                 array(0, 2, 1),
+                array(1, 2, 3)),
+            array(
+                array(function ($a) { return $a; }, array('a' => 1, 'c' => 3, 'b' => 2)),
+                array('a', 'b', 'c'),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(2, 1, 3)),

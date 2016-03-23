@@ -11,12 +11,14 @@ class SortedIterator extends IteratorIterator
 {
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {
-        $data = iterator_to_array($iterable);
+        $data = [];
+        foreach ($iterable as $key => $value) {
+            $data []= array($key, $value);
+        }
 
-        var_dump(['in' => $data]);
         $this->mergesort($data, function ($a, $b) use ($func, $reverse) {
-            $keyA = call_user_func($func, $a);
-            $keyB = call_user_func($func, $b);
+            $keyA = call_user_func($func, $a[1]);
+            $keyB = call_user_func($func, $b[1]);
 
             if ($keyA == $keyB) {
                 return 0;
@@ -26,10 +28,18 @@ class SortedIterator extends IteratorIterator
                 return $reverse ? -1 : 1;
             }
         });
-        var_dump(['out' => $data]);
-        die;
 
         parent::__construct(new ArrayIterator($data));
+    }
+
+    public function key()
+    {
+        return $this->getInnerIterator()->current()[0];
+    }
+    
+    public function current()
+    {
+        return $this->getInnerIterator()->current()[1];
     }
 
     public function toArray()
