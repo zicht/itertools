@@ -10,16 +10,17 @@ class SortedTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expected)
+    public function testGoodKeyCallback(array $arguments, array $expectedKeys, array $expectedValues)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\sorted', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
         $iterator->rewind();
 
-        foreach ($expected as $key => $value) {
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+        for ($index=0; $index<sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
-            $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
-            $this->assertEquals($value, $iterator->current(), 'Failure in $iterator->current()');
+            $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
+            $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();
         }
 
@@ -43,40 +44,55 @@ class SortedTest extends PHPUnit_Framework_TestCase
 
         return array(
             // callback
+            // array(
+            //     array(function ($a) { return $a; }, array(1, 2, 3)),
+            //     array(0, 1, 2),
+            //     array(1, 2, 3)),
             array(
-                array(function ($a) { return $a; }, array(1, 2, 3)),
+                array(function ($a) { return $a; }, array('a' => 11, 'b' => 12, 'c' => 13)),
+                array('a', 'b', 'c'),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(1, 3, 2)),
+                array(0, 2, 1),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(2, 1, 3)),
+                array(1, 0, 2),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(2, 3, 1)),
+                array(2, 0, 1),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(3, 2, 1)),
+                array(2, 1, 0),
                 array(1, 2, 3)),
             array(
                 array(function ($a) { return $a; }, array(3, 1, 2)),
+                array(1, 2, 0),
                 array(1, 2, 3)),
             // the same key value
             array(
                 array(function ($a) { return $a; }, array(1, 2, 1)),
+                array(0, 2, 1),
                 array(1, 1, 2)),
             array(
                 array(function ($o) { return $o->prop; }, array($obj(1, 4), $obj(1, 2), $obj(1, 3))),
+                array(0, 1, 2),
                 array($obj(1, 4), $obj(1, 2), $obj(1, 3))),
             array(
                 array(function ($o) { return $o->prop; }, array($obj(1, 1), $obj(1, 3), $obj(1, 2))),
+                array(0, 1, 2),
                 array($obj(1, 1), $obj(1, 3), $obj(1, 2))),
             array(
                 array(function ($o) { return $o->prop; }, array($obj(1, 1), $obj(2, 1), $obj(1, 2))),
+                array(0, 2, 1),
                 array($obj(1, 1), $obj(1, 2), $obj(2, 1))),
             // reverse
             array(
                 array(function ($a) { return $a; }, array(1, 3, 2), true),
+                array(1, 2, 0),
                 array(3, 2, 1)),
 
             // todo: what happens when reverse sorting when keys are

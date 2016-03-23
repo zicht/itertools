@@ -11,8 +11,9 @@ class SortedIterator extends IteratorIterator
 {
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {
-        $data = iterator_to_array($iterable, false);
+        $data = iterator_to_array($iterable);
 
+        var_dump(['in' => $data]);
         $this->mergesort($data, function ($a, $b) use ($func, $reverse) {
             $keyA = call_user_func($func, $a);
             $keyB = call_user_func($func, $b);
@@ -25,6 +26,8 @@ class SortedIterator extends IteratorIterator
                 return $reverse ? -1 : 1;
             }
         });
+        var_dump(['out' => $data]);
+        die;
 
         parent::__construct(new ArrayIterator($data));
     }
@@ -35,15 +38,20 @@ class SortedIterator extends IteratorIterator
     }
 
     /**
-     * As the manual says, "If two members compare as equal, their order in the sorted array is undefined."
-     * This means that the sort used is not "stable" and may change the order of elements that compare equal.
+     * As the manual says, "If two members compare as equal, their
+     * order in the sorted array is undefined."  This means that the
+     * sort used is not "stable" and may change the order of elements
+     * that compare equal.
      *
-     * Sometimes you really do need a stable sort. For example, if you sort a list by one field,
-     * then sort it again by another field, but don't want to lose the ordering from the previous field.
-     * In that case it is better to use usort with a comparison function that takes both fields into account,
-     * but if you can't do that then use the function below. It is a merge sort, which is guaranteed O(n*log(n))
-     * complexity, which means it stays reasonably fast even when you use larger lists (unlike bubblesort and
-     * insertion sort, which are O(n^2)).
+     * Sometimes you really do need a stable sort. For example, if you
+     * sort a list by one field, then sort it again by another field,
+     * but don't want to lose the ordering from the previous field.
+     * In that case it is better to use usort with a comparison
+     * function that takes both fields into account, but if you can't
+     * do that then use the function below. It is a merge sort, which
+     * is guaranteed O(n*log(n)) complexity, which means it stays
+     * reasonably fast even when you use larger lists (unlike
+     * bubblesort and insertion sort, which are O(n^2)).
      *
      * http://www.php.net/manual/en/function.usort.php#38827
      *

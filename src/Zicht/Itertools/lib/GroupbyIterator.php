@@ -14,17 +14,34 @@ use IteratorIterator;
 
 class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
 {
-    protected $key;
+    protected $groupKey;
+    protected $values;
 
-    public function __construct($key, Iterator $iterable)
+    public function __construct($groupKey)
     {
-        $this->key = $key;
-        parent::__construct($iterable);
+        $this->groupKey = $groupKey;
+        parent::__construct(new ArrayIterator());
     }
 
-    public function getKey()
+    public function getGroupKey()
     {
-        return $this->key;
+        return $this->groupKey;
+    }
+
+    public function append($key, $value)
+    {
+        $this->getInnerIterator()->append(array($key, $value));
+        // var_dump(['add to' => $this->groupKey, 'key' => $key, 'value' => $value]);
+    }
+
+    public function current()
+    {
+        return $this->getInnerIterator()->current()[1];
+    }
+
+    public function key()
+    {
+        return $this->getInnerIterator()->current()[0];
     }
 
     public function count()
@@ -90,17 +107,17 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
         // todo: this implementation pre-computes everything... this is
         // not the way an iterator should work.  Please re-write.
         $groupedIterator = null;
-        $previousKey = null;
+        $previousGroupKey = null;
         $data = array();
 
-        foreach ($iterable as $value) {
-            $key = call_user_func($func, $value);
-            if ($previousKey !== $key || $groupedIterator === null) {
-                $previousKey = $key;
-                $groupedIterator = new GroupedIterator($key, new ArrayIterator());
+        foreach ($iterable as $key => $value) {
+            $groupKey = call_user_func($func, $value);
+            if ($previousGroupKey !== $groupKey || $groupedIterator === null) {
+                $previousGroupKey = $groupKey;
+                $groupedIterator = new GroupedIterator($groupKey);
                 $data []= $groupedIterator;
             }
-            $groupedIterator->getInnerIterator()->append($value);
+            $groupedIterator->append($key, $value);
         }
 
         parent::__construct(new ArrayIterator($data));
@@ -108,7 +125,7 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
 
     public function key()
     {
-        return $this->current()->getKey();
+        return $this->current()->getGroupKey();
     }
 
     public function count()
