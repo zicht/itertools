@@ -10,16 +10,17 @@ class FilterTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expected)
+    public function testGoodKeyCallback(array $arguments, array $expectedKeys, array $expectedValues)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\filter', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\FilterIterator', $iterator);
         $iterator->rewind();
 
-        foreach ($expected as $key => $value) {
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+        for ($index=0; $index<sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
-            $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
-            $this->assertEquals($value, $iterator->current(), 'Failure in $iterator->current()');
+            $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
+            $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();
         }
 
@@ -41,30 +42,30 @@ class FilterTest extends PHPUnit_Framework_TestCase
             // with closure
             array(
                 array(function ($a) { return true; }, array(0, -1, 2, -3)),
-                array(0, -1, 2, -3),
-            ),
+                array(0, 1, 2, 3),
+                array(0, -1, 2, -3)),
             array(
                 array(function ($a) { return false; }, array(0, -1, 2, -3)),
                 array(),
-            ),
+                array()),
             array(
                 array(function ($a) { return 0 < $a; }, array(0, -1, 2, -3)),
-                array(2 => 2),
-            ),
+                array(2),
+                array(2)),
             array(
                 array(function ($a) { return $a < 0; }, array(0, -1, 2, -3)),
-                array(1 => -1, 3 => -3),
-            ),
+                array(1, 3),
+                array(-1, -3)),
 
             // without closure (this uses !empty as a closure)
             array(
                 array(array(1, 2, 3)),
-                array(1, 2, 3),
-            ),
+                array(0, 1, 2),
+                array(1, 2, 3)),
             array(
                 array(array(null, '', 0, '0')),
                 array(),
-            ),
+                array()),
         );
     }
 
