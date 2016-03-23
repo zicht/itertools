@@ -20,7 +20,7 @@ class simpleObject2
 
 class GroupbyTest extends PHPUnit_Framework_TestCase
 {
-    public function DISABLEDtestUnsorted()
+    public function testUnsorted()
     {
         $obj = function ($property, $title) {
             return (object)array('prop' => $property, 'title' => $title);
@@ -54,11 +54,11 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
-        $this->assertEquals(0, $groupedIterator->key());
+        $this->assertEquals(2, $groupedIterator->key());
         $this->assertEquals($obj('2group', '2A'), $groupedIterator->current());
         $groupedIterator->next();
         $this->assertTrue($groupedIterator->valid());
-        $this->assertEquals(1, $groupedIterator->key());
+        $this->assertEquals(3, $groupedIterator->key());
         $this->assertEquals($obj('2group', '2B'), $groupedIterator->current());
         $groupedIterator->next();
         $this->assertFalse($groupedIterator->valid());
@@ -72,7 +72,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
         $groupedIterator->rewind();
         $this->assertTrue($groupedIterator->valid());
-        $this->assertEquals(0, $groupedIterator->key());
+        $this->assertEquals(4, $groupedIterator->key());
         $this->assertEquals($obj('1group', '1C'), $groupedIterator->current());
         $groupedIterator->next();
         $this->assertFalse($groupedIterator->valid());
