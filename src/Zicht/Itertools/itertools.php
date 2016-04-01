@@ -5,6 +5,7 @@ namespace Zicht\Itertools;
 use ArrayIterator;
 use Closure;
 use Doctrine\Common\Collections\Collection;
+use Traversable;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -20,6 +21,7 @@ use Zicht\Itertools\lib\StringIterator;
 use ReflectionClass;
 use InvalidArgumentException;
 use Iterator;
+use Zicht\Itertools\lib\UniqueIterator;
 
 /**
  * Transforms anything into an Iterator or throws an InvalidArgumentException
@@ -50,6 +52,11 @@ function mixedToIterator($iterable)
     // a doctrine Collection (i.e. Array or Persistent) is also an iterator
     if ($iterable instanceof Collection) {
         $iterable = $iterable->getIterator();
+    }
+
+    // todo: add unit tests for Traversable
+    if ($iterable instanceof Traversable) {
+        $iterable = new \IteratorIterator($iterable);
     }
 
     // by now it should be an Iterator, otherwise throw an exception
@@ -575,4 +582,14 @@ function zip(/* $iterable1, $iterable2, ... */)
 function reversed($iterable)
 {
     return new ReversedIterator(mixedToIterator($iterable));
+}
+
+function unique($iterable)
+{
+    return new UniqueIterator(function ($value) { return $value; }, mixedToIterator($iterable));
+}
+
+function uniqueBy($keyStrategy, $iterable)
+{
+    return new UniqueIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));
 }
