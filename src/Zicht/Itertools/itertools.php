@@ -593,3 +593,77 @@ function uniqueBy($keyStrategy, $iterable)
 {
     return new UniqueIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));
 }
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @param Closure $closure Optional, when not specified !empty will be used
+ * @param array|string|Iterator $iterable
+ * @return boolean
+ */
+function any(/* [$closure, ] $iterable */)
+{
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 1:
+            $closure = function ($item) {
+                return !empty($item);
+            };
+            $iterable = mixedToIterator($args[0]);
+            break;
+
+        case 2:
+            $closure = mixedToClosure($args[0]);
+            $iterable = mixedToIterator($args[1]);
+            break;
+
+        default:
+            throw new InvalidArgumentException('filter requires either one (iterable) or two (closure, iterable) arguments');
+    }
+
+    foreach ($iterable as $item) {
+        if (call_user_func($closure, $item)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @param Closure $closure Optional, when not specified !empty will be used
+ * @param array|string|Iterator $iterable
+ * @return boolean
+ */
+function all(/* [$closure, ] $iterable */)
+{
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 1:
+            $closure = function ($item) {
+                return !empty($item);
+            };
+            $iterable = mixedToIterator($args[0]);
+            break;
+
+        case 2:
+            $closure = mixedToClosure($args[0]);
+            $iterable = mixedToIterator($args[1]);
+            break;
+
+        default:
+            throw new InvalidArgumentException('filter requires either one (iterable) or two (closure, iterable) arguments');
+    }
+
+    foreach ($iterable as $item) {
+        if (!call_user_func($closure, $item)) {
+            return false;
+        }
+    }
+
+    return true;
+}
