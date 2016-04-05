@@ -55,7 +55,7 @@ function mixedToIterator($iterable)
     }
 
     // todo: add unit tests for Traversable
-    if ($iterable instanceof Traversable) {
+    if ($iterable instanceof Traversable and !($iterable instanceof Iterator)) {
         $iterable = new \IteratorIterator($iterable);
     }
 
