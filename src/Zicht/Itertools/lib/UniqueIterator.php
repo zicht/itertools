@@ -9,19 +9,30 @@ use Countable;
 use Iterator;
 use FilterIterator as BaseFilterIterator;
 
-class FilterIterator extends BaseFilterIterator implements Countable
+class UniqueIterator extends BaseFilterIterator implements Countable
 {
     private $func;
+    private $seen;
 
     function __construct(Closure $func, Iterator $iterable)
     {
         $this->func = $func;
+        $this->seen = array();
         parent::__construct($iterable);
     }
 
     public function accept()
     {
-        return call_user_func($this->func, $this->current());
+        return !in_array(
+            call_user_func($this->func, parent::current(), parent::key()),
+            $this->seen);
+    }
+
+    public function current()
+    {
+        $value = parent::current();
+        $this->seen []= call_user_func($this->func, $value);
+        return $value;
     }
 
     /**

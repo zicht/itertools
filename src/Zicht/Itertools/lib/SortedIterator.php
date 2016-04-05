@@ -48,6 +48,17 @@ class SortedIterator extends IteratorIterator
     }
 
     /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     *
+     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return iterator_to_array($this);
+    }
+
+    /**
      * As the manual says, "If two members compare as equal, their
      * order in the sorted array is undefined."  This means that the
      * sort used is not "stable" and may change the order of elements

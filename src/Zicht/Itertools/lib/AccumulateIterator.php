@@ -49,4 +49,15 @@ class AccumulateIterator implements Iterator
     {
         return $this->iterable->valid();
     }
+
+    /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     *
+     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return iterator_to_array($this);
+    }
 }

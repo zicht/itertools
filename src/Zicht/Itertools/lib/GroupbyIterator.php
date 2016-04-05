@@ -98,6 +98,17 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     {
         return iterator_to_array($this);
     }
+
+    /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     *
+     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return iterator_to_array($this);
+    }
 }
 
 class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
@@ -183,5 +194,16 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
         $array = iterator_to_array($this);
         array_walk($array, function (&$value) { $value = $value->toArray(); });
         return $array;
+    }
+
+    /**
+     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
+     *
+     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
+     * @return array
+     */
+    public function __debugInfo()
+    {
+        return iterator_to_array($this);
     }
 }
