@@ -187,8 +187,6 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
      */
     public function __debugInfo()
     {
-        $array = iterator_to_array($this);
-        array_walk($array, function (GroupedIterator &$value) { $value = $value->__debugInfo(); });
-        return $array;
+        return iterator_to_array($this);
     }
 }
