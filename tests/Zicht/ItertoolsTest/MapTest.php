@@ -29,7 +29,7 @@ class MapTest extends PHPUnit_Framework_TestCase
      * @expectedException InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
-    public function testBadArgument(array $arguments)
+    public function testBadArguments(array $arguments)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\map', $arguments);
     }
