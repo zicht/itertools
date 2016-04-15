@@ -28,8 +28,10 @@ class MapIterator extends MultipleIterator implements Countable
         }
     }
 
-    protected function genericKeysToKey($keys)
+    protected function genericKeysToKey($keysAndValues)
     {
+        $keys = array_splice($keysAndValues, 0, count($keysAndValues) / 2);
+
         if (count($keys) == 1) {
             return $keys[0];
         }
@@ -48,12 +50,12 @@ class MapIterator extends MultipleIterator implements Countable
 
     public function current()
     {
-        return call_user_func_array($this->valueFunc, parent::current());
+        return call_user_func_array($this->valueFunc, array_merge(parent::current(), parent::key()));
     }
 
     public function key()
     {
-        return call_user_func_array($this->keyFunc, parent::key());
+        return call_user_func_array($this->keyFunc, array_merge(parent::key(), parent::current()));
     }
 
     public function next()
