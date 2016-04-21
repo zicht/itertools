@@ -7,7 +7,7 @@ use Closure;
 use Iterator;
 use IteratorIterator;
 
-class SortedIterator extends IteratorIterator
+class SortedIterator extends IteratorIterator implements \Countable
 {
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {
@@ -32,6 +32,11 @@ class SortedIterator extends IteratorIterator
     public function toArray()
     {
         return iterator_to_array($this);
+    }
+
+    public function count()
+    {
+        return iterator_count($this);
     }
 
     /**
