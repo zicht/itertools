@@ -9,7 +9,6 @@ use Iterator;
 
 class ChainIterator extends AppendIterator implements Countable
 {
-    private $key = 0;
     private $count = 0;
 
     public function __construct(/* Iterator $iterable, Iterator $iterable2, ... */)
@@ -22,23 +21,6 @@ class ChainIterator extends AppendIterator implements Countable
             $this->count += iterator_count($iterable);
             $this->append($iterable);
         }
-    }
-
-    public function rewind()
-    {
-        parent::rewind();
-        $this->key = 0;
-    }
-
-    public function key()
-    {
-        return $this->key;
-    }
-
-    public function next()
-    {
-        parent::next();
-        $this->key += 1;
     }
 
     /**

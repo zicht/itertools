@@ -234,14 +234,24 @@ function accumulate($iterable, $closure = 'add')
  * > reduce([1,2,3], 'max')
  * 3
  *
+ * > reduce([1,2,3], 'sub', 10)
+ * 4
+ *
+ * > reduce([], 'min', 1)
+ * 1
+ *
  * @param array|string|Iterator $iterable
  * @param string|Closure $closure
- * @param mixed $default
+ * @param mixed $initializer
  * @return mixed
  */
-function reduce($iterable, $closure = 'add', $default = null)
+function reduce($iterable, $closure = 'add', $initializer = null)
 {
-    $value = $default;
+    if (null !== $initializer) {
+        $iterable = chain([$initializer], $iterable);
+    }
+        
+    $value = $initializer;
     foreach (accumulate($iterable, $closure) as $value) {};
     return $value;
 }

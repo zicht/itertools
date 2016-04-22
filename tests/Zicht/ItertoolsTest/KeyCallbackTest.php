@@ -18,21 +18,23 @@ class simpleObject
     }
 }
 
+# todo: rename to MapByTest
 class KeyCallbackTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expected)
+    public function testGoodKeyCallback(array $arguments, array $expectedKeys, array $expectedValues)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\KeyCallbackIterator', $iterator);
         $iterator->rewind();
 
-        foreach ($expected as $key => $value) {
-            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
-            $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
-            $this->assertEquals($value, $iterator->current(), 'Failure in $iterator->current()');
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
+            $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
+            $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();
         }
 
@@ -54,28 +56,48 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
             // callback
             array(
                 array(function ($a) { return $a + 10; }, array(1, 2, 3)),
-                array(11 => 1, 12 => 2, 13 => 3)),
+                array(11, 12, 13),
+                array(1, 2, 3),
+            ),
+            // duplicate keys
+            array(
+                array(function ($a) { return $a + 10; }, array(1, 2, 3, 3, 1, 2)),
+                array(11, 12, 13, 13, 11, 12),
+                array(1, 2, 3, 3, 1, 2),
+            ),            
             // use string to identify array key
             array(
                 array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k3'))),
-                array('k1' => array('key' => 'k1'), 'k2' => array('key' => 'k2'), 'k3' => array('key' => 'k3'))),
+                array('k1', 'k2', 'k3'),
+                array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k3')),
+            ),
             array(
                 array('key', array(array('key' => 1), array('key' => 2), array('key' => 3))),
-                array(1 => array('key' => 1), 2 => array('key' => 2), 3 => array('key' => 3))),
+                array(1, 2, 3),
+                array(array('key' => 1), array('key' => 2), array('key' => 3)),
+            ),
             // use string to identify object property
             array(
                 array('prop', array(new simpleObject('p1'), new simpleObject('p2'), new simpleObject('p3'))),
-                array('p1' => new simpleObject('p1'), 'p2' => new simpleObject('p2'), 'p3' => new simpleObject('p3'))),
+                array('p1', 'p2', 'p3'),
+                array(new simpleObject('p1'), new simpleObject('p2'), new simpleObject('p3')),
+            ),
             array(
                 array('prop', array(new simpleObject(1), new simpleObject(2), new simpleObject(3))),
-                array(1 => new simpleObject(1), 2 => new simpleObject(2), 3 => new simpleObject(3))),
+                array(1, 2, 3),
+                array(new simpleObject(1), new simpleObject(2), new simpleObject(3)),
+            ),
             // use string to identify object get method
             array(
                 array('getProp', array(new simpleObject('p1'), new simpleObject('p2'), new simpleObject('p3'))),
-                array('p1' => new simpleObject('p1'), 'p2' => new simpleObject('p2'), 'p3' => new simpleObject('p3'))),
+                array('p1', 'p2', 'p3'),
+                array(new simpleObject('p1'), new simpleObject('p2'), new simpleObject('p3')),
+            ),
             array(
                 array('getProp', array(new simpleObject(1), new simpleObject(2), new simpleObject(3))),
-                array(1 => new simpleObject(1), 2 => new simpleObject(2), 3 => new simpleObject(3))),
+                array(1, 2, 3),
+                array(new simpleObject(1), new simpleObject(2), new simpleObject(3))
+            ),
         );
     }
 

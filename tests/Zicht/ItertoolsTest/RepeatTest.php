@@ -15,8 +15,9 @@ class RepeatTest extends PHPUnit_Framework_TestCase
         $iterator = \Zicht\Itertools\repeat($object, $times);
         $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);
 
-        for ($key=0; $key<$times; $key++) {
-            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
+        $actialTestTimes = $times === null ? 2 : $times;
+        for ($key=0; $key<$actialTestTimes; $key++) {
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($object, $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();

@@ -9,7 +9,6 @@ class AccumulateIterator implements Iterator
 {
     protected $iterable;
     protected $func;
-    protected $key;
     protected $value;
 
     public function __construct(Iterator $iterable, Closure $func)
@@ -20,7 +19,6 @@ class AccumulateIterator implements Iterator
 
     public function rewind()
     {
-        $this->key = 0;
         $this->iterable->rewind();
         $this->value = $this->iterable->current();
     }
@@ -32,12 +30,11 @@ class AccumulateIterator implements Iterator
 
     public function key()
     {
-        return $this->key;
+        return $this->iterable->key();
     }
 
     public function next()
     {
-        $this->key += 1;
         $this->iterable->next();
         if ($this->iterable->valid()) {
             // must assign $this->func to $func before calling the closure

@@ -33,6 +33,14 @@ class ReduceTest extends PHPUnit_Framework_TestCase
             array(array(1, 2, 3), 'mul', null, 6),
             array(array(1, 2, 3), 'min', null, 1),
             array(array(1, 2, 3), 'max', null, 3),
+
+            // test behavior of default value
+            array(array(), 'add', null, null),
+            array(array(), 'add', 2, 2),
+            array(array(1), 'add', 2, 3),
+            array(array(), 'sub', 2, 2),
+            array(array(1), 'sub', 2, 1),
+
         );
     }
 

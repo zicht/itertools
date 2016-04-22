@@ -8,6 +8,7 @@ use ArrayAccess;
 use IteratorIterator;
 
 /**
+ * todo: rename to MapByIterator
  * Class KeyCallbackIterator
  * @package iter
  */
