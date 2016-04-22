@@ -99,10 +99,10 @@ class SortedTest extends PHPUnit_Framework_TestCase
                 array(1, 2, 0),
                 array(3, 2, 1)),
 
-            // todo: what happens when reverse sorting when keys are
-            // the same? --> the items with the same key are *not*
-            // reversed.  This is the behavior of python3, see:
             /*
+              Reverse sorting with keys that have the same value.
+              Below is the behavior of python3, see:
+
             >>> class obj:
             ...  def __init__(self, key, value):
             ...   self.key = key
@@ -123,8 +123,11 @@ class SortedTest extends PHPUnit_Framework_TestCase
             >>> [str(i) for i in sorted(list, key=get_key, reverse=True)]
             ['2:first 2', '2:second 2', '1:first 1', '1:second 1']
             */
-
-            // todo: ensure thare is a test for the above
+            array(
+                array(function ($o) { return $o->prop; }, array($obj(1, 'first 1'), $obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'second 1')), true),
+                array(1, 2, 0, 3),
+                array($obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'first 1'), $obj(1, 'second 1')),
+            ),
         );
     }
 

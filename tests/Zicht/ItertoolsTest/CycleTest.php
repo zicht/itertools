@@ -19,7 +19,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         for ($index=0; $index<sizeof($expectedKeys); $index++) {
-            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();

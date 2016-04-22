@@ -13,33 +13,36 @@ class SortedIterator extends IteratorIterator implements \Countable
     {
         $data = [];
         foreach ($iterable as $key => $value) {
-            $data []= array($key, $value);
+            $data []= array('key' => $key, 'value' => $value);
         }
 
-        $this->mergesort($data, function ($a, $b) use ($func, $reverse) {
-            $keyA = call_user_func($func, $a[1]);
-            $keyB = call_user_func($func, $b[1]);
+        if ($reverse) {
+            $cmp = function ($a, $b) use ($func) {
+                $keyA = call_user_func($func, $a['value']);
+                $keyB = call_user_func($func, $b['value']);
+                return $keyA == $keyB ? 0 : ($keyA < $keyB ? 1 : -1);
+            };
+        } else {
+            $cmp = function ($a, $b) use ($func) {
+                $keyA = call_user_func($func, $a['value']);
+                $keyB = call_user_func($func, $b['value']);
+                return $keyA == $keyB ? 0 : ($keyA < $keyB ? -1 : 1);
+            };
+        }
 
-            if ($keyA == $keyB) {
-                return 0;
-            } else if ($keyA < $keyB) {
-                return $reverse ? 1 : -1;
-            } else {
-                return $reverse ? -1 : 1;
-            }
-        });
+        $this->mergesort($data, $cmp);
 
         parent::__construct(new ArrayIterator($data));
     }
 
     public function key()
     {
-        return $this->getInnerIterator()->current()[0];
+        return $this->getInnerIterator()->current()['key'];
     }
     
     public function current()
     {
-        return $this->getInnerIterator()->current()[1];
+        return $this->getInnerIterator()->current()['value'];
     }
 
     public function toArray()
