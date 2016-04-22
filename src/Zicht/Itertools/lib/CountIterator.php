@@ -48,6 +48,9 @@ class CountIterator implements \Iterator
      */
     public function __debugInfo()
     {
-        return iterator_to_array($this);
+        return array_merge(
+            ['__length__' => 'infinite'],
+            iterator_to_array($this)
+        );
     }
 }

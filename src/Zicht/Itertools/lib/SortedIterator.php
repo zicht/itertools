@@ -7,7 +7,7 @@ use Closure;
 use Iterator;
 use IteratorIterator;
 
-class SortedIterator extends IteratorIterator
+class SortedIterator extends IteratorIterator implements \Countable
 {
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {
@@ -47,6 +47,11 @@ class SortedIterator extends IteratorIterator
         return iterator_to_array($this);
     }
 
+    public function count()
+    {
+        return iterator_count($this);
+    }
+
     /**
      * This method is called by var_dump() when dumping an object to get the properties that should be shown.
      *
@@ -55,7 +60,10 @@ class SortedIterator extends IteratorIterator
      */
     public function __debugInfo()
     {
-        return iterator_to_array($this);
+        return array_merge(
+            ['__length__' => iterator_count($this)],
+            iterator_to_array($this)
+        );
     }
 
     /**

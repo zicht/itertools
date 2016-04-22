@@ -356,10 +356,16 @@ function keyCallback($keyStrategy, $iterable)
 }
 
 /**
- * Make an iterator that applies $func to every value or $iterable.
- * If additional iterables are passed, $func must take that many
- * arguments and is applied to the values from all iterables in
- * parallel.
+ * Make an iterator that applies $func to every entry in the $iterables.
+ *
+ * If one iterable is passed, $func is called for each entry in
+ * the $iterable, where the first argument is the value and the
+ * second argument is the key of the entry.
+ *
+ * If more than one iterable is passed, $func is called with the
+ * values and the keys from the iterables.  For example, the first
+ * call to $func will be:
+ * $func($value_iterable1, $value_iterable2, $key_iterable2, $key_iterable2)
  *
  * With multiple iterables, the iterator stops when the shortest
  * iterable is exhausted.

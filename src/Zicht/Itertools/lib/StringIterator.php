@@ -46,6 +46,9 @@ class StringIterator implements \Iterator
      */
     public function __debugInfo()
     {
-        return iterator_to_array($this);
+        return array_merge(
+            ['__length__' => iterator_count($this)],
+            iterator_to_array($this)
+        );
     }
 }
