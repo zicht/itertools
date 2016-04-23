@@ -15,5 +15,5 @@
     "autoload": {
       "psr-0": { "": ["src/", "tests/"] },
       "files": ["src/Zicht/Itertools/itertools.php"]
-    },
+    }
 }
