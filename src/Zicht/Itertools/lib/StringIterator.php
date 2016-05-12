@@ -2,8 +2,16 @@
 
 namespace Zicht\Itertools\lib;
 
-class StringIterator implements \Iterator
+use Countable;
+use Iterator;
+use Zicht\Itertools\lib\Traits\CountableTrait;
+use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+
+class StringIterator implements Iterator, Countable
 {
+    use CountableTrait;
+    use DebugInfoTrait;
+
     protected $string;
     protected $key;
 
@@ -36,19 +44,5 @@ class StringIterator implements \Iterator
     public function valid()
     {
         return $this->key < strlen($this->string);
-    }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
     }
 }

@@ -14,6 +14,11 @@ class RepeatTest extends PHPUnit_Framework_TestCase
     {
         $iterator = \Zicht\Itertools\repeat($object, $times);
         $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);
+        $this->assertEquals(sizeof($iterator), null === $times ? -1 : $times);
+        if (null !== $times) {
+            $this->assertEquals(iterator_count($iterator), $times);
+        }
+        $iterator->rewind();
 
         $actialTestTimes = $times === null ? 2 : $times;
         for ($key=0; $key<$actialTestTimes; $key++) {

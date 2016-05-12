@@ -14,6 +14,10 @@ class MapTest extends PHPUnit_Framework_TestCase
     {
         $iterator = call_user_func_array('\Zicht\Itertools\map', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\MapIterator', $iterator);
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+        $this->assertEquals(sizeof($iterator), sizeof($expectedKeys));
+        $this->assertEquals(iterator_count($iterator), sizeof($expectedKeys));
+        $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         for ($index=0; $index<sizeof($expectedKeys); $index++) {

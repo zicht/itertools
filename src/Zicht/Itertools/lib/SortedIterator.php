@@ -4,11 +4,17 @@ namespace Zicht\Itertools\lib;
 
 use ArrayIterator;
 use Closure;
+use Countable;
 use Iterator;
 use IteratorIterator;
+use Zicht\Itertools\lib\Traits\CountableTrait;
+use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class SortedIterator extends IteratorIterator implements \Countable
+class SortedIterator extends IteratorIterator implements Countable
 {
+    use CountableTrait;
+    use DebugInfoTrait;
+
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {
         $data = [];
@@ -39,7 +45,7 @@ class SortedIterator extends IteratorIterator implements \Countable
     {
         return $this->getInnerIterator()->current()['key'];
     }
-    
+
     public function current()
     {
         return $this->getInnerIterator()->current()['value'];
@@ -48,25 +54,6 @@ class SortedIterator extends IteratorIterator implements \Countable
     public function toArray()
     {
         return iterator_to_array($this);
-    }
-
-    public function count()
-    {
-        return iterator_count($this);
-    }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
     }
 
     /**

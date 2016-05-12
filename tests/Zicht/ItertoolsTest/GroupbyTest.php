@@ -89,6 +89,8 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
     {
         $iterator = call_user_func_array('\Zicht\Itertools\groupby', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
+        $this->assertEquals(sizeof($iterator), sizeof($expected));
+        $this->assertEquals(iterator_count($iterator), sizeof($expected));
         $iterator->rewind();
 
         foreach ($expected as $key => $expectedGroup) {
@@ -96,6 +98,8 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
             $groupedIterator = $iterator->current();
             $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
+            $this->assertEquals(sizeof($groupedIterator), sizeof($expectedGroup));
+            $this->assertEquals(iterator_count($groupedIterator), sizeof($expectedGroup));
             $groupedIterator->rewind();
 
             foreach ($expectedGroup as $key => $value) {

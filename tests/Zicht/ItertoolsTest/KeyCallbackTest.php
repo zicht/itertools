@@ -28,6 +28,9 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
     {
         $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\KeyCallbackIterator', $iterator);
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+        $this->assertEquals(sizeof($iterator), sizeof($expectedKeys));
+        $this->assertEquals(iterator_count($iterator), sizeof($expectedKeys));
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
@@ -64,7 +67,7 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
                 array(function ($a) { return $a + 10; }, array(1, 2, 3, 3, 1, 2)),
                 array(11, 12, 13, 13, 11, 12),
                 array(1, 2, 3, 3, 1, 2),
-            ),            
+            ),
             // use string to identify array key
             array(
                 array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k3'))),

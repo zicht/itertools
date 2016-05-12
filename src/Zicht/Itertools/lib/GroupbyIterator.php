@@ -8,12 +8,15 @@ use Closure;
 use Countable;
 use Iterator;
 use IteratorIterator;
+use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
 // todo: add unit tests for Countable interface
 // todo: add unit tests for ArrayAccess interface
 
 class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
 {
+    use DebugInfoTrait;
+
     protected $groupKey;
     protected $values;
 
@@ -98,24 +101,12 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     {
         return iterator_to_array($this);
     }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
-    }
 }
 
 class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
 {
+    use DebugInfoTrait;
+
     public function __construct(Closure $func, Iterator $iterable)
     {
         // todo: this implementation pre-computes everything... this is
@@ -197,19 +188,5 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
         $array = iterator_to_array($this);
         array_walk($array, function (&$value) { $value = $value->toArray(); });
         return $array;
-    }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
     }
 }

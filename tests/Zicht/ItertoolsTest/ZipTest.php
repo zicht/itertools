@@ -14,6 +14,9 @@ class ZipTest extends PHPUnit_Framework_TestCase
     {
         $iterator = call_user_func_array('\Zicht\Itertools\zip', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\ZipIterator', $iterator);
+        $this->assertEquals(sizeof($iterator), sizeof($expected));
+        $this->assertEquals(iterator_count($iterator), sizeof($expected));
+        $iterator->rewind();
 
         foreach ($expected as $key => $value) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');

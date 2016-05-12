@@ -5,15 +5,21 @@ namespace Zicht\Itertools\lib;
 // todo: add tests for ArrayAccess
 
 use ArrayAccess;
+use Countable;
 use IteratorIterator;
+use Zicht\Itertools\lib\Traits\CountableTrait;
+use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
 /**
  * todo: rename to MapByIterator
  * Class KeyCallbackIterator
  * @package iter
  */
-class KeyCallbackIterator extends IteratorIterator implements ArrayAccess
+class KeyCallbackIterator extends IteratorIterator implements ArrayAccess, Countable
 {
+    use DebugInfoTrait;
+    use CountableTrait;
+
     /**
      * @var callable
      */
@@ -85,19 +91,5 @@ class KeyCallbackIterator extends IteratorIterator implements ArrayAccess
     public function toArray()
     {
         return iterator_to_array($this);
-    }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
     }
 }

@@ -14,6 +14,7 @@ class CountTest extends PHPUnit_Framework_TestCase
     {
         $iterator = \Zicht\Itertools\count($start, $step);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
+        $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         for ($index=0; $index<sizeof($expectedKeys); $index++) {

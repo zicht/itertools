@@ -2,9 +2,10 @@
 
 namespace Zicht\Itertools\lib;
 
+use Countable;
 use Iterator;
 
-class RepeatIterator implements Iterator
+class RepeatIterator implements Iterator, Countable
 {
     private $mixed;
     private $times;
@@ -40,5 +41,10 @@ class RepeatIterator implements Iterator
     public function valid()
     {
         return null === $this->times ? true : $this->key < $this->times;
+    }
+
+    public function count()
+    {
+        return null === $this->times ? -1 : $this->times;
     }
 }
