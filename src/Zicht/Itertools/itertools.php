@@ -16,6 +16,7 @@ use Zicht\Itertools\lib\KeyCallbackIterator;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\Itertools\lib\RepeatIterator;
 use Zicht\Itertools\lib\ReversedIterator;
+use Zicht\Itertools\lib\SliceIterator;
 use Zicht\Itertools\lib\SortedIterator;
 use Zicht\Itertools\lib\StringIterator;
 use ReflectionClass;
@@ -699,4 +700,24 @@ function all(/* [$closure, ] $iterable */)
     }
 
     return true;
+}
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @param array|string|Iterator $iterable
+ * @param integer $offset
+ * @param null|integer $length
+ * @return SliceIterator
+ */
+function slice($iterable, $offset, $length = null)
+{
+    if (!is_int($offset)) {
+        throw new InvalidArgumentException('Argument $OFFSET must be an integer');
+    }
+    if (!(is_null($length) || is_int($length))) {
+        throw new InvalidArgumentException('Argument $LENGTH must be an integer or null');
+    }
+    return new SliceIterator(mixedToIterator($iterable), $offset, $length);
 }
