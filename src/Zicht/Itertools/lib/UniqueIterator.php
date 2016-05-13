@@ -40,6 +40,12 @@ class UniqueIterator extends BaseFilterIterator implements Countable
         return $value;
     }
 
+    public function rewind()
+    {
+        $this->seen = array();
+        parent::rewind();
+    }
+
     public function toArray()
     {
         return iterator_to_array($this);
