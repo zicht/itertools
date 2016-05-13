@@ -83,13 +83,30 @@ function mixedToClosure($closure)
 }
 
 /**
- * Try to transforms something into a Closure that gets a value from the strategy
+ * Try to transforms something into a Closure that gets a value from $STRATEGY.
  *
- * @param string|Closure
+ * When $STRATEGY is null the returned Closure behaves like an identity function,
+ * i.e. it will return the value that it gets.
+ *
+ * When $STRATEGY is a string the returned Closure tries to find a properties,
+ * methods, or array indexes named by the string.  Multiple property, method,
+ * or index names can be separated by a dot.
+ * - 'getId'
+ * - 'getData.key'
+ *
+ * When $STRATEGY is callable it is converted into a Closure (see mixedToClosure).
+ *
+ * @param null|string|Closure
  * @return Closure
  */
 function mixedToValueGetter($strategy)
 {
+    if (is_null($strategy)) {
+        return function ($value) {
+            return $value;
+        };
+    }
+
     if (is_string($strategy)) {
         $keyParts = explode('.', $strategy);
         $strategy = function ($value) use ($keyParts) {
@@ -250,7 +267,7 @@ function reduce($iterable, $closure = 'add', $initializer = null)
     if (null !== $initializer) {
         $iterable = chain([$initializer], $iterable);
     }
-        
+
     $value = $initializer;
     foreach (accumulate($iterable, $closure) as $value) {};
     return $value;

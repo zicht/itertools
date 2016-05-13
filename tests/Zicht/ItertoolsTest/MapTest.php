@@ -139,6 +139,13 @@ class MapTest extends PHPUnit_Framework_TestCase
                 array(15, 17, 19),
             ),
 
+            // use null as value getter, this returns the value itself
+            array(
+                array(null, array('a' => 1, 'b' => 2, 'c' => 3)),
+                array('a', 'b', 'c'),
+                array(1, 2, 3),
+            ),
+
             // test several ways that php handles array keys *shudder*:
             // - '0' becomes 0
             // - '7 ' stays '7 '
@@ -162,7 +169,8 @@ class MapTest extends PHPUnit_Framework_TestCase
     public function badArgumentProvider()
     {
         return array(
-            array(array(null, array(1, 2, 3))),
+            array(array(123, array(1, 2, 3))),
+            array(array(true, array(1, 2, 3))),
         );
     }
 }

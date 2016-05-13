@@ -101,13 +101,20 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
                 array(1, 2, 3),
                 array(new simpleObject(1), new simpleObject(2), new simpleObject(3))
             ),
+            // use null as value getter, this returns the value itself
+            array(
+                array(null, array('a' => 1, 'b' => 2, 'c' => 3)),
+                array(1, 2, 3),
+                array(1, 2, 3),
+            ),
         );
     }
 
     public function badArgumentProvider()
     {
         return array(
-            array(array(null, array(1, 2, 3))),
+            array(array(123, array(1, 2, 3))),
+            array(array(true, array(1, 2, 3))),
         );
     }
 }

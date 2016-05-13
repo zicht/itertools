@@ -160,14 +160,20 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array('getProp', array(new simpleObject2(1), new simpleObject2(2), new simpleObject2(2))),
                 array(1 => array(0 => new simpleObject2(1)), 2 => array(1 => new simpleObject2(2), 2 => new simpleObject2(2)))),
+            // use null as value getter, this returns the value itself
+            array(
+                array(null, array('a' => 1, 'b' => 2, 'c' => 1)),
+                array(1 => array('a' => 1, 'c' => 1), 2 => array('b' => 2)),
+            ),
          );
     }
 
     public function badArgumentProvider()
     {
         return array(
-            array(array(null, array(1, 2, 3))),
             array(array('foo', array(1, 2, 3), 'not-a-boolean')),
+            array(array(123, array(1, 2, 3))),
+            array(array(true, array(1, 2, 3))),
         );
     }
 }

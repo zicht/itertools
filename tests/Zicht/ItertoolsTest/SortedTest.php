@@ -131,13 +131,21 @@ class SortedTest extends PHPUnit_Framework_TestCase
                 array(1, 2, 0, 3),
                 array($obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'first 1'), $obj(1, 'second 1')),
             ),
+
+            // use null as value getter, this returns the value itself
+            array(
+                array(null, array('a' => 3, 'b' => 1, 'c' => 2)),
+                array('b', 'c', 'a'),
+                array(1, 2, 3),
+            ),
         );
     }
 
     public function badArgumentProvider()
     {
         return array(
-            array(array(null, array(1, 2, 3))),
+            array(array(123, array(1, 2, 3))),
+            array(array(true, array(1, 2, 3))),
             array(array(function () { return 1; }, array(1, 2, 3), 'this is not a boolean')),
         );
     }
