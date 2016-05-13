@@ -4,15 +4,18 @@ namespace Zicht\Itertools\lib;
 
 // todo: add tests
 
+use ArrayAccess;
 use Closure;
 use Countable;
 use Iterator;
 use FilterIterator as BaseFilterIterator;
+use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class UniqueIterator extends BaseFilterIterator implements Countable
+class UniqueIterator extends BaseFilterIterator implements Countable, ArrayAccess
 {
+    use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
 

@@ -5,9 +5,14 @@ namespace Zicht\Itertools\lib;
 use Countable;
 use InvalidArgumentException;
 use MultipleIterator;
+use Zicht\Itertools\lib\Traits\CountableTrait;
+use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
 class ZipIterator extends MultipleIterator implements Countable
 {
+    use CountableTrait;
+    use DebugInfoTrait;
+
     private $key;
 
     public function __construct(/* \Iterator $iterable1, \Iterator $iterable2, ... */)
@@ -37,24 +42,5 @@ class ZipIterator extends MultipleIterator implements Countable
     {
         parent::next();
         $this->key += 1;
-    }
-
-    public function count()
-    {
-        return iterator_count($this);
-    }
-
-    /**
-     * This method is called by var_dump() when dumping an object to get the properties that should be shown.
-     *
-     * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
-     */
-    public function __debugInfo()
-    {
-        return array_merge(
-            ['__length__' => iterator_count($this)],
-            iterator_to_array($this)
-        );
     }
 }
