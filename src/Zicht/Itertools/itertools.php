@@ -707,17 +707,17 @@ function all(/* [$closure, ] $iterable */)
  * TODO: unit tests!
  *
  * @param array|string|Iterator $iterable
- * @param integer $offset
- * @param null|integer $length
+ * @param integer $start
+ * @param null|integer $end
  * @return SliceIterator
  */
-function slice($iterable, $offset, $length = null)
+function slice($iterable, $start, $end = null)
 {
-    if (!is_int($offset)) {
-        throw new InvalidArgumentException('Argument $OFFSET must be an integer');
+    if (!is_int($start)) {
+        throw new InvalidArgumentException('Argument $START must be an integer');
     }
-    if (!(is_null($length) || is_int($length))) {
-        throw new InvalidArgumentException('Argument $LENGTH must be an integer or null');
+    if (!(is_null($end) || is_int($end))) {
+        throw new InvalidArgumentException('Argument $END must be an integer or null');
     }
-    return new SliceIterator(mixedToIterator($iterable), $offset, $length);
+    return new SliceIterator(mixedToIterator($iterable), $start, $end);
 }

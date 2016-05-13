@@ -19,20 +19,23 @@ class SliceIterator extends IteratorIterator implements ArrayAccess, Countable
     use DebugInfoTrait;
 
     private $index;
-    private $offset;
-    private $length;
+    private $start;
+    private $end;
 
-    public function __construct(Iterator $iterable, $offset, $length = null)
+    public function __construct(Iterator $iterable, $start, $end = null)
     {
         $this->index = 0;
-        $this->offset = $offset;
-        $this->length = $length;
+        $this->start = $start < 0 ? iterator_count($iterable) + $start: $start;
+        $this->end = $end === null ? null : ($end < 0 ? iterator_count($iterable) + $end : $end);
         parent::__construct($iterable);
     }
 
     public function valid()
     {
-        return parent::valid() && $this->offset <= $this->index && (null === $this->length || $this->index < $this->length);
+        while (parent::valid() && !($this->start <= $this->index && (null === $this->end || $this->index < $this->end))) {
+            $this->next();
+        }
+        return parent::valid();
     }
 
     public function next()

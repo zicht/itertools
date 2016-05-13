@@ -19,7 +19,7 @@ class ZipTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         foreach ($expected as $key => $value) {
-            $this->assertTrue($iterator->valid(), 'Failure in $iterator->value()');
+            $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($value, $iterator->current(), 'Failure in $iterator->current()');
             $iterator->next();
