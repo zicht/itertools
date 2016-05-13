@@ -32,7 +32,7 @@ class SliceIterator extends IteratorIterator implements ArrayAccess, Countable
 
     public function valid()
     {
-        return $this->offset <= $this->index && (null === $this->length || $this->index < $this->length);
+        return parent::valid() && $this->offset <= $this->index && (null === $this->length || $this->index < $this->length);
     }
 
     public function next()
