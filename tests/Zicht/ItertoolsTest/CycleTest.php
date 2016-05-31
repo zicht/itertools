@@ -83,7 +83,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
         return array(
             array(123),
             array(1.0),
-            array(null),
+            array(true),
         );
     }
 }

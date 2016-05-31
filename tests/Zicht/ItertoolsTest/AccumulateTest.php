@@ -104,7 +104,7 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(0, 'add'),
-            array(null, 'add'),
+            array(1.0, 'add'),
             array(array(), 0),
             array(array(), null),
             array(array(), 'unknown'),

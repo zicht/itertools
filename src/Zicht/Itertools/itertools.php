@@ -38,6 +38,12 @@ use Zicht\Itertools\lib\UniqueIterator;
  */
 function mixedToIterator($iterable)
 {
+    // NULL is often used to indicate that nothing is there,
+    // for robustness we will deal with NULL as it is an empty array
+    if (is_null($iterable)) {
+        $iterable = new ArrayIterator([]);
+    }
+
     // an array is *not* an instance of Traversable (as it is not an
     // object and hence can not 'implement Traversable')
     if (is_array($iterable)) {

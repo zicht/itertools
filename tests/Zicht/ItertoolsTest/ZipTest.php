@@ -54,7 +54,9 @@ class ZipTest extends PHPUnit_Framework_TestCase
     public function badArgumentProvider()
     {
         return array(
-            array(array(null)),
+            array(array(0)),
+            array(array(1.0)),
+            array(array(true)),
         );
     }
 }

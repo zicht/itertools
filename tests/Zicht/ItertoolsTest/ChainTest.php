@@ -82,7 +82,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
         return array(
             array(array(1)),
             array(array(1.0)),
-            array(array(null)),
+            array(array(true)),
         );
     }
 }

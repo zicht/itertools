@@ -48,7 +48,8 @@ class ReduceTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(0, 'add', null),
-            array(null, 'add', null),
+            array(1.0, 'add', null),
+            array(true, 'add', null),
             array(array(), 0, null),
             array(array(), null, null),
             array(array(), 'unknown', null),

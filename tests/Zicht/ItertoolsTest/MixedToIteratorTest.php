@@ -30,6 +30,10 @@ class MixedToTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array(
+                array(null),
+                array(),
+            ),
+            array(
                 array(array(1, 2, 3)),
                 array(1, 2, 3)),
             array(
@@ -59,8 +63,9 @@ class MixedToTest extends PHPUnit_Framework_TestCase
     public function badArgumentProvider()
     {
         return array(
-            array(array(null)),
-            array(array(1)),
+            array(array(0)),
+            array(array(1.0)),
+            array(array(true)),
         );
     }
 }
