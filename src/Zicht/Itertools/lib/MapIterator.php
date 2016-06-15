@@ -2,16 +2,19 @@
 
 namespace Zicht\Itertools\lib;
 
+use ArrayAccess;
 use Closure;
 use Countable;
 use InvalidArgumentException;
 use Iterator;
 use MultipleIterator;
+use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class MapIterator extends MultipleIterator implements Countable
+class MapIterator extends MultipleIterator implements Countable, ArrayAccess
 {
+    use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
 
