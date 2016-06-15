@@ -138,6 +138,13 @@ class SortedTest extends PHPUnit_Framework_TestCase
                 array('b', 'c', 'a'),
                 array(1, 2, 3),
             ),
+
+            // the callback should contain both the key (2nd parameter) and the value (1st parameter)
+            array(
+                array(function ($value, $key) { return $key; }, array('c' => 1, 'b' => 2, 'a' => 3)),
+                array('a', 'b', 'c'),
+                array(3, 2, 1),
+            ),
         );
     }
 

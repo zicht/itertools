@@ -74,7 +74,7 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
         $data = array();
 
         foreach ($iterable as $key => $value) {
-            $groupKey = call_user_func($func, $value);
+            $groupKey = call_user_func($func, $value, $key);
             if ($previousGroupKey !== $groupKey || $groupedIterator === null) {
                 $previousGroupKey = $groupKey;
                 $groupedIterator = new GroupedIterator($groupKey);

@@ -489,7 +489,9 @@ function repeat($mixed, $times = null)
  *
  * Alternatively $keyStrategy can be a closure.  In this case the
  * $keyStrategy closure is called with each value in $iterable and the
- * key will be its return value.
+ * key will be its return value.  $keyStrategy is called with two
+ * parameters: the value and the key of the iterable as the first and
+ * second parameter, respectively.
  *
  * The operation of groupby() is similar to the uniq filter in Unix.
  * It generates a break or new group every time the value of the key
@@ -522,9 +524,10 @@ function groupby($keyStrategy, $iterable, $sort = true)
  * Make an iterator that returns the values from $iterable sorted by
  * $keyStrategy.
  *
- * When determining the order of two entries the $keyStrategy is used
+ * When determining the order of two entries the $keyStrategy is called
  * twice, once for each value, and the results are used to determine
- * the order.
+ * the order.  $keyStrategy is called with two parameters: the value and
+ * the key of the iterable as the first and second parameter, respectively.
  *
  * When $reverse is true the order of the results are reversed.
  *

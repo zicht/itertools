@@ -24,14 +24,14 @@ class SortedIterator extends IteratorIterator implements Countable
 
         if ($reverse) {
             $cmp = function ($a, $b) use ($func) {
-                $keyA = call_user_func($func, $a['value']);
-                $keyB = call_user_func($func, $b['value']);
+                $keyA = call_user_func($func, $a['value'], $a['key']);
+                $keyB = call_user_func($func, $b['value'], $b['key']);
                 return $keyA == $keyB ? 0 : ($keyA < $keyB ? 1 : -1);
             };
         } else {
             $cmp = function ($a, $b) use ($func) {
-                $keyA = call_user_func($func, $a['value']);
-                $keyB = call_user_func($func, $b['value']);
+                $keyA = call_user_func($func, $a['value'], $a['key']);
+                $keyB = call_user_func($func, $b['value'], $b['key']);
                 return $keyA == $keyB ? 0 : ($keyA < $keyB ? -1 : 1);
             };
         }

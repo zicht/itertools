@@ -132,6 +132,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array(function ($a) { return $a + 10; }, array(1, 2, 2, 3, 3, 3), false),
                 array(11 => array(0 => 1), 12 => array(1 => 2, 2 => 2), 13 => array(3 => 3, 4 => 3, 5 => 3))),
+
             // calllback using auto-sort
             array(
                 array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3), true),
@@ -139,6 +140,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3)),
                 array(11 => array(2 => 1), 12 => array(1 => 2, 3 => 2), 13 => array(0 => 3, 4 => 3, 5 => 3))),
+
             // use string to identify array key
             array(
                 array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k2'))),
@@ -146,6 +148,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array('key', array(array('key' => 1), array('key' => 2), array('key' => 2)), false),
                 array(1 => array(0 => array('key' => 1)), 2 => array(1 => array('key' => 2), 2 => array('key' => 2)))),
+
             // use string to identify object property
             array(
                 array('prop', array(new simpleObject2('p1'), new simpleObject2('p2'), new simpleObject2('p2'))),
@@ -153,6 +156,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array('prop', array(new simpleObject2(1), new simpleObject2(2), new simpleObject2(2))),
                 array(1 => array(0 => new simpleObject2(1)), 2 => array(1 => new simpleObject2(2), 2 => new simpleObject2(2)))),
+
             // use string to identify object get method
             array(
                 array('getProp', array(new simpleObject2('p1'), new simpleObject2('p2'), new simpleObject2('p2'))),
@@ -160,10 +164,17 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
             array(
                 array('getProp', array(new simpleObject2(1), new simpleObject2(2), new simpleObject2(2))),
                 array(1 => array(0 => new simpleObject2(1)), 2 => array(1 => new simpleObject2(2), 2 => new simpleObject2(2)))),
+
             // use null as value getter, this returns the value itself
             array(
                 array(null, array('a' => 1, 'b' => 2, 'c' => 1)),
                 array(1 => array('a' => 1, 'c' => 1), 2 => array('b' => 2)),
+            ),
+
+            // the callback should contain both the key (2nd parameter) and the value (1st parameter)
+            array(
+                array(function ($value, $key) { return $key; }, array('c' => 1, 'b' => 2, 'a' => 3)),
+                array('a' => array('a' => 3), 'b' => array('b' => 2), 'c' => array('c' => 1)),
             ),
          );
     }
