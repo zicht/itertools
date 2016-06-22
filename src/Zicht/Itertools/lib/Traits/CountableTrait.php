@@ -19,6 +19,6 @@ trait CountableTrait
      */
     public function count()
     {
-        return iterator_count($this);
+        return $this instanceof \Traversable ? iterator_count($this) : 0;
     }
 }

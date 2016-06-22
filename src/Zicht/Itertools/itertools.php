@@ -627,11 +627,42 @@ function reversed($iterable)
     return new ReversedIterator(mixedToIterator($iterable));
 }
 
-function unique($iterable)
+/**
+ * TODO: document!
+ *
+ * @param string|Closure $keyStrategy
+ * @param array|string|Iterator $iterable
+ * @return UniqueIterator
+ */
+function unique(/* $keyStrategy, $iterable */)
 {
-    return new UniqueIterator(function ($value) { return $value; }, mixedToIterator($iterable));
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 1:
+            $keyStrategy = function ($value) { return $value; };
+            $iterable = mixedToIterator($args[0]);
+            break;
+
+        case 2:
+            $keyStrategy = mixedToValueGetter($args[0]);
+            $iterable = mixedToIterator($args[1]);
+            break;
+
+        default:
+            throw new InvalidArgumentException('unique requires either one (iterable) or two (keyStrategy, iterable) arguments');
+    }
+    return new UniqueIterator($keyStrategy, $iterable);
 }
 
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @deprecated use unique($keyStrategy, $iterable) instead
+ * @param string|Closure $keyStrategy
+ * @param array|string|Iterator $iterable
+ * @return UniqueIterator
+ */
 function uniqueBy($keyStrategy, $iterable)
 {
     return new UniqueIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));

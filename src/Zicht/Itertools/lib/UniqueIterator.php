@@ -2,8 +2,6 @@
 
 namespace Zicht\Itertools\lib;
 
-// todo: add tests
-
 use ArrayAccess;
 use Closure;
 use Countable;
@@ -31,16 +29,13 @@ class UniqueIterator extends BaseFilterIterator implements Countable, ArrayAcces
 
     public function accept()
     {
-        return !in_array(
-            call_user_func($this->func, parent::current(), parent::key()),
-            $this->seen);
-    }
-
-    public function current()
-    {
-        $value = parent::current();
-        $this->seen []= call_user_func($this->func, $value);
-        return $value;
+        $checkValue = call_user_func($this->func, $this->current(), $this->key());
+        if (in_array($checkValue, $this->seen)) {
+            return false;
+        } else {
+            $this->seen [] = $checkValue;
+            return true;
+        }
     }
 
     public function rewind()
