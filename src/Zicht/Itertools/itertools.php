@@ -706,3 +706,19 @@ function slice($iterable, $start, $end = null)
     }
     return new SliceIterator(mixedToIterator($iterable), $start, $end);
 }
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+ *
+ * @param array|string|Iterator $iterable
+ * @param mixed $default
+ * @return mixed
+ */
+function first($iterable, $default = null)
+{
+    foreach (mixedToIterator($iterable) as $item) {
+        return $item;
+    }
+    return $default;
+}
