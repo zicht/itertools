@@ -26,4 +26,9 @@ class ChainIterator extends AppendIterator implements Countable
             $this->append($iterable);
         }
     }
+
+    public function toArray()
+    {
+        return iterator_to_array($this);
+    }
 }

@@ -22,7 +22,7 @@ trait ItertoolChainingTrait
 
     public function chain(/* $iterable1, $iterable2, ... */)
     {
-        return call_user_func_array('iter\chain', array_merge([$this], func_get_args()));
+        return call_user_func_array('\Zicht\itertools\chain', array_merge([$this], func_get_args()));
     }
 
     public function cycle()
@@ -37,7 +37,7 @@ trait ItertoolChainingTrait
 
     public function map($func /* $iterable1, $iterable2, ... */)
     {
-        return call_user_func_array('iter\map', array_merge([$func, $this], array_slice(func_get_args(), 1)));
+        return call_user_func_array('\Zicht\itertools\map', array_merge([$func, $this], array_slice(func_get_args(), 1)));
     }
     
     public function groupby($keyStrategy, $sort = true)
@@ -62,7 +62,7 @@ trait ItertoolChainingTrait
     
     public function zip(/* $iterable1, $iterable2, ... */)
     {
-        return call_user_func_array('iter\zip', array_merge([$this], func_get_args()));
+        return call_user_func_array('\Zicht\itertools\zip', array_merge([$this], func_get_args()));
     }
     
     public function reversed()
