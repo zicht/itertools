@@ -23,6 +23,7 @@ use ReflectionClass;
 use InvalidArgumentException;
 use Iterator;
 use Zicht\Itertools\lib\UniqueIterator;
+use Zicht\Itertools\util\Reductions;
 
 /**
  * Transforms anything into an Iterator or throws an InvalidArgumentException
@@ -161,67 +162,11 @@ function mixedToValueGetter($strategy)
 function mixedToOperationClosure($closure)
 {
     if (is_string($closure)) {
-        switch ($closure) {
-            case 'add':
-                $closure = function ($a, $b) {
-                    if (!is_numeric($a)) {
-                        throw new InvalidArgumentException('Argument $A must be numeric to perform addition');
-                    }
-                    if (!is_numeric($b)) {
-                        throw new InvalidArgumentException('Argument $B must be numeric to perform addition');
-                    }
-                    return $a + $b;
-                };
-                break;
-            case 'sub':
-                $closure = function ($a, $b) {
-                    if (!is_numeric($a)) {
-                        throw new InvalidArgumentException('Argument $A must be numeric to perform subtraction');
-                    }
-                    if (!is_numeric($b)) {
-                        throw new InvalidArgumentException('Argument $B must be numeric to perform subtraction');
-                    }
-                    return $a - $b;
-                };
-                break;
-            case 'mul':
-                $closure = function ($a, $b) {
-                    if (!is_numeric($a)) {
-                        throw new InvalidArgumentException('Argument $A must be numeric to perform multiplication');
-                    }
-                    if (!is_numeric($b)) {
-                        throw new InvalidArgumentException('Argument $B must be numeric to perform multiplication');
-                    }
-                    return $a * $b;
-                };
-                break;
-            case 'min':
-                $closure = function ($a, $b) {
-                    if (!is_numeric($a)) {
-                        throw new InvalidArgumentException('Argument $A must be numeric to determine minimum');
-                    }
-                    if (!is_numeric($b)) {
-                        throw new InvalidArgumentException('Argument $B must be numeric to determine minimum');
-                    }
-                    return $a < $b ? $a : $b;
-                };
-                break;
-            case 'max':
-                $closure = function ($a, $b) {
-                    if (!is_numeric($a)) {
-                        throw new InvalidArgumentException('Argument $A must be numeric to determine maximum');
-                    }
-                    if (!is_numeric($b)) {
-                        throw new InvalidArgumentException('Argument $B must be numeric to determine maximum');
-                    }
-                    return $a < $b ? $b : $a;
-                };
-                break;
-        }
+        $closure = Reductions::getReduction($closure, $closure);
     }
 
     if (!($closure instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "sub", etc)');
+        throw new InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "join", etc)');
     }
 
     return $closure;
