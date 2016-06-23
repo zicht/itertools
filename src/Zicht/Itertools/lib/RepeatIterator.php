@@ -4,9 +4,12 @@ namespace Zicht\Itertools\lib;
 
 use Countable;
 use Iterator;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class RepeatIterator implements Iterator, Countable
 {
+    use ItertoolChainingTrait;
+
     private $mixed;
     private $times;
     private $key;

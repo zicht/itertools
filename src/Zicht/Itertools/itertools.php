@@ -556,6 +556,9 @@ function sorted($keyStrategy, $iterable, $reverse = false)
 
 /**
  * TODO: document!
+ * TODO: I am not happy about the API... filter should become filter([$keyStrategy], $iterable)
+ * TODO: and the $closure argument should be removed (and its behavior become implicit)
+ * TODO: this allows us to remove the filterBy function
  *
  * @param Closure $closure Optional, when not specified !empty will be used
  * @param array|string|Iterator $iterable

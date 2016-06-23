@@ -10,6 +10,8 @@ use Iterator;
 use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\GetterTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 // todo: add unit tests for Countable interface
 // todo: add unit tests for ArrayAccess interface
@@ -18,6 +20,8 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;
+    use GetterTrait;
+    use ItertoolChainingTrait;
 
     protected $groupKey;
     protected $values;

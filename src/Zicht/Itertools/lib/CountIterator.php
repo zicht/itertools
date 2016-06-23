@@ -2,8 +2,13 @@
 
 namespace Zicht\Itertools\lib;
 
-class CountIterator implements \Iterator
+use Iterator;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
+
+class CountIterator implements Iterator
 {
+    use ItertoolChainingTrait;
+
     protected $start;
     protected $step;
     protected $key;

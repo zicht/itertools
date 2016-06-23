@@ -7,11 +7,13 @@ use Iterator;
 use Closure;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class AccumulateIterator implements Iterator, Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     protected $iterable;
     protected $func;

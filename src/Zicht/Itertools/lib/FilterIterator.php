@@ -10,11 +10,13 @@ use Iterator;
 use FilterIterator as BaseFilterIterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class FilterIterator extends BaseFilterIterator implements Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     private $func;
 

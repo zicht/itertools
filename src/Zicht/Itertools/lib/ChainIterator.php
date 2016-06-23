@@ -8,11 +8,13 @@ use InvalidArgumentException;
 use Iterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class ChainIterator extends AppendIterator implements Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     public function __construct(/* Iterator $iterable, Iterator $iterable2, ... */)
     {

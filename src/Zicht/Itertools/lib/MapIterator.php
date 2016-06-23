@@ -11,12 +11,16 @@ use MultipleIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\GetterTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class MapIterator extends MultipleIterator implements Countable, ArrayAccess
 {
     use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
+    use GetterTrait;
+    use ItertoolChainingTrait;
 
     private $valueFunc;
     private $keyFunc;

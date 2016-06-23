@@ -10,6 +10,8 @@ use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\GetterTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 /**
  * todo: rename to MapByIterator
@@ -21,6 +23,8 @@ class KeyCallbackIterator extends IteratorIterator implements ArrayAccess, Count
     use ArrayAccessTrait;
     use DebugInfoTrait;
     use CountableTrait;
+    use GetterTrait;
+    use ItertoolChainingTrait;
 
     /**
      * @var callable
