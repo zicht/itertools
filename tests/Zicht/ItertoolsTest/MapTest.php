@@ -52,6 +52,13 @@ class MapTest extends PHPUnit_Framework_TestCase
         $combineDouble = function ($first, $second, $third, $fourth) { return array($first, $second, $third, $fourth); };
 
         return array(
+            // empty input
+            array(
+                array(null, array()),
+                array(),
+                array(),
+            ),
+
             // single iterable
             array(
                 array($addSingle, array(1, 2, 3)),
