@@ -89,4 +89,9 @@ trait ItertoolChainingTrait
     {
         return iter\slice($this, $start, $end);
     }
+
+    public function first($default = null)
+    {
+        return iter\first($this, $default);
+    }
 }
