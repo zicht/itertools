@@ -43,60 +43,69 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
     public function goodSequenceProvider()
     {
         return array(
-            # data set #0
+            // empty input
+            array(
+                array(),
+                'add',
+                array(),
+                array(),
+            ),
+
+            // test different reductions
             array(
                 new ArrayIterator(array(1, 2, 3)),
                 'add',
                 array(0, 1, 2),
                 array(1, 3, 6)),
-            # data set #1
             array(
                 array(1, 2, 3),
                 'add',
                 array(0, 1, 2),
                 array(1, 3, 6)),
-            # data set #2
             array(
                 array(1, 2, 3),
                 'sub',
                 array(0, 1, 2),
                 array(1, -1, -4)),
-            # data set #3
             array(
                 array(1, 2, 3),
                 'mul',
                 array(0, 1, 2),
                 array(1, 2, 6)),
-            # data set #4
             array(
                 array(1, 2, 3),
                 'min',
                 array(0, 1, 2),
                 array(1, 1, 1)),
-            # data set #5
+
             array(
                 array(1, 2, 3),
                 'max',
                 array(0, 1, 2),
                 array(1, 2, 3)),
-            # data set #6
             array(
                 array(1, 2, 3),
                 function ($a, $b) { return $a + $b; },
                 array(0, 1, 2),
                 array(1, 3, 6)),
-            # data set #7
             array(
                 'Foo',
                 function ($a, $b) { return $a . $b; },
                 array(0, 1, 2),
                 array('F', 'Fo', 'Foo')),
-            # data set #8
             array(
                 array('a' => 1, 'b' => 2, 'c' => 3),
                 'add',
                 array('a', 'b', 'c'),
                 array(1, 3, 6)),
+
+            // test specific bug encountered when using an empty MapIterator as input
+            array(
+                \Zicht\Itertools\map(null, []),
+                'add',
+                array(),
+                array(),
+            ),
         );
     }
 

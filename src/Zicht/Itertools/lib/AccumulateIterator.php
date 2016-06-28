@@ -23,12 +23,13 @@ class AccumulateIterator implements Iterator, Countable
     {
         $this->iterable = $iterable;
         $this->func = $func;
+        $this->value = null;
     }
 
     public function rewind()
     {
         $this->iterable->rewind();
-        $this->value = $this->iterable->current();
+        $this->value = $this->iterable->valid() ? $this->iterable->current() : null;
     }
 
     public function current()
