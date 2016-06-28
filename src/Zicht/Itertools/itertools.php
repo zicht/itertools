@@ -23,6 +23,7 @@ use ReflectionClass;
 use InvalidArgumentException;
 use Iterator;
 use Zicht\Itertools\lib\UniqueIterator;
+use Zicht\Itertools\lib\ZipIterator;
 use Zicht\Itertools\util\Reductions;
 
 /**
@@ -563,6 +564,14 @@ function filterBy(/* $keyStrategy, [$closure, ] $iterable */)
     return new FilterIterator(mixedToClosure($closure), mixedToIterator($iterable));
 }
 
+/**
+ * TODO: document!
+ *
+ * @param array|string|Iterator $iterable1
+ * @param array|string|Iterator $iterable2
+ * @param array|string|Iterator $iterableN
+ * @return ZipIterator
+ */
 function zip(/* $iterable1, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return mixedToIterator($iterable); }, func_get_args());
@@ -570,6 +579,12 @@ function zip(/* $iterable1, $iterable2, ... */)
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
+/**
+ * TODO: document!
+ *
+ * @param array|string|Iterator $iterable
+ * @return ReversedIterator
+ */
 function reversed($iterable)
 {
     return new ReversedIterator(mixedToIterator($iterable));
