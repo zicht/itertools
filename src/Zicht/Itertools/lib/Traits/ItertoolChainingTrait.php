@@ -45,7 +45,7 @@ trait ItertoolChainingTrait
         return iter\groupby($keyStrategy, $this, $sort);
     }
     
-    public function sorted($keyStrategy, $reverse = false)
+    public function sorted($keyStrategy = null, $reverse = false)
     {
         return iter\sorted($keyStrategy, $this, $reverse);
     }
