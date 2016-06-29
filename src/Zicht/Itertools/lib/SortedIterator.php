@@ -9,11 +9,13 @@ use Iterator;
 use IteratorIterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class SortedIterator extends IteratorIterator implements Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     public function __construct(Closure $func, Iterator $iterable, $reverse = false)
     {

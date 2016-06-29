@@ -11,12 +11,14 @@ use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 class SliceIterator extends IteratorIterator implements ArrayAccess, Countable
 {
     use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     private $index;
     private $start;
