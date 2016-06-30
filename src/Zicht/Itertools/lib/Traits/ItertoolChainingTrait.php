@@ -172,4 +172,13 @@ trait ItertoolChainingTrait
     {
         return iter\first($this, $default);
     }
+
+    /**
+     * @param mixed $default
+     * @return mixed
+     */
+    public function last($default = null)
+    {
+        return iter\last($this, $default);
+    }
 }
