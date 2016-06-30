@@ -619,7 +619,6 @@ function unique(/* $keyStrategy, $iterable */)
 
 /**
  * TODO: document!
- * TODO: unit tests!
  *
  * @deprecated use unique($keyStrategy, $iterable) instead
  * @param string|Closure $keyStrategy
@@ -633,34 +632,33 @@ function uniqueBy($keyStrategy, $iterable)
 
 /**
  * TODO: document!
- * TODO: unit tests!
  *
- * @param Closure $closure Optional, when not specified !empty will be used
+ * @param string|Closure $keyStrategy
  * @param array|string|Iterator $iterable
  * @return boolean
  */
-function any(/* [$closure, ] $iterable */)
+function any(/* [$keyStrategy, ] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $closure = function ($item) {
-                return !empty($item);
+            $keyStrategy = function ($item) {
+                return $item;
             };
             $iterable = mixedToIterator($args[0]);
             break;
 
         case 2:
-            $closure = mixedToClosure($args[0]);
+            $keyStrategy = mixedToValueGetter($args[0]);
             $iterable = mixedToIterator($args[1]);
             break;
 
         default:
-            throw new InvalidArgumentException('filter requires either one (iterable) or two (closure, iterable) arguments');
+            throw new InvalidArgumentException('filter requires either one (iterable) or two (keyStrategy, iterable) arguments');
     }
 
     foreach ($iterable as $item) {
-        if (call_user_func($closure, $item)) {
+        if (!empty(call_user_func($keyStrategy, $item))) {
             return true;
         }
     }
