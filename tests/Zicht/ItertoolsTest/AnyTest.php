@@ -31,7 +31,7 @@ class AnyTest extends PHPUnit_Framework_TestCase
                 false,
             ),
             array(
-                array(array(0, 0 ,0)),
+                array(array(0, 0, 0)),
                 false,
             ),
             array(
@@ -57,7 +57,7 @@ class AnyTest extends PHPUnit_Framework_TestCase
                 false,
             ),
             array(
-                array(null, array(0, 0 ,0)),
+                array(null, array(0, 0, 0)),
                 false,
             ),
             array(
@@ -91,7 +91,7 @@ class AnyTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\unique', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\any', $arguments);
     }
 
     public function badArgumentProvider()
