@@ -14,11 +14,10 @@ use Zicht\Itertools\lib\Traits\GetterTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
 /**
- * todo: rename to MapByIterator
- * Class KeyCallbackIterator
+ * Class MapByIterator
  * @package iter
  */
-class KeyCallbackIterator extends IteratorIterator implements ArrayAccess, Countable
+class MapByIterator extends IteratorIterator implements ArrayAccess, Countable
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;

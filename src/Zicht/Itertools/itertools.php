@@ -12,7 +12,7 @@ use Zicht\Itertools\lib\CountIterator;
 use Zicht\Itertools\lib\CycleIterator;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
-use Zicht\Itertools\lib\KeyCallbackIterator;
+use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\Itertools\lib\RepeatIterator;
 use Zicht\Itertools\lib\ReversedIterator;
@@ -320,11 +320,11 @@ function cycle($iterable)
  *
  * @param string|Closure $keyStrategy
  * @param array|string|Iterator $iterable
- * @return KeyCallbackIterator
+ * @return MapByIterator
  */
 function mapBy($keyStrategy, $iterable)
 {
-    return new KeyCallbackIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));
+    return new MapByIterator(mixedToValueGetter($keyStrategy), mixedToIterator($iterable));
 }
 
 /**

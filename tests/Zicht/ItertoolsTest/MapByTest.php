@@ -18,16 +18,15 @@ class simpleObject
     }
 }
 
-# todo: rename to MapByTest
-class KeyCallbackTest extends PHPUnit_Framework_TestCase
+class MapByTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence(array $arguments, array $expectedKeys, array $expectedValues)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
-        $this->assertInstanceOf('\Zicht\Itertools\lib\KeyCallbackIterator', $iterator);
+        $iterator = call_user_func_array('\Zicht\Itertools\mapBy', $arguments);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\MapByIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         $this->assertEquals(sizeof($iterator), sizeof($expectedKeys));
         $this->assertEquals(iterator_count($iterator), sizeof($expectedKeys));
@@ -50,7 +49,7 @@ class KeyCallbackTest extends PHPUnit_Framework_TestCase
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\keyCallback', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\mapBy', $arguments);
     }
 
     public function goodSequenceProvider()

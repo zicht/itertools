@@ -50,7 +50,7 @@ trait ItertoolChainingTrait
 
     /**
      * @param string|Closure $keyStrategy
-     * @return iter\lib\KeyCallbackIterator
+     * @return iter\lib\MapByIterator
      */
     public function mapBy($keyStrategy)
     {
