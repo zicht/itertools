@@ -11,7 +11,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodCycle($p, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence($p, array $expectedKeys, array $expectedValues)
     {
         $iterator = \Zicht\Itertools\cycle($p);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CycleIterator', $iterator);

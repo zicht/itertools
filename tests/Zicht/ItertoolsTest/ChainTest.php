@@ -10,7 +10,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodChain(array $arguments, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence(array $arguments, array $expectedKeys, array $expectedValues)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\chain', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\ChainIterator', $iterator);

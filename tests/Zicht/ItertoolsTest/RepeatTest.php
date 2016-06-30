@@ -10,7 +10,7 @@ class RepeatTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodRepeat($object, $times)
+    public function testGoodSequence($object, $times)
     {
         $iterator = \Zicht\Itertools\repeat($object, $times);
         $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);

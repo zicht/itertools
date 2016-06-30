@@ -10,7 +10,7 @@ class SliceTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence(array $arguments, array $expectedKeys, array $expectedValues)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\slice', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\SliceIterator', $iterator);

@@ -11,7 +11,7 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodAccmulate($iterable, $func, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence($iterable, $func, array $expectedKeys, array $expectedValues)
     {
         $iterator = \Zicht\Itertools\accumulate($iterable, $func);
         $this->assertInstanceOf('\Zicht\Itertools\lib\AccumulateIterator', $iterator);

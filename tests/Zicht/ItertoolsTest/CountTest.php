@@ -10,7 +10,7 @@ class CountTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodCount($start, $step, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence($start, $step, array $expectedKeys, array $expectedValues)
     {
         $iterator = \Zicht\Itertools\count($start, $step);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);

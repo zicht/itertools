@@ -10,7 +10,7 @@ class ReduceTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodReduce($iterable, $closure, $default, $expected)
+    public function testGoodSequence($iterable, $closure, $default, $expected)
     {
         $result = \Zicht\Itertools\reduce($iterable, $closure, $default);
         $this->assertEquals($expected, $result);

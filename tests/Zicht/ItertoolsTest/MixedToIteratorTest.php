@@ -9,9 +9,9 @@ use PHPUnit_Framework_TestCase;
 class MixedToTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider goodSequenceProvider
+     * @dataProvider goodArgumentProvider
      */
-    public function testGoodArguments(array $arguments, array $expected)
+    public function testGoodArgument(array $arguments, array $expected)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\mixedToIterator', $arguments);
         $this->assertInstanceOf('\Iterator', $iterator);
@@ -26,7 +26,7 @@ class MixedToTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($iterator->valid());
     }
 
-    public function goodSequenceProvider()
+    public function goodArgumentProvider()
     {
         return array(
             array(

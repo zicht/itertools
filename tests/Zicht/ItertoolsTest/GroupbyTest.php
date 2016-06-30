@@ -85,7 +85,7 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodKeyCallback(array $arguments, array $expected)
+    public function testGoodSequence(array $arguments, array $expected)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\groupby', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
