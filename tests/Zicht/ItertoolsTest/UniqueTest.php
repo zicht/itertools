@@ -30,15 +30,6 @@ class UniqueTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($iterator->valid());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @dataProvider badArgumentProvider
-     */
-    public function testBadArgument(array $arguments)
-    {
-        $iterator = call_user_func_array('\Zicht\Itertools\unique', $arguments);
-    }
-
     public function goodSequenceProvider()
     {
         return array(
@@ -93,12 +84,27 @@ class UniqueTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     * @dataProvider badArgumentProvider
+     */
+    public function testBadArgument(array $arguments)
+    {
+        $iterator = call_user_func_array('\Zicht\Itertools\unique', $arguments);
+    }
+
     public function badArgumentProvider()
     {
         return array(
+            // wrong types
             array(array(0)),
             array(array(1.0)),
             array(array(true)),
+            array(array()),
+
+            // wrong argument count
+            array(array()),
+            array(array(function ($value) { return $value; }, array(1, 2, 3), 'one argument to many')),
         );
     }
 }
