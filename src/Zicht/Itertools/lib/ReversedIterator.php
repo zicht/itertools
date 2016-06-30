@@ -2,16 +2,43 @@
 
 namespace Zicht\Itertools\lib;
 
-use ArrayIterator;
-use Iterator;
+use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
+use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class ReversedIterator extends ArrayIterator
+class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
+    use ArrayAccessTrait;
+    use CountableTrait;
     use DebugInfoTrait;
 
-    public function __construct(Iterator $iterable)
+    /**
+     * @param \Iterator $iterable
+     */
+    public function __construct(\Iterator $iterable)
     {
-        parent::__construct(array_reverse(iterator_to_array($iterable)));
+        $data = array();
+        foreach ($iterable as $key => $value) {
+            $data [] = array($key, $value);
+        }
+        parent::__construct(new \ArrayIterator(array_reverse($data)));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function key()
+    {
+        list($key, $value) = parent::current();
+        return $key;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function current()
+    {
+        list($key, $value) = parent::current();
+        return $value;
     }
 }
