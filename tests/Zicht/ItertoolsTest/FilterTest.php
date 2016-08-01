@@ -79,7 +79,6 @@ class FilterTest extends PHPUnit_Framework_TestCase
             array(array(0)),
             array(array(1.0)),
             array(array(true)),
-            array(array(null, array())),
             array(array(0, array())),
         );
     }

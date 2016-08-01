@@ -90,7 +90,7 @@ class Reductions
             return join($glue, [$a, $b]);
         };
     }
-    
+
     public static function getReduction($name, $default = null)
     {
         switch ($name) {
