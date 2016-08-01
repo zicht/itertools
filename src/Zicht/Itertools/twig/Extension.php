@@ -60,6 +60,10 @@ class Extension extends Twig_Extension
             new Twig_SimpleFunction('chain', '\Zicht\Itertools\chain'),
             new Twig_SimpleFunction('first', '\Zicht\Itertools\first'),
             new Twig_SimpleFunction('last', '\Zicht\Itertools\last'),
+
+            // functions to create closures
+            new Twig_SimpleFunction('reduction', '\Zicht\Itertools\util\Reductions::getReduction'),
+            new Twig_SimpleFunction('mapping', '\Zicht\Itertools\util\Mappings::getMapping'),
         );
     }
 
