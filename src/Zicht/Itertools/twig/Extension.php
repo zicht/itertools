@@ -6,6 +6,7 @@
 
 namespace Zicht\Itertools\twig;
 
+use Closure;
 use Iterator;
 use Twig_Extension;
 use Twig_SimpleFilter;
@@ -25,7 +26,7 @@ use Zicht\Itertools as iter;
 class Extension extends Twig_Extension
 {
     /**
-     * @inheritDoc
+     * @{inheritDoc}
      */
     public function getFilters()
     {
@@ -52,7 +53,7 @@ class Extension extends Twig_Extension
     }
 
     /**
-     * @inheritDoc
+     * @{inheritDoc}
      */
     public function getFunctions()
     {
@@ -72,7 +73,7 @@ class Extension extends Twig_Extension
      *
      * @param array|string|Iterator $iterable
      * @param mixed $keyStrategy
-     * @return array
+     * @return iter\lib\UniqueIterator
      */
     public function unique($items, $keyStrategy = null)
     {
@@ -85,7 +86,7 @@ class Extension extends Twig_Extension
      * @deprecated use unique($iterable, $keyStrategy) instead
      * @param array|string|Iterator $iterable
      * @param mixed $keyStrategy
-     * @return array
+     * @return iter\lib\UniqueIterator
      */
     public function uniqueby($items, $keyStrategy)
     {
@@ -120,31 +121,77 @@ class Extension extends Twig_Extension
         return iter\reduce($iterable, $operation, $default);
     }
 
+    /**
+     * Make an iterator that returns consecutive groups from the
+     * $iterable.  Generally, the $iterable needs to already be sorted on
+     * the same key function.
+     *
+     * @see \Zicht\Itertools\groupby
+     * @param array|string|Iterator $iterable
+     * @param string|Closure $keyStrategy
+     * @return iter\lib\GroupbyIterator
+     */
     public function groupby($iterable, $keyStrategy)
     {
         return iter\groupby($keyStrategy, $iterable);
     }
 
+    /**
+     * Make an iterator that returns the values from $iterable sorted by
+     * $keyStrategy.
+     *
+     * @see \Zicht\Itertools\sorted
+     * @param array|string|Iterator $iterable
+     * @param string|Closure $keyStrategy
+     * @param bool $reverse
+     * @return iter\lib\SortedIterator
+     */
     public function sorted($iterable, $keyStrategy = null, $reverse = false)
     {
         return iter\sorted($keyStrategy, $iterable, $reverse);
     }
 
+    /**
+     * Make an iterator that applies $func to every entry in the $iterables.
+     *
+     * @see \Zicht\Itertools\map
+     * @param array|string|Iterator $iterable
+     * @param string|Closure $keyStrategy
+     * @return iter\lib\MapIterator
+     */
     public function map($iterable, $keyStrategy)
     {
         return iter\map($keyStrategy, $iterable);
     }
 
+    /**
+     * Make an iterator returning values from $iterable and keys from
+     * $keyStrategy.
+     *
+     * @see \Zicht\Itertools\mapby
+     * @param array|string|Iterator $iterable
+     * @param string|Closure $keyStrategy
+     * @return iter\lib\MapByIterator
+     */
     public function mapby($iterable, $keyStrategy)
     {
         return iter\mapBy($keyStrategy, $iterable);
     }
 
+    /**
+     * @see \Zicht\Itertools\filterby
+     * @param array|string|Iterator $iterable
+     * @param string|Closure $keyStrategy
+     * @return iter\lib\FilterIterator
+     */
     public function filterby($iterable, $keyStrategy)
     {
         return iter\filterBy($keyStrategy, $iterable);
     }
 
+    /**
+     * @{inheritDoc}
+     */
     function getName()
     {
         return 'zicht_itertools';
