@@ -67,10 +67,40 @@ class Conversions
     }
 
     /**
+     * Try to transforms something into a Closure.
+     *
+     * When $CLOSURE is null the returned Closure behaves like an identity function,
+     * i.e. it will return the value that it is given.
+     *
+     * @param null|Closure $closure
+     * @return Closure
+     */
+    public static function mixedToClosure($closure)
+    {
+        if (is_null($closure)) {
+            return function ($value) {
+                return $value;
+            };
+        }
+
+        if (is_callable($closure)) {
+            $closure = function () use($closure) {
+                return call_user_func_array($closure, func_get_args());
+            };
+        }
+
+        if (!($closure instanceof Closure)) {
+            throw new InvalidArgumentException('Argument $CLOSURE must be a Closure');
+        }
+
+        return $closure;
+    }
+
+    /**
      * Try to transforms something into a Closure that gets a value from $STRATEGY.
      *
      * When $STRATEGY is null the returned Closure behaves like an identity function,
-     * i.e. it will return the value that it gets.
+     * i.e. it will return the value that it is given.
      *
      * When $STRATEGY is a string the returned Closure tries to find a properties,
      * methods, or array indexes named by the string.  Multiple property, method,
@@ -80,17 +110,11 @@ class Conversions
      *
      * When $STRATEGY is callable it is converted into a Closure (see mixedToClosure).
      *
-     * @param null|string|Closure
+     * @param null|string|Closure $strategy
      * @return Closure
      */
     public static function mixedToValueGetter($strategy)
     {
-        if (is_null($strategy)) {
-            return function ($value) {
-                return $value;
-            };
-        }
-
         if (is_string($strategy)) {
             $keyParts = explode('.', $strategy);
             $strategy = function ($value) use ($keyParts) {
@@ -126,16 +150,6 @@ class Conversions
             };
         }
 
-        if (is_callable($strategy)) {
-            $strategy = function () use($strategy) {
-                return call_user_func_array($strategy, func_get_args());
-            };
-        }
-
-        if (!($strategy instanceof Closure)) {
-            throw new InvalidArgumentException('Argument $KEYSTRATEGY must be a Closure');
-        }
-
-        return $strategy;
+        return Conversions::mixedToClosure($strategy);
     }
 }

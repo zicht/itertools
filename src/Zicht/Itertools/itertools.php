@@ -34,23 +34,13 @@ function mixedToIterator($iterable)
 }
 
 /**
- * @deprecated Use Conversions::mixedToValueGetter instead
+ * @deprecated Use Conversions::mixedToClosure instead
  * @param $closure
  * @return Closure
  */
 function mixedToClosure($closure)
 {
-    if (is_callable($closure)) {
-        $closure = function () use($closure) {
-            return call_user_func_array($closure, func_get_args());
-        };
-    }
-
-    if (!($closure instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $KEYSTRATEGY must be a Closure');
-    }
-
-    return $closure;
+    return Conversions::mixedToClosure($closure);
 }
 
 /**
