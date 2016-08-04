@@ -3,6 +3,9 @@
 namespace Zicht\Itertools;
 
 use Closure;
+use InvalidArgumentException;
+use Iterator;
+use ReflectionClass;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -15,16 +18,13 @@ use Zicht\Itertools\lib\RepeatIterator;
 use Zicht\Itertools\lib\ReversedIterator;
 use Zicht\Itertools\lib\SliceIterator;
 use Zicht\Itertools\lib\SortedIterator;
-use ReflectionClass;
-use InvalidArgumentException;
-use Iterator;
 use Zicht\Itertools\lib\UniqueIterator;
 use Zicht\Itertools\lib\ZipIterator;
 use Zicht\Itertools\util\Conversions;
 use Zicht\Itertools\util\Reductions;
 
 /**
- * @deprecated Use Conversions::mixedToIterator instead
+ * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
  * @param array|string|Iterator $iterable
  * @return Iterator
  */
@@ -34,7 +34,7 @@ function mixedToIterator($iterable)
 }
 
 /**
- * @deprecated Use Conversions::mixedToClosure instead
+ * @deprecated Use Conversions::mixedToClosure instead, will be removed in version 3.0
  * @param $closure
  * @return Closure
  */
@@ -44,7 +44,7 @@ function mixedToClosure($closure)
 }
 
 /**
- * @deprecated Use Conversions::mixedToValueGetter instead
+ * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
  * @param null|string|Closure
  * @return Closure
  */
@@ -82,8 +82,8 @@ function mixedToOperationClosure($closure)
  * > accumulate([1,2,3,4,5])
  * 1 3 6 10 15
  *
- * > accumulate(['one', 'two', 'three'], function ($a, $b) { return $a . $b; })
- * 'one' 'onetwo' 'onetwothree'
+ * > accumulate(['One', 'Two', 'Three'], function ($a, $b) { return $a . $b; })
+ * 'One' 'OneTwo' 'OneTwoThree'
  *
  * @param array|string|Iterator $iterable
  * @param string|Closure $closure
@@ -127,7 +127,7 @@ function reduce($iterable, $closure = 'add', $initializer = null)
 
 /**
  * Make an iterator that returns elements from the first iterable
- * until it is exhausted, then prodeeds to the next iterable, until
+ * until it is exhausted, then proceeds to the next iterable, until
  * all the iterables are exhausted.  Used for creating consecutive
  * sequences as a single sequence.
  *
@@ -140,12 +140,10 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  * > chain('ABC', 'DEF')
  * A B C D E F
  *
- * @param array|string|Iterator $iterable1
- * @param array|string|Iterator $iterable2
- * @param array|string|Iterator $iterableN
+ * @param array|string|Iterator $iterable
  * @return ChainIterator
  */
-function chain(/* $iterable1, $iterable2, ... */)
+function chain(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, func_get_args());
     $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
@@ -153,7 +151,7 @@ function chain(/* $iterable1, $iterable2, ... */)
 }
 
 /**
- * Make an iterator that returns eventy spaced values starting with
+ * Make an iterator that returns evenly spaced values starting with
  * number $start.
  *
  * > count(10)
@@ -182,7 +180,7 @@ function count($start = 0, $step = 1)
 /**
  * Make an iterator returning elements from the $iterable and saving a
  * copy of each.  When the iterable is exhausted, return elements from
- * the saved copy.  Repeats indefinately.
+ * the saved copy.  Repeats indefinitely.
  *
  * > cycle('ABCD')
  * A B C D A B C D A B C D ...
@@ -197,41 +195,44 @@ function cycle($iterable)
 
 /**
  * Make an iterator returning values from $iterable and keys from
- * $keyStrategy.
+ * $strategy.
  *
- * When $keyStrategy is a string, the key is obtained through one of
+ * When $strategy is a string, the key is obtained through one of
  * the following:
- * 1. $value->{$keyStrategy}, when $value is an object and
- *    $keyStrategy is an existing property,
- * 2. call $value->{$keyStrategy}(), when $value is an object and
- *    $keyStrategy is an existing method,
- * 3. $value[$keyStrategy], when $value is an array and $keyStrategy
+ * 1. $value->{$strategy}, when $value is an object and
+ *    $strategy is an existing property,
+ * 2. call $value->{$strategy}(), when $value is an object and
+ *    $strategy is an existing method,
+ * 3. $value[$strategy], when $value is an array and $strategy
  *    is an existing key,
  * 4. otherwise the key will default to null.
  *
- * Alternatively $keyStrategy can be a closure.  In this case the
- * $keyStrategy closure is called with each value in $iterable and the
+ * Alternatively $strategy can be a closure.  In this case the
+ * $strategy closure is called with each value in $iterable and the
  * key will be its return value.
  *
  * > $list = [['id'=>1, 'title'=>'one'], ['id'=>2, 'title'=>'two']]
  * > keyCallback('id', $list)
  * 1=>['id'=>1, 'title'=>'one'] 2=>['id'=>2, 'title'=>'two']
  *
- * @param string|Closure $keyStrategy
+ * @param string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @return MapByIterator
  */
-function mapBy($keyStrategy, $iterable)
+function mapBy($strategy, $iterable)
 {
-    return new MapByIterator(Conversions::mixedToValueGetter($keyStrategy), Conversions::mixedToIterator($iterable));
+    return new MapByIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
 }
 
 /**
- * @deprecated use mapBy() in stead
+ * @deprecated use mapBy() in stead, will be removed in version 3.0
+ * @param string|Closure $strategy
+ * @param array|string|Iterator $iterable
+ * @return MapByIterator
  */
-function keyCallback($keyStrategy, $iterable)
+function keyCallback($strategy, $iterable)
 {
-    return mapBy($keyStrategy, $iterable);
+    return mapBy($strategy, $iterable);
 }
 
 /**
@@ -257,47 +258,44 @@ function keyCallback($keyStrategy, $iterable)
  * > map($average, [1, 2, 3], [4, 5, 6]);
  * 2.5 3.5 4.5
  *
- * @param Closure|callable $func
- * @param array|string|Iterator $iterable1
- * @param array|string|Iterator $iterable2
- * @param array|string|Iterator $iterableN
+ * @param null|string|Closure $strategy
+ * @param array|string|Iterator $iterable
  * @return MapIterator
  */
-function map($func /* $iterable1, $iterable2, ... */)
+function map($strategy, $iterable /*, $iterable2, ... */)
 {
-//    if (!($func instanceof Closure)) {
-//        throw new InvalidArgumentException('Argument $FUNC must be a Closure');
-//    }
-
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
     $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\MapIterator');
-//    return $reflectorClass->newInstanceArgs(array_merge(array($func), $iterables));
-    return $reflectorClass->newInstanceArgs(array_merge(array(Conversions::mixedToValueGetter($func)), $iterables));
+    return $reflectorClass->newInstanceArgs(array_merge(array(Conversions::mixedToValueGetter($strategy)), $iterables));
 }
-
 
 /**
  * Select values from the iterator by applying a function to each of the iterator values, i.e., mapping it to the
  * value with a strategy based on the input, similar to keyCallback
  *
- * @param mixed $valueStrategy
- * @param mixed $iterable
+ * @todo consider removing this, perhaps it is better to have a helper function in Mappings and call map() instead?
+ *
+ * @param null|string|Closure $strategy
+ * @param array|string|Iterator $iterable
  * @param bool $flatten
  * @return MapIterator
  */
-function select($valueStrategy, $iterable, $flatten = true)
+function select($strategy, $iterable, $flatten = true)
 {
-    $ret = new MapIterator(Conversions::mixedToValueGetter($valueStrategy), Conversions::mixedToIterator($iterable));
+    if (!is_bool($flatten)) {
+        throw new InvalidArgumentException('Argument $FLATTEN must be a boolean');
+    }
+
+    $ret = new MapIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
     if ($flatten) {
         return array_values(iterator_to_array($ret));
     }
     return $ret;
 }
 
-
 /**
  * Make an iterator that returns $mixed over and over again.  Runs
- * indefinately unless the $times argument is specified.
+ * indefinitely unless the $times argument is specified.
  *
  * > repeat(2)
  * 2 2 2 2 2 ...
@@ -322,23 +320,23 @@ function repeat($mixed, $times = null)
  * $iterable.  Generally, the $iterable needs to already be sorted on
  * the same key function.
  *
- * When $keyStrategy is a string, the key is obtained through one of
+ * When $strategy is a string, the key is obtained through one of
  * the following:
- * 1. $value->{$keyStrategy}, when $value is an object and
- *    $keyStrategy is an existing property,
- * 2. call $value->{$keyStrategy}(), when $value is an object and
- *    $keyStrategy is an existing method,
- * 3. $value[$keyStrategy], when $value is an array and $keyStrategy
+ * 1. $value->{$strategy}, when $value is an object and
+ *    $strategy is an existing property,
+ * 2. call $value->{$strategy}(), when $value is an object and
+ *    $strategy is an existing method,
+ * 3. $value[$strategy], when $value is an array and $strategy
  *    is an existing key,
  * 4. otherwise the key will default to null.
  *
- * Alternatively $keyStrategy can be a closure.  In this case the
- * $keyStrategy closure is called with each value in $iterable and the
- * key will be its return value.  $keyStrategy is called with two
+ * Alternatively $strategy can be a closure.  In this case the
+ * $strategy closure is called with each value in $iterable and the
+ * key will be its return value.  $strategy is called with two
  * parameters: the value and the key of the iterable as the first and
  * second parameter, respectively.
  *
- * The operation of groupby() is similar to the uniq filter in Unix.
+ * The operation of groupBy() is similar to the uniq filter in Unix.
  * It generates a break or new group every time the value of the key
  * function changes (which is why it is usually necessary to have
  * sorted the data using the same key function).  That behavior
@@ -349,29 +347,29 @@ function repeat($mixed, $times = null)
  * > groupby('type', $list)
  * 'A'=>[['type'=>'A', 'title'=>'one'], ['type'=>'A', 'title'=>'two']] 'B'=>[['type'=>'B', 'title'=>'three']]
  *
- * @param string|Closure $keyStrategy
+ * @param null|string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @param boolean $sort
  * @return GroupbyIterator
  */
-function groupby($keyStrategy, $iterable, $sort = true)
+function groupBy($strategy, $iterable, $sort = true)
 {
     if (!is_bool($sort)) {
         throw new InvalidArgumentException('Argument $SORT must be a boolean');
     }
 
     return new GroupbyIterator(
-        Conversions::mixedToValueGetter($keyStrategy),
-        $sort ? sorted($keyStrategy, $iterable) : Conversions::mixedToIterator($iterable));
+        Conversions::mixedToValueGetter($strategy),
+        $sort ? sorted($strategy, $iterable) : Conversions::mixedToIterator($iterable));
 }
 
 /**
  * Make an iterator that returns the values from $iterable sorted by
- * $keyStrategy.
+ * $strategy.
  *
- * When determining the order of two entries the $keyStrategy is called
+ * When determining the order of two entries the $strategy is called
  * twice, once for each value, and the results are used to determine
- * the order.  $keyStrategy is called with two parameters: the value and
+ * the order.  $strategy is called with two parameters: the value and
  * the key of the iterable as the first and second parameter, respectively.
  *
  * When $reverse is true the order of the results are reversed.
@@ -386,73 +384,76 @@ function groupby($keyStrategy, $iterable, $sort = true)
  * > sorted('type', $list)
  * ['type'=>'A', 'title'=>'first'] ['type'=>'B', 'title'=>'second']] ['type'=>'C', 'title'=>'third']
  *
- * @param string|Closure $keyStrategy
+ * @param string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @param boolean $reverse
  * @return SortedIterator
  */
-function sorted($keyStrategy, $iterable, $reverse = false)
+function sorted($strategy, $iterable, $reverse = false)
 {
     if (!is_bool($reverse)) {
         throw new InvalidArgumentException('Argument $REVERSE must be boolean');
     }
-    return new SortedIterator(Conversions::mixedToValueGetter($keyStrategy), Conversions::mixedToIterator($iterable), $reverse);
+    return new SortedIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable), $reverse);
 }
 
 /**
  * TODO: document!
- * TODO: I am not happy about the API... filter should become filter([$keyStrategy], $iterable)
- * TODO: and the $closure argument should be removed (and its behavior become implicit)
- * TODO: this allows us to remove the filterBy function
  *
- * @param Closure $closure Optional, when not specified !empty will be used
+ * @param null|string|Closure $strategy, Optional, when not specified !empty will be used
  * @param array|string|Iterator $iterable
  * @return FilterIterator
  */
-function filter(/* [$closure, ] $iterable */)
+function filter(/* [$strategy, ] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $closure = function ($item) { return !empty($item); };
-            $iterable = Conversions::mixedToIterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $closure = Conversions::mixedToValueGetter($args[0]);
-            $iterable = Conversions::mixedToIterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
-            throw new InvalidArgumentException('filter requires either one (iterable) or two (closure, iterable) arguments');
+            throw new InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    return new FilterIterator($closure, $iterable);
+    $strategy = Conversions::mixedToValueGetter($strategy);
+    $isValid = function ($value) use ($strategy) {
+        return !empty($strategy($value));
+    };
+
+    return new FilterIterator($isValid, Conversions::mixedToIterator($iterable));
 }
 
 /**
  * TODO: document!
  * TODO: unit tests!
  *
- * @param string|Closure $keyStrategy
+ * @deprecated Use filter() instead, will be removed in version 3.0
+ * @param string|Closure $strategy
  * @param Closure $closure Optional, when not specified !empty will be used
  * @param array|string|Iterator $iterable
  * @return FilterIterator
  */
-function filterBy(/* $keyStrategy, [$closure, ] $iterable */)
+function filterBy(/* $strategy, [$closure, ] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 2:
-            $keyStrategy = Conversions::mixedToValueGetter($args[0]);
-            $closure = function ($item) use ($keyStrategy) { $tempVarPhp54 = call_user_func($keyStrategy, $item); return !empty($tempVarPhp54); };
+            $strategy = Conversions::mixedToValueGetter($args[0]);
+            $closure = function ($item) use ($strategy) { $tempVarPhp54 = call_user_func($strategy, $item); return !empty($tempVarPhp54); };
             $iterable = Conversions::mixedToIterator($args[1]);
             break;
 
         case 3:
-            $keyStrategy = Conversions::mixedToValueGetter($args[0]);
+            $strategy = Conversions::mixedToValueGetter($args[0]);
             $userClosure = $args[1];
-            $closure = function ($item) use ($keyStrategy, $userClosure) { return call_user_func($userClosure, call_user_func($keyStrategy, $item)); };
+            $closure = function ($item) use ($strategy, $userClosure) { return call_user_func($userClosure, call_user_func($strategy, $item)); };
             $iterable = Conversions::mixedToIterator($args[2]);
             break;
 
@@ -466,12 +467,12 @@ function filterBy(/* $keyStrategy, [$closure, ] $iterable */)
 /**
  * TODO: document!
  *
- * @param array|string|Iterator $iterable1
+ * @param array|string|Iterator $iterable
  * @param array|string|Iterator $iterable2
  * @param array|string|Iterator $iterableN
  * @return ZipIterator
  */
-function zip(/* $iterable1, $iterable2, ... */)
+function zip(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, func_get_args());
     $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
@@ -492,72 +493,71 @@ function reversed($iterable)
 /**
  * TODO: document!
  *
- * @param string|Closure $keyStrategy
+ * @param null|string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @return UniqueIterator
  */
-function unique(/* $keyStrategy, $iterable */)
+function unique(/* [$strategy,] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $keyStrategy = function ($value) { return $value; };
-            $iterable = Conversions::mixedToIterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $keyStrategy = Conversions::mixedToValueGetter($args[0]);
-            $iterable = Conversions::mixedToIterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
-            throw new InvalidArgumentException('unique requires either one (iterable) or two (keyStrategy, iterable) arguments');
+            throw new InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
     }
-    return new UniqueIterator($keyStrategy, $iterable);
+
+    return new UniqueIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
 }
 
 /**
  * TODO: document!
  *
- * @deprecated use unique($keyStrategy, $iterable) instead
- * @param string|Closure $keyStrategy
+ * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
+ * @param null|string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @return UniqueIterator
  */
-function uniqueBy($keyStrategy, $iterable)
+function uniqueBy($strategy, $iterable)
 {
-    return new UniqueIterator(Conversions::mixedToValueGetter($keyStrategy), Conversions::mixedToIterator($iterable));
+    return new UniqueIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
 }
 
 /**
  * TODO: document!
  *
- * @param string|Closure $keyStrategy
+ * @param null|string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @return boolean
  */
-function any(/* [$keyStrategy, ] $iterable */)
+function any(/* [$strategy,] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $keyStrategy = function ($item) {
-                return $item;
-            };
+            $strategy = Conversions::mixedToValueGetter(null);
             $iterable = Conversions::mixedToIterator($args[0]);
             break;
 
         case 2:
-            $keyStrategy = Conversions::mixedToValueGetter($args[0]);
+            $strategy = Conversions::mixedToValueGetter($args[0]);
             $iterable = Conversions::mixedToIterator($args[1]);
             break;
 
         default:
-            throw new InvalidArgumentException('filter requires either one (iterable) or two (keyStrategy, iterable) arguments');
+            throw new InvalidArgumentException('any requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     foreach ($iterable as $item) {
-        if (!empty(call_user_func($keyStrategy, $item))) {
+        if (!empty(call_user_func($strategy, $item))) {
             return true;
         }
     }
@@ -568,32 +568,30 @@ function any(/* [$keyStrategy, ] $iterable */)
 /**
  * TODO: document!
  *
- * @param string|Closure $keyStrategy
+ * @param null|string|Closure $strategy
  * @param array|string|Iterator $iterable
  * @return boolean
  */
-function all(/* [$keyStrategy, ] $iterable */)
+function all(/* [$strategy,] $iterable */)
 {
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $keyStrategy = function ($item) {
-                return $item;
-            };
+            $strategy = Conversions::mixedToValueGetter(null);
             $iterable = Conversions::mixedToIterator($args[0]);
             break;
 
         case 2:
-            $keyStrategy = Conversions::mixedToValueGetter($args[0]);
+            $strategy = Conversions::mixedToValueGetter($args[0]);
             $iterable = Conversions::mixedToIterator($args[1]);
             break;
 
         default:
-            throw new InvalidArgumentException('filter requires either one (iterable) or two (keyStrategy, iterable) arguments');
+            throw new InvalidArgumentException('all requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     foreach ($iterable as $item) {
-        if (empty(call_user_func($keyStrategy, $item))) {
+        if (empty(call_user_func($strategy, $item))) {
             return false;
         }
     }
