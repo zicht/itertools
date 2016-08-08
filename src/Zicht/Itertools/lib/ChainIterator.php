@@ -2,16 +2,14 @@
 
 namespace Zicht\Itertools\lib;
 
-use AppendIterator;
-use Countable;
-use InvalidArgumentException;
-use Iterator;
+use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class ChainIterator extends AppendIterator implements Countable
+class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
 {
+    use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
     use ItertoolChainingTrait;
@@ -20,8 +18,8 @@ class ChainIterator extends AppendIterator implements Countable
     {
         parent::__construct();
         foreach (func_get_args() as $iterable) {
-            if (!$iterable instanceof Iterator) {
-                throw new InvalidArgumentException(sprintf('Argument %d must be an Iterator'));
+            if (!$iterable instanceof \Iterator) {
+                throw new \InvalidArgumentException(sprintf('Argument %d must be an Iterator'));
             }
             $this->append($iterable);
         }
