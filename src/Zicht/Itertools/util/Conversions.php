@@ -6,12 +6,7 @@
 
 namespace Zicht\Itertools\util;
 
-use ArrayIterator;
-use Closure;
 use Doctrine\Common\Collections\Collection;
-use InvalidArgumentException;
-use Iterator;
-use Traversable;
 use Zicht\Itertools\lib\StringIterator;
 
 class Conversions
@@ -25,21 +20,21 @@ class Conversions
      * > mixedToIterator('foo')
      * f o o
      *
-     * @param array|string|Iterator $iterable
-     * @return Iterator
+     * @param array|string|\Iterator $iterable
+     * @return \Iterator
      */
     public static function mixedToIterator($iterable)
     {
         // NULL is often used to indicate that nothing is there,
         // for robustness we will deal with NULL as it is an empty array
         if (is_null($iterable)) {
-            $iterable = new ArrayIterator([]);
+            $iterable = new \ArrayIterator([]);
         }
 
         // an array is *not* an instance of Traversable (as it is not an
         // object and hence can not 'implement Traversable')
         if (is_array($iterable)) {
-            $iterable = new ArrayIterator($iterable);
+            $iterable = new \ArrayIterator($iterable);
         }
 
         // a string is considered iterable in Python
@@ -54,13 +49,13 @@ class Conversions
         }
 
         // todo: add unit tests for Traversable
-        if ($iterable instanceof Traversable and !($iterable instanceof Iterator)) {
+        if ($iterable instanceof \Traversable and !($iterable instanceof \Iterator)) {
             $iterable = new \IteratorIterator($iterable);
         }
 
         // by now it should be an Iterator, otherwise throw an exception
-        if (!($iterable instanceof Iterator)) {
-            throw new InvalidArgumentException('Argument $ITERABLE must be a Traversable');
+        if (!($iterable instanceof \Iterator)) {
+            throw new \InvalidArgumentException('Argument $ITERABLE must be a Traversable');
         }
 
         return $iterable;
@@ -72,8 +67,8 @@ class Conversions
      * When $CLOSURE is null the returned Closure behaves like an identity function,
      * i.e. it will return the value that it is given.
      *
-     * @param null|Closure $closure
-     * @return Closure
+     * @param null|\Closure $closure
+     * @return \Closure
      */
     public static function mixedToClosure($closure)
     {
@@ -89,8 +84,8 @@ class Conversions
             };
         }
 
-        if (!($closure instanceof Closure)) {
-            throw new InvalidArgumentException('Argument $CLOSURE must be a Closure');
+        if (!($closure instanceof \Closure)) {
+            throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure');
         }
 
         return $closure;
@@ -110,8 +105,8 @@ class Conversions
      *
      * When $STRATEGY is callable it is converted into a Closure (see mixedToClosure).
      *
-     * @param null|string|Closure $strategy
-     * @return Closure
+     * @param null|string|\Closure $strategy
+     * @return \Closure
      */
     public static function mixedToValueGetter($strategy)
     {

@@ -6,14 +6,12 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Closure;
-use Iterator;
 use Zicht\Itertools as iter;
 
 trait ItertoolChainingTrait
 {
     /**
-     * @param string|Closure $closure
+     * @param string|\Closure $closure
      * @return iter\lib\AccumulateIterator
      */
     public function accumulate($closure = 'add')
@@ -30,9 +28,9 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param array|string|Iterator $iterable1
-     * @param array|string|Iterator $iterable2
-     * @param array|string|Iterator $iterableN
+     * @param array|string|\Iterator $iterable1
+     * @param array|string|\Iterator $iterable2
+     * @param array|string|\Iterator $iterableN
      * @return iter\lib\ChainIterator
      */
     public function chain(/* $iterable1, $iterable2, ... */)
@@ -49,7 +47,7 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param string|Closure $keyStrategy
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\MapByIterator
      */
     public function mapBy($keyStrategy)
@@ -58,10 +56,10 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param Closure|callable $func
-     * @param array|string|Iterator $iterable1
-     * @param array|string|Iterator $iterable2
-     * @param array|string|Iterator $iterableN
+     * @param \Closure|callable $func
+     * @param array|string|\Iterator $iterable1
+     * @param array|string|\Iterator $iterable2
+     * @param array|string|\Iterator $iterableN
      * @return iter\lib\MapIterator
      */
     public function map($func /* $iterable1, $iterable2, ... */)
@@ -70,17 +68,17 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param string|Closure $keyStrategy
+     * @param string|\Closure $keyStrategy
      * @param bool $sort
      * @return iter\lib\GroupbyIterator
      */
-    public function groupby($keyStrategy, $sort = true)
+    public function groupBy($keyStrategy, $sort = true)
     {
-        return iter\groupby($keyStrategy, $this, $sort);
+        return iter\groupBy($keyStrategy, $this, $sort);
     }
 
     /**
-     * @param string|Closure $keyStrategy
+     * @param string|\Closure $keyStrategy
      * @param bool $reverse
      * @return iter\lib\SortedIterator
      */
@@ -90,7 +88,7 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param Closure $closure Optional, when not specified !empty will be used
+     * @param \Closure $closure Optional, when not specified !empty will be used
      * @return iter\lib\FilterIterator
      */
     public function filter($closure = null)
@@ -99,8 +97,8 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param string|Closure $keyStrategy
-     * @param Closure $closure Optional, when not specified !empty will be used
+     * @param string|\Closure $keyStrategy
+     * @param \Closure $closure Optional, when not specified !empty will be used
      * @return iter\lib\FilterIterator
      */
     public function filterBy($keyStrategy, $closure = null)
@@ -109,9 +107,9 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param array|string|Iterator $iterable1
-     * @param array|string|Iterator $iterable2
-     * @param array|string|Iterator $iterableN
+     * @param array|string|\Iterator $iterable1
+     * @param array|string|\Iterator $iterable2
+     * @param array|string|\Iterator $iterableN
      * @return iter\lib\ZipIterator
      */
     public function zip(/* $iterable1, $iterable2, ... */)
@@ -128,7 +126,7 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param string|Closure $keyStrategy
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\UniqueIterator
      */
     public function unique($keyStrategy = null)
@@ -137,7 +135,7 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param Closure $closure Optional, when not specified !empty will be used
+     * @param \Closure $closure Optional, when not specified !empty will be used
      * @return bool
      */
     public function any($closure = null)
@@ -146,7 +144,7 @@ trait ItertoolChainingTrait
     }
 
     /**
-     * @param Closure $closure Optional, when not specified !empty will be used
+     * @param \Closure $closure Optional, when not specified !empty will be used
      * @return bool
      */
     public function all($closure = null)

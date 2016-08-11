@@ -4,16 +4,12 @@ namespace Zicht\Itertools\lib;
 
 // todo: add tests
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class SliceIterator extends IteratorIterator implements ArrayAccess, Countable
+class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
     use ArrayAccessTrait;
     use CountableTrait;
@@ -24,7 +20,7 @@ class SliceIterator extends IteratorIterator implements ArrayAccess, Countable
     private $start;
     private $end;
 
-    public function __construct(Iterator $iterable, $start, $end = null)
+    public function __construct(\Iterator $iterable, $start, $end = null)
     {
         $this->index = 0;
         $this->start = $start < 0 ? iterator_count($iterable) + $start: $start;

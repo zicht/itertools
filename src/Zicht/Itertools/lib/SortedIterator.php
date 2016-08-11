@@ -2,24 +2,19 @@
 
 namespace Zicht\Itertools\lib;
 
-use ArrayIterator;
-use Closure;
-use Countable;
-use Iterator;
-use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class SortedIterator extends IteratorIterator implements Countable, \ArrayAccess
+class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
     use ItertoolChainingTrait;
 
-    public function __construct(Closure $func, Iterator $iterable, $reverse = false)
+    public function __construct(\Closure $func, \Iterator $iterable, $reverse = false)
     {
         $data = [];
         foreach ($iterable as $key => $value) {
@@ -42,7 +37,7 @@ class SortedIterator extends IteratorIterator implements Countable, \ArrayAccess
 
         $this->mergesort($data, $cmp);
 
-        parent::__construct(new ArrayIterator($data));
+        parent::__construct(new \ArrayIterator($data));
     }
 
     public function key()
@@ -79,9 +74,9 @@ class SortedIterator extends IteratorIterator implements Countable, \ArrayAccess
      * http://www.php.net/manual/en/function.usort.php#38827
      *
      * @param array $array
-     * @param Closure $func
+     * @param \Closure $cmp_function
      */
-    protected function mergesort(array &$array, Closure $cmp_function)
+    protected function mergesort(array &$array, \Closure $cmp_function)
     {
         // Arrays of size < 2 require no action.
         if (count($array) < 2)

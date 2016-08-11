@@ -2,19 +2,13 @@
 
 namespace Zicht\Itertools\lib;
 
-use ArrayAccess;
-use Closure;
-use Countable;
-use InvalidArgumentException;
-use Iterator;
-use MultipleIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\GetterTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class MapIterator extends MultipleIterator implements Countable, ArrayAccess
+class MapIterator extends \MultipleIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
     use CountableTrait;
@@ -25,16 +19,16 @@ class MapIterator extends MultipleIterator implements Countable, ArrayAccess
     private $valueFunc;
     private $keyFunc;
 
-    public function __construct(Closure $valueFunc /* [Closure $keyFunc], \Iterator $iterable1, [\Iterator $iterable2, [...]] */)
+    public function __construct(\Closure $valueFunc /* [\Closure $keyFunc], \Iterator $iterable1, [\Iterator $iterable2, [...]] */)
     {
-        parent::__construct(MultipleIterator::MIT_NEED_ALL| MultipleIterator::MIT_KEYS_NUMERIC);
+        parent::__construct(\MultipleIterator::MIT_NEED_ALL| \MultipleIterator::MIT_KEYS_NUMERIC);
         $args = func_get_args();
-        $argsContainsKeyFunc = $args[1] instanceof Closure;
+        $argsContainsKeyFunc = $args[1] instanceof \Closure;
         $this->valueFunc = $args[0];
         $this->keyFunc = $argsContainsKeyFunc ? $args[1] : function () { return $this->genericKeysToKey(func_get_args()); };
         foreach (array_slice($args, $argsContainsKeyFunc ? 2 : 1) as $iterable) {
-            if (!$iterable instanceof Iterator) {
-                throw new InvalidArgumentException(sprintf('Argument %d must be an iterator'));
+            if (!$iterable instanceof \Iterator) {
+                throw new \InvalidArgumentException(sprintf('Argument %d must be an iterator'));
             }
             $this->attachIterator($iterable);
         }

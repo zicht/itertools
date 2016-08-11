@@ -4,15 +4,11 @@ namespace Zicht\Itertools\lib;
 
 // todo: add tests
 
-use Closure;
-use Countable;
-use Iterator;
-use FilterIterator as BaseFilterIterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class FilterIterator extends BaseFilterIterator implements Countable
+class FilterIterator extends \FilterIterator implements \Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
@@ -20,7 +16,7 @@ class FilterIterator extends BaseFilterIterator implements Countable
 
     private $func;
 
-    function __construct(Closure $func, Iterator $iterable)
+    function __construct(\Closure $func,\ Iterator $iterable)
     {
         $this->func = $func;
         parent::__construct($iterable);

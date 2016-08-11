@@ -4,9 +4,6 @@ namespace Zicht\Itertools\lib;
 
 // todo: add tests for ArrayAccess
 
-use ArrayAccess;
-use Countable;
-use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
@@ -17,7 +14,7 @@ use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
  * Class MapByIterator
  * @package iter
  */
-class MapByIterator extends IteratorIterator implements ArrayAccess, Countable
+class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;

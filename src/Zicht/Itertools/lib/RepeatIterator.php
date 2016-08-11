@@ -2,11 +2,9 @@
 
 namespace Zicht\Itertools\lib;
 
-use Countable;
-use Iterator;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class RepeatIterator implements Iterator, Countable
+class RepeatIterator implements \Iterator, \Countable
 {
     use ItertoolChainingTrait;
 

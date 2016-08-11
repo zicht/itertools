@@ -14,7 +14,7 @@ class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
     use DebugInfoTrait;
     use ItertoolChainingTrait;
 
-    public function __construct(/* Iterator $iterable, Iterator $iterable2, ... */)
+    public function __construct(/* \Iterator $iterable, \Iterator $iterable2, ... */)
     {
         parent::__construct();
         foreach (func_get_args() as $iterable) {

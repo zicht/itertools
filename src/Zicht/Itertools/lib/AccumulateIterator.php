@@ -2,14 +2,11 @@
 
 namespace Zicht\Itertools\lib;
 
-use Countable;
-use Iterator;
-use Closure;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class AccumulateIterator implements Iterator, Countable
+class AccumulateIterator implements\ Iterator, \Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
@@ -19,7 +16,7 @@ class AccumulateIterator implements Iterator, Countable
     protected $func;
     protected $value;
 
-    public function __construct(Iterator $iterable, Closure $func)
+    public function __construct(\Iterator $iterable, \Closure $func)
     {
         $this->iterable = $iterable;
         $this->func = $func;

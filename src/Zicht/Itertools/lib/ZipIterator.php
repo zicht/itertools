@@ -2,13 +2,10 @@
 
 namespace Zicht\Itertools\lib;
 
-use Countable;
-use InvalidArgumentException;
-use MultipleIterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class ZipIterator extends MultipleIterator implements Countable
+class ZipIterator extends \MultipleIterator implements \Countable
 {
     use CountableTrait;
     use DebugInfoTrait;
@@ -17,10 +14,10 @@ class ZipIterator extends MultipleIterator implements Countable
 
     public function __construct(/* \Iterator $iterable1, \Iterator $iterable2, ... */)
     {
-        parent::__construct(MultipleIterator::MIT_NEED_ALL| MultipleIterator::MIT_KEYS_NUMERIC);
+        parent::__construct(\MultipleIterator::MIT_NEED_ALL| \MultipleIterator::MIT_KEYS_NUMERIC);
         foreach (func_get_args() as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new InvalidArgumentException(sprintf('Argument %d must be an iterator'));
+                throw new \InvalidArgumentException(sprintf('Argument %d must be an iterator'));
             }
             $this->attachIterator($iterable);
         }

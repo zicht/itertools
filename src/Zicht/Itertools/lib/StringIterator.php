@@ -2,12 +2,10 @@
 
 namespace Zicht\Itertools\lib;
 
-use Countable;
-use Iterator;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 
-class StringIterator implements Iterator, Countable
+class StringIterator implements \Iterator, \Countable
 {
     use CountableTrait;
     use DebugInfoTrait;

@@ -2,10 +2,6 @@
 
 namespace Zicht\Itertools;
 
-use Closure;
-use InvalidArgumentException;
-use Iterator;
-use ReflectionClass;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -25,8 +21,8 @@ use Zicht\Itertools\util\Reductions;
 
 /**
  * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
- * @param array|string|Iterator $iterable
- * @return Iterator
+ * @param array|string|\Iterator $iterable
+ * @return \Iterator
  */
 function mixedToIterator($iterable)
 {
@@ -36,7 +32,7 @@ function mixedToIterator($iterable)
 /**
  * @deprecated Use Conversions::mixedToClosure instead, will be removed in version 3.0
  * @param $closure
- * @return Closure
+ * @return \Closure
  */
 function mixedToClosure($closure)
 {
@@ -45,8 +41,8 @@ function mixedToClosure($closure)
 
 /**
  * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
- * @param null|string|Closure
- * @return Closure
+ * @param null|string|\Closure
+ * @return \Closure
  */
 function mixedToValueGetter($strategy)
 {
@@ -57,7 +53,7 @@ function mixedToValueGetter($strategy)
  * Try to transform something into a Closure.
  *
  * @param string|$closure
- * @return Closure
+ * @return \Closure
  */
 function mixedToOperationClosure($closure)
 {
@@ -65,8 +61,8 @@ function mixedToOperationClosure($closure)
         $closure = Reductions::getReduction($closure, $closure);
     }
 
-    if (!($closure instanceof Closure)) {
-        throw new InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "join", etc)');
+    if (!($closure instanceof \Closure)) {
+        throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "join", etc)');
     }
 
     return $closure;
@@ -85,8 +81,8 @@ function mixedToOperationClosure($closure)
  * > accumulate(['One', 'Two', 'Three'], function ($a, $b) { return $a . $b; })
  * 'One' 'OneTwo' 'OneTwoThree'
  *
- * @param array|string|Iterator $iterable
- * @param string|Closure $closure
+ * @param array|string|\Iterator $iterable
+ * @param string|\Closure $closure
  * @return AccumulateIterator
  */
 function accumulate($iterable, $closure = 'add')
@@ -109,8 +105,8 @@ function accumulate($iterable, $closure = 'add')
  * > reduce([], 'min', 1)
  * 1
  *
- * @param array|string|Iterator $iterable
- * @param string|Closure $closure
+ * @param array|string|\Iterator $iterable
+ * @param string|\Closure $closure
  * @param mixed $initializer
  * @return mixed
  */
@@ -140,13 +136,13 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  * > chain('ABC', 'DEF')
  * A B C D E F
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @return ChainIterator
  */
 function chain(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, func_get_args());
-    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
+    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
@@ -167,11 +163,11 @@ function chain(/* $iterable, $iterable2, ... */)
 function count($start = 0, $step = 1)
 {
     if (!(is_int($start) or is_float($start))) {
-        throw new InvalidArgumentException('Argument $START must be an integer or float');
+        throw new \InvalidArgumentException('Argument $START must be an integer or float');
     }
 
     if (!(is_int($step) or is_float($step))) {
-        throw new InvalidArgumentException('Argument $STEP must be an integer or float');
+        throw new \InvalidArgumentException('Argument $STEP must be an integer or float');
     }
 
     return new CountIterator($start, $step);
@@ -185,7 +181,7 @@ function count($start = 0, $step = 1)
  * > cycle('ABCD')
  * A B C D A B C D A B C D ...
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @return CycleIterator
  */
 function cycle($iterable)
@@ -215,8 +211,8 @@ function cycle($iterable)
  * > keyCallback('id', $list)
  * 1=>['id'=>1, 'title'=>'one'] 2=>['id'=>2, 'title'=>'two']
  *
- * @param string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return MapByIterator
  */
 function mapBy($strategy, $iterable)
@@ -226,8 +222,8 @@ function mapBy($strategy, $iterable)
 
 /**
  * @deprecated use mapBy() in stead, will be removed in version 3.0
- * @param string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return MapByIterator
  */
 function keyCallback($strategy, $iterable)
@@ -258,14 +254,14 @@ function keyCallback($strategy, $iterable)
  * > map($average, [1, 2, 3], [4, 5, 6]);
  * 2.5 3.5 4.5
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return MapIterator
  */
 function map($strategy, $iterable /*, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
-    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\MapIterator');
+    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
     return $reflectorClass->newInstanceArgs(array_merge(array(Conversions::mixedToValueGetter($strategy)), $iterables));
 }
 
@@ -275,15 +271,15 @@ function map($strategy, $iterable /*, $iterable2, ... */)
  *
  * @todo consider removing this, perhaps it is better to have a helper function in Mappings and call map() instead?
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @param bool $flatten
  * @return MapIterator
  */
 function select($strategy, $iterable, $flatten = true)
 {
     if (!is_bool($flatten)) {
-        throw new InvalidArgumentException('Argument $FLATTEN must be a boolean');
+        throw new \InvalidArgumentException('Argument $FLATTEN must be a boolean');
     }
 
     $ret = new MapIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
@@ -310,7 +306,7 @@ function select($strategy, $iterable, $flatten = true)
 function repeat($mixed, $times = null)
 {
     if (!(is_null($times) or (is_int($times) and $times >= 0))) {
-        throw new InvalidArgumentException('Argument $TIMES must be null or a positive integer');
+        throw new \InvalidArgumentException('Argument $TIMES must be null or a positive integer');
     }
 
     return new RepeatIterator($mixed, $times);
@@ -347,15 +343,15 @@ function repeat($mixed, $times = null)
  * > groupby('type', $list)
  * 'A'=>[['type'=>'A', 'title'=>'one'], ['type'=>'A', 'title'=>'two']] 'B'=>[['type'=>'B', 'title'=>'three']]
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @param boolean $sort
  * @return GroupbyIterator
  */
 function groupBy($strategy, $iterable, $sort = true)
 {
     if (!is_bool($sort)) {
-        throw new InvalidArgumentException('Argument $SORT must be a boolean');
+        throw new \InvalidArgumentException('Argument $SORT must be a boolean');
     }
 
     return new GroupbyIterator(
@@ -384,15 +380,15 @@ function groupBy($strategy, $iterable, $sort = true)
  * > sorted('type', $list)
  * ['type'=>'A', 'title'=>'first'] ['type'=>'B', 'title'=>'second']] ['type'=>'C', 'title'=>'third']
  *
- * @param string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @param boolean $reverse
  * @return SortedIterator
  */
 function sorted($strategy, $iterable, $reverse = false)
 {
     if (!is_bool($reverse)) {
-        throw new InvalidArgumentException('Argument $REVERSE must be boolean');
+        throw new \InvalidArgumentException('Argument $REVERSE must be boolean');
     }
     return new SortedIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable), $reverse);
 }
@@ -400,8 +396,8 @@ function sorted($strategy, $iterable, $reverse = false)
 /**
  * TODO: document!
  *
- * @param null|string|Closure $strategy, Optional, when not specified !empty will be used
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy, Optional, when not specified !empty will be used
+ * @param array|string|\Iterator $iterable
  * @return FilterIterator
  */
 function filter(/* [$strategy, ] $iterable */)
@@ -419,7 +415,7 @@ function filter(/* [$strategy, ] $iterable */)
             break;
 
         default:
-            throw new InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
+            throw new \InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     $strategy = Conversions::mixedToValueGetter($strategy);
@@ -435,9 +431,9 @@ function filter(/* [$strategy, ] $iterable */)
  * TODO: unit tests!
  *
  * @deprecated Use filter() instead, will be removed in version 3.0
- * @param string|Closure $strategy
- * @param Closure $closure Optional, when not specified !empty will be used
- * @param array|string|Iterator $iterable
+ * @param string|\Closure $strategy
+ * @param \Closure $closure Optional, when not specified !empty will be used
+ * @param array|string|\Iterator $iterable
  * @return FilterIterator
  */
 function filterBy(/* $strategy, [$closure, ] $iterable */)
@@ -458,7 +454,7 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
             break;
 
         default:
-            throw new InvalidArgumentException('filterBy requires either two (keyStrategy, iterable) or three (keyStrategy, closure, iterable) arguments');
+            throw new \InvalidArgumentException('filterBy requires either two (keyStrategy, iterable) or three (keyStrategy, closure, iterable) arguments');
     }
 
     return new FilterIterator($closure, $iterable);
@@ -467,22 +463,22 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
 /**
  * TODO: document!
  *
- * @param array|string|Iterator $iterable
- * @param array|string|Iterator $iterable2
- * @param array|string|Iterator $iterableN
+ * @param array|string|\Iterator $iterable
+ * @param array|string|\Iterator $iterable2
+ * @param array|string|\Iterator $iterableN
  * @return ZipIterator
  */
 function zip(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(function ($iterable) { return Conversions::mixedToIterator($iterable); }, func_get_args());
-    $reflectorClass = new ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
+    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
 /**
  * TODO: document!
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @return ReversedIterator
  */
 function reversed($iterable)
@@ -493,8 +489,8 @@ function reversed($iterable)
 /**
  * TODO: document!
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return UniqueIterator
  */
 function unique(/* [$strategy,] $iterable */)
@@ -512,7 +508,7 @@ function unique(/* [$strategy,] $iterable */)
             break;
 
         default:
-            throw new InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
+            throw new \InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     return new UniqueIterator(Conversions::mixedToValueGetter($strategy), Conversions::mixedToIterator($iterable));
@@ -522,8 +518,8 @@ function unique(/* [$strategy,] $iterable */)
  * TODO: document!
  *
  * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return UniqueIterator
  */
 function uniqueBy($strategy, $iterable)
@@ -534,8 +530,8 @@ function uniqueBy($strategy, $iterable)
 /**
  * TODO: document!
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return boolean
  */
 function any(/* [$strategy,] $iterable */)
@@ -553,7 +549,7 @@ function any(/* [$strategy,] $iterable */)
             break;
 
         default:
-            throw new InvalidArgumentException('any requires either one (iterable) or two (strategy, iterable) arguments');
+            throw new \InvalidArgumentException('any requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     foreach ($iterable as $item) {
@@ -568,8 +564,8 @@ function any(/* [$strategy,] $iterable */)
 /**
  * TODO: document!
  *
- * @param null|string|Closure $strategy
- * @param array|string|Iterator $iterable
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
  * @return boolean
  */
 function all(/* [$strategy,] $iterable */)
@@ -587,7 +583,7 @@ function all(/* [$strategy,] $iterable */)
             break;
 
         default:
-            throw new InvalidArgumentException('all requires either one (iterable) or two (strategy, iterable) arguments');
+            throw new \InvalidArgumentException('all requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
     foreach ($iterable as $item) {
@@ -603,7 +599,7 @@ function all(/* [$strategy,] $iterable */)
  * TODO: document!
  * TODO: unit tests!
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @param integer $start
  * @param null|integer $end
  * @return SliceIterator
@@ -611,10 +607,10 @@ function all(/* [$strategy,] $iterable */)
 function slice($iterable, $start, $end = null)
 {
     if (!is_int($start)) {
-        throw new InvalidArgumentException('Argument $START must be an integer');
+        throw new \InvalidArgumentException('Argument $START must be an integer');
     }
     if (!(is_null($end) || is_int($end))) {
-        throw new InvalidArgumentException('Argument $END must be an integer or null');
+        throw new \InvalidArgumentException('Argument $END must be an integer or null');
     }
     return new SliceIterator(Conversions::mixedToIterator($iterable), $start, $end);
 }
@@ -623,7 +619,7 @@ function slice($iterable, $start, $end = null)
  * TODO: document!
  * TODO: unit tests!
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
  */
@@ -640,7 +636,7 @@ function first($iterable, $default = null)
  * TODO: document!
  * TODO: unit tests!
  *
- * @param array|string|Iterator $iterable
+ * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
  */

@@ -2,12 +2,6 @@
 
 namespace Zicht\Itertools\lib;
 
-use ArrayAccess;
-use ArrayIterator;
-use Closure;
-use Countable;
-use Iterator;
-use IteratorIterator;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\GetterTrait;
@@ -16,7 +10,7 @@ use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 // todo: add unit tests for Countable interface
 // todo: add unit tests for ArrayAccess interface
 
-class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
+class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;
@@ -29,7 +23,7 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     public function __construct($groupKey)
     {
         $this->groupKey = $groupKey;
-        parent::__construct(new ArrayIterator());
+        parent::__construct(new \ArrayIterator());
     }
 
     public function getGroupKey()
@@ -40,7 +34,6 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     public function append($key, $value)
     {
         $this->getInnerIterator()->append(array($key, $value));
-        // var_dump(['add to' => $this->groupKey, 'key' => $key, 'value' => $value]);
     }
 
     public function current()
@@ -64,13 +57,13 @@ class GroupedIterator extends IteratorIterator implements Countable, ArrayAccess
     }
 }
 
-class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
+class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;
     use ItertoolChainingTrait;
 
-    public function __construct(Closure $func, Iterator $iterable)
+    public function __construct(\Closure $func, \Iterator $iterable)
     {
         // todo: this implementation pre-computes everything... this is
         // not the way an iterator should work.  Please re-write.
@@ -88,7 +81,7 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
             $groupedIterator->append($key, $value);
         }
 
-        parent::__construct(new ArrayIterator($data));
+        parent::__construct(new \ArrayIterator($data));
     }
 
     public function key()

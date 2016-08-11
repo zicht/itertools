@@ -7,7 +7,6 @@
 namespace Zicht\Itertools\twig;
 
 use Closure;
-use Iterator;
 use Twig_Extension;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
@@ -31,24 +30,27 @@ class Extension extends Twig_Extension
     public function getFilters()
     {
         return array(
+            // filter names are case-sensitive
             new Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
             new Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
             new Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
             new Twig_SimpleFilter('filter', '\Zicht\Itertools\filter'),
             new Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
-            new Twig_SimpleFilter('groupby', array($this, 'groupby')),
+            new Twig_SimpleFilter('groupBy', array($this, 'groupBy')),
             new Twig_SimpleFilter('last', '\Zicht\Itertools\last'),
             new Twig_SimpleFilter('map', array($this, 'map')),
-            new Twig_SimpleFilter('mapby', array($this, 'mapby')),
+            new Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
             new Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce'),
             new Twig_SimpleFilter('sorted', array($this, 'sorted')),
             new Twig_SimpleFilter('unique', array($this, 'unique')),
             new Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
 
             // deprecated filters
-            new Twig_SimpleFilter('filterby', array($this, 'filterby')),
+            new Twig_SimpleFilter('filterby', array($this, 'filterBy')),
+            new Twig_SimpleFilter('groupby', array($this, 'groupByLowercase')),
+            new Twig_SimpleFilter('mapby', array($this, 'mapByLowercase')),
             new Twig_SimpleFilter('sum', array($this, 'sum')),
-            new Twig_SimpleFilter('uniqueby', array($this, 'uniqueby')),
+            new Twig_SimpleFilter('uniqueby', array($this, 'uniqueBy')),
         );
     }
 
@@ -71,7 +73,7 @@ class Extension extends Twig_Extension
     /**
      * Takes an iterable and returns another iterable that is unique.
      *
-     * @param array|string|Iterator $iterable
+     * @param array|string|\Iterator $iterable
      * @param mixed $keyStrategy
      * @return iter\lib\UniqueIterator
      */
@@ -84,11 +86,11 @@ class Extension extends Twig_Extension
      * Takes an iterable and returns another iterable that is unique.
      *
      * @deprecated use unique($iterable, $keyStrategy) instead
-     * @param array|string|Iterator $iterable
+     * @param array|string|\Iterator $iterable
      * @param mixed $keyStrategy
      * @return iter\lib\UniqueIterator
      */
-    public function uniqueby($items, $keyStrategy)
+    public function uniqueBy($items, $keyStrategy)
     {
         return iter\unique($keyStrategy, $items);
     }
@@ -127,13 +129,29 @@ class Extension extends Twig_Extension
      * the same key function.
      *
      * @see \Zicht\Itertools\groupby
-     * @param array|string|Iterator $iterable
-     * @param string|Closure $keyStrategy
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\GroupbyIterator
      */
-    public function groupby($iterable, $keyStrategy)
+    public function groupBy($iterable, $keyStrategy)
     {
-        return iter\groupby($keyStrategy, $iterable);
+        return iter\groupBy($keyStrategy, $iterable);
+    }
+
+    /**
+     * Make an iterator that returns consecutive groups from the
+     * $iterable.  Generally, the $iterable needs to already be sorted on
+     * the same key function.
+     *
+     * @deprecated Use groupBy instead! (upper-case B)
+     * @see \Zicht\Itertools\groupby
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
+     * @return iter\lib\GroupbyIterator
+     */
+    public function groupByLowercase($iterable, $keyStrategy)
+    {
+        return iter\groupBy($keyStrategy, $iterable);
     }
 
     /**
@@ -141,8 +159,8 @@ class Extension extends Twig_Extension
      * $keyStrategy.
      *
      * @see \Zicht\Itertools\sorted
-     * @param array|string|Iterator $iterable
-     * @param string|Closure $keyStrategy
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
      * @param bool $reverse
      * @return iter\lib\SortedIterator
      */
@@ -155,8 +173,8 @@ class Extension extends Twig_Extension
      * Make an iterator that applies $func to every entry in the $iterables.
      *
      * @see \Zicht\Itertools\map
-     * @param array|string|Iterator $iterable
-     * @param string|Closure $keyStrategy
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\MapIterator
      */
     public function map($iterable, $keyStrategy)
@@ -169,22 +187,37 @@ class Extension extends Twig_Extension
      * $keyStrategy.
      *
      * @see \Zicht\Itertools\mapby
-     * @param array|string|Iterator $iterable
-     * @param string|Closure $keyStrategy
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\MapByIterator
      */
-    public function mapby($iterable, $keyStrategy)
+    public function mapBy($iterable, $keyStrategy)
+    {
+        return iter\mapBy($keyStrategy, $iterable);
+    }
+
+    /**
+     * Make an iterator returning values from $iterable and keys from
+     * $keyStrategy.
+     *
+     * @deprecated Use mapBy instead! (upper-case B)
+     * @see \Zicht\Itertools\mapby
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
+     * @return iter\lib\MapByIterator
+     */
+    public function mapByLowercase($iterable, $keyStrategy)
     {
         return iter\mapBy($keyStrategy, $iterable);
     }
 
     /**
      * @see \Zicht\Itertools\filterby
-     * @param array|string|Iterator $iterable
-     * @param string|Closure $keyStrategy
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $keyStrategy
      * @return iter\lib\FilterIterator
      */
-    public function filterby($iterable, $keyStrategy)
+    public function filterBy($iterable, $keyStrategy)
     {
         return iter\filterBy($keyStrategy, $iterable);
     }

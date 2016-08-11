@@ -47,7 +47,7 @@ class Mappings
                 return call_user_func_array('\Zicht\Itertools\util\Mappings::strip', array_slice(func_get_args(), 1));
 
             default:
-                throw new InvalidArgumentException(sprintf('$NAME "%s" is not a valid mapping.', $name));
+                throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid mapping.', $name));
         }
     }
 }
