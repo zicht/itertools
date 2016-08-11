@@ -7,12 +7,14 @@ use Closure;
 use Countable;
 use Iterator;
 use IteratorIterator;
+use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\ItertoolChainingTrait;
 
-class SortedIterator extends IteratorIterator implements Countable
+class SortedIterator extends IteratorIterator implements Countable, \ArrayAccess
 {
+    use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
     use ItertoolChainingTrait;
