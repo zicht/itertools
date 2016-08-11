@@ -68,6 +68,7 @@ class GroupbyIterator extends IteratorIterator implements Countable, ArrayAccess
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;
+    use ItertoolChainingTrait;
 
     public function __construct(Closure $func, Iterator $iterable)
     {
