@@ -6,93 +6,64 @@
 
 namespace Zicht\Itertools\util;
 
+/**
+ * @deprecated Use \Zicht\Itertools\reductions, will be removed in version 3.0
+ */
 class Reductions
 {
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\add, will be removed in version 3.0
+     */
     public static function add()
     {
-        return function ($a, $b) {
-            if (!is_numeric($a)) {
-                throw new \InvalidArgumentException('Argument $A must be numeric to perform addition');
-            }
-            if (!is_numeric($b)) {
-                throw new \InvalidArgumentException('Argument $B must be numeric to perform addition');
-            }
-            return $a + $b;
-        };
+        return \Zicht\Itertools\reductions\add();
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\sub, will be removed in version 3.0
+     */
     public static function sub()
     {
-        return function ($a, $b) {
-            if (!is_numeric($a)) {
-                throw new \InvalidArgumentException('Argument $A must be numeric to perform subtraction');
-            }
-            if (!is_numeric($b)) {
-                throw new \InvalidArgumentException('Argument $B must be numeric to perform subtraction');
-            }
-            return $a - $b;
-        };
+        return \Zicht\Itertools\reductions\sub();
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\mul, will be removed in version 3.0
+     */
     public static function mul()
     {
-        return function ($a, $b) {
-            if (!is_numeric($a)) {
-                throw new \InvalidArgumentException('Argument $A must be numeric to perform multiplication');
-            }
-            if (!is_numeric($b)) {
-                throw new \InvalidArgumentException('Argument $B must be numeric to perform multiplication');
-            }
-            return $a * $b;
-        };
+        return \Zicht\Itertools\reductions\mul();
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\min, will be removed in version 3.0
+     */
     public static function min()
     {
-        return function ($a, $b) {
-            if (!is_numeric($a)) {
-                throw new \InvalidArgumentException('Argument $A must be numeric to determine minimum');
-            }
-            if (!is_numeric($b)) {
-                throw new \InvalidArgumentException('Argument $B must be numeric to determine minimum');
-            }
-            return $a < $b ? $a : $b;
-        };
+        return \Zicht\Itertools\reductions\min();
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\max, will be removed in version 3.0
+     */
     public static function max()
     {
-        return function ($a, $b) {
-            if (!is_numeric($a)) {
-                throw new \InvalidArgumentException('Argument $A must be numeric to determine maximum');
-            }
-            if (!is_numeric($b)) {
-                throw new \InvalidArgumentException('Argument $B must be numeric to determine maximum');
-            }
-            return $a < $b ? $b : $a;
-        };
+        return \Zicht\Itertools\reductions\max();
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\reductions\join, will be removed in version 3.0
+     */
     public static function join($glue = '')
     {
-        if (!is_string($glue)) {
-            throw new \InvalidArgumentException('Argument $GLUE must be a string to join');
-        }
-        return function ($a, $b) use ($glue) {
-            if (!is_string($a)) {
-                throw new \InvalidArgumentException('Argument $A must be a string to join');
-            }
-            if (!is_string($b)) {
-                throw new \InvalidArgumentException('Argument $B must be a string to join');
-            }
-            return join($glue, [$a, $b]);
-        };
+        return \Zicht\Itertools\reductions\join($glue);
     }
 
     /**
      * @todo Remove the default parameter.  It should behave like getMappings,
      * @todo i.e. allowing parameters to pass to the specific reductions and throwing
      * @todo an exception when $NAME does not correspond to a known reduction
+     * @deprecated Use \Zicht\Itertools\reductions\getReduction, note that this has a different API, will be removed in version 3.0
      * @param string $name
      * @param null $default
      * @return \Closure|null
@@ -101,17 +72,17 @@ class Reductions
     {
         switch ($name) {
             case 'add':
-                return Reductions::add();
+                return \Zicht\Itertools\reductions\add();
             case 'sub':
-                return Reductions::sub();
+                return \Zicht\Itertools\reductions\sub();
             case 'mul':
-                return Reductions::mul();
+                return \Zicht\Itertools\reductions\mul();
             case 'min':
-                return Reductions::min();
+                return \Zicht\Itertools\reductions\min();
             case 'max':
-                return Reductions::max();
+                return \Zicht\Itertools\reductions\max();
             case 'join':
-                return Reductions::join();
+                return \Zicht\Itertools\reductions\join();
             default:
                 return $default;
         }

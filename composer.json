@@ -14,6 +14,12 @@
     "minimum-stability": "stable",
     "autoload": {
       "psr-0": { "": ["src/", "tests/"] },
-      "files": ["src/Zicht/Itertools/itertools.php"]
+      "files": [
+          "src/Zicht/Itertools/conversions.php",
+          "src/Zicht/Itertools/filters.php",
+          "src/Zicht/Itertools/itertools.php",
+          "src/Zicht/Itertools/mappings.php",
+          "src/Zicht/Itertools/reductions.php"
+      ]
     }
 }

@@ -6,10 +6,14 @@
 
 namespace Zicht\Itertools\util;
 
-use InvalidArgumentException;
-
+/**
+ * @deprecated Use \Zicht\Itertools\mappings, will be removed in version 3.0
+ */
 class Mappings
 {
+    /**
+     * @deprecated Use \Zicht\Itertools\mappings\lstrip, will be removed in version 3.0
+     */
     public static function lstrip($chars = " \t\n\r\0\x0B")
     {
         return function ($value) use ($chars) {
@@ -17,6 +21,9 @@ class Mappings
         };
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\mappings\rstrip, will be removed in version 3.0
+     */
     public static function rstrip($chars = " \t\n\r\0\x0B")
     {
         return function ($value) use ($chars) {
@@ -24,6 +31,9 @@ class Mappings
         };
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\mappings\strip, will be removed in version 3.0
+     */
     public static function strip($chars = " \t\n\r\0\x0B")
     {
         return function ($value) use ($chars) {
@@ -31,6 +41,9 @@ class Mappings
         };
     }
 
+    /**
+     * @deprecated Use \Zicht\Itertools\mappings\getMapping, will be removed in version 3.0
+     */
     public static function getMapping($name /* [argument, [arguments, ...] */)
     {
         switch ($name) {
