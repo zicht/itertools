@@ -11,12 +11,12 @@ use Zicht\Itertools as iter;
 trait GroupByTrait
 {
     /**
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @param bool $sort
      * @return iter\lib\GroupbyIterator
      */
-    public function groupBy($keyStrategy, $sort = true)
+    public function groupBy($strategy, $sort = true)
     {
-        return iter\groupBy($keyStrategy, $this, $sort);
+        return iter\groupBy($strategy, $this, $sort);
     }
 }

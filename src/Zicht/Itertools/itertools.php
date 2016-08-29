@@ -469,7 +469,7 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
             break;
 
         default:
-            throw new \InvalidArgumentException('filterBy requires either two (keyStrategy, iterable) or three (keyStrategy, closure, iterable) arguments');
+            throw new \InvalidArgumentException('filterBy requires either two (strategy, iterable) or three (strategy, closure, iterable) arguments');
     }
 
     return new FilterIterator($closure, $iterable);

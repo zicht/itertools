@@ -74,25 +74,25 @@ class Extension extends Twig_Extension
      * Takes an iterable and returns another iterable that is unique.
      *
      * @param array|string|\Iterator $iterable
-     * @param mixed $keyStrategy
+     * @param mixed $strategy
      * @return iter\lib\UniqueIterator
      */
-    public function unique($items, $keyStrategy = null)
+    public function unique($items, $strategy = null)
     {
-        return iter\unique($keyStrategy, $items);
+        return iter\unique($strategy, $items);
     }
 
     /**
      * Takes an iterable and returns another iterable that is unique.
      *
-     * @deprecated use unique($iterable, $keyStrategy) instead
+     * @deprecated use unique($iterable, $strategy) instead
      * @param array|string|\Iterator $iterable
-     * @param mixed $keyStrategy
+     * @param mixed $strategy
      * @return iter\lib\UniqueIterator
      */
-    public function uniqueBy($items, $keyStrategy)
+    public function uniqueBy($items, $strategy)
     {
-        return iter\unique($keyStrategy, $items);
+        return iter\unique($strategy, $items);
     }
 
     /**
@@ -130,12 +130,12 @@ class Extension extends Twig_Extension
      *
      * @see \Zicht\Itertools\groupby
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\GroupbyIterator
      */
-    public function groupBy($iterable, $keyStrategy)
+    public function groupBy($iterable, $strategy)
     {
-        return iter\groupBy($keyStrategy, $iterable);
+        return iter\groupBy($strategy, $iterable);
     }
 
     /**
@@ -146,12 +146,12 @@ class Extension extends Twig_Extension
      * @deprecated Use groupBy instead! (upper-case B)
      * @see \Zicht\Itertools\groupby
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\GroupbyIterator
      */
-    public function groupByLowercase($iterable, $keyStrategy)
+    public function groupByLowercase($iterable, $strategy)
     {
-        return iter\groupBy($keyStrategy, $iterable);
+        return iter\groupBy($strategy, $iterable);
     }
 
     /**
@@ -169,17 +169,17 @@ class Extension extends Twig_Extension
 
     /**
      * Make an iterator that returns the values from $iterable sorted by
-     * $keyStrategy.
+     * $strategy.
      *
      * @see \Zicht\Itertools\sorted
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @param bool $reverse
      * @return iter\lib\SortedIterator
      */
-    public function sorted($iterable, $keyStrategy = null, $reverse = false)
+    public function sorted($iterable, $strategy = null, $reverse = false)
     {
-        return iter\sorted($keyStrategy, $iterable, $reverse);
+        return iter\sorted($strategy, $iterable, $reverse);
     }
 
     /**
@@ -187,52 +187,52 @@ class Extension extends Twig_Extension
      *
      * @see \Zicht\Itertools\map
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\MapIterator
      */
-    public function map($iterable, $keyStrategy)
+    public function map($iterable, $strategy)
     {
-        return iter\map($keyStrategy, $iterable);
+        return iter\map($strategy, $iterable);
     }
 
     /**
      * Make an iterator returning values from $iterable and keys from
-     * $keyStrategy.
+     * $strategy.
      *
      * @see \Zicht\Itertools\mapby
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\MapByIterator
      */
-    public function mapBy($iterable, $keyStrategy)
+    public function mapBy($iterable, $strategy)
     {
-        return iter\mapBy($keyStrategy, $iterable);
+        return iter\mapBy($strategy, $iterable);
     }
 
     /**
      * Make an iterator returning values from $iterable and keys from
-     * $keyStrategy.
+     * $strategy.
      *
      * @deprecated Use mapBy instead! (upper-case B)
      * @see \Zicht\Itertools\mapby
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\MapByIterator
      */
-    public function mapByLowercase($iterable, $keyStrategy)
+    public function mapByLowercase($iterable, $strategy)
     {
-        return iter\mapBy($keyStrategy, $iterable);
+        return iter\mapBy($strategy, $iterable);
     }
 
     /**
      * @see \Zicht\Itertools\filterby
      * @param array|string|\Iterator $iterable
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\FilterIterator
      */
-    public function filterBy($iterable, $keyStrategy)
+    public function filterBy($iterable, $strategy)
     {
-        return iter\filterBy($keyStrategy, $iterable);
+        return iter\filterBy($strategy, $iterable);
     }
 
     /**
