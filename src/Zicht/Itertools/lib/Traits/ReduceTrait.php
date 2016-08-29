@@ -13,8 +13,8 @@ trait ReduceTrait
     /**
      * @return mixed
      */
-    public function reduce()
+    public function reduce($closure = 'add', $initializer = null)
     {
-        return iter\reduce($this, $closure = 'add', $initializer = null);
+        return iter\reduce($this, $closure, $initializer);
     }
 }
