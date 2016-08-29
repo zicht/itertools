@@ -34,7 +34,7 @@ class Extension extends Twig_Extension
             new Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
             new Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
             new Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
-            new Twig_SimpleFilter('filter', '\Zicht\Itertools\filter'),
+            new Twig_SimpleFilter('filter', array($this, 'filter')),
             new Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
             new Twig_SimpleFilter('groupBy', array($this, 'groupBy')),
             new Twig_SimpleFilter('last', '\Zicht\Itertools\last'),
@@ -152,6 +152,19 @@ class Extension extends Twig_Extension
     public function groupByLowercase($iterable, $keyStrategy)
     {
         return iter\groupBy($keyStrategy, $iterable);
+    }
+
+    /**
+     * Make an iterator that returns values from $iterable where the
+     * $strategy determines that the values are not empty.
+     *
+     * @param $iterable
+     * @param null $strategy
+     * @return iter\lib\FilterIterator
+     */
+    public function filter($iterable, $strategy = null)
+    {
+        return iter\filter($strategy, $iterable);
     }
 
     /**

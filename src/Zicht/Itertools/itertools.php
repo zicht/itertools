@@ -408,7 +408,8 @@ function sorted($strategy, $iterable, $reverse = false)
 }
 
 /**
- * TODO: document!
+ * Make an iterator that returns values from $iterable where the
+ * $strategy determines that the values are not empty.
  *
  * @param null|string|\Closure $strategy, Optional, when not specified !empty will be used
  * @param array|string|\Iterator $iterable
