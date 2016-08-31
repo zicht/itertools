@@ -48,7 +48,7 @@ class FilterIterator extends \FilterIterator implements \Countable
 
     private $func;
 
-    function __construct(\Closure $func,\ Iterator $iterable)
+    function __construct(\Closure $func, \Iterator $iterable)
     {
         $this->func = $func;
         parent::__construct($iterable);
@@ -56,7 +56,7 @@ class FilterIterator extends \FilterIterator implements \Countable
 
     public function accept()
     {
-        return call_user_func($this->func, $this->current());
+        return call_user_func_array($this->func, array($this->current(), $this->key()));
     }
 
     public function toArray()

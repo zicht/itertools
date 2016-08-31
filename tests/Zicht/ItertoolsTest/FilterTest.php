@@ -44,21 +44,33 @@ class FilterTest extends PHPUnit_Framework_TestCase
         return array(
             // with closure
             array(
-                array(function ($a) { return true; }, array(0, -1, 2, -3)),
+                array(function ($value) { return true; }, array(0, -1, 2, -3)),
                 array(0, 1, 2, 3),
                 array(0, -1, 2, -3)),
             array(
-                array(function ($a) { return false; }, array(0, -1, 2, -3)),
+                array(function ($value) { return false; }, array(0, -1, 2, -3)),
                 array(),
                 array()),
             array(
-                array(function ($a) { return 0 < $a; }, array(0, -1, 2, -3)),
+                array(function ($value) { return 0 < $value; }, array(0, -1, 2, -3)),
                 array(2),
                 array(2)),
             array(
-                array(function ($a) { return $a < 0; }, array(0, -1, 2, -3)),
+                array(function ($value) { return $value < 0; }, array(0, -1, 2, -3)),
                 array(1, 3),
                 array(-1, -3)),
+
+            // single iterable using both key and value
+            array(
+                array(function ($value, $key) { return $key < 3; }, array('a', 'b', 'c', 'd', 'e')),
+                array(0, 1, 2),
+                array('a', 'b', 'c'),
+            ),
+            array(
+                array(function ($value, $key) { return 3 <= $key; }, array('a', 'b', 'c', 'd', 'e')),
+                array(3, 4),
+                array('d', 'e'),
+            ),
 
             // without closure (this uses !empty as a closure)
             array(

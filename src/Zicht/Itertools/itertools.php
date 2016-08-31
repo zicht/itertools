@@ -434,8 +434,8 @@ function filter(/* [$strategy, ] $iterable */)
     }
 
     $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($strategy);
-    $isValid = function ($value) use ($strategy) {
-        return !empty($strategy($value));
+    $isValid = function ($value, $key) use ($strategy) {
+        return !empty($strategy($value, $key));
     };
 
     return new FilterIterator($isValid, \Zicht\Itertools\conversions\mixedToIterator($iterable));
