@@ -11,11 +11,11 @@ use Zicht\Itertools as iter;
 trait MapByTrait
 {
     /**
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\MapByIterator
      */
-    public function mapBy($keyStrategy)
+    public function mapBy($strategy)
     {
-        return iter\mapBy($keyStrategy, $this);
+        return iter\mapBy($strategy, $this);
     }
 }

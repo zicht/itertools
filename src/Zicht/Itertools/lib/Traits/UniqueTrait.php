@@ -11,11 +11,11 @@ use Zicht\Itertools as iter;
 trait UniqueTrait
 {
     /**
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @return iter\lib\UniqueIterator
      */
-    public function unique($keyStrategy = null)
+    public function unique($strategy = null)
     {
-        return iter\unique($keyStrategy, $this);
+        return iter\unique($strategy, $this);
     }
 }

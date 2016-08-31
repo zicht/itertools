@@ -11,12 +11,12 @@ use Zicht\Itertools as iter;
 trait SortedTrait
 {
     /**
-     * @param string|\Closure $keyStrategy
+     * @param string|\Closure $strategy
      * @param bool $reverse
      * @return iter\lib\SortedIterator
      */
-    public function sorted($keyStrategy = null, $reverse = false)
+    public function sorted($strategy = null, $reverse = false)
     {
-        return iter\sorted($keyStrategy, $this, $reverse);
+        return iter\sorted($strategy, $this, $reverse);
     }
 }
