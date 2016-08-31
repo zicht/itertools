@@ -24,6 +24,7 @@ use Zicht\Itertools\lib\Traits\ZipTrait;
 
 // todo: add unit tests for Countable interface
 // todo: add unit tests for ArrayAccess interface
+// todo: place the two classed in their own file
 
 class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
