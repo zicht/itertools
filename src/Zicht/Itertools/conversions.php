@@ -76,14 +76,18 @@ function mixedToClosure($closure)
         };
     }
 
-    if (is_callable($closure)) {
-        $closure = function () use($closure) {
-            return call_user_func_array($closure, func_get_args());
-        };
-    }
-
     if (!($closure instanceof \Closure)) {
-        throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure');
+
+        // A \Closure is always callable, but a callable is not always a \Closure.
+        // Checking within this if statement is a slight optimization, preventing an unnecessary function wrap
+        if (is_callable($closure)) {
+            $closure = function () use($closure) {
+                return call_user_func_array($closure, func_get_args());
+            };
+
+        } else {
+            throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure');
+        }
     }
 
     return $closure;
