@@ -16,6 +16,6 @@ trait AnyTrait
      */
     public function any($closure = null)
     {
-        return iter\any($closure === null ? function ($item) { return !empty($item); } : $closure, $this);
+        return iter\any($closure, $this);
     }
 }

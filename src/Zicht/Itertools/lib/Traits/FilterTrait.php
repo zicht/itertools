@@ -16,6 +16,6 @@ trait FilterTrait
      */
     public function filter($closure = null)
     {
-        return iter\filter($closure === null ? function ($item) { return !empty($item); } : $closure, $this);
+        return iter\filter($closure, $this);
     }
 }

@@ -16,6 +16,6 @@ trait AllTrait
      */
     public function all($closure = null)
     {
-        return iter\all($closure === null ? function ($item) { return !empty($item); } : $closure, $this);
+        return iter\all($closure, $this);
     }
 }
