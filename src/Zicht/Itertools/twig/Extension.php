@@ -6,7 +6,6 @@
 
 namespace Zicht\Itertools\twig;
 
-use Closure;
 use Twig_Extension;
 use Twig_SimpleFilter;
 use Twig_SimpleFunction;
@@ -41,6 +40,7 @@ class Extension extends Twig_Extension
             new Twig_SimpleFilter('map', array($this, 'map')),
             new Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
             new Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce'),
+            new Twig_SimpleFilter('reversed', '\Zicht\Itertools\reversed'),
             new Twig_SimpleFilter('sorted', array($this, 'sorted')),
             new Twig_SimpleFilter('unique', array($this, 'unique')),
             new Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
