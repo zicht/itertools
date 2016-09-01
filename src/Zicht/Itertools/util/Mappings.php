@@ -42,6 +42,16 @@ class Mappings
     }
 
     /**
+     * @deprecated Use \Zicht\Itertools\mappings\length, will be removed in version 3.0
+     */
+    public static function length()
+    {
+        return function ($value) {
+            return sizeof($value);
+        };
+    }
+
+    /**
      * @deprecated Use \Zicht\Itertools\mappings\getMapping, will be removed in version 3.0
      */
     public static function getMapping($name /* [argument, [arguments, ...] */)
@@ -58,6 +68,9 @@ class Mappings
             case 'trim':
             case 'strip':
                 return call_user_func_array('\Zicht\Itertools\util\Mappings::strip', array_slice(func_get_args(), 1));
+
+            case 'length':
+                return call_user_func_array('\Zicht\Itertools\util\Mappings::length', array_slice(func_get_args(), 1));
 
             default:
                 throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid mapping.', $name));
