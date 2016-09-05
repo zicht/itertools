@@ -435,7 +435,8 @@ function filter(/* [$strategy, ] $iterable */)
 
     $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($strategy);
     $isValid = function ($value, $key) use ($strategy) {
-        return !empty($strategy($value, $key));
+        $tempVarPhp54 = $strategy($value, $key);
+        return !empty($tempVarPhp54);
     };
 
     return new FilterIterator($isValid, \Zicht\Itertools\conversions\mixedToIterator($iterable));
@@ -574,7 +575,8 @@ function any(/* [$strategy,] $iterable */)
     }
 
     foreach ($iterable as $item) {
-        if (!empty(call_user_func($strategy, $item))) {
+        $tempVarPhp54 = call_user_func($strategy, $item);
+        if (!empty($tempVarPhp54)) {
             return true;
         }
     }
@@ -608,7 +610,8 @@ function all(/* [$strategy,] $iterable */)
     }
 
     foreach ($iterable as $item) {
-        if (empty(call_user_func($strategy, $item))) {
+        $tempVarPhp54 = call_user_func($strategy, $item);
+        if (empty($tempVarPhp54)) {
             return false;
         }
     }
