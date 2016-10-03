@@ -2,6 +2,7 @@
 
 namespace Zicht\Itertools;
 
+use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -17,6 +18,7 @@ use Zicht\Itertools\lib\SliceIterator;
 use Zicht\Itertools\lib\SortedIterator;
 use Zicht\Itertools\lib\UniqueIterator;
 use Zicht\Itertools\lib\ZipIterator;
+use Zicht\Itertools\reductions;
 
 /**
  * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
@@ -25,7 +27,7 @@ use Zicht\Itertools\lib\ZipIterator;
  */
 function mixedToIterator($iterable)
 {
-    return \Zicht\Itertools\conversions\mixedToIterator($iterable);
+    return conversions\mixedToIterator($iterable);
 }
 
 /**
@@ -35,7 +37,7 @@ function mixedToIterator($iterable)
  */
 function mixedToClosure($closure)
 {
-    return \Zicht\Itertools\conversions\mixedToClosure($closure);
+    return conversions\mixedToClosure($closure);
 }
 
 /**
@@ -45,7 +47,7 @@ function mixedToClosure($closure)
  */
 function mixedToValueGetter($strategy)
 {
-    return \Zicht\Itertools\conversions\mixedToValueGetter($strategy);
+    return conversions\mixedToValueGetter($strategy);
 }
 
 /**
@@ -58,7 +60,7 @@ function mixedToValueGetter($strategy)
 function mixedToOperationClosure($closure)
 {
     if (is_string($closure)) {
-        $closure = \Zicht\Itertools\reductions\getReduction($closure, $closure);
+        $closure = reductions\getReduction($closure, $closure);
     }
 
     if (!($closure instanceof \Closure)) {
@@ -88,8 +90,8 @@ function mixedToOperationClosure($closure)
 function accumulate($iterable, $closure = 'add')
 {
     return new AccumulateIterator(
-        \Zicht\Itertools\conversions\mixedToIterator($iterable),
-        $closure instanceof \Closure ? $closure : \Zicht\Itertools\reductions\getReduction($closure)
+        conversions\mixedToIterator($iterable),
+        $closure instanceof \Closure ? $closure : reductions\getReduction($closure)
     );
 }
 
@@ -144,7 +146,7 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  */
 function chain(/* $iterable, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return \Zicht\Itertools\conversions\mixedToIterator($iterable); }, func_get_args());
+    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, func_get_args());
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
@@ -189,7 +191,7 @@ function count($start = 0, $step = 1)
  */
 function cycle($iterable)
 {
-    return new CycleIterator(\Zicht\Itertools\conversions\mixedToIterator($iterable));
+    return new CycleIterator(conversions\mixedToIterator($iterable));
 }
 
 /**
@@ -221,8 +223,8 @@ function cycle($iterable)
 function mapBy($strategy, $iterable)
 {
     return new MapByIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        \Zicht\Itertools\conversions\mixedToIterator($iterable)
+        conversions\mixedToValueGetter($strategy),
+        conversions\mixedToIterator($iterable)
     );
 }
 
@@ -266,9 +268,9 @@ function keyCallback($strategy, $iterable)
  */
 function map($strategy, $iterable /*, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return \Zicht\Itertools\conversions\mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
+    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
-    return $reflectorClass->newInstanceArgs(array_merge(array(\Zicht\Itertools\conversions\mixedToValueGetter($strategy)), $iterables));
+    return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixedToValueGetter($strategy)), $iterables));
 }
 
 /**
@@ -289,8 +291,8 @@ function select($strategy, $iterable, $flatten = true)
     }
 
     $ret = new MapIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        \Zicht\Itertools\conversions\mixedToIterator($iterable)
+        conversions\mixedToValueGetter($strategy),
+        conversions\mixedToIterator($iterable)
     );
     if ($flatten) {
         return array_values(iterator_to_array($ret));
@@ -365,8 +367,8 @@ function groupBy($strategy, $iterable, $sort = true)
     }
 
     return new GroupbyIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        $sort ? sorted($strategy, $iterable) : \Zicht\Itertools\conversions\mixedToIterator($iterable)
+        conversions\mixedToValueGetter($strategy),
+        $sort ? sorted($strategy, $iterable) : conversions\mixedToIterator($iterable)
     );
 }
 
@@ -402,8 +404,8 @@ function sorted($strategy, $iterable, $reverse = false)
         throw new \InvalidArgumentException('Argument $REVERSE must be boolean');
     }
     return new SortedIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        \Zicht\Itertools\conversions\mixedToIterator($iterable),
+        conversions\mixedToValueGetter($strategy),
+        conversions\mixedToIterator($iterable),
         $reverse
     );
 }
@@ -434,13 +436,13 @@ function filter(/* [$strategy, ] $iterable */)
             throw new \InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixedToValueGetter($strategy);
     $isValid = function ($value, $key) use ($strategy) {
         $tempVarPhp54 = $strategy($value, $key);
         return !empty($tempVarPhp54);
     };
 
-    return new FilterIterator($isValid, \Zicht\Itertools\conversions\mixedToIterator($iterable));
+    return new FilterIterator($isValid, conversions\mixedToIterator($iterable));
 }
 
 /**
@@ -458,16 +460,16 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 2:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($args[0]);
+            $strategy = conversions\mixedToValueGetter($args[0]);
             $closure = function ($item) use ($strategy) { $tempVarPhp54 = call_user_func($strategy, $item); return !empty($tempVarPhp54); };
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[1]);
+            $iterable = conversions\mixedToIterator($args[1]);
             break;
 
         case 3:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($args[0]);
+            $strategy = conversions\mixedToValueGetter($args[0]);
             $userClosure = $args[1];
             $closure = function ($item) use ($strategy, $userClosure) { return call_user_func($userClosure, call_user_func($strategy, $item)); };
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[2]);
+            $iterable = conversions\mixedToIterator($args[2]);
             break;
 
         default:
@@ -487,7 +489,7 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
  */
 function zip(/* $iterable, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return \Zicht\Itertools\conversions\mixedToIterator($iterable); }, func_get_args());
+    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, func_get_args());
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
@@ -500,7 +502,7 @@ function zip(/* $iterable, $iterable2, ... */)
  */
 function reversed($iterable)
 {
-    return new ReversedIterator(\Zicht\Itertools\conversions\mixedToIterator($iterable));
+    return new ReversedIterator(conversions\mixedToIterator($iterable));
 }
 
 /**
@@ -529,8 +531,8 @@ function unique(/* [$strategy,] $iterable */)
     }
 
     return new UniqueIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        \Zicht\Itertools\conversions\mixedToIterator($iterable)
+        conversions\mixedToValueGetter($strategy),
+        conversions\mixedToIterator($iterable)
     );
 }
 
@@ -545,8 +547,8 @@ function unique(/* [$strategy,] $iterable */)
 function uniqueBy($strategy, $iterable)
 {
     return new UniqueIterator(
-        \Zicht\Itertools\conversions\mixedToValueGetter($strategy),
-        \Zicht\Itertools\conversions\mixedToIterator($iterable)
+        conversions\mixedToValueGetter($strategy),
+        conversions\mixedToIterator($iterable)
     );
 }
 
@@ -562,13 +564,13 @@ function any(/* [$strategy,] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter(null);
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[0]);
+            $strategy = conversions\mixedToValueGetter(null);
+            $iterable = conversions\mixedToIterator($args[0]);
             break;
 
         case 2:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($args[0]);
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[1]);
+            $strategy = conversions\mixedToValueGetter($args[0]);
+            $iterable = conversions\mixedToIterator($args[1]);
             break;
 
         default:
@@ -597,13 +599,13 @@ function all(/* [$strategy,] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter(null);
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[0]);
+            $strategy = conversions\mixedToValueGetter(null);
+            $iterable = conversions\mixedToIterator($args[0]);
             break;
 
         case 2:
-            $strategy = \Zicht\Itertools\conversions\mixedToValueGetter($args[0]);
-            $iterable = \Zicht\Itertools\conversions\mixedToIterator($args[1]);
+            $strategy = conversions\mixedToValueGetter($args[0]);
+            $iterable = conversions\mixedToIterator($args[1]);
             break;
 
         default:
@@ -637,7 +639,7 @@ function slice($iterable, $start, $end = null)
     if (!(is_null($end) || is_int($end))) {
         throw new \InvalidArgumentException('Argument $END must be an integer or null');
     }
-    return new SliceIterator(\Zicht\Itertools\conversions\mixedToIterator($iterable), $start, $end);
+    return new SliceIterator(conversions\mixedToIterator($iterable), $start, $end);
 }
 
 /**
@@ -651,7 +653,7 @@ function slice($iterable, $start, $end = null)
 function first($iterable, $default = null)
 {
     $item = $default;
-    foreach (\Zicht\Itertools\conversions\mixedToIterator($iterable) as $item) {
+    foreach (conversions\mixedToIterator($iterable) as $item) {
         break;
     }
     return $item;
@@ -668,7 +670,7 @@ function first($iterable, $default = null)
 function last($iterable, $default = null)
 {
     $item = $default;
-    foreach (\Zicht\Itertools\conversions\mixedToIterator($iterable) as $item) {}
+    foreach (conversions\mixedToIterator($iterable) as $item) {}
     return $item;
 }
 
@@ -681,5 +683,5 @@ function last($iterable, $default = null)
  */
 function iterable($iterable)
 {
-    return new IterableIterator(\Zicht\Itertools\conversions\mixedToIterator($iterable));
+    return new IterableIterator(conversions\mixedToIterator($iterable));
 }
