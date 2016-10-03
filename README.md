@@ -56,7 +56,7 @@ $vehicles = [
 ## Usage within PHP code
 ### Fluent interface
 One way to use the Iterator Tools is to convert the array, Iterator, string, etc into an
-IterableIterator.  This class provides a fluent interface all of the common operations.
+`IterableIterator`.  This class provides a fluent interface all of the common operations.
 For example:
 
 ```
@@ -105,6 +105,21 @@ $lengths = iterable($words)->map(length());
 var_dump($lengths->toArray());
 // [6, 3, 4, 5, 9]
 ```
+
+### Filtering
+_todo_
+
+### Sorting
+_todo_
+
+### Grouping
+_todo_
+
+### Chaining
+_todo_
+
+### Reducing
+_todo_
 
 ## Usage within Twig template
 _todo_
