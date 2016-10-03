@@ -5,18 +5,18 @@ namespace Zicht\ItertoolsTest;
 use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
-class ItertoolsChainingTest extends PHPUnit_Framework_TestCase
+class FluentInterfaceTest extends PHPUnit_Framework_TestCase
 {
-    public function testChain()
+    public function test()
     {
         // utility functions
         $multiply = function ($value) { return $value * 2; };
         $isSmall = function ($value) { return $value < 10; };
 
-        // apply chain
+        // get iterable
         $originalData = $expected = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 0);
-        $iterator = iter\chain($expected);
-        $this->assertInstanceOf('\Zicht\Itertools\lib\ChainIterator', $iterator);
+        $iterator = iter\iterable($expected);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\IterableIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
 
         // apply map

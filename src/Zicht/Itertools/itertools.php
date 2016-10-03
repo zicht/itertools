@@ -8,6 +8,7 @@ use Zicht\Itertools\lib\CountIterator;
 use Zicht\Itertools\lib\CycleIterator;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\Itertools\lib\RepeatIterator;
@@ -669,4 +670,16 @@ function last($iterable, $default = null)
     $item = $default;
     foreach (\Zicht\Itertools\conversions\mixedToIterator($iterable) as $item) {}
     return $item;
+}
+
+/**
+ * TODO: document!
+ * TODO: unit tests!
+
+ * @param array|string|\Iterator $iterable
+ * @return IterableIterator
+ */
+function iterable($iterable)
+{
+    return new IterableIterator(\Zicht\Itertools\conversions\mixedToIterator($iterable));
 }
