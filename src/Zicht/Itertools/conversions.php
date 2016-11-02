@@ -138,6 +138,11 @@ function mixedToValueGetter($strategy)
                     continue;
                 }
 
+                if (is_object($value) && method_exists($value, '__get')) {
+                    $value = $value->$keyPart;
+                    continue;
+                }
+
                 // no match found
                 $value = null;
                 break;
