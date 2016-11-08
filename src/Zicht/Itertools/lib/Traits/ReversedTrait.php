@@ -11,6 +11,8 @@ use Zicht\Itertools as iter;
 trait ReversedTrait
 {
     /**
+     * Returns an iterable with all the elements from this iterable reversed
+     *
      * @return iter\lib\ReversedIterator
      */
     public function reversed()

@@ -11,11 +11,14 @@ use Zicht\Itertools as iter;
 trait FilterTrait
 {
     /**
-     * @param \Closure $closure Optional, when not specified !empty will be used
+     * Make an iterator that returns values from this iterable where the
+     * $strategy determines that the values are not empty.
+     *
+     * @param \Closure $strategy Optional, when not specified !empty will be used
      * @return iter\lib\FilterIterator
      */
-    public function filter($closure = null)
+    public function filter($strategy = null)
     {
-        return iter\filter($closure, $this);
+        return iter\filter($strategy, $this);
     }
 }

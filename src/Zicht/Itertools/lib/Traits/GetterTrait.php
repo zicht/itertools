@@ -8,6 +8,12 @@ namespace Zicht\Itertools\lib\Traits;
 
 trait GetterTrait
 {
+    /**
+     * Returns true when a key exists of the same type and value as $OFFSET
+     *
+     * @param mixed $offset
+     * @return bool
+     */
     public function has($offset)
     {
         if ($this instanceof ArrayAccessTrait) {
@@ -16,6 +22,14 @@ trait GetterTrait
         return false;
     }
 
+    /**
+     * Returns the value of a key with the same type and value as $OFFSET, or returns
+     * $DEFAULT when it this key does not exist
+     *
+     * @param mixed $offset
+     * @param mixed $default
+     * @return mixed
+     */
     public function get($offset, $default = null)
     {
         if ($this instanceof ArrayAccessTrait) {

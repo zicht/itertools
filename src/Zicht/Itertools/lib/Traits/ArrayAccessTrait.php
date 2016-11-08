@@ -9,6 +9,8 @@ namespace Zicht\Itertools\lib\Traits;
 trait ArrayAccessTrait
 {
     /**
+     * Returns true when a key exists of the same type and value as $OFFSET
+     *
      * @param mixed $offset
      * @return bool
      */
@@ -23,9 +25,12 @@ trait ArrayAccessTrait
     }
 
     /**
+     * Returns the value of a key with the same type and value as $OFFSET, or returns
+     * $DEFAULT when it this key does not exist
+     *
      * @param mixed $offset
      * @param mixed $default
-     * @return mixed|null
+     * @return mixed
      */
     public function offsetGet($offset, $default = null)
     {
@@ -38,6 +43,8 @@ trait ArrayAccessTrait
     }
 
     /**
+     * Not implemented
+     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -47,6 +54,8 @@ trait ArrayAccessTrait
     }
 
     /**
+     * Not implemented
+     *
      * @param mixed $offset
      */
     public function offsetUnset($offset)

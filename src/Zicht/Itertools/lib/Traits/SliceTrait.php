@@ -11,6 +11,8 @@ use Zicht\Itertools as iter;
 trait SliceTrait
 {
     /**
+     * TODO: document!
+     *
      * @param integer $start
      * @param null|integer $end
      * @return iter\lib\SliceIterator

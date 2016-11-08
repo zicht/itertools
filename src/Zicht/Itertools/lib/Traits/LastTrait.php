@@ -11,6 +11,9 @@ use Zicht\Itertools as iter;
 trait LastTrait
 {
     /**
+     * Returns the last element of this iterable or
+     * returns $DEFAULT when this iterable is empty
+     *
      * @param mixed $default
      * @return mixed
      */

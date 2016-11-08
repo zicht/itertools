@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools;
 
@@ -21,9 +25,12 @@ use Zicht\Itertools\lib\ZipIterator;
 use Zicht\Itertools\reductions;
 
 /**
- * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
+ * Transforms anything into an Iterator or throws an InvalidArgumentException
+ *
  * @param array|string|\Iterator $iterable
  * @return \Iterator
+ *
+ * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
  */
 function mixedToIterator($iterable)
 {
@@ -31,9 +38,12 @@ function mixedToIterator($iterable)
 }
 
 /**
- * @deprecated Use Conversions::mixedToClosure instead, will be removed in version 3.0
- * @param $closure
+ * Try to transforms something into a Closure
+ *
+ * @param null|\Closure $closure
  * @return \Closure
+ *
+ * @deprecated Use Conversions::mixedToClosure instead, will be removed in version 3.0
  */
 function mixedToClosure($closure)
 {
@@ -41,9 +51,12 @@ function mixedToClosure($closure)
 }
 
 /**
- * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
- * @param null|string|\Closure
+ * Try to transforms something into a Closure that gets a value from $STRATEGY
+ *
+ * @param null|string|\Closure $strategy
  * @return \Closure
+ *
+ * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
  */
 function mixedToValueGetter($strategy)
 {
@@ -51,11 +64,12 @@ function mixedToValueGetter($strategy)
 }
 
 /**
- * Try to transform something into a Closure.
+ * Try to transform something into a Closure
+ *
+ * @param string|\Closure $closure
+ * @return \Closure
  *
  * @deprecated Will be removed in version 3.0, no replacement will be needed
- * @param string|$closure
- * @return \Closure
  */
 function mixedToOperationClosure($closure)
 {
@@ -71,9 +85,9 @@ function mixedToOperationClosure($closure)
 }
 
 /**
- * Make an iterator that returns accumulated sums.
+ * Make an iterator that returns accumulated sums
  *
- * If the optional $func argument is supplied, it should be a string:
+ * If the optional $closure argument is supplied, it should be a string:
  * add, sub, mul, min, or max.  Or it can be a Closure taking two
  * arguments that will be used to instead of addition.
  *
@@ -96,7 +110,7 @@ function accumulate($iterable, $closure = 'add')
 }
 
 /**
- * Reduce an iterator to a single value.
+ * Reduce an iterator to a single value
  *
  * > reduce([1,2,3])
  * 6
@@ -122,7 +136,8 @@ function reduce($iterable, $closure = 'add', $initializer = null)
     }
 
     $value = $initializer;
-    foreach (accumulate($iterable, $closure) as $value) {};
+    foreach (accumulate($iterable, $closure) as $value) {
+    };
     return $value;
 }
 
@@ -130,7 +145,7 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  * Make an iterator that returns elements from the first iterable
  * until it is exhausted, then proceeds to the next iterable, until
  * all the iterables are exhausted.  Used for creating consecutive
- * sequences as a single sequence.
+ * sequences as a single sequence
  *
  * Note that the keys of the returned ChainIterator follow 0, 1, etc,
  * regardless of the keys given in the iterables.
@@ -142,18 +157,24 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  * A B C D E F
  *
  * @param array|string|\Iterator $iterable
+ * @param array|string|\Iterator $iterable2
  * @return ChainIterator
  */
 function chain(/* $iterable, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, func_get_args());
+    $iterables = array_map(
+        function ($iterable) {
+            return conversions\mixedToIterator($iterable);
+        },
+        func_get_args()
+    );
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
 /**
  * Make an iterator that returns evenly spaced values starting with
- * number $start.
+ * number $start
  *
  * > count(10)
  * 10 11 12 13 14 ...
@@ -181,7 +202,7 @@ function count($start = 0, $step = 1)
 /**
  * Make an iterator returning elements from the $iterable and saving a
  * copy of each.  When the iterable is exhausted, return elements from
- * the saved copy.  Repeats indefinitely.
+ * the saved copy, repeating indefinitely
  *
  * > cycle('ABCD')
  * A B C D A B C D A B C D ...
@@ -196,7 +217,7 @@ function cycle($iterable)
 
 /**
  * Make an iterator returning values from $iterable and keys from
- * $strategy.
+ * $strategy
  *
  * When $strategy is a string, the key is obtained through one of
  * the following:
@@ -213,7 +234,7 @@ function cycle($iterable)
  * key will be its return value.
  *
  * > $list = [['id'=>1, 'title'=>'one'], ['id'=>2, 'title'=>'two']]
- * > keyCallback('id', $list)
+ * > mapBy('id', $list)
  * 1=>['id'=>1, 'title'=>'one'] 2=>['id'=>2, 'title'=>'two']
  *
  * @param string|\Closure $strategy
@@ -229,10 +250,14 @@ function mapBy($strategy, $iterable)
 }
 
 /**
- * @deprecated use mapBy() in stead, will be removed in version 3.0
+ * Make an iterator returning values from $iterable and keys from
+ * $strategy
+ *
  * @param string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
+ *
+ * @deprecated use mapBy() in stead, will be removed in version 3.0
  */
 function keyCallback($strategy, $iterable)
 {
@@ -240,16 +265,16 @@ function keyCallback($strategy, $iterable)
 }
 
 /**
- * Make an iterator that applies $func to every entry in the $iterables.
+ * Make an iterator that applies $strategy to every entry in the iterables
  *
- * If one iterable is passed, $func is called for each entry in
+ * If one iterable is passed, $strategy is called for each entry in
  * the $iterable, where the first argument is the value and the
- * second argument is the key of the entry.
+ * second argument is the key of the entry
  *
- * If more than one iterable is passed, $func is called with the
+ * If more than one iterable is passed, $strategy is called with the
  * values and the keys from the iterables.  For example, the first
- * call to $func will be:
- * $func($value_iterable1, $value_iterable2, $key_iterable2, $key_iterable2)
+ * call to $strategy will be:
+ * $strategy($value_iterable1, $value_iterable2, $key_iterable2, $key_iterable2)
  *
  * With multiple iterables, the iterator stops when the shortest
  * iterable is exhausted.
@@ -264,11 +289,17 @@ function keyCallback($strategy, $iterable)
  *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
+ * @param array|string|\Iterator $iterable2
  * @return MapIterator
  */
 function map($strategy, $iterable /*, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, array_slice(func_get_args(), 1));
+    $iterables = array_map(
+        function ($iterable) {
+            return conversions\mixedToIterator($iterable);
+        },
+        array_slice(func_get_args(), 1)
+    );
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
     return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixedToValueGetter($strategy)), $iterables));
 }
@@ -277,12 +308,12 @@ function map($strategy, $iterable /*, $iterable2, ... */)
  * Select values from the iterator by applying a function to each of the iterator values, i.e., mapping it to the
  * value with a strategy based on the input, similar to keyCallback
  *
- * @todo consider removing this, perhaps it is better to have a helper function in Mappings and call map() instead?
- *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @param bool $flatten
  * @return MapIterator
+ *
+ * @todo consider removing this, perhaps it is better to have a helper function in Mappings and call map() instead?
  */
 function select($strategy, $iterable, $flatten = true)
 {
@@ -302,7 +333,7 @@ function select($strategy, $iterable, $flatten = true)
 
 /**
  * Make an iterator that returns $mixed over and over again.  Runs
- * indefinitely unless the $times argument is specified.
+ * indefinitely unless the $times argument is specified
  *
  * > repeat(2)
  * 2 2 2 2 2 ...
@@ -326,7 +357,7 @@ function repeat($mixed, $times = null)
 /**
  * Make an iterator that returns consecutive groups from the
  * $iterable.  Generally, the $iterable needs to already be sorted on
- * the same key function.
+ * the same key function
  *
  * When $strategy is a string, the key is obtained through one of
  * the following:
@@ -374,7 +405,7 @@ function groupBy($strategy, $iterable, $sort = true)
 
 /**
  * Make an iterator that returns the values from $iterable sorted by
- * $strategy.
+ * $strategy
  *
  * When determining the order of two entries the $strategy is called
  * twice, once for each value, and the results are used to determine
@@ -412,7 +443,7 @@ function sorted($strategy, $iterable, $reverse = false)
 
 /**
  * Make an iterator that returns values from $iterable where the
- * $strategy determines that the values are not empty.
+ * $strategy determines that the values are not empty
  *
  * @param null|string|\Closure $strategy, Optional, when not specified !empty will be used
  * @param array|string|\Iterator $iterable
@@ -449,11 +480,12 @@ function filter(/* [$strategy, ] $iterable */)
  * TODO: document!
  * TODO: unit tests!
  *
- * @deprecated Use filter() instead, will be removed in version 3.0
  * @param string|\Closure $strategy
  * @param \Closure $closure Optional, when not specified !empty will be used
  * @param array|string|\Iterator $iterable
  * @return FilterIterator
+ *
+ * @deprecated Use filter() instead, will be removed in version 3.0
  */
 function filterBy(/* $strategy, [$closure, ] $iterable */)
 {
@@ -461,14 +493,19 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
     switch (sizeof($args)) {
         case 2:
             $strategy = conversions\mixedToValueGetter($args[0]);
-            $closure = function ($item) use ($strategy) { $tempVarPhp54 = call_user_func($strategy, $item); return !empty($tempVarPhp54); };
+            $closure = function ($item) use ($strategy) {
+                $tempVarPhp54 = call_user_func($strategy, $item);
+                return !empty($tempVarPhp54);
+            };
             $iterable = conversions\mixedToIterator($args[1]);
             break;
 
         case 3:
             $strategy = conversions\mixedToValueGetter($args[0]);
             $userClosure = $args[1];
-            $closure = function ($item) use ($strategy, $userClosure) { return call_user_func($userClosure, call_user_func($strategy, $item)); };
+            $closure = function ($item) use ($strategy, $userClosure) {
+                return call_user_func($userClosure, call_user_func($strategy, $item));
+            };
             $iterable = conversions\mixedToIterator($args[2]);
             break;
 
@@ -480,22 +517,35 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
 }
 
 /**
- * TODO: document!
+ * Returns an iterator where one or more iterables are zipped together
+ *
+ * This function returns a list of tuples, where the i-th tuple contains
+ * the i-th element from each of the argument sequences or iterables.
+ *
+ * The returned list is truncated in length to the length of the
+ * shortest argument sequence.
+ *
+ * > zip([1, 2, 3], ['a', 'b', 'c'])
+ * [1, 'a'] [2, 'b'] [3, 'c']
  *
  * @param array|string|\Iterator $iterable
  * @param array|string|\Iterator $iterable2
- * @param array|string|\Iterator $iterableN
  * @return ZipIterator
  */
 function zip(/* $iterable, $iterable2, ... */)
 {
-    $iterables = array_map(function ($iterable) { return conversions\mixedToIterator($iterable); }, func_get_args());
+    $iterables = array_map(
+        function ($iterable) {
+            return conversions\mixedToIterator($iterable);
+        },
+        func_get_args()
+    );
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
     return $reflectorClass->newInstanceArgs($iterables);
 }
 
 /**
- * TODO: document!
+ * Returns an iterable with all the elements from $ITERABLE reversed
  *
  * @param array|string|\Iterator $iterable
  * @return ReversedIterator
@@ -506,7 +556,17 @@ function reversed($iterable)
 }
 
 /**
- * TODO: document!
+ * Returns an iterator where the values from $STRATEGY are unique
+ *
+ * The $strategy is used to get values for every element in $iterable,
+ * when this value has already been encountered the element is not
+ * part of the returned iterator
+ *
+ * > unique([1, 1, 2, 2, 3, 3])
+ * 1 2 3
+ *
+ * > unique('id', [['id' => 1, 'value' => 'a'], ['id' => 1, 'value' => 'b']])
+ * ['id' => 1, 'value' => 'a']  # one element in this list
  *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
@@ -553,7 +613,16 @@ function uniqueBy($strategy, $iterable)
 }
 
 /**
- * TODO: document!
+ * Returns true when one or more element of $ITERABLE is not empty, otherwise returns false
+ *
+ * When the optional $STRATEGY argument is given, this argument is used to obtain the
+ * value which is tested to be empty.
+ *
+ * > any([0, '', false])
+ * false
+ *
+ * > any([1, null, 3])
+ * true
  *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
@@ -588,7 +657,16 @@ function any(/* [$strategy,] $iterable */)
 }
 
 /**
- * TODO: document!
+ * Returns true when all elements of $ITERABLE are not empty, otherwise returns false
+ *
+ * When the optional $STRATEGY argument is given, this argument is used to obtain the
+ * value which is tested to be empty.
+ *
+ * > all([1, 'hello world', true])
+ * true
+ *
+ * > all([1, null, 3])
+ * false
  *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
@@ -624,7 +702,6 @@ function all(/* [$strategy,] $iterable */)
 
 /**
  * TODO: document!
- * TODO: unit tests!
  *
  * @param array|string|\Iterator $iterable
  * @param integer $start
@@ -643,7 +720,8 @@ function slice($iterable, $start, $end = null)
 }
 
 /**
- * TODO: document!
+ * Returns the first element of $ITERABLE or returns $DEFAULT when $ITERABLE is empty
+ *
  * TODO: unit tests!
  *
  * @param array|string|\Iterator $iterable
@@ -660,7 +738,8 @@ function first($iterable, $default = null)
 }
 
 /**
- * TODO: document!
+ * Returns the last element of $ITERABLE or returns $DEFAULT when $ITERABLE is empty
+ *
  * TODO: unit tests!
  *
  * @param array|string|\Iterator $iterable
@@ -670,14 +749,15 @@ function first($iterable, $default = null)
 function last($iterable, $default = null)
 {
     $item = $default;
-    foreach (conversions\mixedToIterator($iterable) as $item) {}
+    foreach (conversions\mixedToIterator($iterable) as $item) {
+    }
     return $item;
 }
 
 /**
  * TODO: document!
  * TODO: unit tests!
-
+ *
  * @param array|string|\Iterator $iterable
  * @return IterableIterator
  */

@@ -11,11 +11,22 @@ use Zicht\Itertools as iter;
 trait AllTrait
 {
     /**
-     * @param \Closure $closure Optional, when not specified !empty will be used
+     * Returns true when all elements of this iterable are not empty, otherwise returns false
+     *
+     * When the optional $STRATEGY argument is given, this argument is used to obtain the
+     * value which is tested to be empty.
+     *
+     * > iter\iterable([1, 'hello world', true])->all()
+     * true
+     *
+     * > iter\iterable([1, null, 3])->all()
+     * false
+     *
+     * @param \Closure $strategy Optional, when not specified !empty will be used
      * @return bool
      */
-    public function all($closure = null)
+    public function all($strategy = null)
     {
-        return iter\all($closure, $this);
+        return iter\all($strategy, $this);
     }
 }
