@@ -42,12 +42,37 @@ class ZipTest extends PHPUnit_Framework_TestCase
         return array(
             // single iterable
             array(
+                array(array()),
+                array(),
+            ),
+            array(
                 array(array(1, 2, 3)),
                 array(array(1), array(2), array(3))),
             // double iterable
             array(
+                array(array(), array()),
+                array(),
+            ),
+            array(
                 array(array(1, 2, 3), array(4, 5, 6)),
                 array(array(1, 4), array(2, 5), array(3, 6))),
+            // unequal input length
+            array(
+                array(array(), array(4, 5, 6)),
+                array()
+            ),
+            array(
+                array(array(1, 2, 3), array()),
+                array()
+            ),
+            array(
+                array(array(1), array(4, 5, 6)),
+                array(array(1, 4))
+            ),
+            array(
+                array(array(1, 2, 3), array(4)),
+                array(array(1, 4))
+            ),
         );
     }
 
