@@ -7,7 +7,7 @@
 namespace Zicht\Itertools\mappings;
 
 /**
- * Returns a mappings closure that strips any matching $CHARS from the left of the input string
+ * Returns a closure that strips any matching $CHARS from the left of the input string
  *
  * @param string $chars
  * @return \Closure
@@ -20,7 +20,7 @@ function lstrip($chars = " \t\n\r\0\x0B")
 }
 
 /**
- * Returns a mapping closure that strips any matching $CHARS from the right of the input string
+ * Returns a closure that strips any matching $CHARS from the right of the input string
  *
  * @param string $chars
  * @return \Closure
@@ -33,7 +33,7 @@ function rstrip($chars = " \t\n\r\0\x0B")
 }
 
 /**
- * Returns a mapping closure that strips any matching $CHARS from the left and right of the input string
+ * Returns a closure that strips any matching $CHARS from the left and right of the input string
  *
  * @param string $chars
  * @return \Closure
@@ -46,7 +46,7 @@ function strip($chars = " \t\n\r\0\x0B")
 }
 
 /**
- * Returns a mapping closure returns the length of the input
+ * Returns a closure that returns the length of the input
  *
  * @return \Closure
  */
@@ -54,6 +54,58 @@ function length()
 {
     return function ($value) {
         return sizeof($value);
+    };
+}
+
+/**
+ * Returns a closure that returns the key
+ *
+ * @return \Closure
+ */
+function key()
+{
+    return function ($value, $key) {
+        return $key;
+    };
+}
+
+/**
+ * Returns a closure that applies multiple $STRATEGIES to the value and returns the results
+ *
+ * > $compute = function ($value, $key) {
+ * >    return 'some computation result';
+ * > };
+ * > $list = iter\iterable([new Data(1), new Data(2), new Data(3)]);
+ * > $list->map(select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.DescriptionName', 'comp' => $compute]));
+ * [
+ *    [
+ *       'data' => Data(1),
+ *       'id' => Data(1)->Identifier,
+ *       'desc' => Data(1)->Value->DescriptionName,
+ *       'comp' => $compute(Data(1), 0),
+ *    ],
+ *    ...
+ *    [
+ *       'data' => Data(3),
+ *       'id' => Data(3)->Identifier,
+ *       'desc' => Data(3)->Value->DescriptionName,
+ *       'comp' => $compute(Data(3), 2),
+ *    ],
+ * ]
+ *
+ * @param array $strategies
+ * @return \Closure
+ */
+function select(array $strategies)
+{
+    $strategies = array_map('\Zicht\Itertools\conversions\mixedToValueGetter', $strategies);
+
+    return function ($value, $key) use ($strategies) {
+        $res = [];
+        foreach ($strategies as $strategyKey => $strategy) {
+            $res[$strategyKey] = $strategy($value, $key);
+        }
+        return $res;
     };
 }
 
@@ -81,7 +133,13 @@ function get_mapping($name /* [argument, [arguments, ...] */)
                 return call_user_func_array('\Zicht\Itertools\mappings\strip', array_slice(func_get_args(), 1));
 
             case 'length':
-                return call_user_func_array('\Zicht\Itertools\mappings\length', array_slice(func_get_args(), 1));
+                return length();
+
+            case 'key':
+                return key();
+
+            case 'select':
+                return call_user_func_array('\Zicht\Itertools\mappings\select', array_slice(func_get_args(), 1));
         }
     }
 
