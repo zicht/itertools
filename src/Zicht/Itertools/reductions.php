@@ -92,7 +92,7 @@ function join($glue = '')
  * @return \Closure
  * @throws \InvalidArgumentException
  */
-function getReduction($name /* [argument, [arguments, ...] */)
+function get_reduction($name /* [argument, [arguments, ...] */)
 {
     if (is_string($name)) {
         switch ($name) {
@@ -112,4 +112,12 @@ function getReduction($name /* [argument, [arguments, ...] */)
     }
 
     throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid reduction.', $name));
+}
+
+/**
+ * @deprecated use get_reduction, will be removed in version 3.0
+ */
+function getReduction($name /* [argument, [arguments, ...] */)
+{
+    return call_user_func_array('\Zicht\Itertools\reductions\get_reduction', func_get_args());
 }
