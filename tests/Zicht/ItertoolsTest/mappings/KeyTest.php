@@ -4,7 +4,7 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
-namespace Zicht\ItertoolsTest\filters;
+namespace Zicht\ItertoolsTest\mappings;
 
 use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
@@ -12,7 +12,7 @@ use Zicht\Itertools as iter;
 /**
  * Class KeyTest
  *
- * @package Zicht\ItertoolsTest\filters
+ * @package Zicht\ItertoolsTest\mappings
  */
 class KeyTest extends PHPUnit_Framework_TestCase
 {
