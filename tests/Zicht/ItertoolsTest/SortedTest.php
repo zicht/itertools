@@ -4,9 +4,26 @@ namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
+use Zicht\Itertools as iter;
 
 class SortedTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Ensure that the sorting value is computed exactly once per element
+     */
+    public function testCallbackCount()
+    {
+        $counter = 0;
+        $getSortKey = function ($value, $key) use (&$counter) {
+            $counter += 1;
+            return $value;
+        };
+        $data = [1, 3, 5, 2, 4];
+
+        $this->assertEquals([0 => 1, 3 => 2, 1 => 3, 4 => 4, 2 => 5], iter\sorted($getSortKey, $data)->toArray());
+        $this->assertEquals(sizeof($data), $counter);
+    }
+
     /**
      * @dataProvider goodSequenceProvider
      */

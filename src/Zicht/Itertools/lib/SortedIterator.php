@@ -48,23 +48,23 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
 
     public function __construct(\Closure $func, \Iterator $iterable, $reverse = false)
     {
-        $data = [];
-        foreach ($iterable as $key => $value) {
-            $data []= array('key' => $key, 'value' => $value);
-        }
-
         if ($reverse) {
             $cmp = function ($a, $b) use ($func) {
-                $keyA = call_user_func($func, $a['value'], $a['key']);
-                $keyB = call_user_func($func, $b['value'], $b['key']);
-                return $keyA == $keyB ? 0 : ($keyA < $keyB ? 1 : -1);
+                $orderA = $a['order'];
+                $orderB = $b['order'];
+                return $orderA == $orderB ? 0 : ($orderA < $orderB ? 1 : -1);
             };
         } else {
             $cmp = function ($a, $b) use ($func) {
-                $keyA = call_user_func($func, $a['value'], $a['key']);
-                $keyB = call_user_func($func, $b['value'], $b['key']);
-                return $keyA == $keyB ? 0 : ($keyA < $keyB ? -1 : 1);
+                $orderA = $a['order'];
+                $orderB = $b['order'];
+                return $orderA == $orderB ? 0 : ($orderA < $orderB ? -1 : 1);
             };
+        }
+
+        $data = [];
+        foreach ($iterable as $key => $value) {
+            $data []= array('key' => $key, 'value' => $value, 'order' => call_user_func($func, $value, $key));
         }
 
         $this->mergesort($data, $cmp);
