@@ -110,6 +110,24 @@ function select(array $strategies)
 }
 
 /**
+ * Returns a closure that returns random integer numbers between $MIN and $MAX
+ *
+ * @param int $min
+ * @param null|int $max
+ * @return \Closure
+ */
+function random($min = 0, $max = null)
+{
+    if (null === $max) {
+        $max = getrandmax();
+    }
+
+    return function () use ($min, $max) {
+        return rand($min, $max);
+    };
+}
+
+/**
  * Returns a mapping closure
  *
  * @param string $name
@@ -140,6 +158,9 @@ function get_mapping($name /* [argument, [arguments, ...] */)
 
             case 'select':
                 return call_user_func_array('\Zicht\Itertools\mappings\select', array_slice(func_get_args(), 1));
+
+            case 'random':
+                return call_user_func_array('\Zicht\Itertools\mappings\random', array_slice(func_get_args(), 1));
         }
     }
 
