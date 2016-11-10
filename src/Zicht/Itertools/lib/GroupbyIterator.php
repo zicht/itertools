@@ -19,6 +19,7 @@ use Zicht\Itertools\lib\Traits\ReduceTrait;
 use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
+use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
@@ -47,6 +48,7 @@ class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     use ReversedTrait;
     use SliceTrait;
     use SortedTrait;
+    use ToArrayTrait;
     use UniqueTrait;
     use ZipTrait;
 
@@ -82,11 +84,6 @@ class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     public function count()
     {
         return iterator_count($this->getInnerIterator());
-    }
-
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 }
 
@@ -126,7 +123,7 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
             if ($previousGroupKey !== $groupKey || $groupedIterator === null) {
                 $previousGroupKey = $groupKey;
                 $groupedIterator = new GroupedIterator($groupKey);
-                $data []= $groupedIterator;
+                $data [] = $groupedIterator;
             }
             $groupedIterator->append($key, $value);
         }
@@ -144,10 +141,19 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
         return iterator_count($this->getInnerIterator());
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function toArray()
     {
         $array = iterator_to_array($this);
-        array_walk($array, function (&$value) { $value = $value->toArray(); });
+        array_walk(
+            $array,
+            function (&$value) {
+                /** @var GroupedIterator $value */
+                $value = $value->toArray();
+            }
+        );
         return $array;
     }
 }

@@ -19,6 +19,7 @@ use Zicht\Itertools\lib\Traits\ReduceTrait;
 use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
+use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
@@ -43,6 +44,7 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
     use ReversedTrait;
     use SliceTrait;
     use SortedTrait;
+    use ToArrayTrait;
     use UniqueTrait;
     use ZipTrait;
 
@@ -80,11 +82,6 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
     public function current()
     {
         return $this->getInnerIterator()->current()['value'];
-    }
-
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 
     /**

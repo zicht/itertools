@@ -20,6 +20,7 @@ use Zicht\Itertools\lib\Traits\ReduceTrait;
 use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
+use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
@@ -51,6 +52,7 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use ReversedTrait;
     use SliceTrait;
     use SortedTrait;
+    use ToArrayTrait;
     use UniqueTrait;
     use ZipTrait;
 
@@ -75,10 +77,5 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     public function key()
     {
         return call_user_func($this->func, $this->current());
-    }
-
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 }

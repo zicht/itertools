@@ -18,6 +18,7 @@ use Zicht\Itertools\lib\Traits\ReduceTrait;
 use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
+use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
@@ -43,6 +44,7 @@ class FilterIterator extends \FilterIterator implements \Countable
     use ReversedTrait;
     use SliceTrait;
     use SortedTrait;
+    use ToArrayTrait;
     use UniqueTrait;
     use ZipTrait;
 
@@ -57,10 +59,5 @@ class FilterIterator extends \FilterIterator implements \Countable
     public function accept()
     {
         return call_user_func_array($this->func, array($this->current(), $this->key()));
-    }
-
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 }
