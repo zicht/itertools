@@ -13,6 +13,8 @@ use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GetterTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
+use Zicht\Itertools\lib\Traits\ItemsTrait;
+use Zicht\Itertools\lib\Traits\KeysTrait;
 use Zicht\Itertools\lib\Traits\LastTrait;
 use Zicht\Itertools\lib\Traits\MapByTrait;
 use Zicht\Itertools\lib\Traits\MapTrait;
@@ -22,6 +24,7 @@ use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
 use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
+use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
 // todo: add tests for ArrayAccess
@@ -45,6 +48,8 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
+    use ItemsTrait;
+    use KeysTrait;
     use LastTrait;
     use MapByTrait;
     use MapTrait;
@@ -54,6 +59,7 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use SortedTrait;
     use ToArrayTrait;
     use UniqueTrait;
+    use ValuesTrait;
     use ZipTrait;
 
     /**
