@@ -16,8 +16,10 @@ trait GetterTrait
      */
     public function has($offset)
     {
-        if ($this instanceof ArrayAccessTrait) {
-            return $this->offsetExists($offset);
+        foreach ($this as $key => $_) {
+            if ($key === $offset) {
+                return true;
+            }
         }
         return false;
     }
@@ -32,8 +34,10 @@ trait GetterTrait
      */
     public function get($offset, $default = null)
     {
-        if ($this instanceof ArrayAccessTrait) {
-            return $this->offsetGet($offset, $default);
+        foreach ($this as $key => $value) {
+            if ($key === $offset) {
+                return $value;
+            }
         }
         return $default;
     }
