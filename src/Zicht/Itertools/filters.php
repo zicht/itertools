@@ -83,3 +83,36 @@ function not_in($haystack, $strategy = null, $strict = false)
         return !in_array($strategy($value), $haystack, $strict);
     };
 }
+
+/**
+ * Returns a filter closure that only accepts values that are equal to $EXPECTED
+ *
+ * For example, the following will return a list where all items
+ * equal 'bar':
+ * > Itertools\filter(filters\equals('bar'), $list)
+ *
+ * For example, the following will return a list where all items
+ * have a property or array index 'foo' that equals 'bar':
+ * > Itertools\filter(filters\equals('bar', 'foo'), $list)
+ *
+ * @param mixed $expected
+ * @param null|string|\Closure $strategy
+ * @param boolean $strict
+ * @return \Closure
+ */
+function equals($expected, $strategy = null, $strict = false)
+{
+    if (!is_bool($strict)) {
+        throw new \InvalidArgumentException('$STRICT must be a boolean');
+    }
+    $strategy = conversions\mixedToValueGetter($strategy);
+    if ($strict) {
+        return function ($value) use ($expected, $strategy) {
+            return $expected === $strategy($value);
+        };
+    } else {
+        return function ($value) use ($expected, $strategy) {
+            return $expected == $strategy($value);
+        };
+    }
+}
