@@ -45,16 +45,20 @@ function type($class, $strategy = null)
  *
  * @param array|string|\Iterator $haystack
  * @param null|string|\Closure $strategy
+ * @param boolean $strict
  * @return \Closure
  */
-function in($haystack, $strategy = null)
+function in($haystack, $strategy = null, $strict = false)
 {
+    if (!is_bool($strict)) {
+        throw new \InvalidArgumentException('$STRICT must be a boolean');
+    }
     if (!is_array($haystack)) {
         $haystack = iterator_to_array(conversions\mixedToIterator($haystack));
     }
     $strategy = conversions\mixedToValueGetter($strategy);
-    return function ($value) use ($haystack, $strategy) {
-        return in_array($strategy($value), $haystack);
+    return function ($value) use ($haystack, $strategy, $strict) {
+        return in_array($strategy($value), $haystack, $strict);
     };
 }
 
@@ -63,15 +67,19 @@ function in($haystack, $strategy = null)
  *
  * @param array|string|\Iterator $haystack
  * @param null|string|\Closure $strategy
+ * @param boolean $strict
  * @return \Closure
  */
-function not_in($haystack, $strategy = null)
+function not_in($haystack, $strategy = null, $strict = false)
 {
+    if (!is_bool($strict)) {
+        throw new \InvalidArgumentException('$STRICT must be a boolean');
+    }
     if (!is_array($haystack)) {
         $haystack = iterator_to_array(conversions\mixedToIterator($haystack));
     }
     $strategy = conversions\mixedToValueGetter($strategy);
-    return function ($value) use ($haystack, $strategy) {
-        return !in_array($strategy($value), $haystack);
+    return function ($value) use ($haystack, $strategy, $strict) {
+        return !in_array($strategy($value), $haystack, $strict);
     };
 }
