@@ -97,6 +97,7 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
 {
     use ArrayAccessTrait;
     use DebugInfoTrait;
+    use GetterTrait;
 
     // Fluent interface traits
     use AllTrait;
