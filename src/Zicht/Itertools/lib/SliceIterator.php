@@ -14,6 +14,8 @@ use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
+use Zicht\Itertools\lib\Traits\ItemsTrait;
+use Zicht\Itertools\lib\Traits\KeysTrait;
 use Zicht\Itertools\lib\Traits\LastTrait;
 use Zicht\Itertools\lib\Traits\MapByTrait;
 use Zicht\Itertools\lib\Traits\MapTrait;
@@ -21,7 +23,9 @@ use Zicht\Itertools\lib\Traits\ReduceTrait;
 use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
+use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
+use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
 class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countable
@@ -38,6 +42,8 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
+    use ItemsTrait;
+    use KeysTrait;
     use LastTrait;
     use MapByTrait;
     use MapTrait;
@@ -45,7 +51,9 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use ReversedTrait;
     use SliceTrait;
     use SortedTrait;
+    use ToArrayTrait;
     use UniqueTrait;
+    use ValuesTrait;
     use ZipTrait;
 
     private $index;
@@ -78,10 +86,5 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     {
         $this->index = 0;
         parent::rewind();
-    }
-
-    public function toArray()
-    {
-        return iterator_to_array($this);
     }
 }

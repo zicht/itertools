@@ -311,9 +311,9 @@ function map($strategy, $iterable /*, $iterable2, ... */)
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @param bool $flatten
- * @return MapIterator
+ * @return array|MapIterator
  *
- * @todo consider removing this, perhaps it is better to have a helper function in Mappings and call map() instead?
+ * @deprecated Please use map(...)->values() instead (when flatten true), will be removed in version 3.0
  */
 function select($strategy, $iterable, $flatten = true)
 {
@@ -326,7 +326,7 @@ function select($strategy, $iterable, $flatten = true)
         conversions\mixedToIterator($iterable)
     );
     if ($flatten) {
-        return array_values(iterator_to_array($ret));
+        return $ret->values();
     }
     return $ret;
 }
