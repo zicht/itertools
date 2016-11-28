@@ -14,14 +14,47 @@ class CountTest extends PHPUnit_Framework_TestCase
     {
         $iterator = \Zicht\Itertools\count($start, $step);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
-        $iterator->rewind();
-
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
-            $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
-            $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
-            $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
-            $iterator->next();
+
+        for ($rewindCounter=0; $rewindCounter<2; $rewindCounter++) {
+            $iterator->rewind();
+
+            for ($index=0; $index<sizeof($expectedKeys); $index++) {
+                $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
+                $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
+                $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
+                $iterator->next();
+            }
+        }
+    }
+
+    /**
+     * Use foreach to iterate
+     *
+     * Using foreach or valid(), next(), etc, should always result in the same behavior
+     *
+     * @dataProvider goodSequenceProvider
+     */
+    public function testGoodSequence_foreach($start, $step, array $expectedKeys, array $expectedValues)
+    {
+        $iterator = \Zicht\Itertools\count($start, $step);
+        $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
+        $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
+
+        for ($rewindCounter=0; $rewindCounter<2; $rewindCounter++) {
+            $index = 0;
+            foreach ($iterator as $key => $value) {
+                if (sizeof($expectedValues) <= $index) {
+                    break;
+                }
+
+                $this->assertEquals($expectedKeys[$index], $key, 'Failure in $key');
+                $this->assertEquals($expectedValues[$index], $value, 'Failure in $value');
+                $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
+
+                $index++;
+            }
+            $this->assertEquals(sizeof($expectedValues), $index);
         }
     }
 

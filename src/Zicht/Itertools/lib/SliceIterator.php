@@ -62,18 +62,32 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
 
     public function __construct(\Iterator $iterable, $start, $end = null)
     {
+        if ($start < 0 || $end < 0) {
+            $length = iterator_count($iterable);
+        }
+
         $this->index = 0;
-        $this->start = $start < 0 ? iterator_count($iterable) + $start: $start;
-        $this->end = $end === null ? null : ($end < 0 ? iterator_count($iterable) + $end : $end);
+        $this->start = $start < 0 ? $length + $start: $start;
+        $this->end = $end === null ? null : ($end < 0 ? $length + $end : $end);
         parent::__construct($iterable);
     }
 
     public function valid()
     {
-        while (parent::valid() && !($this->start <= $this->index && (null === $this->end || $this->index < $this->end))) {
-            $this->next();
+        while ($this->index < $this->start) {
+            if (parent::valid()) {
+                $this->index += 1;
+                parent::next();
+            } else {
+                return false;
+            }
         }
-        return parent::valid();
+
+        if (null === $this->end || $this->index < $this->end) {
+            return parent::valid();
+        }
+
+        return false;
     }
 
     public function next()
