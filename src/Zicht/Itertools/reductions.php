@@ -6,6 +6,8 @@
 
 namespace Zicht\Itertools\reductions;
 
+use Zicht\Itertools\lib\ChainIterator;
+
 function add()
 {
     return function ($a, $b) {
@@ -88,6 +90,31 @@ function join($glue = '')
 }
 
 /**
+ * Returns a closure that chains lists together
+ *
+ * > $lists = [[1, 2, 3], [4, 5, 6]]
+ * > iterable($lists)->reduce(reductions\chain())
+ * results in a ChainIterator: 1, 2, 3, 4, 5, 6
+ *
+ * @return \Closure
+ */
+function chain()
+{
+    $chainIterator = new ChainIterator();
+    $isFirst = true;
+
+    return function ($a, $b) use ($chainIterator, &$isFirst) {
+        if ($isFirst) {
+            $isFirst = false;
+            $chainIterator->extend($a);
+        }
+
+        $chainIterator->extend($b);
+        return $chainIterator;
+    };
+}
+
+/**
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
@@ -108,6 +135,8 @@ function get_reduction($name /* [argument, [arguments, ...] */)
                 return max();
             case 'join':
                 return call_user_func_array('\Zicht\Itertools\util\reductions\join', array_slice(func_get_args(), 1));
+            case 'chain':
+                return chain();
         }
     }
 
