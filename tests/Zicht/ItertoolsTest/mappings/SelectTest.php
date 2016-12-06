@@ -106,4 +106,46 @@ class SelectTest extends PHPUnit_Framework_TestCase
         $closure = iter\mappings\select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
         $this->assertEquals($expected, iter\map($closure, $data)->toArray());
     }
+
+    /**
+     * Test get_mapping
+     *
+     * @param array $arguments
+     * @param array $data
+     * @param array $expected
+     *
+     * @dataProvider goodSequenceProvider
+     */
+    public function testGetMapping(array $arguments, array $data, array $expected)
+    {
+        $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
+        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+    }
+
+    /**
+     * Test deprecated getMapping
+     *
+     * @param array $arguments
+     * @param array $data
+     * @param array $expected
+     *
+     * @dataProvider goodSequenceProvider
+     */
+    public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
+    {
+        $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
+        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+    }
+
+    /**
+     * Provides tests
+     *
+     * @return array
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            [['select', ['a']], [['a' => 1]], [[1]]],
+        ];
+    }
 }
