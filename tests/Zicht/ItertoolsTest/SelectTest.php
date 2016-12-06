@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest
  */
-class SelectTest extends PHPUnit_Framework_TestCase
+class SelectTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test good sequences
@@ -49,5 +48,28 @@ class SelectTest extends PHPUnit_Framework_TestCase
                 [-1, -2, -3, 1, 2, 3]
             ],
         ];
+    }
+
+    /**
+     * Test select without flattening the result
+     */
+    public function testWithoutFlatten()
+    {
+        $data = [1, 2, 3];
+        $expected = [1, 2, 3];
+
+        $result = iter\select(null, $data, false);
+        $this->assertInstanceOf(iter\lib\MapIterator::class, $result);
+        $this->assertEquals($expected, $result->toArray());
+    }
+
+    /**
+     * Test select using invalid arguments
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testBadArgument()
+    {
+        iter\select('strategy', [], 'wrong-argument');
     }
 }
