@@ -131,14 +131,24 @@ function accumulate($iterable, $closure = 'add')
  */
 function reduce($iterable, $closure = 'add', $initializer = null)
 {
-    if (null !== $initializer) {
-        $iterable = chain([$initializer], $iterable);
+    $closure = $closure instanceof \Closure ? $closure : reductions\get_reduction($closure);
+    $iterable = conversions\mixedToIterator($iterable);
+    $iterable->rewind();
+
+    if (null === $initializer) {
+        if ($iterable->valid()) {
+            $initializer = $iterable->current();
+            $iterable->next();
+        }
     }
 
-    $value = $initializer;
-    foreach (accumulate($iterable, $closure) as $value) {
-    };
-    return $value;
+    $accumulatedValue = $initializer;
+    while ($iterable->valid()) {
+        $accumulatedValue = $closure($accumulatedValue, $iterable->current());
+        $iterable->next();
+    }
+
+    return $accumulatedValue;
 }
 
 /**

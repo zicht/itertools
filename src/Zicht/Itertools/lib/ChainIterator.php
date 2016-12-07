@@ -2,6 +2,7 @@
 
 namespace Zicht\Itertools\lib;
 
+use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\Traits\AllTrait;
 use Zicht\Itertools\lib\Traits\AnyTrait;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
@@ -63,5 +64,15 @@ class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
             }
             $this->append($iterable);
         }
+    }
+
+    /**
+     * Extend this iterator with the contents of $iterable
+     *
+     * @param array|string|\Iterator $iterable
+     */
+    public function extend($iterable)
+    {
+        parent::append(conversions\mixedToIterator($iterable));
     }
 }
