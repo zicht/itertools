@@ -10,44 +10,29 @@ use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
- * Class RandomTest
+ * Class LengthTest
  *
- * @package Zicht\ItertoolsTest\filters
+ * @package Zicht\ItertoolsTest\mappings
  */
-class RandomTest extends PHPUnit_Framework_TestCase
+class LengthTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Generate random numbers
+     * Simple test
      */
     public function test()
     {
-        $data = ['a' => 1, 'b' => 2, 'c' => 3];
-        $expected = ['a' => 42, 'b' => 42, 'c' => 42];
-        $closure = iter\mappings\random(42, 42);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
-    }
+        $data = [
+            null,
+            [],
+            [1, 2, 3],
+            '',
+            'foo',
+        ];
 
-    /**
-     * Generate negative numbers
-     */
-    public function testNegative()
-    {
-        $data = ['a' => 1, 'b' => 2, 'c' => 3];
-        $expected = ['a' => -42, 'b' => -42, 'c' => -42];
-        $closure = iter\mappings\random(-42, -42);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
-    }
+        $expected = [0, 0, 3, 0, 3];
 
-    /**
-     * Generate maximum size numbers
-     */
-    public function testLargeNumbers()
-    {
-        $maxrand = getrandmax();
-        $data = ['a' => 1, 'b' => 2, 'c' => 3];
-        $expected = ['a' => $maxrand, 'b' => $maxrand, 'c' => $maxrand];
-        $closure = iter\mappings\random($maxrand);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = iter\mappings\length();
+        $this->assertEquals($expected, iter\iterable($data)->map($closure)->values());
     }
 
     /**
@@ -88,7 +73,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
     public function goodSequenceProvider()
     {
         return [
-            [['random', 42, 42], [1, 2, 3], [42, 42, 42]],
+            [['length'], [null, [], [1, 2, 3], '', 'foo'], [0, 0, 3, 0, 3]],
         ];
     }
 }

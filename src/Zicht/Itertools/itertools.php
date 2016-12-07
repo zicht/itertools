@@ -503,8 +503,8 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
     switch (sizeof($args)) {
         case 2:
             $strategy = conversions\mixedToValueGetter($args[0]);
-            $closure = function ($item) use ($strategy) {
-                $tempVarPhp54 = call_user_func($strategy, $item);
+            $closure = function ($value, $key) use ($strategy) {
+                $tempVarPhp54 = call_user_func($strategy, $value, $key);
                 return !empty($tempVarPhp54);
             };
             $iterable = conversions\mixedToIterator($args[1]);
@@ -513,8 +513,8 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
         case 3:
             $strategy = conversions\mixedToValueGetter($args[0]);
             $userClosure = $args[1];
-            $closure = function ($item) use ($strategy, $userClosure) {
-                return call_user_func($userClosure, call_user_func($strategy, $item));
+            $closure = function ($value, $key) use ($strategy, $userClosure) {
+                return call_user_func($userClosure, call_user_func($strategy, $value, $key));
             };
             $iterable = conversions\mixedToIterator($args[2]);
             break;

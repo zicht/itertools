@@ -53,6 +53,14 @@ function strip($chars = " \t\n\r\0\x0B")
 function length()
 {
     return function ($value) {
+        if (is_null($value)) {
+            return 0;
+        }
+
+        if (is_string($value)) {
+            return strlen($value);
+        }
+
         return sizeof($value);
     };
 }
@@ -168,6 +176,10 @@ function get_mapping($name /* [argument, [arguments, ...] */)
 }
 
 /**
+ * @param string $name
+ * @return \Closure
+ * @throws \InvalidArgumentException
+ *
  * @deprecated use get_mappings, will be removed in version 3.0
  */
 function getMapping($name /* [argument, [arguments, ...] */)
