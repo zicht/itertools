@@ -138,10 +138,7 @@ function random($min = 0, $max = null)
 }
 
 /**
- * Returns a closure that returns the class name of the input
- *
- * Since PHP integers, arrays, etc are not considered to be objects,
- * the closure will return null when it encounters these types.
+ * Returns a closure that returns either the class name, given an object, or otherwise the type
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
@@ -151,7 +148,7 @@ function type($strategy = null)
     $strategy = conversions\mixedToValueGetter($strategy);
     return function ($value) use ($strategy) {
         $value = $strategy($value);
-        return is_object($value) ? get_class($value) : null;
+        return is_object($value) ? get_class($value) : gettype($value);
     };
 }
 
