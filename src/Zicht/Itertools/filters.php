@@ -7,6 +7,7 @@
 namespace Zicht\Itertools\filters;
 
 use Zicht\Itertools\conversions;
+use Zicht\Itertools as iter;
 
 /**
  * Returns a filter closure that only accepts values that are instances of $CLASS.
@@ -43,7 +44,7 @@ function type($class, $strategy = null)
  * have a property or array index 'foo' that is either 'a' or 'b':
  * > Itertools\filter(filters\in(['a', 'b'], 'prop'), $list)
  *
- * @param array|string|\Iterator $haystack
+ * @param null|array|string|\Iterator $haystack
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
@@ -54,7 +55,7 @@ function in($haystack, $strategy = null, $strict = false)
         throw new \InvalidArgumentException('$STRICT must be a boolean');
     }
     if (!is_array($haystack)) {
-        $haystack = iterator_to_array(conversions\mixedToIterator($haystack));
+        $haystack = iter\iterable($haystack)->values();
     }
     $strategy = conversions\mixedToValueGetter($strategy);
     return function ($value) use ($haystack, $strategy, $strict) {
@@ -76,7 +77,7 @@ function not_in($haystack, $strategy = null, $strict = false)
         throw new \InvalidArgumentException('$STRICT must be a boolean');
     }
     if (!is_array($haystack)) {
-        $haystack = iterator_to_array(conversions\mixedToIterator($haystack));
+        $haystack = iter\iterable($haystack)->values();
     }
     $strategy = conversions\mixedToValueGetter($strategy);
     return function ($value) use ($haystack, $strategy, $strict) {
