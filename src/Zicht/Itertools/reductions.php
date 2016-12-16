@@ -8,6 +8,11 @@ namespace Zicht\Itertools\reductions;
 
 use Zicht\Itertools\lib\ChainIterator;
 
+/**
+ * Returns a closure that adds two numbers together
+ *
+ * @return \Closure
+ */
 function add()
 {
     return function ($a, $b) {
@@ -21,6 +26,11 @@ function add()
     };
 }
 
+/**
+ * Returns a closure that subtracts one number from another
+ *
+ * @return \Closure
+ */
 function sub()
 {
     return function ($a, $b) {
@@ -34,6 +44,11 @@ function sub()
     };
 }
 
+/**
+ * Returns a closure that multiplies two numbers
+ *
+ * @return \Closure
+ */
 function mul()
 {
     return function ($a, $b) {
@@ -47,6 +62,11 @@ function mul()
     };
 }
 
+/**
+ * Returns a closure that returns the smallest of two numbers
+ *
+ * @return \Closure
+ */
 function min()
 {
     return function ($a, $b) {
@@ -60,6 +80,11 @@ function min()
     };
 }
 
+/**
+ * Returns a closure that returns the largest of two numbers
+ *
+ * @return \Closure
+ */
 function max()
 {
     return function ($a, $b) {
@@ -73,6 +98,12 @@ function max()
     };
 }
 
+/**
+ * Returns a closure that concatenates two strings using $glue
+ *
+ * @param string $glue
+ * @return \Closure
+ */
 function join($glue = '')
 {
     if (!is_string($glue)) {
@@ -115,6 +146,8 @@ function chain()
 }
 
 /**
+ * Returns a reduction closure
+ *
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
@@ -134,7 +167,7 @@ function get_reduction($name /* [argument, [arguments, ...] */)
             case 'max':
                 return max();
             case 'join':
-                return call_user_func_array('\Zicht\Itertools\util\reductions\join', array_slice(func_get_args(), 1));
+                return call_user_func_array('\Zicht\Itertools\reductions\join', array_slice(func_get_args(), 1));
             case 'chain':
                 return chain();
         }
