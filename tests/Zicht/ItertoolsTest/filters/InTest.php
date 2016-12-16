@@ -31,13 +31,29 @@ class InTest extends PHPUnit_Framework_TestCase
     /**
      * Instanceof test with a specific property
      */
-    public function testProperty()
+    public function testStrategy()
     {
         $filter = filters\in(['a', 'b', 'c'], 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => 'b']));
         $this->assertFalse($filter(['hello world']));
         $this->assertFalse($filter(['prop' => 'Hello world']));
+    }
+
+    /**
+     * Equals test with strict or non strict
+     */
+    public function testStrict()
+    {
+        $filter = filters\in([1, 2, 3], null, false);
+        $this->assertInstanceOf('\Closure', $filter);
+        $this->assertTrue($filter(1), 'Non-strict should result in 1 == 1 --> true');
+        $this->assertTrue($filter(1.0), 'Non-strict should result in 1 == 1.0 --> true');
+
+        $filter = filters\in([1, 2, 3], null, true);
+        $this->assertInstanceOf('\Closure', $filter);
+        $this->assertTrue($filter(1), 'Strict should result in 1 == 1 --> true');
+        $this->assertFalse($filter(1.0), 'Strict should result in 1 == 1.0 --> false');
     }
 
     /**
