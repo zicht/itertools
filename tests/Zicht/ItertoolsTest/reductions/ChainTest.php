@@ -28,4 +28,52 @@ class ChainTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], $result->keys());
         $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9], $result->values());
     }
+
+    /**
+     * Test get_reduction
+     *
+     * @param array $arguments
+     * @param array $data
+     * @param mixed $expected
+     *
+     * @dataProvider goodSequenceProvider
+     */
+    public function testGetReduction(array $arguments, array $data, $expected)
+    {
+        $closure = call_user_func_array('\Zicht\Itertools\reductions\get_reduction', $arguments);
+        $this->assertInstanceOf('\Closure', $closure);
+        $this->assertEquals($expected, iter\iterable($data)->reduce($closure)->values());
+    }
+
+    /**
+     * Test deprecated getReduction
+     *
+     * @param array $arguments
+     * @param array $data
+     * @param mixed $expected
+     *
+     * @dataProvider goodSequenceProvider
+     */
+    public function testDeprecatedGetReduction(array $arguments, array $data, $expected)
+    {
+        $closure = call_user_func_array('\Zicht\Itertools\reductions\getReduction', $arguments);
+        $this->assertInstanceOf('\Closure', $closure);
+        $this->assertEquals($expected, iter\iterable($data)->reduce($closure)->values());
+    }
+
+    /**
+     * Provides tests
+     *
+     * @return array
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            [
+                ['chain'],
+                [[1, 2, 3], [4, 5, 6]],
+                [1, 2, 3, 4, 5, 6]
+            ],
+        ];
+    }
 }

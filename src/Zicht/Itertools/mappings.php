@@ -6,6 +6,8 @@
 
 namespace Zicht\Itertools\mappings;
 
+use Zicht\Itertools\conversions;
+
 /**
  * Returns a closure that strips any matching $CHARS from the left of the input string
  *
@@ -136,6 +138,21 @@ function random($min = 0, $max = null)
 }
 
 /**
+ * Returns a closure that returns either the class name, given an object, or otherwise the type
+ *
+ * @param null|string|\Closure $strategy
+ * @return \Closure
+ */
+function type($strategy = null)
+{
+    $strategy = conversions\mixedToValueGetter($strategy);
+    return function ($value) use ($strategy) {
+        $value = $strategy($value);
+        return is_object($value) ? get_class($value) : gettype($value);
+    };
+}
+
+/**
  * Returns a mapping closure
  *
  * @param string $name
@@ -169,6 +186,9 @@ function get_mapping($name /* [argument, [arguments, ...] */)
 
             case 'random':
                 return call_user_func_array('\Zicht\Itertools\mappings\random', array_slice(func_get_args(), 1));
+
+            case 'type':
+                return call_user_func_array('\Zicht\Itertools\mappings\type', array_slice(func_get_args(), 1));
         }
     }
 
