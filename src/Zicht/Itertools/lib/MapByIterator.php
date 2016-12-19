@@ -82,6 +82,6 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
      */
     public function key()
     {
-        return call_user_func($this->func, $this->current());
+        return call_user_func($this->func, $this->current(), parent::key());
     }
 }
