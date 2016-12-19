@@ -124,20 +124,16 @@ function join($glue = '')
  * Returns a closure that chains lists together
  *
  * > $lists = [[1, 2, 3], [4, 5, 6]]
- * > iterable($lists)->reduce(reductions\chain())
+ * > iterable($lists)->reduce(reductions\chain(), new ChainIterator())
  * results in a ChainIterator: 1, 2, 3, 4, 5, 6
  *
  * @return \Closure
  */
 function chain()
 {
-    $chainIterator = new ChainIterator();
-    $isFirst = true;
-
-    return function ($a, $b) use ($chainIterator, &$isFirst) {
-        if ($isFirst) {
-            $isFirst = false;
-            $chainIterator->extend($a);
+    return function ($chainIterator, $b) {
+        if (!($chainIterator instanceof ChainIterator)) {
+            throw new \InvalidArgumentException('Argument $A must be a ChainIterator.  Did your call "reduce" with "new ChainIterator()" as the initial parameter?');
         }
 
         $chainIterator->extend($b);
