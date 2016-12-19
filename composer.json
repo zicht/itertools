@@ -1,5 +1,6 @@
 {
     "name": "zicht/itertools",
+    "license": "MIT",
     "description": "A collection of functions that mirror the Python itertools library",
     "authors": [
         {
@@ -13,7 +14,7 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-      "psr-0": { "": ["src/", "tests/"] },
+      "psr-0": { "Zicht\\": ["src/", "tests/"] },
       "files": [
           "src/Zicht/Itertools/conversions.php",
           "src/Zicht/Itertools/filters.php",
