@@ -16,7 +16,7 @@ The examples below will use the following data to illustrate how
 various Iterator tools work:
 
 ```php
-$words = ['Useful', 'God', 'oven', 'Bland', 'notorious'];
+$words = ['Useful', 'Goonies', 'oven', 'Bland', 'notorious'];
 $numbers = [1, 3, 2, 5, 4],
 $vehicles = [
     [
@@ -67,7 +67,7 @@ is used to obtain a value from the elements in the collection.  The
 
     $result = iterable($words)->map(null);
     var_dump($result);
-    // {0: 'Useful', 1: 'God', 2: 'oven', 3: 'Bland', 4: 'notorious'}
+    // {0: 'Useful', 1: 'Goonies', 2: 'oven', 3: 'Bland', 4: 'notorious'}
     ```
 
 2. a closure, in which case the closure is called with the element
@@ -212,9 +212,9 @@ example:
 use function Zicht\Itertools\iterable;
 use function Zicht\Itertools\filters\in;
 
-$religiousWords = iterable($words)->filter(in(['Allah', 'evi', 'God']));
-var_dump($religiousWords);
-// {1: 'God'}
+$movieWords = iterable($words)->filter(in(['Shining', 'My little pony', 'Goonies']));
+var_dump($movieWords);
+// {1: 'Goonies'}
 ```
 
 ## Sorting
@@ -251,7 +251,7 @@ $getLower = function ($value, $key) {
 };
 $ordered = iterable($words)->sorted($getLower);
 var_dump($ordered);
-// {3: 'Bland', 1: 'God', 2: 'oven', 0: 'Useful', 4: 'notorious'};
+// {3: 'Bland', 1: 'Goonies', 2: 'oven', 0: 'Useful', 4: 'notorious'};
 ```
 
 The [mappings.php](src/Zicht/Itertools/mappings.php) provides a
@@ -330,5 +330,5 @@ use function Zicht\Itertools\iterable;
 
 $scentence = iterable($words, reductions\join(' - '));
 var_dump($scentence);
-// 'Useful - God - oven - Bland - notorious'
+// 'Useful - Goonies - oven - Bland - notorious'
 ```
