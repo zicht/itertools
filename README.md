@@ -1,23 +1,22 @@
 # Zicht Iterator Tools Library
-The Iterator Tools, or itertools for short, are a collection of 
-convenience functions to handle collections such as arrays, iterators, 
-and strings.  Some of the naming and API is based on the Python 
-itertools.
+The Iterator Tools, or itertools for short, are a collection of
+convenience tools to handle sequences of data such as arrays,
+iterators, and strings.  Some of the naming and API is based on the
+Python itertools.
 
 Common operations include:
 - [mapping](#mapping): `map` and `mapBy`
 - [filtering](#filtering): `filter`
 - [sorting](#sorting): `sorted`
 - [grouping](#grouping): `groupBy`
-- [chaining](#chaining): `chain`
 - [reducing](#reducing): `accumulate` and `reduce`
 
 ## Example data
-The examples below will use the following data to illustrate how various
-Iterator tools work:
+The examples below will use the following data to illustrate how
+various Iterator tools work:
 
 ```php
-$words = ['Useful', 'god', 'oven', 'Bland', 'notorious'];
+$words = ['Useful', 'God', 'oven', 'Bland', 'notorious'];
 $numbers = [1, 3, 2, 5, 4],
 $vehicles = [
     [
@@ -56,24 +55,83 @@ $vehicles = [
 
 ```
 
+## Getter strategy
+Many itertools can be passed a `$strategy` parameter.  This parameter
+is used to obtain a value from the elements in the collection.  The
+`$strategy` can be one of three things:
+
+1. null, in which case the element itself is returned.  For example:
+
+    ```php
+    use function Zicht\Itertools\iterable;
+
+    $result = iterable($words)->map(null);
+    var_dump($result);
+    // {0: 'Useful', 1: 'God', 2: 'oven', 3: 'Bland', 4: 'notorious'}
+    ```
+
+2. a closure, in which case the closure is called with the element
+   value and key as parameters to be used to compute a return value.
+   For example:
+
+    ```php
+    use function Zicht\Itertools\iterable;
+
+    $getDouble = function($value, $key) {
+        return 2 * $value;
+    };
+    $result = iterable($numbers)->map($getDouble);
+    var_dump($result);
+    // {0: 2, 1: 6, 2: 4, 3: 10, 4: 8}
+    ```
+
+3. a string, in which case this string is used to create a closure
+   that tries to find public properties, methods, or array indexes.
+   For example:
+
+    ```php
+    use function Zicht\Itertools\iterable;
+
+    $result = iterable($vehicles)->map('type');
+    var_dump($result);
+    // {0: 'car', 1: 'bike', 2: 'unicicle', 3: 'car'}
+    ```
+
+   The string can consist of multiple dot separated words, allowing
+   access to nested properties, methods, and array indexes.
+
+   If one of the words in the string can not be resolved into an
+   existing propety, method, or array index, the value `null` will be
+   returned.  For example:
+
+    ```php
+    use function Zicht\Itertools\iterable;
+
+    $result = iterable($vehicles)->map('colors.2');
+    var_dump($result);
+    // {0: 'blue', 1: 'blue', 2: null, 3: null}
+    ```
+
 ## Fluent interface
-One way to use the Iterator Tools is to convert the array, Iterator, 
-string, etc into an `IterableIterator`.  This class provides a fluent 
-interface all of the common operations.  For example:
+One way to use the Iterator Tools is to convert the array, Iterator,
+string, etc into an `IterableIterator`.  This class provides a fluent
+interface to all of the common operations.  For example:
 
 ```php
 use function Zicht\Itertools\iterable;
 
 $result = iterable($vehicles)->filter('is_cool')->mapBy('id')->map('type');
 var_dump($result);
-// 5: 'unicicle', 9: 'car'
-
+// {5: 'unicicle', 9: 'car'}
 ```
 
 ## Mapping
-Mapping converts one collection into another collection of equal size.
-Using `map` allows manipulation of the items while `mapBy` allows 
-manipulation of the collection keys.  For example:
+Mapping converts one collection into another collection of equal
+length.  Using `map` allows manipulation of the elements while `mapBy`
+allows manipulation of the collection keys.
+
+For example, we can use a closure to create a title for each element
+in `$vehicles`:
 
 ```php
 use function Zicht\Itertools\iterable;
@@ -81,98 +139,109 @@ use function Zicht\Itertools\iterable;
 $getTitle = function ($value, $key) {
     return sprintf('%s with %s wheels', $value['type'], $value['wheels']);
 };
-$titles = iterable($vehicles)->map(getTitle);
-var_dump($titles->toArray());
-// 'car with 4 wheels', ..., 'car with 8 wheels'
+$titles = iterable($vehicles)->map($getTitle);
+var_dump($titles);
+// {0: 'car with 4 wheels', ..., 3: 'car with 8 wheels'}
 ```
 
-Instead of a closure, `map` and `mapBy` also accept a string.  This 
-string will be used to find a property or array index within the element 
-which will become the new value or key.  For example:
+Using the string [getter strategy](#getter-strategy) we can easily get
+the types for each element in `$vehicles` mapped by the vehicle
+identifiers.  For example:
 
 ```php
 use function Zicht\Itertools\iterable;
 
-$types = iterable($vehicles)->map('type');
-var_dump($types->toArray());
-// 'car', 'bike', 'unicicle', 'car'
-
-$vehiclesById = iterable($vehicles)->mapBy('id');
-var_dump(array_keys($vehiclesById->toArray()));
-// 1, 2, 5, 9
+$types = iterable($vehicles)->mapBy('id')->map('type');
+var_dump($types);
+// {1: 'car', 2: 'bike', 5: 'unicicle', 9: 'car'}
 ```
 
-There are several common mapping closures available in mappings.php.
-Calling these functions returns a closure that can be passed to `map` 
-and `mapBy`.  For example:
+There are several common mapping closures available
+in [mappings.php](src/Zicht/Itertools/mappings.php).  Calling these
+functions returns a closure that can be passed to `map` and `mapBy`.
+For example:
 
 ```php
 use function Zicht\Itertools\iterable;
 use function Zicht\Itertools\mappings\length;
 
 $lengths = iterable($words)->map(length());
-var_dump($lengths->toArray());
-// 6, 3, 4, 5, 9
+var_dump($lengths);
+// {0: 6, 1: 3, 2: 4, 3: 5, 4: 9}
 ```
 
 ## Filtering
-Filtering converts one collection into another, possibly shorter, 
-collection.  Using `filter` each element in the collection is evaluated.
-For example:
+Filtering converts one collection into another, possibly shorter,
+collection.  Using `filter` each element in the collection is
+evaluated, the elements that are considered `empty` will be rejected,
+while the elements that are not `empty` will be allowd to pass through
+the filter.
+
+For example, we can use a closure to determine if an element is
+expensive, the `filter` will then only allow the expensive elements
+through:
 
 ```php
 use function Zicht\Itertools\iterable;
 
 $isExpensive = function($value, $key) {
-    return $value['price'] > 10000;
+    return $value['price'] >= 10000;
 }
-$expensive = iterable($vehicles)->filter($isExpensive);
-var_dump($expensive->map('type'));
-// 1: 'car', 9: 'car'
+$expensiveTypes = iterable($vehicles)->filter($isExpensive)->map('type');
+var_dump($expensiveTypes);
+// {1: 'car', 9: 'car'}
 ```
 
-Instead of a closure, `filter` also accepts a string.  This string will
-be used to find a property or array index within the element which will
-be evaluated using `empty`.
+Using the string [getter strategy](#getter-strategy) we can get only
+the `$vehicles` that are considered to be cool.  For example:
 
 ```php
 use function Zicht\Itertools\iterable;
 
-$cool = iterable($vehicles)->filter('is_cool');
-var_dump($cool->map('type'));
-// 5: 'unicicle', 9: 'car'
+$coolVehicleTypes = iterable($vehicles)->filter('is_cool')->map('type');
+var_dump($coolVehicleTypes);
+// {5: 'unicicle', 9: 'car'}
 ```
 
-There are several common filter closures available in filters.php.
-Calling these function returns a closure that can be passed to `filter`.
-For example:
+There are several common filter closures available
+in [filters.php](src/Zicht/Itertools/filters.php).  Calling these
+function returns a closure that can be passed to `filter`.  For
+example:
 
 ```php
 use function Zicht\Itertools\iterable;
 use function Zicht\Itertools\filters\in;
 
-$religiousWords = iterable($words)->filter(in(['allah', 'evi', 'god']));
+$religiousWords = iterable($words)->filter(in(['Allah', 'evi', 'God']));
 var_dump($religiousWords);
-// 'god'
+// {1: 'God'}
 ```
 
 ## Sorting
 `sorted` converts one collection into another collection of equal size
-but with the elements sorted.  Without any arguments the elements are 
-sorted ascending using their own value, for example:
+but with the elements possibly reordered.
+
+For example, using the `null` [getter strategy](#getter-strategy),
+which is the default, we will sort using the element values in
+ascending order:
 
 ```php
 use function Zicht\Itertools\iterable;
 
 $ordered = iterable($numbers)->sorted();
 var_dump($ordered);
-// 1, 2, 3, 4, 5
+// {0: 1, 2: 2, 1: 3, 4: 4, 3: 5}
 ```
 
-The first argument is used to obtain the sorting value to order by.
-This can be a string, in which case it is used to find a property or 
-array index within the element, or it can be a closure that returns the 
-sorting value.  For example: 
+The sorting algorithm will preserve the keys and is guarateed to be
+stable.  I.e. when elements are sorted using the same value, then the
+sorted order is guarateed to be the same as the order of the input
+elements.  This is contrary to the standard PHP sorting functions.
+
+Using the closure [getter strategy](#getter-strategy) the returned
+value is used to determine the order.  The closure is called exactly
+once per element, and the resulting values must be comparable.  For
+example:
 
 ```php
 use function Zicht\Itertools\iterable;
@@ -182,15 +251,84 @@ $getLower = function ($value, $key) {
 };
 $ordered = iterable($words)->sorted($getLower);
 var_dump($ordered);
-// 'Bland', 'god', ,  'oven','Useful', 'notorious'];
-// 1, 2, 3, 4, 5
+// {3: 'Bland', 1: 'God', 2: 'oven', 0: 'Useful', 4: 'notorious'};
+```
+
+The [mappings.php](src/Zicht/Itertools/mappings.php) provides a
+mapping closure which returns a random number.  This can be used to
+sort a collection in a random order.  For example:
+
+```php
+use function Zicht\Itertools\iterable;
+use function Zicht\Itertools\mappings\random;
+
+$randomized = iterable($words)->sorted(random());
+var_dump($randomized);
+// {... randomly ordere words ...}
 ```
 
 ## Grouping
-_todo_
+`groupBy` converts one collection into one or more collections that
+group the elements together on a specific criteria.
 
-## Chaining
-_todo_
+For example, using the string [getter strategy](#getter-strategy) we
+can group all the `$vehicles` of the same type together:
+
+```php
+use function Zicht\Itertools\iterable;
+
+$vehiclesByType = iterable($vehicles)->groupBy('type');
+var_dump($vehiclesByType);
+// {'bike': {1: [...]}, 'car': {0: [...], 3: [...]} 'unicicle': {2: [...]}}
+```
+
+Not that the original keys of the vehicles are still part of the
+resulting groups, and the elements within each group keep the order
+that they had in the input, i.e. it uses the stable sorting provided
+by [`sorted`](#sorting).
 
 ## Reducing
-_todo_
+`reduce` converts a collection into a single value by calling a
+closure of two arguments comulatively to the elements in the
+collection, from left to right.
+
+For example, without any arguments `reduce` will add all elements of
+the collection together:
+
+```php
+use function Zicht\Itertools\iterable;
+
+$sum = iterable($numbers);
+var_dump($sum);
+// 15
+```
+
+In the above exmple, the default closure that is used looks like this:
+
+```php
+function add($a, $b) {
+    return $a + $b;
+}
+```
+
+Given that `$numbers` consists of the elements {1, 3, 2, 5, 4}, the
+`add` closure is called four times:
+
+```php
+$sum = add(add(add(add(1, 3), 2), 5), 4);
+var_dump($sum);
+// 15
+```
+
+There are several common reduction closures available
+in [reductions.php](src/Zicht/Itertools/reductions.php).  Calling
+these functions returns a closure that can be passed to `reduction`.
+For example:
+
+```php
+use function Zicht\Itertools\iterable;
+
+$scentence = iterable($words, reductions\join(' - '));
+var_dump($scentence);
+// 'Useful - God - oven - Bland - notorious'
+```
