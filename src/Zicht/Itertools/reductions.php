@@ -147,6 +147,8 @@ function chain()
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
+ *
+ * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
 function get_reduction($name /* [argument, [arguments, ...] */)
 {
@@ -173,7 +175,7 @@ function get_reduction($name /* [argument, [arguments, ...] */)
 }
 
 /**
- * @deprecated use get_reduction, will be removed in version 3.0
+ * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
 function getReduction($name /* [argument, [arguments, ...] */)
 {

@@ -7,6 +7,7 @@
 namespace Zicht\Itertools\twig;
 
 use Zicht\Itertools as iter;
+use Zicht\Itertools\reductions;
 
 /**
  * Twig extension.
@@ -63,8 +64,12 @@ class Extension extends \Twig_Extension
             new Twig_SimpleFunction('last', '\Zicht\Itertools\last'),
 
             // functions to create closures
-            new Twig_SimpleFunction('reduction', '\Zicht\Itertools\reductions\get_reduction'),
-            new Twig_SimpleFunction('mapping', '\Zicht\Itertools\mappings\get_mapping'),
+            new Twig_SimpleFunction('reducing', array($this, 'getReduction')),
+            new Twig_SimpleFunction('mapping', array($this, 'getMapping')),
+            new Twig_SimpleFunction('filtering', array($this, 'getFilter')),
+
+            // deprecated functions
+            new Twig_SimpleFunction('reduction', array($this, 'deprecatedGetReduction')),
         );
     }
 
@@ -166,6 +171,55 @@ class Extension extends \Twig_Extension
         return iter\mapBy($strategy, $iterable);
     }
 
+
+    /**
+     * Returns a reduction closure
+     *
+     * @param string $name
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     */
+    public function getReduction($name /* [argument, [arguments, ...] */)
+    {
+        if (is_string($name) && in_array($name, ['add', 'sub', 'mul', 'min', 'max', 'join', 'chain'])) {
+            return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
+        }
+
+        throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid reduction.', $name));
+    }
+
+    /**
+     * Returns a mapping closure
+     *
+     * @param string $name
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     */
+    public function getMapping($name /* [argument, [arguments, ...] */)
+    {
+        if (is_string($name) && in_array($name, ['lstrip', 'rstrip', 'strip', 'length', 'key', 'select', 'random', 'type'])) {
+            return call_user_func_array(sprintf('\Zicht\Itertools\mappings\%s', $name), array_slice(func_get_args(), 1));
+        }
+
+        throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid mapping.', $name));
+    }
+
+    /**
+     * Returns a filter closure
+     *
+     * @param string $name
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     */
+    public function getFilter($name /* [argument, [arguments, ...] */)
+    {
+        if (is_string($name) && in_array($name, ['type', 'in', 'not_in', 'equals'])) {
+            return call_user_func_array(sprintf('\Zicht\Itertools\filters\%s', $name), array_slice(func_get_args(), 1));
+        }
+
+        throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid filter.', $name));
+    }
+
     /**
      * Make an iterator that returns values from $iterable where the
      * $strategy determines that the values are not empty.
@@ -242,6 +296,24 @@ class Extension extends \Twig_Extension
     public function deprecatedUniqueBy($iterable, $strategy = null)
     {
         return iter\unique($strategy, $iterable);
+    }
+
+    /**
+     * Returns a reduction closure
+     *
+     * @param string $name
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     *
+     * @deprecated Use reducing instead!
+     */
+    public function deprecatedGetReduction($name /* [argument, [arguments, ...] */)
+    {
+        if (is_string($name) && in_array($name, ['add', 'sub', 'mul', 'min', 'max', 'join', 'chain'])) {
+            return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
+        }
+
+        throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid reduction.', $name));
     }
 
     /**

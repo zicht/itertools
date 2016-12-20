@@ -158,6 +158,8 @@ function type($strategy = null)
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
+ *
+ * @deprecated please use the mapping functions directly, will be removed in version 3.0
  */
 function get_mapping($name /* [argument, [arguments, ...] */)
 {
@@ -200,7 +202,7 @@ function get_mapping($name /* [argument, [arguments, ...] */)
  * @return \Closure
  * @throws \InvalidArgumentException
  *
- * @deprecated use get_mappings, will be removed in version 3.0
+ * @deprecated please use the mapping functions directly, will be removed in version 3.0
  */
 function getMapping($name /* [argument, [arguments, ...] */)
 {
