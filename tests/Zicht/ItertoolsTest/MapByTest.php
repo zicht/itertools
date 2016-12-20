@@ -86,6 +86,10 @@ class MapByTest extends PHPUnit_Framework_TestCase
             return $a + 10;
         };
 
+        $incrementKey = function ($value, $key) {
+            return $key + 1;
+        };
+
         return array(
             // callback
             array(
@@ -137,6 +141,12 @@ class MapByTest extends PHPUnit_Framework_TestCase
                 array(null, array('a' => 1, 'b' => 2, 'c' => 3)),
                 array(1, 2, 3),
                 array(1, 2, 3),
+            ),
+            // the closure is given both $value and $key as parameters
+            array(
+                array($incrementKey, array(0 => 'a', 1 => 'b', 2 => 'c')),
+                array(1, 2, 3),
+                array('a', 'b', 'c'),
             ),
         );
     }
