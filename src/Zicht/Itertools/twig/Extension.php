@@ -7,7 +7,6 @@
 namespace Zicht\Itertools\twig;
 
 use Zicht\Itertools as iter;
-use Zicht\Itertools\reductions;
 
 /**
  * Twig extension.
@@ -25,32 +24,32 @@ class Extension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
+        return [
             // filter names are case-sensitive
             new \Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
             new \Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
             new \Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
-            new \Twig_SimpleFilter('filter', array($this, 'filter')),
+            new \Twig_SimpleFilter('filter', [$this, 'filter']),
             new \Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
-            new \Twig_SimpleFilter('group_by', array($this, 'groupBy')),
+            new \Twig_SimpleFilter('group_by', [$this, 'groupBy']),
             new \Twig_SimpleFilter('last', '\Zicht\Itertools\last'),
-            new \Twig_SimpleFilter('map', array($this, 'map')),
-            new \Twig_SimpleFilter('map_by', array($this, 'mapBy')),
+            new \Twig_SimpleFilter('map', [$this, 'map']),
+            new \Twig_SimpleFilter('map_by', [$this, 'mapBy']),
             new \Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce'),
             new \Twig_SimpleFilter('reversed', '\Zicht\Itertools\reversed'),
-            new \Twig_SimpleFilter('sorted', array($this, 'sorted')),
-            new \Twig_SimpleFilter('unique', array($this, 'unique')),
+            new \Twig_SimpleFilter('sorted', [$this, 'sorted']),
+            new \Twig_SimpleFilter('unique', [$this, 'unique']),
             new \Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
 
             // deprecated filters
-            new \Twig_SimpleFilter('filterby', array($this, 'deprecatedFilterBy')),
-            new \Twig_SimpleFilter('groupBy', array($this, 'deprecatedGroupBy')),
-            new \Twig_SimpleFilter('groupby', array($this, 'deprecatedGroupBy')),
-            new \Twig_SimpleFilter('mapBy', array($this, 'deprecatedMapBy')),
-            new \Twig_SimpleFilter('mapby', array($this, 'deprecatedMapBy')),
-            new \Twig_SimpleFilter('sum', array($this, 'deprecatedSum')),
-            new \Twig_SimpleFilter('uniqueby', array($this, 'deprecatedUniqueBy')),
-        );
+            new \Twig_SimpleFilter('filterby', [$this, 'deprecatedFilterBy']),
+            new \Twig_SimpleFilter('groupBy', [$this, 'deprecatedGroupBy']),
+            new \Twig_SimpleFilter('groupby', [$this, 'deprecatedGroupBy']),
+            new \Twig_SimpleFilter('mapBy', [$this, 'deprecatedMapBy']),
+            new \Twig_SimpleFilter('mapby', [$this, 'deprecatedMapBy']),
+            new \Twig_SimpleFilter('sum', [$this, 'deprecatedSum']),
+            new \Twig_SimpleFilter('uniqueby', [$this, 'deprecatedUniqueBy']),
+        ];
     }
 
     /**
@@ -58,19 +57,19 @@ class Extension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
+        return [
             new Twig_SimpleFunction('chain', '\Zicht\Itertools\chain'),
             new Twig_SimpleFunction('first', '\Zicht\Itertools\first'),
             new Twig_SimpleFunction('last', '\Zicht\Itertools\last'),
 
             // functions to create closures
-            new Twig_SimpleFunction('reducing', array($this, 'getReduction')),
-            new Twig_SimpleFunction('mapping', array($this, 'getMapping')),
-            new Twig_SimpleFunction('filtering', array($this, 'getFilter')),
+            new Twig_SimpleFunction('reducing', [$this, 'getReduction']),
+            new Twig_SimpleFunction('mapping', [$this, 'getMapping']),
+            new Twig_SimpleFunction('filtering', [$this, 'getFilter']),
 
             // deprecated functions
-            new Twig_SimpleFunction('reduction', array($this, 'deprecatedGetReduction')),
-        );
+            new Twig_SimpleFunction('reduction', [$this, 'deprecatedGetReduction']),
+        ];
     }
 
     /**
