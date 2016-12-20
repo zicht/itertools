@@ -6,9 +6,6 @@
 
 namespace Zicht\Itertools\twig;
 
-use Twig_Extension;
-use Twig_SimpleFilter;
-use Twig_SimpleFunction;
 use Zicht\Itertools as iter;
 
 /**
@@ -18,10 +15,9 @@ use Zicht\Itertools as iter;
  *    <tag name="twig.extension"/>
  * </service>
  *
- * Class Extension
  * @package Zicht\Itertools\twig
  */
-class Extension extends Twig_Extension
+class Extension extends \Twig_Extension
 {
     /**
      * @{inheritDoc}
@@ -30,27 +26,29 @@ class Extension extends Twig_Extension
     {
         return array(
             // filter names are case-sensitive
-            new Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
-            new Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
-            new Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
-            new Twig_SimpleFilter('filter', array($this, 'filter')),
-            new Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
-            new Twig_SimpleFilter('groupBy', array($this, 'groupBy')),
-            new Twig_SimpleFilter('last', '\Zicht\Itertools\last'),
-            new Twig_SimpleFilter('map', array($this, 'map')),
-            new Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
-            new Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce'),
-            new Twig_SimpleFilter('reversed', '\Zicht\Itertools\reversed'),
-            new Twig_SimpleFilter('sorted', array($this, 'sorted')),
-            new Twig_SimpleFilter('unique', array($this, 'unique')),
-            new Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
+            new \Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
+            new \Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
+            new \Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
+            new \Twig_SimpleFilter('filter', array($this, 'filter')),
+            new \Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
+            new \Twig_SimpleFilter('group_by', array($this, 'groupBy')),
+            new \Twig_SimpleFilter('last', '\Zicht\Itertools\last'),
+            new \Twig_SimpleFilter('map', array($this, 'map')),
+            new \Twig_SimpleFilter('map_by', array($this, 'mapBy')),
+            new \Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce'),
+            new \Twig_SimpleFilter('reversed', '\Zicht\Itertools\reversed'),
+            new \Twig_SimpleFilter('sorted', array($this, 'sorted')),
+            new \Twig_SimpleFilter('unique', array($this, 'unique')),
+            new \Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
 
             // deprecated filters
-            new Twig_SimpleFilter('filterby', array($this, 'filterBy')),
-            new Twig_SimpleFilter('groupby', array($this, 'groupByLowercase')),
-            new Twig_SimpleFilter('mapby', array($this, 'mapByLowercase')),
-            new Twig_SimpleFilter('sum', array($this, 'sum')),
-            new Twig_SimpleFilter('uniqueby', array($this, 'uniqueBy')),
+            new \Twig_SimpleFilter('filterby', array($this, 'filterBy')),
+            new \Twig_SimpleFilter('groupBy', array($this, 'groupBy')),
+            new \Twig_SimpleFilter('groupby', array($this, 'groupBy')),
+            new \Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
+            new \Twig_SimpleFilter('mapby', array($this, 'mapBy')),
+            new \Twig_SimpleFilter('sum', array($this, 'sum')),
+            new \Twig_SimpleFilter('uniqueby', array($this, 'unique')),
         );
     }
 
@@ -77,34 +75,25 @@ class Extension extends Twig_Extension
      * @param mixed $strategy
      * @return iter\lib\UniqueIterator
      */
-    public function unique($items, $strategy = null)
+    public function unique($iterable, $strategy = null)
     {
-        return iter\unique($strategy, $items);
+        return iter\unique($strategy, $iterable);
     }
 
     /**
-     * Takes an iterable and returns another iterable that is unique.
+     * Create a reduction
      *
-     * @deprecated use unique($iterable, $strategy) instead
      * @param array|string|\Iterator $iterable
-     * @param mixed $strategy
-     * @return iter\lib\UniqueIterator
-     */
-    public function uniqueBy($items, $strategy)
-    {
-        return iter\unique($strategy, $items);
-    }
-
-    /**
-     * @deprecated Use reduce instead!
-     * @param $iterable
      * @param int $default
      * @return int
+     *
+     * @deprecated Use reduce instead!
      */
     public function sum($iterable, $default = 0)
     {
         $result = $default;
-        foreach (iter\accumulate($iterable) as $result) {};
+        foreach (iter\accumulate($iterable) as $result) {
+        };
         return $result;
     }
 
@@ -117,10 +106,15 @@ class Extension extends Twig_Extension
      *
      * Sro example to get the prices for all items in the basket:
      * {{ transaction_snapshot.Basket.Items|map('TotalPrice.Amount')|reduce }}
+     *
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $closure
+     * @param mixed $initializer
+     * @return mixed
      */
-    public function reduce($iterable, $operation = 'sum', $default = 0)
+    public function reduce($iterable, $closure = 'add', $initializer = null)
     {
-        return iter\reduce($iterable, $operation, $default);
+        return iter\reduce($iterable, $closure, $initializer);
     }
 
     /**
@@ -128,7 +122,6 @@ class Extension extends Twig_Extension
      * $iterable.  Generally, the $iterable needs to already be sorted on
      * the same key function.
      *
-     * @see \Zicht\Itertools\groupby
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @return iter\lib\GroupbyIterator
@@ -139,26 +132,10 @@ class Extension extends Twig_Extension
     }
 
     /**
-     * Make an iterator that returns consecutive groups from the
-     * $iterable.  Generally, the $iterable needs to already be sorted on
-     * the same key function.
-     *
-     * @deprecated Use groupBy instead! (upper-case B)
-     * @see \Zicht\Itertools\groupby
-     * @param array|string|\Iterator $iterable
-     * @param string|\Closure $strategy
-     * @return iter\lib\GroupbyIterator
-     */
-    public function groupByLowercase($iterable, $strategy)
-    {
-        return iter\groupBy($strategy, $iterable);
-    }
-
-    /**
      * Make an iterator that returns values from $iterable where the
      * $strategy determines that the values are not empty.
      *
-     * @param $iterable
+     * @param array|string|\Iterator $iterable
      * @param null $strategy
      * @return iter\lib\FilterIterator
      */
@@ -171,7 +148,6 @@ class Extension extends Twig_Extension
      * Make an iterator that returns the values from $iterable sorted by
      * $strategy.
      *
-     * @see \Zicht\Itertools\sorted
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @param bool $reverse
@@ -185,7 +161,6 @@ class Extension extends Twig_Extension
     /**
      * Make an iterator that applies $func to every entry in the $iterables.
      *
-     * @see \Zicht\Itertools\map
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @return iter\lib\MapIterator
@@ -199,7 +174,6 @@ class Extension extends Twig_Extension
      * Make an iterator returning values from $iterable and keys from
      * $strategy.
      *
-     * @see \Zicht\Itertools\mapby
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @return iter\lib\MapByIterator
@@ -210,25 +184,14 @@ class Extension extends Twig_Extension
     }
 
     /**
-     * Make an iterator returning values from $iterable and keys from
-     * $strategy.
+     * Make an iterator that returns values from $iterable where the
+     * $strategy determines that the values are not empty.
      *
-     * @deprecated Use mapBy instead! (upper-case B)
-     * @see \Zicht\Itertools\mapby
-     * @param array|string|\Iterator $iterable
-     * @param string|\Closure $strategy
-     * @return iter\lib\MapByIterator
-     */
-    public function mapByLowercase($iterable, $strategy)
-    {
-        return iter\mapBy($strategy, $iterable);
-    }
-
-    /**
-     * @see \Zicht\Itertools\filterby
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @return iter\lib\FilterIterator
+     *
+     * @deprecated Use filter instead!
      */
     public function filterBy($iterable, $strategy)
     {
