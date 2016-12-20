@@ -42,13 +42,13 @@ class Extension extends \Twig_Extension
             new \Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
 
             // deprecated filters
-            new \Twig_SimpleFilter('filterby', array($this, 'filterBy')),
-            new \Twig_SimpleFilter('groupBy', array($this, 'groupBy')),
-            new \Twig_SimpleFilter('groupby', array($this, 'groupBy')),
-            new \Twig_SimpleFilter('mapBy', array($this, 'mapBy')),
-            new \Twig_SimpleFilter('mapby', array($this, 'mapBy')),
-            new \Twig_SimpleFilter('sum', array($this, 'sum')),
-            new \Twig_SimpleFilter('uniqueby', array($this, 'unique')),
+            new \Twig_SimpleFilter('filterby', array($this, 'deprecatedFilterBy')),
+            new \Twig_SimpleFilter('groupBy', array($this, 'deprecatedGroupBy')),
+            new \Twig_SimpleFilter('groupby', array($this, 'deprecatedGroupBy')),
+            new \Twig_SimpleFilter('mapBy', array($this, 'deprecatedMapBy')),
+            new \Twig_SimpleFilter('mapby', array($this, 'deprecatedMapBy')),
+            new \Twig_SimpleFilter('sum', array($this, 'deprecatedSum')),
+            new \Twig_SimpleFilter('uniqueby', array($this, 'deprecatedUniqueBy')),
         );
     }
 
@@ -78,23 +78,6 @@ class Extension extends \Twig_Extension
     public function unique($iterable, $strategy = null)
     {
         return iter\unique($strategy, $iterable);
-    }
-
-    /**
-     * Create a reduction
-     *
-     * @param array|string|\Iterator $iterable
-     * @param int $default
-     * @return int
-     *
-     * @deprecated Use reduce instead!
-     */
-    public function sum($iterable, $default = 0)
-    {
-        $result = $default;
-        foreach (iter\accumulate($iterable) as $result) {
-        };
-        return $result;
     }
 
     /**
@@ -193,9 +176,72 @@ class Extension extends \Twig_Extension
      *
      * @deprecated Use filter instead!
      */
-    public function filterBy($iterable, $strategy)
+    public function deprecatedFilterBy($iterable, $strategy)
     {
         return iter\filterBy($strategy, $iterable);
+    }
+
+
+    /**
+     * Make an iterator that returns consecutive groups from the
+     * $iterable.  Generally, the $iterable needs to already be sorted on
+     * the same key function.
+     *
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $strategy
+     * @return iter\lib\GroupbyIterator
+     *
+     * @deprecated Use group_by instead!
+     */
+    public function deprecatedGroupBy($iterable, $strategy)
+    {
+        return iter\groupBy($strategy, $iterable);
+    }
+
+    /**
+     * Make an iterator returning values from $iterable and keys from
+     * $strategy.
+     *
+     * @param array|string|\Iterator $iterable
+     * @param string|\Closure $strategy
+     * @return iter\lib\MapByIterator
+     *
+     * @deprecated Use map_by instead!
+     */
+    public function deprecatedMapBy($iterable, $strategy)
+    {
+        return iter\mapBy($strategy, $iterable);
+    }
+
+    /**
+     * Create a reduction
+     *
+     * @param array|string|\Iterator $iterable
+     * @param int $default
+     * @return int
+     *
+     * @deprecated Use reduce instead!
+     */
+    public function deprecatedSum($iterable, $default = 0)
+    {
+        $result = $default;
+        foreach (iter\accumulate($iterable) as $result) {
+        };
+        return $result;
+    }
+
+    /**
+     * Takes an iterable and returns another iterable that is unique.
+     *
+     * @param array|string|\Iterator $iterable
+     * @param mixed $strategy
+     * @return iter\lib\UniqueIterator
+     *
+     * @deprecated Use unique instead!
+     */
+    public function deprecatedUniqueBy($iterable, $strategy = null)
+    {
+        return iter\unique($strategy, $iterable);
     }
 
     /**
