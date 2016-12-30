@@ -1,7 +1,4 @@
-plugins: ['ci', 'svn']
-
-vcs:
-    url: svn://zon/projecten/zicht-libraries/ZichtIter
+plugins: ['ci']
 
 tasks:
     ci.phpunit:
