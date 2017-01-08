@@ -298,7 +298,7 @@ the collection together:
 ```php
 use function Zicht\Itertools\iterable;
 
-$sum = iterable($numbers);
+$sum = iterable($numbers)->reduce();
 var_dump($sum);
 // 15
 ```
