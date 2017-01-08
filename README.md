@@ -327,8 +327,9 @@ For example:
 
 ```php
 use function Zicht\Itertools\iterable;
+use Zicht\Itertools\reductions;
 
-$scentence = iterable($words, reductions\join(' - '));
+$scentence = iterable($words)->reduce(reductions\join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
 ```
