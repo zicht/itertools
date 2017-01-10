@@ -333,3 +333,6 @@ $scentence = iterable($words)->reduce(reductions\join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
 ```
+
+# Maintainer(s)
+* Boudewijn Schoon <boudewijn@zicht.nl>
