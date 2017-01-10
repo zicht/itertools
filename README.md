@@ -298,7 +298,7 @@ the collection together:
 ```php
 use function Zicht\Itertools\iterable;
 
-$sum = iterable($numbers);
+$sum = iterable($numbers)->reduce();
 var_dump($sum);
 // 15
 ```
@@ -327,8 +327,9 @@ For example:
 
 ```php
 use function Zicht\Itertools\iterable;
+use Zicht\Itertools\reductions;
 
-$scentence = iterable($words, reductions\join(' - '));
+$scentence = iterable($words)->reduce(reductions\join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
 ```
