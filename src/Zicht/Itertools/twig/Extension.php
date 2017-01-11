@@ -42,13 +42,13 @@ class Extension extends \Twig_Extension
             new \Twig_SimpleFilter('zip', '\Zicht\Itertools\zip'),
 
             // deprecated filters
-            new \Twig_SimpleFilter('filterby', [$this, 'deprecatedFilterBy']),
-            new \Twig_SimpleFilter('groupBy', [$this, 'deprecatedGroupBy']),
-            new \Twig_SimpleFilter('groupby', [$this, 'deprecatedGroupBy']),
-            new \Twig_SimpleFilter('mapBy', [$this, 'deprecatedMapBy']),
-            new \Twig_SimpleFilter('mapby', [$this, 'deprecatedMapBy']),
-            new \Twig_SimpleFilter('sum', [$this, 'deprecatedSum']),
-            new \Twig_SimpleFilter('uniqueby', [$this, 'deprecatedUniqueBy']),
+            new \Twig_SimpleFilter('filterby', [$this, 'deprecatedFilterBy'], ['deprecated' => true, 'alternative' => 'filter']),
+            new \Twig_SimpleFilter('groupBy', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => 'group_by']),
+            new \Twig_SimpleFilter('groupby', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => 'group_by']),
+            new \Twig_SimpleFilter('mapBy', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => 'map_by']),
+            new \Twig_SimpleFilter('mapby', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => 'map_by']),
+            new \Twig_SimpleFilter('sum', [$this, 'deprecatedSum'], ['deprecated' => true, 'alternative' => 'reduce']),
+            new \Twig_SimpleFilter('uniqueby', [$this, 'deprecatedUniqueBy'], ['deprecated' => true, 'alternative' => 'unique']),
         ];
     }
 
@@ -58,17 +58,17 @@ class Extension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new Twig_SimpleFunction('chain', '\Zicht\Itertools\chain'),
-            new Twig_SimpleFunction('first', '\Zicht\Itertools\first'),
-            new Twig_SimpleFunction('last', '\Zicht\Itertools\last'),
+            new \Twig_SimpleFunction('chain', '\Zicht\Itertools\chain'),
+            new \Twig_SimpleFunction('first', '\Zicht\Itertools\first'),
+            new \Twig_SimpleFunction('last', '\Zicht\Itertools\last'),
 
             // functions to create closures
-            new Twig_SimpleFunction('reducing', [$this, 'getReduction']),
-            new Twig_SimpleFunction('mapping', [$this, 'getMapping']),
-            new Twig_SimpleFunction('filtering', [$this, 'getFilter']),
+            new \Twig_SimpleFunction('reducing', [$this, 'reducing']),
+            new \Twig_SimpleFunction('mapping', [$this, 'mapping']),
+            new \Twig_SimpleFunction('filtering', [$this, 'filtering']),
 
             // deprecated functions
-            new Twig_SimpleFunction('reduction', [$this, 'deprecatedGetReduction']),
+            new \Twig_SimpleFunction('reduction', [$this, 'deprecatedGetReduction'], ['deprecated' => true, 'alternative' => 'reducing']),
         ];
     }
 
@@ -178,7 +178,7 @@ class Extension extends \Twig_Extension
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function getReduction($name /* [argument, [arguments, ...] */)
+    public function reducing($name /* [argument, [arguments, ...] */)
     {
         if (is_string($name) && in_array($name, ['add', 'sub', 'mul', 'min', 'max', 'join', 'chain'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
@@ -194,7 +194,7 @@ class Extension extends \Twig_Extension
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function getMapping($name /* [argument, [arguments, ...] */)
+    public function mapping($name /* [argument, [arguments, ...] */)
     {
         if (is_string($name) && in_array($name, ['lstrip', 'rstrip', 'strip', 'length', 'key', 'select', 'random', 'type'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\mappings\%s', $name), array_slice(func_get_args(), 1));
@@ -210,7 +210,7 @@ class Extension extends \Twig_Extension
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function getFilter($name /* [argument, [arguments, ...] */)
+    public function filtering($name /* [argument, [arguments, ...] */)
     {
         if (is_string($name) && in_array($name, ['type', 'in', 'not_in', 'equals'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\filters\%s', $name), array_slice(func_get_args(), 1));
@@ -231,7 +231,7 @@ class Extension extends \Twig_Extension
      */
     public function deprecatedFilterBy($iterable, $strategy)
     {
-        return iter\filterBy($strategy, $iterable);
+        return iter\filter($strategy, $iterable);
     }
 
 
@@ -318,7 +318,7 @@ class Extension extends \Twig_Extension
     /**
      * @{inheritDoc}
      */
-    function getName()
+    public function getName()
     {
         return 'zicht_itertools';
     }

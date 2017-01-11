@@ -10,7 +10,8 @@
     ],
     "require-dev": {
         "doctrine/collections": "^1.3",
-        "phpunit/phpunit": "4.*"
+        "phpunit/phpunit": "4.*",
+        "twig/twig": "^1.30"
     },
     "minimum-stability": "stable",
     "autoload": {
