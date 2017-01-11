@@ -196,7 +196,7 @@ class Extension extends \Twig_Extension
      */
     public function mapping($name /* [argument, [arguments, ...] */)
     {
-        if (is_string($name) && in_array($name, ['lstrip', 'rstrip', 'strip', 'length', 'key', 'select', 'random', 'type'])) {
+        if (is_string($name) && in_array($name, ['lstrip', 'rstrip', 'strip', 'length', 'key', 'select', 'random', 'type', 'lower', 'upper'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\mappings\%s', $name), array_slice(func_get_args(), 1));
         }
 
