@@ -80,6 +80,30 @@ function key()
 }
 
 /**
+ * Returns a closure that returns the string value lower cased
+ *
+ * @return \Closure
+ */
+function lower()
+{
+    return function ($value) {
+        return strtolower($value);
+    };
+}
+
+/**
+ * Returns a closure that returns the string value upper cased
+ *
+ * @return \Closure
+ */
+function upper()
+{
+    return function ($value) {
+        return strtoupper($value);
+    };
+}
+
+/**
  * Returns a closure that applies multiple $STRATEGIES to the value and returns the results
  *
  * > $compute = function ($value, $key) {
