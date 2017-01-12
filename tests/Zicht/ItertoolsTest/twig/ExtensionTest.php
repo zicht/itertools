@@ -45,7 +45,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
 
         /** @var \Twig_SimpleFilter $filter */
         foreach ($this->extension->getFilters() as $filter) {
-            $this->assertInstanceOf(\Twig_SimpleFilter::class, $filter);
+            $this->assertInstanceOf('\Twig_SimpleFilter', $filter);
             $filters [] = $filter->getName();
         }
 
@@ -68,7 +68,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
 
         /** @var \Twig_SimpleFunction $function */
         foreach ($this->extension->getFunctions() as $function) {
-            $this->assertInstanceOf(\Twig_SimpleFunction::class, $function);
+            $this->assertInstanceOf('\Twig_SimpleFunction', $function);
             $functions [] = $function->getName();
         }
 
@@ -90,7 +90,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testUnique()
     {
         $result = $this->extension->unique([1, 2, 3]);
-        $this->assertInstanceOf(UniqueIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\UniqueIterator', $result);
     }
 
     /**
@@ -108,7 +108,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testGroupBy()
     {
         $result = $this->extension->groupBy([1, 2, 3], null);
-        $this->assertInstanceOf(GroupbyIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\GroupbyIterator', $result);
     }
 
     /**
@@ -117,7 +117,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testFilter()
     {
         $result = $this->extension->filter([1, 2, 3]);
-        $this->assertInstanceOf(FilterIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\FilterIterator', $result);
     }
 
     /**
@@ -126,7 +126,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testSorted()
     {
         $result = $this->extension->sorted([1, 2, 3]);
-        $this->assertInstanceOf(SortedIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\SortedIterator', $result);
     }
 
     /**
@@ -135,7 +135,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testMap()
     {
         $result = $this->extension->map([1, 2, 3], null);
-        $this->assertInstanceOf(MapIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $result);
     }
 
     /**
@@ -144,7 +144,7 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testMapBy()
     {
         $result = $this->extension->mapBy([1, 2, 3], null);
-        $this->assertInstanceOf(MapByIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\MapByIterator', $result);
     }
 
     /**

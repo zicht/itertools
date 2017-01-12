@@ -1,3 +1,6 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zicht/itertools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zicht/itertools/?branch=master) 
+[![Code Coverage](https://scrutinizer-ci.com/g/zicht/itertools/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/zicht/itertools/?branch=master)
+
 # Zicht Iterator Tools Library
 The Iterator Tools, or itertools for short, are a collection of
 convenience tools to handle sequences of data such as arrays,

@@ -24,7 +24,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
     {
         $lists = [['a' => 1, 'b' => 2, 'c' => 3], ['d' => 4, 'e' => 5, 'f' => 6], ['g' => 7, 'h' => 8, 'i' => 9]];
         $result = iter\iterable($lists)->reduce(reductions\chain(), new iter\lib\ChainIterator());
-        $this->assertInstanceOf(iter\lib\ChainIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\ChainIterator', $result);
         $this->assertEquals(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'], $result->keys());
         $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9], $result->values());
     }
@@ -36,7 +36,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
     {
         $lists = [];
         $result = iter\iterable($lists)->reduce(reductions\chain(), new iter\lib\ChainIterator());
-        $this->assertInstanceOf(iter\lib\ChainIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\ChainIterator', $result);
         $this->assertEquals([], $result->keys());
         $this->assertEquals([], $result->values());
     }
@@ -49,7 +49,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
     public function testInitializerChainIterator()
     {
         $result = iter\iterable([[1, 2, 3], [4, 5, 6]])->reduce(reductions\chain());
-        $this->assertInstanceOf(iter\lib\ChainIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\ChainIterator', $result);
         $result->values();
     }
 

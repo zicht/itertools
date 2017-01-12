@@ -30,7 +30,7 @@ class TypeTest extends PHPUnit_Framework_TestCase
             new \Exception('test'),
         ];
 
-        $expected = ['NULL', 'integer', 'boolean', 'array', 'string', \Exception::class];
+        $expected = ['NULL', 'integer', 'boolean', 'array', 'string', 'Exception'];
 
         $closure = iter\mappings\type();
         $this->assertEquals($expected, iter\iterable($data)->map($closure)->values());
@@ -50,7 +50,7 @@ class TypeTest extends PHPUnit_Framework_TestCase
             ],
         ];
 
-        $expected = ['integer', \Exception::class];
+        $expected = ['integer', 'Exception'];
 
         $closure = iter\mappings\type('key');
         $this->assertEquals($expected, iter\iterable($data)->map($closure)->values());
@@ -94,8 +94,8 @@ class TypeTest extends PHPUnit_Framework_TestCase
     public function goodSequenceProvider()
     {
         return [
-            [['type'], [null, 1, true, [], '', new \Exception('test')], ['NULL', 'integer', 'boolean', 'array', 'string', \Exception::class]],
-            [['type', 'key'], [['key' => 42], ['key' => new \Exception('test')]], ['integer', \Exception::class]],
+            [['type'], [null, 1, true, [], '', new \Exception('test')], ['NULL', 'integer', 'boolean', 'array', 'string', 'Exception']],
+            [['type', 'key'], [['key' => 42], ['key' => new \Exception('test')]], ['integer', 'Exception']],
         ];
     }
 }

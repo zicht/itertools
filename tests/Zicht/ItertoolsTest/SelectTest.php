@@ -59,7 +59,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $expected = [1, 2, 3];
 
         $result = iter\select(null, $data, false);
-        $this->assertInstanceOf(iter\lib\MapIterator::class, $result);
+        $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $result);
         $this->assertEquals($expected, $result->toArray());
     }
 
