@@ -1,3 +1,4 @@
+[![Build Status](https://scrutinizer-ci.com/g/zicht/itertools/badges/build.png?b=master)](https://scrutinizer-ci.com/g/zicht/itertools/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zicht/itertools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zicht/itertools/?branch=master) 
 [![Code Coverage](https://scrutinizer-ci.com/g/zicht/itertools/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/zicht/itertools/?branch=master)
 
