@@ -132,7 +132,7 @@ function upper()
  */
 function select(array $strategies)
 {
-    $strategies = array_map('\Zicht\Itertools\conversions\mixedToValueGetter', $strategies);
+    $strategies = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', $strategies);
 
     return function ($value, $key) use ($strategies) {
         $res = [];
@@ -169,7 +169,7 @@ function random($min = 0, $max = null)
  */
 function type($strategy = null)
 {
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value) use ($strategy) {
         $value = $strategy($value);
         return is_object($value) ? get_class($value) : gettype($value);

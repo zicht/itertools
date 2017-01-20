@@ -73,6 +73,6 @@ class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
      */
     public function extend($iterable)
     {
-        parent::append(conversions\mixedToIterator($iterable));
+        parent::append(conversions\mixed_to_iterator($iterable));
     }
 }

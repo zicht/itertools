@@ -30,11 +30,11 @@ use Zicht\Itertools\reductions;
  * @param array|string|\Iterator $iterable
  * @return \Iterator
  *
- * @deprecated Use Conversions::mixedToIterator instead, will be removed in version 3.0
+ * @deprecated Use conversions\mixed_to_iterator instead, will be removed in version 3.0
  */
 function mixedToIterator($iterable)
 {
-    return conversions\mixedToIterator($iterable);
+    return conversions\mixed_to_iterator($iterable);
 }
 
 /**
@@ -43,11 +43,11 @@ function mixedToIterator($iterable)
  * @param null|\Closure $closure
  * @return \Closure
  *
- * @deprecated Use Conversions::mixedToClosure instead, will be removed in version 3.0
+ * @deprecated Use conversions\mixed_to_closure instead, will be removed in version 3.0
  */
 function mixedToClosure($closure)
 {
-    return conversions\mixedToClosure($closure);
+    return conversions\mixed_to_closure($closure);
 }
 
 /**
@@ -60,7 +60,7 @@ function mixedToClosure($closure)
  */
 function mixedToValueGetter($strategy)
 {
-    return conversions\mixedToValueGetter($strategy);
+    return conversions\mixed_to_value_getter($strategy);
 }
 
 /**
@@ -104,7 +104,7 @@ function mixedToOperationClosure($closure)
 function accumulate($iterable, $closure = 'add')
 {
     return new AccumulateIterator(
-        conversions\mixedToIterator($iterable),
+        conversions\mixed_to_iterator($iterable),
         $closure instanceof \Closure ? $closure : reductions\getReduction($closure)
     );
 }
@@ -132,7 +132,7 @@ function accumulate($iterable, $closure = 'add')
 function reduce($iterable, $closure = 'add', $initializer = null)
 {
     $closure = $closure instanceof \Closure ? $closure : reductions\get_reduction($closure);
-    $iterable = conversions\mixedToIterator($iterable);
+    $iterable = conversions\mixed_to_iterator($iterable);
     $iterable->rewind();
 
     if (null === $initializer) {
@@ -174,7 +174,7 @@ function chain(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(
         function ($iterable) {
-            return conversions\mixedToIterator($iterable);
+            return conversions\mixed_to_iterator($iterable);
         },
         func_get_args()
     );
@@ -222,7 +222,7 @@ function count($start = 0, $step = 1)
  */
 function cycle($iterable)
 {
-    return new CycleIterator(conversions\mixedToIterator($iterable));
+    return new CycleIterator(conversions\mixed_to_iterator($iterable));
 }
 
 /**
@@ -254,8 +254,8 @@ function cycle($iterable)
 function mapBy($strategy, $iterable)
 {
     return new MapByIterator(
-        conversions\mixedToValueGetter($strategy),
-        conversions\mixedToIterator($iterable)
+        conversions\mixed_to_value_getter($strategy),
+        conversions\mixed_to_iterator($iterable)
     );
 }
 
@@ -306,12 +306,12 @@ function map($strategy, $iterable /*, $iterable2, ... */)
 {
     $iterables = array_map(
         function ($iterable) {
-            return conversions\mixedToIterator($iterable);
+            return conversions\mixed_to_iterator($iterable);
         },
         array_slice(func_get_args(), 1)
     );
     $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
-    return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixedToValueGetter($strategy)), $iterables));
+    return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixed_to_value_getter($strategy)), $iterables));
 }
 
 /**
@@ -332,8 +332,8 @@ function select($strategy, $iterable, $flatten = true)
     }
 
     $ret = new MapIterator(
-        conversions\mixedToValueGetter($strategy),
-        conversions\mixedToIterator($iterable)
+        conversions\mixed_to_value_getter($strategy),
+        conversions\mixed_to_iterator($iterable)
     );
     if ($flatten) {
         return $ret->values();
@@ -408,8 +408,8 @@ function groupBy($strategy, $iterable, $sort = true)
     }
 
     return new GroupbyIterator(
-        conversions\mixedToValueGetter($strategy),
-        $sort ? sorted($strategy, $iterable) : conversions\mixedToIterator($iterable)
+        conversions\mixed_to_value_getter($strategy),
+        $sort ? sorted($strategy, $iterable) : conversions\mixed_to_iterator($iterable)
     );
 }
 
@@ -445,8 +445,8 @@ function sorted($strategy, $iterable, $reverse = false)
         throw new \InvalidArgumentException('Argument $REVERSE must be boolean');
     }
     return new SortedIterator(
-        conversions\mixedToValueGetter($strategy),
-        conversions\mixedToIterator($iterable),
+        conversions\mixed_to_value_getter($strategy),
+        conversions\mixed_to_iterator($iterable),
         $reverse
     );
 }
@@ -477,13 +477,13 @@ function filter(/* [$strategy, ] $iterable */)
             throw new \InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     $isValid = function ($value, $key) use ($strategy) {
         $tempVarPhp54 = $strategy($value, $key);
         return !empty($tempVarPhp54);
     };
 
-    return new FilterIterator($isValid, conversions\mixedToIterator($iterable));
+    return new FilterIterator($isValid, conversions\mixed_to_iterator($iterable));
 }
 
 /**
@@ -502,21 +502,21 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 2:
-            $strategy = conversions\mixedToValueGetter($args[0]);
+            $strategy = conversions\mixed_to_value_getter($args[0]);
             $closure = function ($value, $key) use ($strategy) {
                 $tempVarPhp54 = call_user_func($strategy, $value, $key);
                 return !empty($tempVarPhp54);
             };
-            $iterable = conversions\mixedToIterator($args[1]);
+            $iterable = conversions\mixed_to_iterator($args[1]);
             break;
 
         case 3:
-            $strategy = conversions\mixedToValueGetter($args[0]);
+            $strategy = conversions\mixed_to_value_getter($args[0]);
             $userClosure = $args[1];
             $closure = function ($value, $key) use ($strategy, $userClosure) {
                 return call_user_func($userClosure, call_user_func($strategy, $value, $key));
             };
-            $iterable = conversions\mixedToIterator($args[2]);
+            $iterable = conversions\mixed_to_iterator($args[2]);
             break;
 
         default:
@@ -546,7 +546,7 @@ function zip(/* $iterable, $iterable2, ... */)
 {
     $iterables = array_map(
         function ($iterable) {
-            return conversions\mixedToIterator($iterable);
+            return conversions\mixed_to_iterator($iterable);
         },
         func_get_args()
     );
@@ -562,7 +562,7 @@ function zip(/* $iterable, $iterable2, ... */)
  */
 function reversed($iterable)
 {
-    return new ReversedIterator(conversions\mixedToIterator($iterable));
+    return new ReversedIterator(conversions\mixed_to_iterator($iterable));
 }
 
 /**
@@ -601,8 +601,8 @@ function unique(/* [$strategy,] $iterable */)
     }
 
     return new UniqueIterator(
-        conversions\mixedToValueGetter($strategy),
-        conversions\mixedToIterator($iterable)
+        conversions\mixed_to_value_getter($strategy),
+        conversions\mixed_to_iterator($iterable)
     );
 }
 
@@ -617,8 +617,8 @@ function unique(/* [$strategy,] $iterable */)
 function uniqueBy($strategy, $iterable)
 {
     return new UniqueIterator(
-        conversions\mixedToValueGetter($strategy),
-        conversions\mixedToIterator($iterable)
+        conversions\mixed_to_value_getter($strategy),
+        conversions\mixed_to_iterator($iterable)
     );
 }
 
@@ -643,13 +643,13 @@ function any(/* [$strategy,] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixedToValueGetter(null);
-            $iterable = conversions\mixedToIterator($args[0]);
+            $strategy = conversions\mixed_to_value_getter(null);
+            $iterable = conversions\mixed_to_iterator($args[0]);
             break;
 
         case 2:
-            $strategy = conversions\mixedToValueGetter($args[0]);
-            $iterable = conversions\mixedToIterator($args[1]);
+            $strategy = conversions\mixed_to_value_getter($args[0]);
+            $iterable = conversions\mixed_to_iterator($args[1]);
             break;
 
         default:
@@ -687,13 +687,13 @@ function all(/* [$strategy,] $iterable */)
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixedToValueGetter(null);
-            $iterable = conversions\mixedToIterator($args[0]);
+            $strategy = conversions\mixed_to_value_getter(null);
+            $iterable = conversions\mixed_to_iterator($args[0]);
             break;
 
         case 2:
-            $strategy = conversions\mixedToValueGetter($args[0]);
-            $iterable = conversions\mixedToIterator($args[1]);
+            $strategy = conversions\mixed_to_value_getter($args[0]);
+            $iterable = conversions\mixed_to_iterator($args[1]);
             break;
 
         default:
@@ -726,7 +726,7 @@ function slice($iterable, $start, $end = null)
     if (!(is_null($end) || is_int($end))) {
         throw new \InvalidArgumentException('Argument $END must be an integer or null');
     }
-    return new SliceIterator(conversions\mixedToIterator($iterable), $start, $end);
+    return new SliceIterator(conversions\mixed_to_iterator($iterable), $start, $end);
 }
 
 /**
@@ -741,7 +741,7 @@ function slice($iterable, $start, $end = null)
 function first($iterable, $default = null)
 {
     $item = $default;
-    foreach (conversions\mixedToIterator($iterable) as $item) {
+    foreach (conversions\mixed_to_iterator($iterable) as $item) {
         break;
     }
     return $item;
@@ -759,7 +759,7 @@ function first($iterable, $default = null)
 function last($iterable, $default = null)
 {
     $item = $default;
-    foreach (conversions\mixedToIterator($iterable) as $item) {
+    foreach (conversions\mixed_to_iterator($iterable) as $item) {
     }
     return $item;
 }
@@ -773,5 +773,5 @@ function last($iterable, $default = null)
  */
 function iterable($iterable)
 {
-    return new IterableIterator(conversions\mixedToIterator($iterable));
+    return new IterableIterator(conversions\mixed_to_iterator($iterable));
 }

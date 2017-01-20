@@ -27,7 +27,7 @@ use Zicht\Itertools as iter;
  */
 function type($class, $strategy = null)
 {
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value) use ($class, $strategy) {
         return $strategy($value) instanceof $class;
     };
@@ -57,7 +57,7 @@ function in($haystack, $strategy = null, $strict = false)
     if (!is_array($haystack)) {
         $haystack = iter\iterable($haystack)->values();
     }
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value) use ($haystack, $strategy, $strict) {
         return in_array($strategy($value), $haystack, $strict);
     };
@@ -79,7 +79,7 @@ function not_in($haystack, $strategy = null, $strict = false)
     if (!is_array($haystack)) {
         $haystack = iter\iterable($haystack)->values();
     }
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value) use ($haystack, $strategy, $strict) {
         return !in_array($strategy($value), $haystack, $strict);
     };
@@ -106,7 +106,7 @@ function equals($expected, $strategy = null, $strict = false)
     if (!is_bool($strict)) {
         throw new \InvalidArgumentException('$STRICT must be a boolean');
     }
-    $strategy = conversions\mixedToValueGetter($strategy);
+    $strategy = conversions\mixed_to_value_getter($strategy);
     if ($strict) {
         return function ($value) use ($expected, $strategy) {
             return $expected === $strategy($value);
