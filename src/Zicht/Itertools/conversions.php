@@ -21,7 +21,7 @@ use Zicht\Itertools\lib\StringIterator;
  * @param array|string|\Iterator $iterable
  * @return \Iterator
  */
-function mixedToIterator($iterable)
+function mixed_to_iterator($iterable)
 {
     // NULL is often used to indicate that nothing is there,
     // for robustness we will deal with NULL as it is an empty array
@@ -68,7 +68,7 @@ function mixedToIterator($iterable)
  * @param null|\Closure $closure
  * @return \Closure
  */
-function mixedToClosure($closure)
+function mixed_to_closure($closure)
 {
     if (is_null($closure)) {
         return function ($value) {
@@ -81,10 +81,9 @@ function mixedToClosure($closure)
         // A \Closure is always callable, but a callable is not always a \Closure.
         // Checking within this if statement is a slight optimization, preventing an unnecessary function wrap
         if (is_callable($closure)) {
-            $closure = function () use($closure) {
+            $closure = function () use ($closure) {
                 return call_user_func_array($closure, func_get_args());
             };
-
         } else {
             throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure');
         }
@@ -110,7 +109,7 @@ function mixedToClosure($closure)
  * @param null|string|\Closure $strategy
  * @return \Closure
  */
-function mixedToValueGetter($strategy)
+function mixed_to_value_getter($strategy)
 {
     if (is_string($strategy)) {
         $keyParts = explode('.', $strategy);
@@ -128,8 +127,8 @@ function mixedToValueGetter($strategy)
                     }
                 }
 
-                if (is_callable(array($value, $keyPart))) {
-                    $value = call_user_func(array($value, $keyPart));
+                if (is_callable([$value, $keyPart])) {
+                    $value = call_user_func([$value, $keyPart]);
                     continue;
                 }
 
@@ -152,5 +151,43 @@ function mixedToValueGetter($strategy)
         };
     }
 
-    return mixedToClosure($strategy);
+    return mixed_to_closure($strategy);
+}
+
+/**
+ * Transforms anything into an Iterator or throws an InvalidArgumentException
+ *
+ * @param array|string|\Iterator $iterable
+ * @return \Iterator
+ * @deprecated Use mixed_to_iterator() instead, will be removed in version 3.0
+ */
+function mixedToIterator($iterable)
+{
+    return mixed_to_iterator($iterable);
+}
+
+
+/**
+ * Try to transforms something into a Closure.
+ *
+ * @param null|\Closure $closure
+ * @return \Closure
+ * @deprecated Use mixed_to_closure() instead, will be removed in version 3.0
+ */
+function mixedToClosure($closure)
+{
+    return mixed_to_closure($closure);
+}
+
+
+/**
+ * Try to transforms something into a Closure that gets a value from $STRATEGY.
+ *
+ * @param null|string|\Closure $strategy
+ * @return \Closure
+ * @deprecated Use mixed_to_closure() instead, will be removed in version 3.0
+ */
+function mixedToValueGetter($strategy)
+{
+    return mixed_to_value_getter($strategy);
 }

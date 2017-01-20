@@ -6,8 +6,13 @@
 
 namespace Zicht\Itertools\util;
 
+use Zicht\Itertools\conversions as conversion_functions;
+
 /**
+ * Class Conversions
+ *
  * @deprecated Use \Zicht\Itertools\conversions, will be removed in version 3.0
+ * @package Zicht\Itertools\util
  */
 class Conversions
 {
@@ -20,13 +25,13 @@ class Conversions
      * > mixedToIterator('foo')
      * f o o
      *
-     * @deprecated Use \Zicht\Itertools\conversions\mixedToIterator, will be removed in version 3.0
      * @param array|string|\Iterator $iterable
      * @return \Iterator
+     * @deprecated Use \Zicht\Itertools\conversions\mixed_to_iterator, will be removed in version 3.0
      */
     public static function mixedToIterator($iterable)
     {
-        return \Zicht\Itertools\conversions\mixedToIterator($iterable);
+        return conversion_functions\mixed_to_iterator($iterable);
     }
 
     /**
@@ -35,13 +40,13 @@ class Conversions
      * When $CLOSURE is null the returned Closure behaves like an identity function,
      * i.e. it will return the value that it is given.
      *
-     * @deprecated Use \Zicht\Itertools\conversions\mixedToClosure, will be removed in version 3.0
      * @param null|\Closure $closure
      * @return \Closure
+     * @deprecated Use \Zicht\Itertools\conversions\mixed_to_closure, will be removed in version 3.0
      */
     public static function mixedToClosure($closure)
     {
-        return \Zicht\Itertools\conversions\mixedToClosure($closure);
+        return conversion_functions\mixed_to_closure($closure);
     }
 
     /**
@@ -58,12 +63,12 @@ class Conversions
      *
      * When $STRATEGY is callable it is converted into a Closure (see mixedToClosure).
      *
-     * @deprecated Use \Zicht\Itertools\conversions\mixedToValueGetter, will be removed in version 3.0
      * @param null|string|\Closure $strategy
      * @return \Closure
+     * @deprecated Use \Zicht\Itertools\conversions\mixed_to_value_getter, will be removed in version 3.0
      */
     public static function mixedToValueGetter($strategy)
     {
-        return \Zicht\Itertools\conversions\mixedToValueGetter($strategy);
+        return conversion_functions\mixed_to_value_getter($strategy);
     }
 }
