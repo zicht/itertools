@@ -42,20 +42,17 @@ class KeyValuePair implements \ArrayAccess
     /**
      * @{inheritDoc}
      */
-    public function offsetGet($offset, $default = null)
+    public function offsetGet($offset)
     {
-        switch ($offset) {
-            case 0:
-            case 'key':
-                return $this->key;
-
-            case 1:
-            case 'value':
-                return $this->value;
-
-            default:
-                throw new \InvalidArgumentException('$OFFSET must be either 0, 1, "key", or "value"');
+        if ($offset === 0 || $offset === 'key') {
+            return $this->key;
         }
+
+        if ($offset === 1 || $offset === 'value') {
+            return $this->value;
+        }
+
+        throw new \InvalidArgumentException('$OFFSET must be either 0, 1, "key", or "value"');
     }
 
     /**
@@ -63,20 +60,15 @@ class KeyValuePair implements \ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        switch ($offset) {
-            case 0:
-            case 'key':
-                $this->key = $value;
-                break;
-
-            case 1:
-            case 'value':
-                $this->value = $value;
-                break;
-
-            default:
-                throw new \InvalidArgumentException('$OFFSET must be either 0, 1, "key", or "value"');
+        if ($offset === 0 || $offset === 'key') {
+            $this->key = $value;
         }
+
+        if ($offset === 1 || $offset === 'value') {
+            $this->value = $value;
+        }
+
+        throw new \InvalidArgumentException('$OFFSET must be either 0, 1, "key", or "value"');
     }
 
     /**
