@@ -8,7 +8,7 @@ namespace Zicht\ItertoolsTest;
 
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase;
-use Zicht\ItertoolsTest\Containers\SimpleObject;
+use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
 /**
  * Class MapByTest

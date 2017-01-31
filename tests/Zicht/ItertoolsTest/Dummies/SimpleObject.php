@@ -4,7 +4,7 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
-namespace Zicht\ItertoolsTest\Containers;
+namespace Zicht\ItertoolsTest\Dummies;
 
 /**
  * Class simpleObject
@@ -13,6 +13,9 @@ namespace Zicht\ItertoolsTest\Containers;
  */
 class SimpleObject
 {
+    /** @var mixed */
+    public $prop;
+
     /**
      * SimpleObject constructor.
      *
