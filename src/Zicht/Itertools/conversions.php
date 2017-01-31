@@ -40,13 +40,11 @@ function mixed_to_iterator($iterable)
         $iterable = new StringIterator($iterable);
     }
 
-    // todo: add unit tests for Collection
     // a doctrine Collection (i.e. Array or Persistent) is also an iterator
     if ($iterable instanceof Collection) {
         $iterable = $iterable->getIterator();
     }
 
-    // todo: add unit tests for Traversable
     if ($iterable instanceof \Traversable and !($iterable instanceof \Iterator)) {
         $iterable = new \IteratorIterator($iterable);
     }
