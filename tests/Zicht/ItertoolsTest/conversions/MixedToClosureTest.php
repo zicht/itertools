@@ -21,7 +21,7 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
      * @param mixed $return
      * @return string
      */
-    public function callMePlease($return)
+    public static function callMePlease($return)
     {
         return $return;
     }

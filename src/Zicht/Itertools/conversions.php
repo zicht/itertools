@@ -63,7 +63,7 @@ function mixed_to_iterator($iterable)
  * When $CLOSURE is null the returned Closure behaves like an identity function,
  * i.e. it will return the value that it is given.
  *
- * @param null|\Closure $closure
+ * @param null|array|\Closure $closure
  * @return \Closure
  */
 function mixed_to_closure($closure)

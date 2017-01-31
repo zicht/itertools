@@ -20,14 +20,38 @@ class ItemsTest extends PHPUnit_Framework_TestCase
      * Test good sequences
      *
      * @param mixed $iterable
-     * @param array $expected
+     * @param array $expectedList
      *
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodSequence($iterable, array $expected)
+    public function testGoodSequence($iterable, array $expectedList)
     {
         $items = $iterable->items();
-        $this->assertEquals($expected, $items);
+        $this->assertTrue(is_array($items));
+        $this->assertEquals(sizeof($expectedList), sizeof($items));
+
+        foreach ($items as $pair) {
+            list($expectedKey, $expectedValue) = current($expectedList);
+            next($expectedList);
+
+            $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $pair);
+
+            $this->assertArrayHasKey(0, $pair);
+            $this->assertArrayHasKey('key', $pair);
+            $this->assertEquals($expectedKey, $pair->key);
+            $this->assertEquals($expectedKey, $pair[0]);
+            $this->assertEquals($expectedKey, $pair['key']);
+
+            $this->assertArrayHasKey(1, $pair);
+            $this->assertArrayHasKey('value', $pair);
+            $this->assertEquals($expectedValue, $pair->value);
+            $this->assertEquals($expectedValue, $pair[1]);
+            $this->assertEquals($expectedValue, $pair['value']);
+
+            list($key, $value) = $pair;
+            $this->assertEquals($expectedKey, $key);
+            $this->assertEquals($expectedValue, $value);
+        }
     }
 
     /**
@@ -39,29 +63,29 @@ class ItemsTest extends PHPUnit_Framework_TestCase
             [
                 iter\iterable([1, 2, 3]),
                 [
-                    new iter\lib\Containers\KeyValuePair(0, 1),
-                    new iter\lib\Containers\KeyValuePair(1, 2),
-                    new iter\lib\Containers\KeyValuePair(2, 3)
+                    [0, 1],
+                    [1, 2],
+                    [2, 3],
                 ]
             ],
             [
                 iter\iterable(['a' => 1, 'b' => 2, 'c' => 3]),
                 [
-                    new iter\lib\Containers\KeyValuePair('a', 1),
-                    new iter\lib\Containers\KeyValuePair('b', 2),
-                    new iter\lib\Containers\KeyValuePair('c', 3)
+                    ['a', 1],
+                    ['b', 2],
+                    ['c', 3],
                 ]
             ],
             // duplicate keys
             [
                 iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
                 [
-                    new iter\lib\Containers\KeyValuePair('a', -1),
-                    new iter\lib\Containers\KeyValuePair('b', -2),
-                    new iter\lib\Containers\KeyValuePair('c', -3),
-                    new iter\lib\Containers\KeyValuePair('a', 1),
-                    new iter\lib\Containers\KeyValuePair('b', 2),
-                    new iter\lib\Containers\KeyValuePair('c', 3)
+                    ['a', -1],
+                    ['b', -2],
+                    ['c', -3],
+                    ['a', 1],
+                    ['b', 2],
+                    ['c', 3],
                 ]
             ],
         ];
