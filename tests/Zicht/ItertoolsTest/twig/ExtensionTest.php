@@ -167,6 +167,26 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensure reducing returns a closure (deprecated)
+     */
+    public function testDeprecatedReduction()
+    {
+        $result = $this->extension->deprecatedGetReduction('add');
+        $this->assertTrue(is_callable($result));
+    }
+
+    /**
+     * Ensure reducing fails on unknown reduction (deprecated)
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testDeprecatedInvalidReduction()
+    {
+        $result = $this->extension->deprecatedGetReduction('invalid');
+        $this->assertTrue(is_callable($result));
+    }
+
+    /**
      * Ensure mapping returns a closure
      */
     public function testMapping()
