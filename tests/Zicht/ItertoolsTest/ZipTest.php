@@ -16,7 +16,7 @@ class ZipTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodSequence(array $arguments, array $expected)
+    public function GoodSequence(array $arguments, array $expected)
     {
         $iterator = call_user_func_array('\Zicht\Itertools\zip', $arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\ZipIterator', $iterator);
