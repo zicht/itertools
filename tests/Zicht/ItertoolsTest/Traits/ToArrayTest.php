@@ -7,6 +7,7 @@
 namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools as iter;
+use Zicht\ItertoolsTest\Dummies\BadToArrayObject;
 
 /**
  * Class ToArrayTest
@@ -48,5 +49,14 @@ class ToArrayTest extends \PHPUnit_Framework_TestCase
                 ['a' => 1, 'b' => 2, 'c' => 3],
             ],
         ];
+    }
+
+    /**
+     * Test that toArray returns an empty array when the trait is applied on a non-Traversable
+     */
+    public function testNonTraversable()
+    {
+        $object = new BadToArrayObject();
+        $this->assertEquals([], $object->toArray());
     }
 }

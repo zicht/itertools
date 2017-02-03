@@ -6,6 +6,7 @@
 
 namespace Zicht\Itertools\lib;
 
+use Zicht\Itertools\lib\Traits\AccumulateTrait;
 use Zicht\Itertools\lib\Traits\AllTrait;
 use Zicht\Itertools\lib\Traits\AnyTrait;
 use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
@@ -15,6 +16,7 @@ use Zicht\Itertools\lib\Traits\CycleTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
+use Zicht\Itertools\lib\Traits\GetterTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
 use Zicht\Itertools\lib\Traits\ItemsTrait;
 use Zicht\Itertools\lib\Traits\KeysTrait;
@@ -35,8 +37,10 @@ class IterableIterator extends \IteratorIterator implements \Countable, \ArrayAc
     use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
+    use GetterTrait;
 
     // Fluent interface traits
+    use AccumulateTrait;
     use AllTrait;
     use AnyTrait;
     use ChainTrait;
