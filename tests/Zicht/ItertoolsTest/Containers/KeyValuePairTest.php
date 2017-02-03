@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\lib\Containers\KeyValuePair;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools\lib\Containers\KeyValuePair;
  *
  * @package Zicht\ItertoolsTest\Traits
  */
-class KeyValuePairTest extends PHPUnit_Framework_TestCase
+class KeyValuePairTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Tests several ways to access the key and value

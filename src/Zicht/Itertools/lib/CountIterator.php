@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -19,6 +23,11 @@ use Zicht\Itertools\lib\Traits\SortedTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class CountIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class CountIterator implements \Iterator
 {
     // Fluent interface traits
@@ -39,10 +48,21 @@ class CountIterator implements \Iterator
     use UniqueTrait;
     use ZipTrait;
 
+    /** @var integer */
     protected $start;
+
+    /** @var integer */
     protected $step;
+
+    /** @var integer */
     protected $key;
 
+    /**
+     * CountIterator constructor.
+     *
+     * @param integer $start
+     * @param integer $step
+     */
     public function __construct($start, $step)
     {
         $this->start = $start;
@@ -50,26 +70,41 @@ class CountIterator implements \Iterator
         $this->key = 0;
     }
 
+    /**
+     * @{inheritdoc}
+     */
     public function rewind()
     {
         $this->key = 0;
     }
 
+    /**
+     * @{inheritdoc}
+     */
     public function current()
     {
         return $this->start + ($this->key * $this->step);
     }
 
+    /**
+     * @{inheritdoc}
+     */
     public function key()
     {
         return $this->key;
     }
 
+    /**
+     * @{inheritdoc}
+     */
     public function next()
     {
         $this->key += 1;
     }
 
+    /**
+     * @{inheritdoc}
+     */
     public function valid()
     {
         return true;
@@ -83,9 +118,14 @@ class CountIterator implements \Iterator
      */
     public function __debugInfo()
     {
-        return array_merge(
-            ['__length__' => 'infinite'],
-            iterator_to_array($this)
-        );
+        $info = ['__length__' => 'infinite'];
+        $count = 0;
+        foreach ($this as $key => $value) {
+            $info[$key] = $value;
+            if ($count++ >= 4) {
+                break;
+            }
+        }
+        return $info;
     }
 }

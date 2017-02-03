@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\filters;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools\filters;
  *
  * @package Zicht\ItertoolsTest\filters
  */
-class EqualsTest extends PHPUnit_Framework_TestCase
+class EqualsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Simple equals test

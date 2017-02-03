@@ -1,32 +1,31 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
+use Zicht\Itertools\lib\GroupedIterator;
+use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-class simpleObject2
+/**
+ * Class GroupByTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class GroupByTest extends \PHPUnit_Framework_TestCase
 {
-    public function __construct($value)
-    {
-        $this->prop = $value;
-    }
-
-    public function getProp()
-    {
-        return $this->prop;
-    }
-}
-
-class GroupbyTest extends PHPUnit_Framework_TestCase
-{
+    /**
+     * Test what happens when grouping without sorting the input
+     */
     public function testUnsorted()
     {
         $obj = function ($property, $title) {
-            return (object)array('prop' => $property, 'title' => $title);
+            return (object)['prop' => $property, 'title' => $title];
         };
 
-        $list = array($obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C'));
+        $list = [$obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C')];
 
         $iterator = \Zicht\Itertools\groupby('prop', $list, false);
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
@@ -96,16 +95,17 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
         foreach ($expected as $key => $expectedGroup) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
+            /** @var GroupedIterator $groupedIterator */
             $groupedIterator = $iterator->current();
             $this->assertInstanceOf('\Zicht\Itertools\lib\GroupedIterator', $groupedIterator);
             $this->assertEquals(sizeof($groupedIterator), sizeof($expectedGroup));
             $this->assertEquals(iterator_count($groupedIterator), sizeof($expectedGroup));
             $groupedIterator->rewind();
 
-            foreach ($expectedGroup as $key => $value) {
+            foreach ($expectedGroup as $groupKey => $groupValue) {
                 $this->assertTrue($groupedIterator->valid(), 'Failure in $groupedIterator->valid()');
-                $this->assertEquals($key, $groupedIterator->key(), 'Failure in $groupedIterator->key()');
-                $this->assertEquals($value, $groupedIterator->current(), 'Failure in $groupedIterator->current()');
+                $this->assertEquals($groupKey, $groupedIterator->key(), 'Failure in $groupedIterator->key()');
+                $this->assertEquals($groupValue, $groupedIterator->current(), 'Failure in $groupedIterator->current()');
                 $groupedIterator->next();
             }
             $this->assertFalse($groupedIterator->valid());
@@ -117,74 +117,98 @@ class GroupbyTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * Provides good sequence tests
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            // callback
+            [
+                [function ($a) {
+                    return $a + 10;
+                }, [1, 2, 2, 3, 3, 3], false],
+                [11 => [0 => 1], 12 => [1 => 2, 2 => 2], 13 => [3 => 3, 4 => 3, 5 => 3]]],
+
+            // callback using auto-sort
+            [
+                [function ($a) {
+                    return $a + 10;
+                }, [3, 2, 1, 2, 3, 3], true],
+                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]]],
+            [
+                [function ($a) {
+                    return $a + 10;
+                }, [3, 2, 1, 2, 3, 3]],
+                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]]],
+
+            // use string to identify array key
+            [
+                ['key', [['key' => 'k1'], ['key' => 'k2'], ['key' => 'k2']]],
+                ['k1' => [0 => ['key' => 'k1']], 'k2' => [1 => ['key' => 'k2'], 2 => ['key' => 'k2']]]],
+            [
+                ['key', [['key' => 1], ['key' => 2], ['key' => 2]], false],
+                [1 => [0 => ['key' => 1]], 2 => [1 => ['key' => 2], 2 => ['key' => 2]]]],
+
+            // use string to identify object property
+            [
+                ['prop', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p2')]],
+                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]]],
+            [
+                ['prop', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(2)]],
+                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]]],
+
+            // use string to identify object get method
+            [
+                ['getProp', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p2')]],
+                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]]],
+            [
+                ['getProp', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(2)]],
+                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]]],
+
+            // use null as value getter, this returns the value itself
+            [
+                [null, ['a' => 1, 'b' => 2, 'c' => 1]],
+                [1 => ['a' => 1, 'c' => 1], 2 => ['b' => 2]],
+            ],
+
+            // the callback should contain both the key (2nd parameter) and the value (1st parameter)
+            [
+                [function ($value, $key) {
+                    return $key;
+                }, ['c' => 1, 'b' => 2, 'a' => 3]],
+                ['a' => ['a' => 3], 'b' => ['b' => 2], 'c' => ['c' => 1]],
+            ],
+        ];
+    }
+
+    /**
+     * Test the toArray method
+     */
+    public function testToArray()
+    {
+        $iterable = \Zicht\Itertools\iterable([0 => 1, 1 => 2, 2 => 3, 3 => 2, 4 => 3, 5 => 3]);
+        $grouped = $iterable->groupBy(null);
+        $this->assertEquals([1 => [0 => 1], 2 => [1 => 2, 3 => 2], 3 => [2 => 3, 4 => 3, 5 => 3]], $grouped->toArray());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\groupby', $arguments);
+        call_user_func_array('\Zicht\Itertools\groupby', $arguments);
     }
 
-    public function goodSequenceProvider()
-    {
-        return array(
-            // callback
-            array(
-                array(function ($a) { return $a + 10; }, array(1, 2, 2, 3, 3, 3), false),
-                array(11 => array(0 => 1), 12 => array(1 => 2, 2 => 2), 13 => array(3 => 3, 4 => 3, 5 => 3))),
-
-            // calllback using auto-sort
-            array(
-                array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3), true),
-                array(11 => array(2 => 1), 12 => array(1 => 2, 3 => 2), 13 => array(0 => 3, 4 => 3, 5 => 3))),
-            array(
-                array(function ($a) { return $a + 10; }, array(3, 2, 1, 2, 3, 3)),
-                array(11 => array(2 => 1), 12 => array(1 => 2, 3 => 2), 13 => array(0 => 3, 4 => 3, 5 => 3))),
-
-            // use string to identify array key
-            array(
-                array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k2'))),
-                array('k1' => array(0 => array('key' => 'k1')), 'k2' => array(1 => array('key' => 'k2'), 2 => array('key' => 'k2')))),
-            array(
-                array('key', array(array('key' => 1), array('key' => 2), array('key' => 2)), false),
-                array(1 => array(0 => array('key' => 1)), 2 => array(1 => array('key' => 2), 2 => array('key' => 2)))),
-
-            // use string to identify object property
-            array(
-                array('prop', array(new simpleObject2('p1'), new simpleObject2('p2'), new simpleObject2('p2'))),
-                array('p1' => array(0 => new simpleObject2('p1')), 'p2' => array(1 => new simpleObject2('p2'), 2 => new simpleObject2('p2')))),
-            array(
-                array('prop', array(new simpleObject2(1), new simpleObject2(2), new simpleObject2(2))),
-                array(1 => array(0 => new simpleObject2(1)), 2 => array(1 => new simpleObject2(2), 2 => new simpleObject2(2)))),
-
-            // use string to identify object get method
-            array(
-                array('getProp', array(new simpleObject2('p1'), new simpleObject2('p2'), new simpleObject2('p2'))),
-                array('p1' => array(0 => new simpleObject2('p1')), 'p2' => array(1 => new simpleObject2('p2'), 2 => new simpleObject2('p2')))),
-            array(
-                array('getProp', array(new simpleObject2(1), new simpleObject2(2), new simpleObject2(2))),
-                array(1 => array(0 => new simpleObject2(1)), 2 => array(1 => new simpleObject2(2), 2 => new simpleObject2(2)))),
-
-            // use null as value getter, this returns the value itself
-            array(
-                array(null, array('a' => 1, 'b' => 2, 'c' => 1)),
-                array(1 => array('a' => 1, 'c' => 1), 2 => array('b' => 2)),
-            ),
-
-            // the callback should contain both the key (2nd parameter) and the value (1st parameter)
-            array(
-                array(function ($value, $key) { return $key; }, array('c' => 1, 'b' => 2, 'a' => 3)),
-                array('a' => array('a' => 3), 'b' => array('b' => 2), 'c' => array('c' => 1)),
-            ),
-         );
-    }
-
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(array('foo', array(1, 2, 3), 'not-a-boolean')),
-            array(array(123, array(1, 2, 3))),
-            array(array(true, array(1, 2, 3))),
-        );
+        return [
+            [['foo', [1, 2, 3], 'not-a-boolean']],
+            [[123, [1, 2, 3]]],
+            [[true, [1, 2, 3]]],
+        ];
     }
 }

@@ -1,11 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class AnyTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AnyTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class AnyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -16,95 +22,105 @@ class AnyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * Provides good sequence tests
+     */
     public function goodSequenceProvider()
     {
-        $isEven = function ($value) { return $value % 2 == 0; };
+        $isEven = function ($value) {
+            return $value % 2 == 0;
+        };
 
-        return array(
+        return [
             // call WITHOUT $keyStrategy
-            array(
-                array(array()),
+            [
+                [[]],
                 false,
-            ),
-            array(
-                array(array(0)),
+            ],
+            [
+                [[0]],
                 false,
-            ),
-            array(
-                array(array(0, 0, 0)),
+            ],
+            [
+                [[0, 0, 0]],
                 false,
-            ),
-            array(
-                array(array(1, 0, 1)),
+            ],
+            [
+                [[1, 0, 1]],
                 true,
-            ),
-            array(
-                array(array(0, 1, 0)),
+            ],
+            [
+                [[0, 1, 0]],
                 true,
-            ),
-            array(
-                array(array(0, 1, 0)),
+            ],
+            [
+                [[0, 1, 0]],
                 true,
-            ),
+            ],
 
             // call WITH 'null' $keyStrategy
-            array(
-                array(null, array()),
+            [
+                [null, []],
                 false,
-            ),
-            array(
-                array(null, array(0)),
+            ],
+            [
+                [null, [0]],
                 false,
-            ),
-            array(
-                array(null, array(0, 0, 0)),
+            ],
+            [
+                [null, [0, 0, 0]],
                 false,
-            ),
-            array(
-                array(null, array(1, 0, 1)),
+            ],
+            [
+                [null, [1, 0, 1]],
                 true,
-            ),
-            array(
-                array(null, array(0, 1, 0)),
+            ],
+            [
+                [null, [0, 1, 0]],
                 true,
-            ),
-            array(
-                array(null, array(0, 1, 0)),
+            ],
+            [
+                [null, [0, 1, 0]],
                 true,
-            ),
+            ],
 
             // call WITH $keyStrategy
-            array(
-                array($isEven, array(1, 2, 3)),
+            [
+                [$isEven, [1, 2, 3]],
                 true,
-            ),
-            array(
-                array($isEven, array(1, 3, 5)),
+            ],
+            [
+                [$isEven, [1, 3, 5]],
                 false,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\any', $arguments);
+        call_user_func_array('\Zicht\Itertools\any', $arguments);
     }
 
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
+        return [
             // wrong types
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
+            [[0]],
+            [[1.0]],
+            [[true]],
 
             // wrong argument count
-            array(array()),
-            array(array(function ($value) { return $value; }, array(1, 2, 3), 'one argument to many')),
-        );
+            [[]],
+            [[function ($value) {
+                return $value;
+            }, [1, 2, 3], 'one argument to many']],
+        ];
     }
 }

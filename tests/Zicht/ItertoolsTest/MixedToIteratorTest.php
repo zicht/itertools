@@ -1,12 +1,19 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 
-class MixedToTest extends PHPUnit_Framework_TestCase
+/**
+ * Class MixedToTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class MixedToTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodArgumentProvider
@@ -26,46 +33,52 @@ class MixedToTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($iterator->valid());
     }
 
+    /**
+     * Provides good sequence tests
+     */
     public function goodArgumentProvider()
     {
-        return array(
-            array(
-                array(null),
-                array(),
-            ),
-            array(
-                array(array(1, 2, 3)),
-                array(1, 2, 3)),
-            array(
-                array(array('a' => 1, 'b' => 2, 'c' => 3)),
-                array('a' => 1, 'b' => 2, 'c' => 3)),
-            array(
-                array('abc'),
-                array('a', 'b', 'c')),
-            array(
-                array(new ArrayCollection(array(1, 2, 3))),
-                array(1, 2, 3)),
-            array(
-                array(new ArrayCollection(array('a' => 1, 'b' => 2, 'c' => 3))),
-                array('a' => 1, 'b' => 2, 'c' => 3)),
-        );
+        return [
+            [
+                [null],
+                [],
+            ],
+            [
+                [[1, 2, 3]],
+                [1, 2, 3]],
+            [
+                [['a' => 1, 'b' => 2, 'c' => 3]],
+                ['a' => 1, 'b' => 2, 'c' => 3]],
+            [
+                ['abc'],
+                ['a', 'b', 'c']],
+            [
+                [new ArrayCollection([1, 2, 3])],
+                [1, 2, 3]],
+            [
+                [new ArrayCollection(['a' => 1, 'b' => 2, 'c' => 3])],
+                ['a' => 1, 'b' => 2, 'c' => 3]],
+        ];
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArguments(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\mixedToIterator', $arguments);
+        call_user_func_array('\Zicht\Itertools\mixedToIterator', $arguments);
     }
 
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
-        );
+        return [
+            [[0]],
+            [[1.0]],
+            [[true]],
+        ];
     }
 }

@@ -1,11 +1,19 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
+use Zicht\Itertools\lib\MapIterator;
 
-class MapTest extends PHPUnit_Framework_TestCase
+/**
+ * Class MapTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class MapTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -20,7 +28,7 @@ class MapTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -31,127 +39,135 @@ class MapTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @dataProvider badArgumentProvider
+     * Provides good sequence tests
      */
-    public function testBadArguments(array $arguments)
-    {
-        $iterator = call_user_func_array('\Zicht\Itertools\map', $arguments);
-    }
-
     public function goodSequenceProvider()
     {
-        $addSingle = function ($a=0) { return 10 + $a; };
-        $addDouble = function ($a=0, $b=0) { return 10 + $a + $b; };
-        $addTriple = function ($a=0, $b=0, $c=0) { return 10 + $a + $b + $c; };
+        $addSingle = function ($a = 0) {
+            return 10 + $a;
+        };
+        $addDouble = function ($a = 0, $b = 0) {
+            return 10 + $a + $b;
+        };
+        $addTriple = function ($a = 0, $b = 0, $c = 0) {
+            return 10 + $a + $b + $c;
+        };
 
-        $swapSingle = function ($first, $second) { return $second; };
-        $swapDouble = function ($first, $second, $third, $fourth) { return array($third, $fourth); };
+        $swapSingle = function ($first, $second) {
+            return $second;
+        };
+        $swapDouble = function ($first, $second, $third, $fourth) {
+            return [$third, $fourth];
+        };
 
-        $combineSingle = function ($first, $second) { return array($first, $second); };
-        $combineDouble = function ($first, $second, $third, $fourth) { return array($first, $second, $third, $fourth); };
+        $combineSingle = function ($first, $second) {
+            return [$first, $second];
+        };
+        $combineDouble = function ($first, $second, $third, $fourth) {
+            return [$first, $second, $third, $fourth];
+        };
 
-        return array(
+        return [
             // empty input
-            array(
-                array(null, array()),
-                array(),
-                array(),
-            ),
+            [
+                [null, []],
+                [],
+                [],
+            ],
 
             // single iterable
-            array(
-                array($addSingle, array(1, 2, 3)),
-                array(0, 1, 2),
-                array(11, 12, 13),
-            ),
-            array(
-                array($addSingle, array('a' => 1, 'b' => 2, 'c' => 3)),
-                array('a', 'b', 'c'),
-                array(11, 12, 13),
-            ),
-            array(
-                array($addSingle, array(1 => 1, 2 => 2, 3 => 3)),
-                array(1, 2, 3),
-                array(11, 12, 13),
-            ),
-            array(
-                array($addSingle, array(1 => 1, 'b' => 2, 3 => 3)),
-                array(1, 'b', 3),
-                array(11, 12, 13),
-            ),
+            [
+                [$addSingle, [1, 2, 3]],
+                [0, 1, 2],
+                [11, 12, 13],
+            ],
+            [
+                [$addSingle, ['a' => 1, 'b' => 2, 'c' => 3]],
+                ['a', 'b', 'c'],
+                [11, 12, 13],
+            ],
+            [
+                [$addSingle, [1 => 1, 2 => 2, 3 => 3]],
+                [1, 2, 3],
+                [11, 12, 13],
+            ],
+            [
+                [$addSingle, [1 => 1, 'b' => 2, 3 => 3]],
+                [1, 'b', 3],
+                [11, 12, 13],
+            ],
 
             // single iterable using both key and value
-            array(
-                array($swapSingle, array('a' => 1, 'b' => 2, 'c' => 3)),
-                array('a', 'b', 'c'),
-                array('a', 'b', 'c'),
-            ),
-            array(
-                array($combineSingle, array('a' => 1, 'b' => 2, 'c' => 3)),
-                array('a', 'b', 'c'),
-                array(array(1, 'a'), array(2, 'b'), array(3, 'c')),
-            ),
+            [
+                [$swapSingle, ['a' => 1, 'b' => 2, 'c' => 3]],
+                ['a', 'b', 'c'],
+                ['a', 'b', 'c'],
+            ],
+            [
+                [$combineSingle, ['a' => 1, 'b' => 2, 'c' => 3]],
+                ['a', 'b', 'c'],
+                [[1, 'a'], [2, 'b'], [3, 'c']],
+            ],
 
             // multiple iterables of equal length
-            array(
-                array($addDouble, array(1, 2, 3), array(4, 5, 6)),
-                array(0, 1, 2),
-                array(15, 17, 19),
-            ),
-            array(
-                array($addTriple, array(1, 2, 3), array(4, 5, 6), array(7, 8, 9)),
-                array(0, 1, 2),
-                array(22, 25, 28),
-            ),
+            [
+                [$addDouble, [1, 2, 3], [4, 5, 6]],
+                [0, 1, 2],
+                [15, 17, 19],
+            ],
+            [
+                [$addTriple, [1, 2, 3], [4, 5, 6], [7, 8, 9]],
+                [0, 1, 2],
+                [22, 25, 28],
+            ],
 
             // multiple iterables using both keys and values
-            array(
-                array($swapDouble, array('a' => 1, 'b' => 2, 'c' => 3), array('d' => 4, 'e' => 5, 'f' => 6)),
-                array('a:d', 'b:e', 'c:f'),
-                array(array('a', 'd'), array('b', 'e'), array('c', 'f')),
-            ),
-            array(
-                array($combineDouble, array('a' => 1, 'b' => 2, 'c' => 3), array('d' => 4, 'e' => 5, 'f' => 6)),
-                array('a:d', 'b:e', 'c:f'),
-                array(array(1, 4, 'a', 'd'), array(2, 5, 'b', 'e'), array(3, 6, 'c', 'f')),
-            ),
+            [
+                [$swapDouble, ['a' => 1, 'b' => 2, 'c' => 3], ['d' => 4, 'e' => 5, 'f' => 6]],
+                ['a:d', 'b:e', 'c:f'],
+                [['a', 'd'], ['b', 'e'], ['c', 'f']],
+            ],
+            [
+                [$combineDouble, ['a' => 1, 'b' => 2, 'c' => 3], ['d' => 4, 'e' => 5, 'f' => 6]],
+                ['a:d', 'b:e', 'c:f'],
+                [[1, 4, 'a', 'd'], [2, 5, 'b', 'e'], [3, 6, 'c', 'f']],
+            ],
 
             // multiple iterables of unequal length
-            array(
-                array($addTriple, array(1, 2), array(4, 5, 6), array(7, 8, 9)),
-                array(0, 1),
-                array(22, 25),
-            ),
-            array(
-                array($addTriple, array(1, 2, 3), array(4, 5), array(7, 8, 9)),
-                array(0, 1),
-                array(22, 25),
-            ),
-            array(
-                array($addTriple, array(1, 2, 3), array(4, 5, 6), array(7, 8)),
-                array(0, 1),
-                array(22, 25),
-            ),
+            [
+                [$addTriple, [1, 2], [4, 5, 6], [7, 8, 9]],
+                [0, 1],
+                [22, 25],
+            ],
+            [
+                [$addTriple, [1, 2, 3], [4, 5], [7, 8, 9]],
+                [0, 1],
+                [22, 25],
+            ],
+            [
+                [$addTriple, [1, 2, 3], [4, 5, 6], [7, 8]],
+                [0, 1],
+                [22, 25],
+            ],
 
             // multiple with different keys
-            array(
-                array($addDouble, array(1 => 1, 2 => 2, 3 => 3), array(4 => 4, 5 => 5, 6 => 6)),
-                array('1:4', '2:5', '3:6'),
-                array(15, 17, 19),
-            ),
-            array(
-                array($addDouble, array('a' => 1, 'b' => 2, 'c' => 3), array(4 => 4, 5 => 5, 6 => 6)),
-                array('a:4', 'b:5', 'c:6'),
-                array(15, 17, 19),
-            ),
+            [
+                [$addDouble, [1 => 1, 2 => 2, 3 => 3], [4 => 4, 5 => 5, 6 => 6]],
+                ['1:4', '2:5', '3:6'],
+                [15, 17, 19],
+            ],
+            [
+                [$addDouble, ['a' => 1, 'b' => 2, 'c' => 3], [4 => 4, 5 => 5, 6 => 6]],
+                ['a:4', 'b:5', 'c:6'],
+                [15, 17, 19],
+            ],
 
             // use null as value getter, this returns the value itself
-            array(
-                array(null, array('a' => 1, 'b' => 2, 'c' => 3)),
-                array('a', 'b', 'c'),
-                array(1, 2, 3),
-            ),
+            [
+                [null, ['a' => 1, 'b' => 2, 'c' => 3]],
+                ['a', 'b', 'c'],
+                [1, 2, 3],
+            ],
 
             // test several ways that php handles array keys *shudder*:
             // - '0' becomes 0
@@ -161,23 +177,47 @@ class MapTest extends PHPUnit_Framework_TestCase
             // - 4.1 becomes 4
             // - 5.5 becomes 5
             // - 6.9 becomes 6
-            array(
-                array(
+            [
+                [
                     $addDouble,
-                    array('0' => 1, 'b' => 2, 3.0 => 3, 'D' => 4, '1.0' => 5, 4.1 => 6,  5.5 => 7, 6.9 => 8, '7 ' => 9),
-                    array(0 => 1,   'b' => 2, '3' => 3, 'd' => 4,  1 => 5,   '4.1' => 6, 5 => 7,   6 => 8,   7 => 9)
-                ),
-                array(0, 'b', 3, 'D:d', '1.0:1', '4:4.1', 5, 6, '7 :7'),
-                array(12, 14, 16, 18, 20, 22, 24, 26, 28),
-            ),
+                    ['0' => 1, 'b' => 2, 3.0 => 3, 'D' => 4, '1.0' => 5, 4.1 => 6, 5.5 => 7, 6.9 => 8, '7 ' => 9],
+                    [0 => 1, 'b' => 2, '3' => 3, 'd' => 4, 1 => 5, '4.1' => 6, 5 => 7, 6 => 8, 7 => 9],
+                ],
+                [0, 'b', 3, 'D:d', '1.0:1', '4:4.1', 5, 6, '7 :7'],
+                [12, 14, 16, 18, 20, 22, 24, 26, 28],
+            ],
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider badArgumentProvider
+     */
+    public function testBadArgumentsToFunction($closure, $iterable)
+    {
+        call_user_func_array('\Zicht\Itertools\map', [$closure, $iterable]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testBadArgumentToIterator()
+    {
+        new MapIterator(
+            function () {
+            },
+            123
         );
     }
 
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(123, array(1, 2, 3))),
-            array(array(true, array(1, 2, 3))),
-        );
+        return [
+            [123, [1, 2, 3]],
+            [true, [1, 2, 3]],
+        ];
     }
 }

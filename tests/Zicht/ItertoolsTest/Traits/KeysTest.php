@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest\Traits
  */
-class KeysTest extends PHPUnit_Framework_TestCase
+class KeysTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test good sequences
@@ -37,16 +36,16 @@ class KeysTest extends PHPUnit_Framework_TestCase
         return [
             [
                 iter\iterable([1, 2, 3]),
-                [0, 1, 2]
+                [0, 1, 2],
             ],
             [
                 iter\iterable(['a' => 1, 'b' => 2, 'c' => 3]),
-                ['a', 'b', 'c']
+                ['a', 'b', 'c'],
             ],
             // duplicate keys
             [
                 iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
-                ['a', 'b', 'c', 'a', 'b', 'c']
+                ['a', 'b', 'c', 'a', 'b', 'c'],
             ],
         ];
     }

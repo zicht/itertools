@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest\filters
  */
-class RandomTest extends PHPUnit_Framework_TestCase
+class RandomTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Generate random numbers

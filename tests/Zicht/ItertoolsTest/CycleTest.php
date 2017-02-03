@@ -1,12 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use ArrayIterator;
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class CycleTest extends PHPUnit_Framework_TestCase
+/**
+ * Class CycleTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class CycleTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -18,7 +23,7 @@ class CycleTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -27,63 +32,69 @@ class CycleTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * Provides good sequence tests
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            [
+                new \ArrayIterator([0, 1, 2]),
+                [0, 1, 2, 0, 1, 2, 0],
+                [0, 1, 2, 0, 1, 2, 0]],
+            [
+                ['a' => 0, 'b' => 1, 'c' => 2],
+                ['a', 'b', 'c', 'a', 'b', 'c', 'a'],
+                [0, 1, 2, 0, 1, 2, 0]],
+            [
+                new \ArrayIterator([0, -1, -2]),
+                [0, 1, 2, 0, 1, 2, 0],
+                [0, -1, -2, 0, -1, -2, 0]],
+            [
+                [0, -1, -2],
+                [0, 1, 2, 0, 1, 2, 0],
+                [0, -1, -2, 0, -1, -2, 0]],
+            [
+                new \ArrayIterator([3, 4, 5]),
+                [0, 1, 2, 0, 1, 2, 0],
+                [3, 4, 5, 3, 4, 5, 3]],
+            [
+                [3, 4, 5],
+                [0, 1, 2, 0, 1, 2, 0],
+                [3, 4, 5, 3, 4, 5, 3]],
+            [
+                new \ArrayIterator([-3, -4, -5]),
+                [0, 1, 2, 0, 1, 2, 0],
+                [-3, -4, -5, -3, -4, -5, -3]],
+            [
+                [-3, -4, -5],
+                [0, 1, 2, 0, 1, 2, 0],
+                [-3, -4, -5, -3, -4, -5, -3]],
+            [
+                'Foo',
+                [0, 1, 2, 0, 1, 2, 0],
+                ['F', 'o', 'o', 'F', 'o', 'o', 'F']],
+            // todo: add unicode string test
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($p)
     {
-        $iterator = \Zicht\Itertools\cycle($p);
+        \Zicht\Itertools\cycle($p);
     }
 
-    public function goodSequenceProvider()
-    {
-        return array(
-            array(
-                new ArrayIterator(array(0, 1, 2)),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(0, 1, 2, 0, 1, 2, 0)),
-            array(
-                array('a' => 0, 'b' => 1, 'c' => 2),
-                array('a', 'b', 'c', 'a', 'b', 'c', 'a'),
-                array(0, 1, 2, 0, 1, 2, 0)),
-            array(
-                new ArrayIterator(array(0, -1, -2)),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(0, -1, -2, 0, -1, -2, 0)),
-            array(
-                array(0, -1, -2),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(0, -1, -2, 0, -1, -2, 0)),
-            array(
-                new ArrayIterator(array(3, 4, 5)),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(3, 4, 5, 3, 4, 5, 3)),
-            array(
-                array(3, 4, 5),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(3, 4, 5, 3, 4, 5, 3)),
-            array(
-                new ArrayIterator(array(-3, -4, -5)),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(-3, -4, -5, -3, -4, -5, -3)),
-            array(
-                array(-3, -4, -5),
-                array(0, 1, 2, 0, 1, 2, 0),
-                array(-3, -4, -5, -3, -4, -5, -3)),
-            array(
-                'Foo',
-                array(0, 1, 2, 0, 1, 2, 0),
-                array('F', 'o', 'o', 'F', 'o', 'o', 'F')),
-            // todo: add unicode string test
-        );
-    }
-
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(123),
-            array(1.0),
-            array(true),
-        );
+        return [
+            [123],
+            [1.0],
+            [true],
+        ];
     }
 }

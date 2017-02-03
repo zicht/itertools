@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\filters;
 use Zicht\Itertools as iter;
 
@@ -15,7 +14,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest\filters
  */
-class NotInTest extends PHPUnit_Framework_TestCase
+class NotInTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Simple instanceof test

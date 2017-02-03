@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -20,7 +19,7 @@ use Zicht\Itertools\twig\Extension;
  *
  * @package Zicht\ItertoolsTest\twig
  */
-class ExtensionTest extends PHPUnit_Framework_TestCase
+class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Extension */
     protected $extension;

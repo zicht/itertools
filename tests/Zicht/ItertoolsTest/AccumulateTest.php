@@ -1,12 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use ArrayIterator;
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class AccumulateTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AccumulateTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class AccumulateTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -21,7 +26,7 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -32,91 +37,101 @@ class AccumulateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * Provides good sequence tests
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            // empty input
+            [
+                [],
+                'add',
+                [],
+                [],
+            ],
+
+            // test different reductions
+            [
+                new \ArrayIterator([1, 2, 3]),
+                'add',
+                [0, 1, 2],
+                [1, 3, 6]],
+            [
+                [1, 2, 3],
+                'add',
+                [0, 1, 2],
+                [1, 3, 6]],
+            [
+                [1, 2, 3],
+                'sub',
+                [0, 1, 2],
+                [1, -1, -4]],
+            [
+                [1, 2, 3],
+                'mul',
+                [0, 1, 2],
+                [1, 2, 6]],
+            [
+                [1, 2, 3],
+                'min',
+                [0, 1, 2],
+                [1, 1, 1]],
+
+            [
+                [1, 2, 3],
+                'max',
+                [0, 1, 2],
+                [1, 2, 3]],
+            [
+                [1, 2, 3],
+                function ($a, $b) {
+                    return $a + $b;
+                },
+                [0, 1, 2],
+                [1, 3, 6]],
+            [
+                'Foo',
+                function ($a, $b) {
+                    return $a . $b;
+                },
+                [0, 1, 2],
+                ['F', 'Fo', 'Foo']],
+            [
+                ['a' => 1, 'b' => 2, 'c' => 3],
+                'add',
+                ['a', 'b', 'c'],
+                [1, 3, 6]],
+
+            // test specific bug encountered when using an empty MapIterator as input
+            [
+                \Zicht\Itertools\map(null, []),
+                'add',
+                [],
+                [],
+            ],
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($iterable, $func)
     {
-        $iterator = \Zicht\Itertools\accumulate($iterable, $func);
+        \Zicht\Itertools\accumulate($iterable, $func);
     }
 
-    public function goodSequenceProvider()
-    {
-        return array(
-            // empty input
-            array(
-                array(),
-                'add',
-                array(),
-                array(),
-            ),
-
-            // test different reductions
-            array(
-                new ArrayIterator(array(1, 2, 3)),
-                'add',
-                array(0, 1, 2),
-                array(1, 3, 6)),
-            array(
-                array(1, 2, 3),
-                'add',
-                array(0, 1, 2),
-                array(1, 3, 6)),
-            array(
-                array(1, 2, 3),
-                'sub',
-                array(0, 1, 2),
-                array(1, -1, -4)),
-            array(
-                array(1, 2, 3),
-                'mul',
-                array(0, 1, 2),
-                array(1, 2, 6)),
-            array(
-                array(1, 2, 3),
-                'min',
-                array(0, 1, 2),
-                array(1, 1, 1)),
-
-            array(
-                array(1, 2, 3),
-                'max',
-                array(0, 1, 2),
-                array(1, 2, 3)),
-            array(
-                array(1, 2, 3),
-                function ($a, $b) { return $a + $b; },
-                array(0, 1, 2),
-                array(1, 3, 6)),
-            array(
-                'Foo',
-                function ($a, $b) { return $a . $b; },
-                array(0, 1, 2),
-                array('F', 'Fo', 'Foo')),
-            array(
-                array('a' => 1, 'b' => 2, 'c' => 3),
-                'add',
-                array('a', 'b', 'c'),
-                array(1, 3, 6)),
-
-            // test specific bug encountered when using an empty MapIterator as input
-            array(
-                \Zicht\Itertools\map(null, []),
-                'add',
-                array(),
-                array(),
-            ),
-        );
-    }
-
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(0, 'add'),
-            array(1.0, 'add'),
-            array(array(), 0),
-            array(array(), null),
-            array(array(), 'unknown'),
-        );
+        return [
+            [0, 'add'],
+            [1.0, 'add'],
+            [[], 0],
+            [[], null],
+            [[], 'unknown'],
+        ];
     }
 }
