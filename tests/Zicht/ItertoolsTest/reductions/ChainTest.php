@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 use Zicht\Itertools\reductions;
 
@@ -15,7 +14,7 @@ use Zicht\Itertools\reductions;
  *
  * @package Zicht\ItertoolsTest\reductions
  */
-class ChainTest extends PHPUnit_Framework_TestCase
+class ChainTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Simple test
@@ -96,7 +95,7 @@ class ChainTest extends PHPUnit_Framework_TestCase
             [
                 ['chain'],
                 [[1, 2, 3], [4, 5, 6]],
-                [1, 2, 3, 4, 5, 6]
+                [1, 2, 3, 4, 5, 6],
             ],
         ];
     }

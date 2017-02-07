@@ -6,15 +6,15 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
+use Zicht\ItertoolsTest\Dummies\BadToArrayObject;
 
 /**
  * Class ToArrayTest
  *
  * @package Zicht\ItertoolsTest\Traits
  */
-class ToArrayTest extends PHPUnit_Framework_TestCase
+class ToArrayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test good sequences
@@ -37,17 +37,26 @@ class ToArrayTest extends PHPUnit_Framework_TestCase
         return [
             [
                 iter\iterable([1, 2, 3]),
-                [1, 2, 3]
+                [1, 2, 3],
             ],
             [
                 iter\iterable(['a' => 1, 'b' => 2, 'c' => 3]),
-                ['a' => 1, 'b' => 2, 'c' => 3]
+                ['a' => 1, 'b' => 2, 'c' => 3],
             ],
             // duplicate keys
             [
                 iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
-                ['a' => 1, 'b' => 2, 'c' => 3]
+                ['a' => 1, 'b' => 2, 'c' => 3],
             ],
         ];
+    }
+
+    /**
+     * Test that toArray returns an empty array when the trait is applied on a non-Traversable
+     */
+    public function testNonTraversable()
+    {
+        $object = new BadToArrayObject();
+        $this->assertEquals([], $object->toArray());
     }
 }

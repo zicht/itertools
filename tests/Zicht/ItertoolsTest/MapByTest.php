@@ -6,8 +6,6 @@
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
 /**
@@ -15,7 +13,7 @@ use Zicht\ItertoolsTest\Dummies\SimpleObject;
  *
  * @package Zicht\ItertoolsTest
  */
-class MapByTest extends PHPUnit_Framework_TestCase
+class MapByTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test mapBy
@@ -36,7 +34,7 @@ class MapByTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -65,7 +63,7 @@ class MapByTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -90,65 +88,65 @@ class MapByTest extends PHPUnit_Framework_TestCase
             return $key + 1;
         };
 
-        return array(
+        return [
             // callback
-            array(
-                array($addClosure, array(1, 2, 3)),
-                array(11, 12, 13),
-                array(1, 2, 3),
-            ),
+            [
+                [$addClosure, [1, 2, 3]],
+                [11, 12, 13],
+                [1, 2, 3],
+            ],
             // duplicate keys
-            array(
-                array($addClosure, array(1, 2, 3, 3, 1, 2)),
-                array(11, 12, 13, 13, 11, 12),
-                array(1, 2, 3, 3, 1, 2),
-            ),
+            [
+                [$addClosure, [1, 2, 3, 3, 1, 2]],
+                [11, 12, 13, 13, 11, 12],
+                [1, 2, 3, 3, 1, 2],
+            ],
             // use string to identify array key
-            array(
-                array('key', array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k3'))),
-                array('k1', 'k2', 'k3'),
-                array(array('key' => 'k1'), array('key' => 'k2'), array('key' => 'k3')),
-            ),
-            array(
-                array('key', array(array('key' => 1), array('key' => 2), array('key' => 3))),
-                array(1, 2, 3),
-                array(array('key' => 1), array('key' => 2), array('key' => 3)),
-            ),
+            [
+                ['key', [['key' => 'k1'], ['key' => 'k2'], ['key' => 'k3']]],
+                ['k1', 'k2', 'k3'],
+                [['key' => 'k1'], ['key' => 'k2'], ['key' => 'k3']],
+            ],
+            [
+                ['key', [['key' => 1], ['key' => 2], ['key' => 3]]],
+                [1, 2, 3],
+                [['key' => 1], ['key' => 2], ['key' => 3]],
+            ],
             // use string to identify object property
-            array(
-                array('prop', array(new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3'))),
-                array('p1', 'p2', 'p3'),
-                array(new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')),
-            ),
-            array(
-                array('prop', array(new SimpleObject(1), new SimpleObject(2), new SimpleObject(3))),
-                array(1, 2, 3),
-                array(new SimpleObject(1), new SimpleObject(2), new SimpleObject(3)),
-            ),
+            [
+                ['prop', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')]],
+                ['p1', 'p2', 'p3'],
+                [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')],
+            ],
+            [
+                ['prop', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(3)]],
+                [1, 2, 3],
+                [new SimpleObject(1), new SimpleObject(2), new SimpleObject(3)],
+            ],
             // use string to identify object get method
-            array(
-                array('getProp', array(new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3'))),
-                array('p1', 'p2', 'p3'),
-                array(new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')),
-            ),
-            array(
-                array('getProp', array(new SimpleObject(1), new SimpleObject(2), new SimpleObject(3))),
-                array(1, 2, 3),
-                array(new SimpleObject(1), new SimpleObject(2), new SimpleObject(3))
-            ),
+            [
+                ['getProp', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')]],
+                ['p1', 'p2', 'p3'],
+                [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p3')],
+            ],
+            [
+                ['getProp', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(3)]],
+                [1, 2, 3],
+                [new SimpleObject(1), new SimpleObject(2), new SimpleObject(3)],
+            ],
             // use null as value getter, this returns the value itself
-            array(
-                array(null, array('a' => 1, 'b' => 2, 'c' => 3)),
-                array(1, 2, 3),
-                array(1, 2, 3),
-            ),
+            [
+                [null, ['a' => 1, 'b' => 2, 'c' => 3]],
+                [1, 2, 3],
+                [1, 2, 3],
+            ],
             // the closure is given both $value and $key as parameters
-            array(
-                array($incrementKey, array(0 => 'a', 1 => 'b', 2 => 'c')),
-                array(1, 2, 3),
-                array('a', 'b', 'c'),
-            ),
-        );
+            [
+                [$incrementKey, [0 => 'a', 1 => 'b', 2 => 'c']],
+                [1, 2, 3],
+                ['a', 'b', 'c'],
+            ],
+        ];
     }
 
     /**
@@ -156,7 +154,7 @@ class MapByTest extends PHPUnit_Framework_TestCase
      *
      * @param array $arguments
      *
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
@@ -171,9 +169,9 @@ class MapByTest extends PHPUnit_Framework_TestCase
      */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(123, array(1, 2, 3))),
-            array(array(true, array(1, 2, 3))),
-        );
+        return [
+            [[123, [1, 2, 3]]],
+            [[true, [1, 2, 3]]],
+        ];
     }
 }

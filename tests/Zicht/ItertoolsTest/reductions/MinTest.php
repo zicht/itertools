@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest\reductions
  */
-class MinTest extends PHPUnit_Framework_TestCase
+class MinTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test good arguments

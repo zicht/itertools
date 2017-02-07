@@ -1,11 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class LastTest extends PHPUnit_Framework_TestCase
+/**
+ * Class LastTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class LastTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -17,14 +23,8 @@ class LastTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @dataProvider badArgumentProvider
+     * Provides good sequence tests
      */
-    public function testBadArgument(array $arguments)
-    {
-        $iterator = call_user_func_array('\Zicht\Itertools\last', $arguments);
-    }
-
     public function goodSequenceProvider()
     {
         return array(
@@ -53,6 +53,18 @@ class LastTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider badArgumentProvider
+     */
+    public function testBadArgument(array $arguments)
+    {
+        call_user_func_array('\Zicht\Itertools\last', $arguments);
+    }
+
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
         return array(

@@ -62,10 +62,12 @@ class KeyValuePair implements \ArrayAccess
     {
         if ($offset === 0 || $offset === 'key') {
             $this->key = $value;
+            return;
         }
 
         if ($offset === 1 || $offset === 'value') {
             $this->value = $value;
+            return;
         }
 
         throw new \InvalidArgumentException('$OFFSET must be either 0, 1, "key", or "value"');

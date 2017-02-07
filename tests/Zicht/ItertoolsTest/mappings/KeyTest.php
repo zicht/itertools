@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools as iter;
 
 /**
@@ -14,7 +13,7 @@ use Zicht\Itertools as iter;
  *
  * @package Zicht\ItertoolsTest\mappings
  */
-class KeyTest extends PHPUnit_Framework_TestCase
+class KeyTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Simple test

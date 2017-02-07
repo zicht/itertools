@@ -35,7 +35,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -64,7 +64,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -95,35 +95,35 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             return $value < 0;
         };
 
-        return array(
+        return [
             // with closure
-            array(
-                array($trueClosure, array(0, -1, 2, -3)),
-                array(0, 1, 2, 3),
-                array(0, -1, 2, -3)),
-            array(
-                array($falseClosure, array(0, -1, 2, -3)),
-                array(),
-                array()),
-            array(
-                array($isPositiveClosure, array(0, -1, 2, -3)),
-                array(2),
-                array(2)),
-            array(
-                array($isNegativeClosure, array(0, -1, 2, -3)),
-                array(1, 3),
-                array(-1, -3)),
+            [
+                [$trueClosure, [0, -1, 2, -3]],
+                [0, 1, 2, 3],
+                [0, -1, 2, -3]],
+            [
+                [$falseClosure, [0, -1, 2, -3]],
+                [],
+                []],
+            [
+                [$isPositiveClosure, [0, -1, 2, -3]],
+                [2],
+                [2]],
+            [
+                [$isNegativeClosure, [0, -1, 2, -3]],
+                [1, 3],
+                [-1, -3]],
 
             // without closure (this uses !empty as a closure)
-            array(
-                array(array(1, 2, 3)),
-                array(0, 1, 2),
-                array(1, 2, 3)),
-            array(
-                array(array(null, '', 0, '0')),
-                array(),
-                array()),
-        );
+            [
+                [[1, 2, 3]],
+                [0, 1, 2],
+                [1, 2, 3]],
+            [
+                [[null, '', 0, '0']],
+                [],
+                []],
+        ];
     }
 
     /**
@@ -139,19 +139,19 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             return 3 <= $key;
         };
 
-        return array(
+        return [
             // single iterable using both key and value
-            array(
-                array($hasSmallIndex, array('a', 'b', 'c', 'd', 'e')),
-                array(0, 1, 2),
-                array('a', 'b', 'c'),
-            ),
-            array(
-                array($hasLargeIndex, array('a', 'b', 'c', 'd', 'e')),
-                array(3, 4),
-                array('d', 'e'),
-            ),
-        );
+            [
+                [$hasSmallIndex, ['a', 'b', 'c', 'd', 'e']],
+                [0, 1, 2],
+                ['a', 'b', 'c'],
+            ],
+            [
+                [$hasLargeIndex, ['a', 'b', 'c', 'd', 'e']],
+                [3, 4],
+                ['d', 'e'],
+            ],
+        ];
     }
 
     /**
@@ -184,12 +184,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
      */
     public function badArgumentProvider()
     {
-        return array(
-            array(array()),
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
-            array(array(0, array())),
-        );
+        return [
+            [[]],
+            [[0]],
+            [[1.0]],
+            [[true]],
+            [[0, []]],
+        ];
     }
 }

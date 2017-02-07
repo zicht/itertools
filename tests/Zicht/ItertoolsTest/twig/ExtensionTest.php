@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -20,7 +19,7 @@ use Zicht\Itertools\twig\Extension;
  *
  * @package Zicht\ItertoolsTest\twig
  */
-class ExtensionTest extends PHPUnit_Framework_TestCase
+class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Extension */
     protected $extension;
@@ -164,6 +163,26 @@ class ExtensionTest extends PHPUnit_Framework_TestCase
     public function testInvalidReducing()
     {
         $result = $this->extension->reducing('invalid');
+        $this->assertTrue(is_callable($result));
+    }
+
+    /**
+     * Ensure reducing returns a closure (deprecated)
+     */
+    public function testDeprecatedReduction()
+    {
+        $result = $this->extension->deprecatedGetReduction('add');
+        $this->assertTrue(is_callable($result));
+    }
+
+    /**
+     * Ensure reducing fails on unknown reduction (deprecated)
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testDeprecatedInvalidReduction()
+    {
+        $result = $this->extension->deprecatedGetReduction('invalid');
         $this->assertTrue(is_callable($result));
     }
 

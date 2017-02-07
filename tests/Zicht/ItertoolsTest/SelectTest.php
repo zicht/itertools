@@ -36,16 +36,16 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         return [
             [
                 [1, 2, 3],
-                [1, 2, 3]
+                [1, 2, 3],
             ],
             [
                 ['a' => 1, 'b' => 2, 'c' => 3],
-                [1, 2, 3]
+                [1, 2, 3],
             ],
             // duplicate keys
             [
                 iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
-                [-1, -2, -3, 1, 2, 3]
+                [-1, -2, -3, 1, 2, 3],
             ],
         ];
     }

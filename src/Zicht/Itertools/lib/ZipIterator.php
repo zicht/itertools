@@ -51,7 +51,7 @@ class ZipIterator extends \MultipleIterator implements \Countable
         parent::__construct(\MultipleIterator::MIT_NEED_ALL| \MultipleIterator::MIT_KEYS_NUMERIC);
         foreach (func_get_args() as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new \InvalidArgumentException(sprintf('Argument %d must be an iterator'));
+                throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
             }
             $this->attachIterator($iterable);
         }

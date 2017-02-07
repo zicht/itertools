@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -27,6 +31,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class ChainIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
@@ -55,12 +64,15 @@ class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
     use ValuesTrait;
     use ZipTrait;
 
+    /**
+     * ChainIterator constructor.
+     */
     public function __construct(/* \Iterator $iterable, \Iterator $iterable2, ... */)
     {
         parent::__construct();
         foreach (func_get_args() as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new \InvalidArgumentException(sprintf('Argument %d must be an Iterator'));
+                throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
             }
             $this->append($iterable);
         }

@@ -115,7 +115,7 @@ class Extension extends \Twig_Extension
      */
     public function groupBy($iterable, $strategy)
     {
-        return iter\groupBy($strategy, $iterable);
+        return iter\group_by($strategy, $iterable);
     }
 
     /**
@@ -167,19 +167,26 @@ class Extension extends \Twig_Extension
      */
     public function mapBy($iterable, $strategy)
     {
-        return iter\mapBy($strategy, $iterable);
+        return iter\map_by($strategy, $iterable);
     }
 
 
     /**
      * Returns a reduction closure
      *
+     * Any parameters provided, beyond $name, are passed directly to the underlying
+     * reduction.  This can be used to, for example, provide a $glue when using join.
+     *
      * @param string $name
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function reducing($name /* [argument, [arguments, ...] */)
+    public function reducing($name)
     {
+        // note, once we stop supporting php 5.5, we can rewrite the code below
+        // to the reducing($name, ...$args) structure.
+        // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
         if (is_string($name) && in_array($name, ['add', 'sub', 'mul', 'min', 'max', 'join', 'chain'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
         }
@@ -190,12 +197,19 @@ class Extension extends \Twig_Extension
     /**
      * Returns a mapping closure
      *
+     * Any parameters provided, beyond $name, are passed directly to the underlying
+     * mapping.  This can be used to, for example, provide a $glue when using join.
+     *
      * @param string $name
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function mapping($name /* [argument, [arguments, ...] */)
+    public function mapping($name)
     {
+        // note, once we stop supporting php 5.5, we can rewrite the code below
+        // to the reducing($name, ...$args) structure.
+        // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
         if (is_string($name) && in_array($name, ['lstrip', 'rstrip', 'strip', 'length', 'key', 'select', 'random', 'type', 'lower', 'upper'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\mappings\%s', $name), array_slice(func_get_args(), 1));
         }
@@ -206,12 +220,19 @@ class Extension extends \Twig_Extension
     /**
      * Returns a filter closure
      *
+     * Any parameters provided, beyond $name, are passed directly to the underlying
+     * filter.  This can be used to, for example, provide a $glue when using join.
+     *
      * @param string $name
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    public function filtering($name /* [argument, [arguments, ...] */)
+    public function filtering($name)
     {
+        // note, once we stop supporting php 5.5, we can rewrite the code below
+        // to the reducing($name, ...$args) structure.
+        // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
         if (is_string($name) && in_array($name, ['type', 'in', 'not_in', 'equals'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\filters\%s', $name), array_slice(func_get_args(), 1));
         }
@@ -248,7 +269,7 @@ class Extension extends \Twig_Extension
      */
     public function deprecatedGroupBy($iterable, $strategy)
     {
-        return iter\groupBy($strategy, $iterable);
+        return iter\group_by($strategy, $iterable);
     }
 
     /**
@@ -306,13 +327,9 @@ class Extension extends \Twig_Extension
      *
      * @deprecated Use reducing instead!
      */
-    public function deprecatedGetReduction($name /* [argument, [arguments, ...] */)
+    public function deprecatedGetReduction($name)
     {
-        if (is_string($name) && in_array($name, ['add', 'sub', 'mul', 'min', 'max', 'join', 'chain'])) {
-            return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
-        }
-
-        throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid reduction.', $name));
+        return call_user_func_array([$this, 'reducing'], func_get_args());
     }
 
     /**

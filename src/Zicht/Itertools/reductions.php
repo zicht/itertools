@@ -150,7 +150,7 @@ function chain()
  *
  * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
-function get_reduction($name /* [argument, [arguments, ...] */)
+function get_reduction($name)
 {
     if (is_string($name)) {
         switch ($name) {
@@ -177,7 +177,7 @@ function get_reduction($name /* [argument, [arguments, ...] */)
 /**
  * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
-function getReduction($name /* [argument, [arguments, ...] */)
+function getReduction($name)
 {
     return call_user_func_array('\Zicht\Itertools\reductions\get_reduction', func_get_args());
 }

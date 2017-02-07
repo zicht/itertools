@@ -1,12 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use ArrayIterator;
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class ReversedTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ReversedTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class ReversedTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -21,7 +26,7 @@ class ReversedTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -32,7 +37,34 @@ class ReversedTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * Provides good sequence tests
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            // empty input
+            [
+                [],
+                [],
+                [],
+            ],
+
+            // test simple reversal
+            [
+                [1, 2, 3],
+                [2, 1, 0],
+                [3, 2, 1]],
+
+            // test duplicate keys reversal
+            [
+                \Zicht\Itertools\chain([1, 2, 3], [4, 5, 6]),
+                [2, 1, 0, 2, 1, 0],
+                [6, 5, 4, 3, 2, 1]],
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($iterable)
@@ -40,36 +72,17 @@ class ReversedTest extends PHPUnit_Framework_TestCase
         $iterator = \Zicht\Itertools\reversed($iterable);
     }
 
-    public function goodSequenceProvider()
-    {
-        return array(
-            // empty input
-            array(
-                array(),
-                array(),
-                array(),
-            ),
-
-            // test simple reversal
-            array(
-                array(1, 2, 3),
-                array(2, 1, 0),
-                array(3, 2, 1)),
-
-            // test duplicate keys reversal
-            array(
-                \Zicht\Itertools\chain(array(1, 2, 3), array(4, 5, 6)),
-                array(2, 1, 0, 2, 1, 0),
-                array(6, 5, 4, 3, 2, 1)),
-        );
-    }
-
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(0),
-            array(1.0),
-            array(function () { return ''; }),
-        );
+        return [
+            [0],
+            [1.0],
+            [function () {
+                return '';
+            }],
+        ];
     }
 }

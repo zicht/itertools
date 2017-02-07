@@ -1,11 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class FirstTest extends PHPUnit_Framework_TestCase
+/**
+ * Class FirstTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class FirstTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -17,48 +23,57 @@ class FirstTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * Provides good sequence tests
+     */
+    public function goodSequenceProvider()
+    {
+        return [
+            // test default values
+            [
+                [[]],
+                null,
+            ],
+            [
+                [[], 'default'],
+                'default',
+            ],
+            [
+                ['', 'default'],
+                'default',
+            ],
+            // test first
+            [
+                [[0]],
+                0,
+            ],
+            [
+                [[0, 1, 2, 3]],
+                0,
+            ],
+        ];
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\first', $arguments);
+        call_user_func_array('\Zicht\Itertools\first', $arguments);
     }
 
-    public function goodSequenceProvider()
-    {
-        return array(
-            // test default values
-            array(
-                array(array()),
-                null,
-            ),
-            array(
-                array(array(), 'default'),
-                'default',
-            ),
-            array(
-                array('', 'default'),
-                'default',
-            ),
-            // test first
-            array(
-                array(array(0)),
-                0,
-            ),
-            array(
-                array(array(0, 1, 2, 3)),
-                0,
-            ),
-        );
-    }
-
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
-            array(array(function () { return []; })),
-        );
-    }}
+        return [
+            [[0]],
+            [[1.0]],
+            [[true]],
+            [[function () {
+                return [];
+            }]],
+        ];
+    }
+}

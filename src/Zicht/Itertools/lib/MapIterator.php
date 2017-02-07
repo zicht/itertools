@@ -68,7 +68,7 @@ class MapIterator extends \MultipleIterator implements \Countable, \ArrayAccess
         $this->keyFunc = $argsContainsKeyFunc ? $args[1] : function () { return $this->genericKeysToKey(func_get_args()); };
         foreach (array_slice($args, $argsContainsKeyFunc ? 2 : 1) as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new \InvalidArgumentException(sprintf('Argument %d must be an iterator'));
+                throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
             }
             $this->attachIterator($iterable);
         }

@@ -1,11 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class UniqueByTest extends PHPUnit_Framework_TestCase
+/**
+ * Class UniqueByTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class UniqueByTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -20,7 +26,7 @@ class UniqueByTest extends PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        for ($index=0; $index<sizeof($expectedKeys); $index++) {
+        for ($index = 0; $index < sizeof($expectedKeys); $index++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($expectedKeys[$index], $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($expectedValues[$index], $iterator->current(), 'Failure in $iterator->current()');
@@ -30,52 +36,64 @@ class UniqueByTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($iterator->valid());
     }
 
+    /**
+     * Provides good sequence tests
+     */
     public function goodSequenceProvider()
     {
-        return array(
+        return [
             // call WITH $keyStrategy
-            array(
-                array(null, array(1, 2, 3)),
-                array(0, 1, 2),
-                array(1, 2, 3)
-            ),
-            array(
-                array(function ($value) { return $value; }, array(1, 1, 2, 2, 3, 3)),
-                array(0, 2, 4),
-                array(1, 2, 3)
-            ),
-            array(
-                array(function ($value, $key) { return $key; }, array(1, 2, 3)),
-                array(0, 1, 2),
-                array(1, 2, 3)
-            ),
-            array(
-                array(function ($value, $key) { return 'A'; }, array(1, 2, 3)),
-                array(0),
-                array(1)
-            ),
-        );
+            [
+                [null, [1, 2, 3]],
+                [0, 1, 2],
+                [1, 2, 3],
+            ],
+            [
+                [function ($value) {
+                    return $value;
+                }, [1, 1, 2, 2, 3, 3]],
+                [0, 2, 4],
+                [1, 2, 3],
+            ],
+            [
+                [function ($value, $key) {
+                    return $key;
+                }, [1, 2, 3]],
+                [0, 1, 2],
+                [1, 2, 3],
+            ],
+            [
+                [function ($value, $key) {
+                    return 'A';
+                }, [1, 2, 3]],
+                [0],
+                [1],
+            ],
+        ];
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\uniqueBy', $arguments);
+        call_user_func_array('\Zicht\Itertools\uniqueBy', $arguments);
     }
 
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
+        return [
             // wrong types
-            array(array(null, 0)),
-            array(array(null, 1.0)),
-            array(array(null, true)),
-            array(array(0, array())),
-            array(array(1.0, array())),
-            array(array(true, array())),
-        );
+            [[null, 0]],
+            [[null, 1.0]],
+            [[null, true]],
+            [[0, []]],
+            [[1.0, []]],
+            [[true, []]],
+        ];
     }
 }

@@ -25,7 +25,7 @@ use Zicht\Itertools\lib\ZipIterator;
 use Zicht\Itertools\reductions;
 
 /**
- * Transforms anything into an Iterator or throws an InvalidArgumentException
+ * Transforms anything into an \Iterator or throws an \InvalidArgumentException
  *
  * @param array|string|\Iterator $iterable
  * @return \Iterator
@@ -38,7 +38,7 @@ function mixedToIterator($iterable)
 }
 
 /**
- * Try to transforms something into a Closure
+ * Try to transforms something into a \Closure
  *
  * @param null|\Closure $closure
  * @return \Closure
@@ -51,7 +51,7 @@ function mixedToClosure($closure)
 }
 
 /**
- * Try to transforms something into a Closure that gets a value from $STRATEGY
+ * Try to transforms something into a \Closure that gets a value from $strategy
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
@@ -64,7 +64,7 @@ function mixedToValueGetter($strategy)
 }
 
 /**
- * Try to transform something into a Closure
+ * Try to transform something into a \Closure
  *
  * @param string|\Closure $closure
  * @return \Closure
@@ -78,7 +78,7 @@ function mixedToOperationClosure($closure)
     }
 
     if (!($closure instanceof \Closure)) {
-        throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure or string (i.e. "add", "join", etc)');
+        throw new \InvalidArgumentException('Argument $closure must be a \Closure or string (i.e. "add", "join", etc)');
     }
 
     return $closure;
@@ -88,7 +88,7 @@ function mixedToOperationClosure($closure)
  * Make an iterator that returns accumulated sums
  *
  * If the optional $closure argument is supplied, it should be a string:
- * add, sub, mul, min, or max.  Or it can be a Closure taking two
+ * add, sub, mul, min, or max.  Or it can be a \Closure taking two
  * arguments that will be used to instead of addition.
  *
  * > accumulate([1,2,3,4,5])
@@ -152,13 +152,12 @@ function reduce($iterable, $closure = 'add', $initializer = null)
 }
 
 /**
- * Make an iterator that returns elements from the first iterable
- * until it is exhausted, then proceeds to the next iterable, until
+ * Make an iterator that contains all consecutive elements from all provided iterables.
+ *
+ * The resulting iterator contains elements from the first iterable in the parameters
+ * until it is exhausted, then proceeds to the next iterable in the parameters, until
  * all the iterables are exhausted.  Used for creating consecutive
  * sequences as a single sequence
- *
- * Note that the keys of the returned ChainIterator follow 0, 1, etc,
- * regardless of the keys given in the iterables.
  *
  * > chain([1, 2, 3], [4, 5, 6])
  * 1 2 3 4 5 6
@@ -166,12 +165,14 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  * > chain('ABC', 'DEF')
  * A B C D E F
  *
- * @param array|string|\Iterator $iterable
- * @param array|string|\Iterator $iterable2
  * @return ChainIterator
  */
-function chain(/* $iterable, $iterable2, ... */)
+function chain()
 {
+    // note, once we stop supporting php 5.5, we can rewrite the code below
+    // to the chain(...$iterables) structure.
+    // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
     $iterables = array_map(
         function ($iterable) {
             return conversions\mixed_to_iterator($iterable);
@@ -198,12 +199,12 @@ function chain(/* $iterable, $iterable2, ... */)
  */
 function count($start = 0, $step = 1)
 {
-    if (!(is_int($start) or is_float($start))) {
-        throw new \InvalidArgumentException('Argument $START must be an integer or float');
+    if (!(is_int($start) || is_float($start))) {
+        throw new \InvalidArgumentException('Argument $start must be an integer or float');
     }
 
-    if (!(is_int($step) or is_float($step))) {
-        throw new \InvalidArgumentException('Argument $STEP must be an integer or float');
+    if (!(is_int($step) || is_float($step))) {
+        throw new \InvalidArgumentException('Argument $step must be an integer or float');
     }
 
     return new CountIterator($start, $step);
@@ -251,12 +252,30 @@ function cycle($iterable)
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  */
-function mapBy($strategy, $iterable)
+function map_by($strategy, $iterable)
 {
+    // In version 3.0 mapBy and map_by will be removed
+    // as its functionality will be merged into map.
+
     return new MapByIterator(
         conversions\mixed_to_value_getter($strategy),
         conversions\mixed_to_iterator($iterable)
     );
+}
+
+/**
+ * Make an iterator returning values from $iterable and keys from
+ * $strategy
+ *
+ * @param string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
+ * @return MapByIterator
+ *
+ * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
+ */
+function mapBy($strategy, $iterable)
+{
+    return map_by($strategy, $iterable);
 }
 
 /**
@@ -298,12 +317,15 @@ function keyCallback($strategy, $iterable)
  * 2.5 3.5 4.5
  *
  * @param null|string|\Closure $strategy
- * @param array|string|\Iterator $iterable
- * @param array|string|\Iterator $iterable2
+ * @param array|string|\Iterator $iterable Additional $iterable parameters may follow
  * @return MapIterator
  */
-function map($strategy, $iterable /*, $iterable2, ... */)
+function map($strategy, $iterable)
 {
+    // note, once we stop supporting php 5.5, we can rewrite the code below
+    // to the map(...$iterables) structure.
+    // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
     $iterables = array_map(
         function ($iterable) {
             return conversions\mixed_to_iterator($iterable);
@@ -316,7 +338,7 @@ function map($strategy, $iterable /*, $iterable2, ... */)
 
 /**
  * Select values from the iterator by applying a function to each of the iterator values, i.e., mapping it to the
- * value with a strategy based on the input, similar to keyCallback
+ * value with a strategy based on the input, similar to map_key
  *
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
@@ -357,8 +379,8 @@ function select($strategy, $iterable, $flatten = true)
  */
 function repeat($mixed, $times = null)
 {
-    if (!(is_null($times) or (is_int($times) and $times >= 0))) {
-        throw new \InvalidArgumentException('Argument $TIMES must be null or a positive integer');
+    if (!(is_null($times) || (is_int($times) && $times >= 0))) {
+        throw new \InvalidArgumentException('Argument $times must be null or a positive integer');
     }
 
     return new RepeatIterator($mixed, $times);
@@ -401,16 +423,33 @@ function repeat($mixed, $times = null)
  * @param boolean $sort
  * @return GroupbyIterator
  */
-function groupBy($strategy, $iterable, $sort = true)
+function group_by($strategy, $iterable, $sort = true)
 {
     if (!is_bool($sort)) {
-        throw new \InvalidArgumentException('Argument $SORT must be a boolean');
+        throw new \InvalidArgumentException('Argument $sort must be a boolean');
     }
 
     return new GroupbyIterator(
         conversions\mixed_to_value_getter($strategy),
         $sort ? sorted($strategy, $iterable) : conversions\mixed_to_iterator($iterable)
     );
+}
+
+/**
+ * Make an iterator that returns consecutive groups from the
+ * $iterable.  Generally, the $iterable needs to already be sorted on
+ * the same key function
+ *
+ * @param null|string|\Closure $strategy
+ * @param array|string|\Iterator $iterable
+ * @param boolean $sort
+ * @return GroupbyIterator
+ *
+ * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
+ */
+function groupBy($strategy, $iterable, $sort = true)
+{
+    return group_by($strategy, $iterable, $sort);
 }
 
 /**
@@ -442,7 +481,7 @@ function groupBy($strategy, $iterable, $sort = true)
 function sorted($strategy, $iterable, $reverse = false)
 {
     if (!is_bool($reverse)) {
-        throw new \InvalidArgumentException('Argument $REVERSE must be boolean');
+        throw new \InvalidArgumentException('Argument $reverse must be boolean');
     }
     return new SortedIterator(
         conversions\mixed_to_value_getter($strategy),
@@ -455,12 +494,20 @@ function sorted($strategy, $iterable, $reverse = false)
  * Make an iterator that returns values from $iterable where the
  * $strategy determines that the values are not empty
  *
- * @param null|string|\Closure $strategy, Optional, when not specified !empty will be used
- * @param array|string|\Iterator $iterable
+ * An optional $strategy may be given, this must be either null,
+ * a string, or a \Closure.
+ *
+ * Following the (optional) $strategy, one or more $iterable instances
+ * must be given.  They must be either an array, a string, or an \Iterator.
+ *
  * @return FilterIterator
  */
-function filter(/* [$strategy, ] $iterable */)
+function filter()
 {
+    // note, once we stop supporting php 5.5, we can rewrite the code below
+    // to the filter(...$iterables) structure.
+    // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
@@ -487,18 +534,30 @@ function filter(/* [$strategy, ] $iterable */)
 }
 
 /**
- * TODO: document!
- * TODO: unit tests!
+ * Make an iterator that returns values from $iterable where the
+ * $strategy determines that the values are not empty
  *
- * @param string|\Closure $strategy
- * @param \Closure $closure Optional, when not specified !empty will be used
- * @param array|string|\Iterator $iterable
+ * An $strategy must be given, this must be either null, a string,
+ * or a \Closure.
+ *
+ * Following the $strategy, an optional $closure may be given, this
+ * closure is called to determine is the value (which results from
+ * $strategy) is or is not filtered.  Note that without providing a
+ * $closure, the function !empty(...) is used instead.
+ *
+ * Following the (optional) $closure, one or more $iterable instances
+ * must be given.  They must be either an array, a string, or an \Iterator.
+ *
  * @return FilterIterator
  *
  * @deprecated Use filter() instead, will be removed in version 3.0
  */
-function filterBy(/* $strategy, [$closure, ] $iterable */)
+function filterBy()
 {
+    // note, once we stop supporting php 5.5, we can rewrite the code below
+    // to the filterBy(...$iterables) structure.
+    // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
     $args = func_get_args();
     switch (sizeof($args)) {
         case 2:
@@ -538,12 +597,15 @@ function filterBy(/* $strategy, [$closure, ] $iterable */)
  * > zip([1, 2, 3], ['a', 'b', 'c'])
  * [1, 'a'] [2, 'b'] [3, 'c']
  *
- * @param array|string|\Iterator $iterable
- * @param array|string|\Iterator $iterable2
+ * @param array|string|\Iterator $iterable Additional $iterable parameters may follow
  * @return ZipIterator
  */
-function zip(/* $iterable, $iterable2, ... */)
+function zip($iterableA)
 {
+    // note, once we stop supporting php 5.5, we can rewrite the code below
+    // to the zip(...$iterables) structure.
+    // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
+
     $iterables = array_map(
         function ($iterable) {
             return conversions\mixed_to_iterator($iterable);
@@ -555,7 +617,7 @@ function zip(/* $iterable, $iterable2, ... */)
 }
 
 /**
- * Returns an iterable with all the elements from $ITERABLE reversed
+ * Returns an iterable with all the elements from $iterable reversed
  *
  * @param array|string|\Iterator $iterable
  * @return ReversedIterator
@@ -566,11 +628,15 @@ function reversed($iterable)
 }
 
 /**
- * Returns an iterator where the values from $STRATEGY are unique
+ * Returns an iterator where the values from $strategy are unique
  *
- * The $strategy is used to get values for every element in $iterable,
- * when this value has already been encountered the element is not
- * part of the returned iterator
+ * An optional $strategy may be given to specify the value which is used
+ * to determine weather the element is unique.  When no $strategy is
+ * given, the identity function is used, i.e. the value of the element
+ * itself is used to determine weather the element is unique.
+ *
+ * Following the optional $strategy, a $iterable must be given.  Otherwise,
+ * an \InvalidArgumentException will be raised.
  *
  * > unique([1, 1, 2, 2, 3, 3])
  * 1 2 3
@@ -578,11 +644,9 @@ function reversed($iterable)
  * > unique('id', [['id' => 1, 'value' => 'a'], ['id' => 1, 'value' => 'b']])
  * ['id' => 1, 'value' => 'a']  # one element in this list
  *
- * @param null|string|\Closure $strategy
- * @param array|string|\Iterator $iterable
  * @return UniqueIterator
  */
-function unique(/* [$strategy,] $iterable */)
+function unique()
 {
     $args = func_get_args();
     switch (sizeof($args)) {
@@ -607,12 +671,13 @@ function unique(/* [$strategy,] $iterable */)
 }
 
 /**
- * TODO: document!
+ * Returns an iterator where the values from $strategy are unique
  *
- * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return UniqueIterator
+ *
+ * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
  */
 function uniqueBy($strategy, $iterable)
 {
@@ -623,10 +688,16 @@ function uniqueBy($strategy, $iterable)
 }
 
 /**
- * Returns true when one or more element of $ITERABLE is not empty, otherwise returns false
+ * Returns true when one or more element of $iterable is not empty, otherwise returns false
  *
- * When the optional $STRATEGY argument is given, this argument is used to obtain the
- * value which is tested to be empty.
+ * An optional $strategy may be given to specify the value which is used
+ * to determine weather the element evaluates to true.  When no $strategy is
+ * given, the identity function is used, i.e. the value of the element
+ * itself is used to determine weather the element evaluates to true.
+ *
+ * Following the optional $strategy, an $iterable may be given.  Its type may
+ * be either array, string, or \Iterator.  When no $iterable is given, false
+ * is returned.
  *
  * > any([0, '', false])
  * false
@@ -634,11 +705,9 @@ function uniqueBy($strategy, $iterable)
  * > any([1, null, 3])
  * true
  *
- * @param null|string|\Closure $strategy
- * @param array|string|\Iterator $iterable
  * @return boolean
  */
-function any(/* [$strategy,] $iterable */)
+function any()
 {
     $args = func_get_args();
     switch (sizeof($args)) {
@@ -667,10 +736,16 @@ function any(/* [$strategy,] $iterable */)
 }
 
 /**
- * Returns true when all elements of $ITERABLE are not empty, otherwise returns false
+ * Returns true when all elements of $iterable are not empty, otherwise returns false
  *
- * When the optional $STRATEGY argument is given, this argument is used to obtain the
- * value which is tested to be empty.
+ * An optional $strategy may be given to specify the value which is used
+ * to determine weather the element evaluates to true.  When no $strategy is
+ * given, the identity function is used, i.e. the value of the element
+ * itself is used to determine weather the element evaluates to true.
+ *
+ * Following the optional $strategy, an $iterable may be given.  Its type may
+ * be either array, string, or \Iterator.  When no $iterable is given, true
+ * is returned.
  *
  * > all([1, 'hello world', true])
  * true
@@ -678,11 +753,9 @@ function any(/* [$strategy,] $iterable */)
  * > all([1, null, 3])
  * false
  *
- * @param null|string|\Closure $strategy
- * @param array|string|\Iterator $iterable
  * @return boolean
  */
-function all(/* [$strategy,] $iterable */)
+function all()
 {
     $args = func_get_args();
     switch (sizeof($args)) {
@@ -711,7 +784,23 @@ function all(/* [$strategy,] $iterable */)
 }
 
 /**
- * TODO: document!
+ * Make an iterator that contains a slice of $iterable
+ *
+ * The parameters $start and $end determine the range that will be taken
+ * from the $iterable.  These values may be negative, in which case they
+ * will indicate elements in $iterable starting at the end.
+ *
+ * > slice(['a', 'b', 'c', 'd', 'e', 1]
+ * 'b', 'c', 'd', 'e'
+ *
+ * > slice(['a', 'b', 'c', 'd', 'e', -1]
+ * 'e'
+ *
+ * > slice(['a', 'b', 'c', 'd', 'e', 1, 2]
+ * 'b'
+ *
+ * > slice(['a', 'b', 'c', 'd', 'e', 1, -1]
+ * 'b', 'c', 'd'
  *
  * @param array|string|\Iterator $iterable
  * @param integer $start
@@ -721,18 +810,22 @@ function all(/* [$strategy,] $iterable */)
 function slice($iterable, $start, $end = null)
 {
     if (!is_int($start)) {
-        throw new \InvalidArgumentException('Argument $START must be an integer');
+        throw new \InvalidArgumentException('Argument $start must be an integer');
     }
     if (!(is_null($end) || is_int($end))) {
-        throw new \InvalidArgumentException('Argument $END must be an integer or null');
+        throw new \InvalidArgumentException('Argument $end must be an integer or null');
     }
     return new SliceIterator(conversions\mixed_to_iterator($iterable), $start, $end);
 }
 
 /**
- * Returns the first element of $ITERABLE or returns $DEFAULT when $ITERABLE is empty
+ * Returns the first element of $iterable or returns $default when $iterable is empty
  *
- * TODO: unit tests!
+ * > first([1, 2, 3])
+ * 1
+ *
+ * > first([])
+ * null
  *
  * @param array|string|\Iterator $iterable
  * @param mixed $default
@@ -748,9 +841,13 @@ function first($iterable, $default = null)
 }
 
 /**
- * Returns the last element of $ITERABLE or returns $DEFAULT when $ITERABLE is empty
+ * Returns the last element of $iterable or returns $default when $iterable is empty
  *
- * TODO: unit tests!
+ * > last([1, 2, 3])
+ * 3
+ *
+ * > last([])
+ * null
  *
  * @param array|string|\Iterator $iterable
  * @param mixed $default
@@ -765,8 +862,9 @@ function last($iterable, $default = null)
 }
 
 /**
- * TODO: document!
- * TODO: unit tests!
+ * Returns a IterableIterator providing a fluent interface to itertools
+ *
+ * > iterable([1, 2, 3])->filter(...)->map(...)->first(...)
  *
  * @param array|string|\Iterator $iterable
  * @return IterableIterator

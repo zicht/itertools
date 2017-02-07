@@ -1,24 +1,29 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest\filters;
 
-use PHPUnit_Framework_TestCase;
 use Zicht\Itertools\filters;
+use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-class Foo
-{
-}
-
-class TypeTest extends PHPUnit_Framework_TestCase
+/**
+ * Class TypeTest
+ *
+ * @package Zicht\ItertoolsTest\filters
+ */
+class TypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Simple instanceof test
      */
     public function test()
     {
-        $filter = filters\type('\Zicht\ItertoolsTest\filters\Foo');
+        $filter = filters\type('Zicht\ItertoolsTest\Dummies\SimpleObject');
         $this->assertInstanceOf('\Closure', $filter);
-        $this->assertTrue($filter(new Foo()));
+        $this->assertTrue($filter(new SimpleObject('test')));
         $this->assertFalse($filter('Hello world'));
     }
 
@@ -27,9 +32,9 @@ class TypeTest extends PHPUnit_Framework_TestCase
      */
     public function testProperty()
     {
-        $filter = filters\type('\Zicht\ItertoolsTest\filters\Foo', 'prop');
+        $filter = filters\type('\Zicht\ItertoolsTest\Dummies\SimpleObject', 'prop');
         $this->assertInstanceOf('\Closure', $filter);
-        $this->assertTrue($filter(['prop' => new Foo()]));
+        $this->assertTrue($filter(['prop' => new SimpleObject('test')]));
         $this->assertFalse($filter('Hello world'));
         $this->assertFalse($filter(['prop' => 'Hello world']));
     }

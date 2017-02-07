@@ -1,11 +1,17 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\ItertoolsTest;
 
-use InvalidArgumentException;
-use PHPUnit_Framework_TestCase;
-
-class ZipTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ZipTest
+ *
+ * @package Zicht\ItertoolsTest
+ */
+class ZipTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -29,59 +35,75 @@ class ZipTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
-     * @dataProvider badArgumentProvider
+     * Provides good sequence tests
      */
-    public function testBadArgument(array $arguments)
-    {
-        $iterator = call_user_func_array('\Zicht\Itertools\zip', $arguments);
-    }
-
     public function goodSequenceProvider()
     {
-        return array(
+        return [
             // single iterable
-            array(
-                array(array()),
-                array(),
-            ),
-            array(
-                array(array(1, 2, 3)),
-                array(array(1), array(2), array(3))),
+            [
+                [[]],
+                [],
+            ],
+            [
+                [[1, 2, 3]],
+                [[1], [2], [3]]],
             // double iterable
-            array(
-                array(array(), array()),
-                array(),
-            ),
-            array(
-                array(array(1, 2, 3), array(4, 5, 6)),
-                array(array(1, 4), array(2, 5), array(3, 6))),
+            [
+                [[], []],
+                [],
+            ],
+            [
+                [[1, 2, 3], [4, 5, 6]],
+                [[1, 4], [2, 5], [3, 6]]],
             // unequal input length
-            array(
-                array(array(), array(4, 5, 6)),
-                array()
-            ),
-            array(
-                array(array(1, 2, 3), array()),
-                array()
-            ),
-            array(
-                array(array(1), array(4, 5, 6)),
-                array(array(1, 4))
-            ),
-            array(
-                array(array(1, 2, 3), array(4)),
-                array(array(1, 4))
-            ),
-        );
+            [
+                [[], [4, 5, 6]],
+                [],
+            ],
+            [
+                [[1, 2, 3], []],
+                [],
+            ],
+            [
+                [[1], [4, 5, 6]],
+                [[1, 4]],
+            ],
+            [
+                [[1, 2, 3], [4]],
+                [[1, 4]],
+            ],
+        ];
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider badArgumentProvider
+     */
+    public function testBadArgumentToFunction(array $arguments)
+    {
+        call_user_func_array('\Zicht\Itertools\zip', $arguments);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider badArgumentProvider
+     */
+    public function testBadArgumentToIterator(array $arguments)
+    {
+        $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
+        $reflectorClass->newInstanceArgs($arguments);
+    }
+
+    /**
+     * Provides bad sequence tests
+     */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
-        );
+        return [
+            [[0]],
+            [[1.0]],
+            [[true]],
+        ];
     }
 }
