@@ -600,7 +600,7 @@ function filterBy()
  * @param array|string|\Iterator $iterable Additional $iterable parameters may follow
  * @return ZipIterator
  */
-function zip($iterableA)
+function zip($iterable)
 {
     // note, once we stop supporting php 5.5, we can rewrite the code below
     // to the zip(...$iterables) structure.
