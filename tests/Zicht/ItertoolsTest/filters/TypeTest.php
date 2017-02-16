@@ -38,4 +38,21 @@ class TypeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($filter('Hello world'));
         $this->assertFalse($filter(['prop' => 'Hello world']));
     }
+
+    /**
+     * The closure must propagate the key to the strategy
+     */
+    public function testKeyPropagation()
+    {
+        $strategy = function ($value, $key) {
+            $this->assertInstanceOf('Zicht\ItertoolsTest\Dummies\SimpleObject', $value);
+            $this->assertEquals('test', $value->prop);
+            $this->assertEquals('key', $key);
+            return $value;
+        };
+
+        $filter = filters\type('Zicht\ItertoolsTest\Dummies\SimpleObject', $strategy);
+        $this->assertInstanceOf('\Closure', $filter);
+        $this->assertTrue($filter(new SimpleObject('test'), 'key'));
+    }
 }
