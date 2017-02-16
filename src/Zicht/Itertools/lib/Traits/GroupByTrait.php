@@ -48,6 +48,6 @@ trait GroupByTrait
      */
     public function groupBy($strategy, $sort = true)
     {
-        return iter\groupBy($strategy, $this, $sort);
+        return iter\group_by($strategy, $this, $sort);
     }
 }
