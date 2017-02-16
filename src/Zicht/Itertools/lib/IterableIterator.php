@@ -32,6 +32,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class IterableIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class IterableIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;

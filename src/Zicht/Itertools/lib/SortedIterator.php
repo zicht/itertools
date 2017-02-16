@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -26,6 +30,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class SortedIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
@@ -54,6 +63,13 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
     use ValuesTrait;
     use ZipTrait;
 
+    /**
+     * SortedIterator constructor.
+     *
+     * @param \Closure $func
+     * @param \Iterator $iterable
+     * @param bool $reverse
+     */
     public function __construct(\Closure $func, \Iterator $iterable, $reverse = false)
     {
         if ($reverse) {
@@ -72,19 +88,25 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
 
         $data = [];
         foreach ($iterable as $key => $value) {
-            $data []= array('key' => $key, 'value' => $value, 'order' => call_user_func($func, $value, $key));
+            $data [] = ['key' => $key, 'value' => $value, 'order' => call_user_func($func, $value, $key)];
         }
 
-        $this->mergesort($data, $cmp);
+        $this->mergeSort($data, $cmp);
 
         parent::__construct(new \ArrayIterator($data));
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->getInnerIterator()->current()['key'];
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function current()
     {
         return $this->getInnerIterator()->current()['value'];
@@ -108,14 +130,15 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
      *
      * http://www.php.net/manual/en/function.usort.php#38827
      *
-     * @param array $array
+     * @param array &$array
      * @param \Closure $cmp_function
      */
-    protected function mergesort(array &$array, \Closure $cmp_function)
+    protected function mergeSort(array &$array, \Closure $cmp_function)
     {
         // Arrays of size < 2 require no action.
-        if (count($array) < 2)
+        if (count($array) < 2) {
             return;
+        }
 
         // Split the array in half
         $halfway = count($array) / 2;
@@ -133,20 +156,23 @@ class SortedIterator extends \IteratorIterator implements \Countable, \ArrayAcce
         }
 
         // Merge the two sorted arrays into a single sorted array
-        $array = array();
+        $array = [];
         $ptr1 = $ptr2 = 0;
         while ($ptr1 < count($array1) && $ptr2 < count($array2)) {
             if (call_user_func($cmp_function, $array1[$ptr1], $array2[$ptr2]) < 1) {
                 $array[] = $array1[$ptr1++];
-            }
-            else {
+            } else {
                 $array[] = $array2[$ptr2++];
             }
         }
 
         // Merge the remainder
-        while ($ptr1 < count($array1)) $array[] = $array1[$ptr1++];
-        while ($ptr2 < count($array2)) $array[] = $array2[$ptr2++];
+        while ($ptr1 < count($array1)) {
+            $array[] = $array1[$ptr1++];
+        }
+        while ($ptr2 < count($array2)) {
+            $array[] = $array2[$ptr2++];
+        }
         return;
     }
 }

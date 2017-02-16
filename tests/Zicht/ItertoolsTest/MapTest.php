@@ -6,6 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapIterator;
 
 /**
@@ -15,6 +16,44 @@ use Zicht\Itertools\lib\MapIterator;
  */
 class MapTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Test without the optional $keyFunc argument for the MapIterator
+     */
+    public function testWithoutKeyFunc()
+    {
+        $valueFunc = function ($value, $key) {
+            $this->assertEquals('value', $value);
+            $this->assertEquals('key', $key);
+            return $value;
+        };
+
+        $iterator = new MapIterator($valueFunc, new \ArrayIterator(['key' => 'value']));
+        $this->assertEquals(['key'], $iterator->keys());
+        $this->assertEquals(['value'], $iterator->values());
+    }
+
+    /**
+     * Test with the optional $keyFunc argument for the MapIterator
+     */
+    public function testWithKeyFunc()
+    {
+        $valueFunc = function ($value, $key) {
+            $this->assertEquals('value', $value);
+            $this->assertEquals('key', $key);
+            return $value;
+        };
+
+        $keyFunc = function ($key, $value) {
+            $this->assertEquals('key', $key);
+            $this->assertEquals('value', $value);
+            return $key;
+        };
+
+        $iterator = new MapIterator($valueFunc, $keyFunc, new \ArrayIterator(['key' => 'value']));
+        $this->assertEquals(['key'], $iterator->keys());
+        $this->assertEquals(['value'], $iterator->values());
+    }
+
     /**
      * @dataProvider goodSequenceProvider
      */

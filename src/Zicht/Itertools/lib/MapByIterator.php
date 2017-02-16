@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -27,11 +31,10 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
-// todo: add tests for ArrayAccess
-
 /**
  * Class MapByIterator
- * @package iter
+ *
+ * @package Zicht\Itertools\lib
  */
 class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
@@ -68,7 +71,9 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     private $func;
 
     /**
-     * @param callable $func
+     * MapByIterator constructor.
+     *
+     * @param \Closure $func
      * @param \Iterator $iterable
      */
     public function __construct(\Closure $func, \Iterator $iterable)
@@ -78,7 +83,7 @@ class MapByIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     }
 
     /**
-     * @return mixed
+     * @{inheritDoc}
      */
     public function key()
     {

@@ -1,8 +1,10 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
-
-// todo: add tests
 
 use Zicht\Itertools\lib\Traits\AllTrait;
 use Zicht\Itertools\lib\Traits\AnyTrait;
@@ -28,6 +30,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class SliceIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
     use ArrayAccessTrait;
@@ -56,10 +63,22 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     use ValuesTrait;
     use ZipTrait;
 
+    /** @var integer */
     private $index;
+
+    /** @var integer */
     private $start;
+
+    /** @var null|int */
     private $end;
 
+    /**
+     * SliceIterator constructor.
+     *
+     * @param \Iterator $iterable
+     * @param integer $start
+     * @param null|integer $end
+     */
     public function __construct(\Iterator $iterable, $start, $end = null)
     {
         if ($start < 0 || $end < 0) {
@@ -67,11 +86,14 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
         }
 
         $this->index = 0;
-        $this->start = $start < 0 ? $length + $start: $start;
+        $this->start = $start < 0 ? $length + $start : $start;
         $this->end = $end === null ? null : ($end < 0 ? $length + $end : $end);
         parent::__construct($iterable);
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function valid()
     {
         while ($this->index < $this->start) {
@@ -90,12 +112,18 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
         return false;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function next()
     {
         $this->index += 1;
         parent::next();
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function rewind()
     {
         $this->index = 0;
