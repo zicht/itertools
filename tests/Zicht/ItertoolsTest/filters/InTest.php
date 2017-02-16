@@ -82,6 +82,22 @@ class InTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * The closure must propagate the key to the strategy
+     */
+    public function testKeyPropagation()
+    {
+        $strategy = function ($value, $key) {
+            $this->assertEquals('value', $value);
+            $this->assertEquals('key', $key);
+            return $value;
+        };
+
+        $filter = filters\in(['value'], $strategy);
+        $this->assertInstanceOf('\Closure', $filter);
+        $this->assertTrue($filter('value', 'key'));
+    }
+
+    /**
      * Should throw exception when invalid arguments are given
      *
      * @param mixed $haystack

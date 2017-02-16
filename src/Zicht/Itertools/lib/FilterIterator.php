@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -25,8 +29,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
-// todo: add tests
-
+/**
+ * Class FilterIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class FilterIterator extends \FilterIterator implements \Countable
 {
     use CountableTrait;
@@ -56,14 +63,23 @@ class FilterIterator extends \FilterIterator implements \Countable
 
     private $func;
 
-    function __construct(\Closure $func, \Iterator $iterable)
+    /**
+     * FilterIterator constructor.
+     *
+     * @param \Closure $func
+     * @param \Iterator $iterable
+     */
+    public function __construct(\Closure $func, \Iterator $iterable)
     {
         $this->func = $func;
         parent::__construct($iterable);
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function accept()
     {
-        return call_user_func_array($this->func, array($this->current(), $this->key()));
+        return call_user_func_array($this->func, [$this->current(), $this->key()]);
     }
 }

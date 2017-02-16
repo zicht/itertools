@@ -83,6 +83,22 @@ class NotInTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * The closure must propagate the key to the strategy
+     */
+    public function testKeyPropagation()
+    {
+        $strategy = function ($value, $key) {
+            $this->assertEquals('value', $value);
+            $this->assertEquals('key', $key);
+            return $value;
+        };
+
+        $filter = filters\not_in(['value'], $strategy);
+        $this->assertInstanceOf('\Closure', $filter);
+        $this->assertFalse($filter('value', 'key'));
+    }
+
+    /**
      * Should throw exception when invalid arguments are given
      *
      * @param mixed $haystack

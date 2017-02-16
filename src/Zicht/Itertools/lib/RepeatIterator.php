@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -19,6 +23,11 @@ use Zicht\Itertools\lib\Traits\SortedTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class RepeatIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class RepeatIterator implements \Iterator, \Countable
 {
     // Fluent interface traits
@@ -43,6 +52,12 @@ class RepeatIterator implements \Iterator, \Countable
     private $times;
     private $key;
 
+    /**
+     * RepeatIterator constructor.
+     *
+     * @param mixed $mixed
+     * @param integer $times
+     */
     public function __construct($mixed, $times)
     {
         $this->mixed = $mixed;
@@ -50,31 +65,49 @@ class RepeatIterator implements \Iterator, \Countable
         $this->key = 0;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function rewind()
     {
         $this->key = 0;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function current()
     {
         return $this->mixed;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->key;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function next()
     {
         $this->key += 1;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function valid()
     {
         return null === $this->times ? true : $this->key < $this->times;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function count()
     {
         return null === $this->times ? -1 : $this->times;

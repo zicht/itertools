@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -25,6 +29,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class AccumulateIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class AccumulateIterator implements \Iterator, \Countable
 {
     use CountableTrait;
@@ -52,6 +61,12 @@ class AccumulateIterator implements \Iterator, \Countable
     protected $func;
     protected $value;
 
+    /**
+     * AccumulateIterator constructor.
+     *
+     * @param \Iterator $iterable
+     * @param \Closure $func
+     */
     public function __construct(\Iterator $iterable, \Closure $func)
     {
         $this->iterable = $iterable;
@@ -59,22 +74,34 @@ class AccumulateIterator implements \Iterator, \Countable
         $this->value = null;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function rewind()
     {
         $this->iterable->rewind();
         $this->value = $this->iterable->valid() ? $this->iterable->current() : null;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function current()
     {
         return $this->value;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->iterable->key();
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function next()
     {
         $this->iterable->next();
@@ -87,6 +114,9 @@ class AccumulateIterator implements \Iterator, \Countable
         }
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function valid()
     {
         return $this->iterable->valid();

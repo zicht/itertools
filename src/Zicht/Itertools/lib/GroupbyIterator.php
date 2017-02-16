@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -26,10 +30,13 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
-// todo: add unit tests for Countable interface
-// todo: add unit tests for ArrayAccess interface
 // todo: place the two classed in their own file
 
+/**
+ * Class GroupedIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
@@ -58,41 +65,69 @@ class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     use ValuesTrait;
     use ZipTrait;
 
+    /** @var mixed */
     protected $groupKey;
-    protected $values;
 
+    /**
+     * GroupedIterator constructor.
+     *
+     * @param mixed $groupKey
+     */
     public function __construct($groupKey)
     {
         $this->groupKey = $groupKey;
         parent::__construct(new \ArrayIterator());
     }
 
+    /**
+     * @return mixed
+     */
     public function getGroupKey()
     {
         return $this->groupKey;
     }
 
+    /**
+     * Adds an element to the iterable
+     *
+     * @param mixed $key
+     * @param mixed $value
+     */
     public function append($key, $value)
     {
-        $this->getInnerIterator()->append(array($key, $value));
+        $this->getInnerIterator()->append([$key, $value]);
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function current()
     {
         return $this->getInnerIterator()->current()[1];
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->getInnerIterator()->current()[0];
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function count()
     {
         return iterator_count($this->getInnerIterator());
     }
 }
 
+/**
+ * Class GroupbyIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAccess
 {
     use ArrayAccessTrait;
@@ -121,13 +156,19 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     use ValuesTrait;
     use ZipTrait;
 
+    /**
+     * GroupbyIterator constructor.
+     *
+     * @param \Closure $func
+     * @param \Iterator $iterable
+     */
     public function __construct(\Closure $func, \Iterator $iterable)
     {
         // todo: this implementation pre-computes everything... this is
         // not the way an iterator should work.  Please re-write.
         $groupedIterator = null;
         $previousGroupKey = null;
-        $data = array();
+        $data = [];
 
         foreach ($iterable as $key => $value) {
             $groupKey = call_user_func($func, $value, $key);
@@ -142,11 +183,17 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
         parent::__construct(new \ArrayIterator($data));
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->current()->getGroupKey();
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function count()
     {
         return iterator_count($this->getInnerIterator());

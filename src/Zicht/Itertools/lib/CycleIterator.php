@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
+
 
 namespace Zicht\Itertools\lib;
 
@@ -19,6 +24,11 @@ use Zicht\Itertools\lib\Traits\SortedTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class CycleIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class CycleIterator extends \InfiniteIterator
 {
     // Fluent interface traits

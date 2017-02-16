@@ -28,8 +28,8 @@ use Zicht\Itertools as iter;
 function type($class, $strategy = null)
 {
     $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value) use ($class, $strategy) {
-        return $strategy($value) instanceof $class;
+    return function ($value, $key = null) use ($class, $strategy) {
+        return $strategy($value, $key) instanceof $class;
     };
 }
 
@@ -58,8 +58,8 @@ function in($haystack, $strategy = null, $strict = false)
         $haystack = iter\iterable($haystack)->values();
     }
     $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value) use ($haystack, $strategy, $strict) {
-        return in_array($strategy($value), $haystack, $strict);
+    return function ($value, $key = null) use ($haystack, $strategy, $strict) {
+        return in_array($strategy($value, $key), $haystack, $strict);
     };
 }
 
@@ -80,8 +80,8 @@ function not_in($haystack, $strategy = null, $strict = false)
         $haystack = iter\iterable($haystack)->values();
     }
     $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value) use ($haystack, $strategy, $strict) {
-        return !in_array($strategy($value), $haystack, $strict);
+    return function ($value, $key = null) use ($haystack, $strategy, $strict) {
+        return !in_array($strategy($value, $key), $haystack, $strict);
     };
 }
 
@@ -108,12 +108,12 @@ function equals($expected, $strategy = null, $strict = false)
     }
     $strategy = conversions\mixed_to_value_getter($strategy);
     if ($strict) {
-        return function ($value) use ($expected, $strategy) {
-            return $expected === $strategy($value);
+        return function ($value, $key = null) use ($expected, $strategy) {
+            return $expected === $strategy($value, $key);
         };
     } else {
-        return function ($value) use ($expected, $strategy) {
-            return $expected == $strategy($value);
+        return function ($value, $key = null) use ($expected, $strategy) {
+            return $expected == $strategy($value, $key);
         };
     }
 }

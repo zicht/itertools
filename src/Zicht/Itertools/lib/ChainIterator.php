@@ -67,7 +67,7 @@ class ChainIterator extends \AppendIterator implements \Countable, \ArrayAccess
     /**
      * ChainIterator constructor.
      */
-    public function __construct(/* \Iterator $iterable, \Iterator $iterable2, ... */)
+    public function __construct()
     {
         parent::__construct();
         foreach (func_get_args() as $iterable) {

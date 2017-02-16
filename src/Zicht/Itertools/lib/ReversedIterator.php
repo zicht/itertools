@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -26,6 +30,11 @@ use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class ReversedIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Countable
 {
     use ArrayAccessTrait;
@@ -55,19 +64,21 @@ class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Count
     use ZipTrait;
 
     /**
+     * ReversedIterator constructor.
+     *
      * @param \Iterator $iterable
      */
     public function __construct(\Iterator $iterable)
     {
-        $data = array();
+        $data = [];
         foreach ($iterable as $key => $value) {
-            $data [] = array($key, $value);
+            $data [] = [$key, $value];
         }
         parent::__construct(new \ArrayIterator(array_reverse($data)));
     }
 
     /**
-     * @inheritDoc
+     * @{inheritDoc}
      */
     public function key()
     {
@@ -76,7 +87,7 @@ class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Count
     }
 
     /**
-     * @inheritDoc
+     * @{inheritDoc}
      */
     public function current()
     {

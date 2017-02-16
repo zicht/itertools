@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author Boudewijn Schoon <boudewijn@zicht.nl>
+ * @copyright Zicht Online <http://zicht.nl>
+ */
 
 namespace Zicht\Itertools\lib;
 
@@ -11,6 +15,8 @@ use Zicht\Itertools\lib\Traits\DebugInfoTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
+use Zicht\Itertools\lib\Traits\ItemsTrait;
+use Zicht\Itertools\lib\Traits\KeysTrait;
 use Zicht\Itertools\lib\Traits\LastTrait;
 use Zicht\Itertools\lib\Traits\MapByTrait;
 use Zicht\Itertools\lib\Traits\MapTrait;
@@ -19,8 +25,14 @@ use Zicht\Itertools\lib\Traits\ReversedTrait;
 use Zicht\Itertools\lib\Traits\SliceTrait;
 use Zicht\Itertools\lib\Traits\SortedTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
+use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
 
+/**
+ * Class ZipIterator
+ *
+ * @package Zicht\Itertools\lib
+ */
 class ZipIterator extends \MultipleIterator implements \Countable
 {
     use CountableTrait;
@@ -34,6 +46,8 @@ class ZipIterator extends \MultipleIterator implements \Countable
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
+    use ItemsTrait;
+    use KeysTrait;
     use LastTrait;
     use MapByTrait;
     use MapTrait;
@@ -42,13 +56,18 @@ class ZipIterator extends \MultipleIterator implements \Countable
     use SliceTrait;
     use SortedTrait;
     use UniqueTrait;
+    use ValuesTrait;
     use ZipTrait;
 
+    /** @var int */
     private $key;
 
-    public function __construct(/* \Iterator $iterable1, \Iterator $iterable2, ... */)
+    /**
+     * ZipIterator constructor.
+     */
+    public function __construct()
     {
-        parent::__construct(\MultipleIterator::MIT_NEED_ALL| \MultipleIterator::MIT_KEYS_NUMERIC);
+        parent::__construct(\MultipleIterator::MIT_NEED_ALL | \MultipleIterator::MIT_KEYS_NUMERIC);
         foreach (func_get_args() as $iterable) {
             if (!$iterable instanceof \Iterator) {
                 throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
@@ -58,17 +77,26 @@ class ZipIterator extends \MultipleIterator implements \Countable
         $this->key = 0;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function rewind()
     {
         parent::rewind();
         $this->key = 0;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function key()
     {
         return $this->key;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function next()
     {
         parent::next();

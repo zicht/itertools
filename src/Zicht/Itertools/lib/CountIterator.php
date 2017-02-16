@@ -71,7 +71,7 @@ class CountIterator implements \Iterator
     }
 
     /**
-     * @{inheritdoc}
+     * @{inheritDoc}
      */
     public function rewind()
     {
@@ -79,7 +79,7 @@ class CountIterator implements \Iterator
     }
 
     /**
-     * @{inheritdoc}
+     * @{inheritDoc}
      */
     public function current()
     {
@@ -87,7 +87,7 @@ class CountIterator implements \Iterator
     }
 
     /**
-     * @{inheritdoc}
+     * @{inheritDoc}
      */
     public function key()
     {
@@ -95,7 +95,7 @@ class CountIterator implements \Iterator
     }
 
     /**
-     * @{inheritdoc}
+     * @{inheritDoc}
      */
     public function next()
     {
@@ -103,7 +103,7 @@ class CountIterator implements \Iterator
     }
 
     /**
-     * @{inheritdoc}
+     * @{inheritDoc}
      */
     public function valid()
     {
