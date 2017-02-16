@@ -32,11 +32,11 @@ trait MapByTrait
      * > iter\iterable($list)->mapBy('id')
      * 1=>['id'=>1, 'title'=>'one'] 2=>['id'=>2, 'title'=>'two']
      *
-     * @param string|\Closure $strategy
+     * @param null|string|\Closure $strategy
      * @return iter\lib\MapByIterator
      */
     public function mapBy($strategy)
     {
-        return iter\mapBy($strategy, $this);
+        return iter\map_by($strategy, $this);
     }
 }

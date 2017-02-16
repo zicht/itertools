@@ -22,7 +22,7 @@ trait AllTrait
      * > iter\iterable([1, null, 3])->all()
      * false
      *
-     * @param \Closure $strategy Optional, when not specified !empty will be used
+     * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
      * @return bool
      */
     public function all($strategy = null)

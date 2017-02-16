@@ -14,7 +14,7 @@ trait FilterTrait
      * Make an iterator that returns values from this iterable where the
      * $strategy determines that the values are not empty.
      *
-     * @param \Closure $strategy Optional, when not specified !empty will be used
+     * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
      * @return iter\lib\FilterIterator
      */
     public function filter($strategy = null)
