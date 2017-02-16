@@ -16,9 +16,11 @@ trait GetterTrait
      */
     public function has($offset)
     {
-        foreach ($this as $key => $_) {
-            if ($key === $offset) {
-                return true;
+        if ($this instanceof \Traversable) {
+            foreach ($this as $key => $_) {
+                if ($key === $offset) {
+                    return true;
+                }
             }
         }
         return false;
@@ -34,9 +36,11 @@ trait GetterTrait
      */
     public function get($offset, $default = null)
     {
-        foreach ($this as $key => $value) {
-            if ($key === $offset) {
-                return $value;
+        if ($this instanceof \Traversable) {
+            foreach ($this as $key => $value) {
+                if ($key === $offset) {
+                    return $value;
+                }
             }
         }
         return $default;
