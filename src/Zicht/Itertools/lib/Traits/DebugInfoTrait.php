@@ -18,14 +18,16 @@ trait DebugInfoTrait
     {
         $duplicateKeys = [];
         $info = ['__length__' => 0];
-        foreach ($this as $key => $value) {
-            $key = (string)$key;
-            while (array_key_exists($key, $info)) {
-                $duplicateKeys[$key] = array_key_exists($key, $duplicateKeys) ? $duplicateKeys[$key] + 1 : 1;
-                $key = sprintf('%s__#%s__', $key, $duplicateKeys[$key]);
+        if ($this instanceof \Traversable) {
+            foreach ($this as $key => $value) {
+                $key = (string)$key;
+                while (array_key_exists($key, $info)) {
+                    $duplicateKeys[$key] = array_key_exists($key, $duplicateKeys) ? $duplicateKeys[$key] + 1 : 1;
+                    $key = sprintf('%s__#%s__', $key, $duplicateKeys[$key]);
+                }
+                $info[$key] = $value;
+                $info['__length__'] += 1;
             }
-            $info[$key] = $value;
-            $info['__length__'] += 1;
         }
         return $info;
     }

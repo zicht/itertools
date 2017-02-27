@@ -22,7 +22,7 @@ trait AnyTrait
      * > any([1, null, 3])
      * true
      *
-     * @param \Closure $strategy Optional, when not specified !empty will be used
+     * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
      * @return bool
      */
     public function any($strategy = null)

@@ -31,7 +31,7 @@ trait SortedTrait
      * > iter\iterable($list)->sorted('type')
      * ['type'=>'A', 'title'=>'first'] ['type'=>'B', 'title'=>'second']] ['type'=>'C', 'title'=>'third']
      *
-     * @param string|\Closure $strategy
+     * @param null|string|\Closure $strategy
      * @param bool $reverse
      * @return iter\lib\SortedIterator
      */

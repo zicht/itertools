@@ -248,7 +248,7 @@ function cycle($iterable)
  * > mapBy('id', $list)
  * 1=>['id'=>1, 'title'=>'one'] 2=>['id'=>2, 'title'=>'two']
  *
- * @param string|\Closure $strategy
+ * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  */
@@ -267,7 +267,7 @@ function map_by($strategy, $iterable)
  * Make an iterator returning values from $iterable and keys from
  * $strategy
  *
- * @param string|\Closure $strategy
+ * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
@@ -282,7 +282,7 @@ function mapBy($strategy, $iterable)
  * Make an iterator returning values from $iterable and keys from
  * $strategy
  *
- * @param string|\Closure $strategy
+ * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
@@ -473,7 +473,7 @@ function groupBy($strategy, $iterable, $sort = true)
  * > sorted('type', $list)
  * ['type'=>'A', 'title'=>'first'] ['type'=>'B', 'title'=>'second']] ['type'=>'C', 'title'=>'third']
  *
- * @param string|\Closure $strategy
+ * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @param boolean $reverse
  * @return SortedIterator

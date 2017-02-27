@@ -83,6 +83,9 @@ class SliceIterator extends \IteratorIterator implements \ArrayAccess, \Countabl
     {
         if ($start < 0 || $end < 0) {
             $length = iterator_count($iterable);
+        } else {
+            // length is not needed.  still, we will define it for code cleanliness
+            $length = 0;
         }
 
         $this->index = 0;
