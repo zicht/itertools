@@ -13,6 +13,8 @@ use Zicht\Itertools\lib\CountIterator;
 use Zicht\Itertools\lib\CycleIterator;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
+use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -103,10 +105,11 @@ function mixedToOperationClosure($closure)
  */
 function accumulate($iterable, $closure = 'add')
 {
-    return new AccumulateIterator(
-        conversions\mixed_to_iterator($iterable),
-        $closure instanceof \Closure ? $closure : reductions\getReduction($closure)
-    );
+    if (!($iterable instanceof AccumulateInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->accumulate($closure);
 }
 
 /**
@@ -131,24 +134,11 @@ function accumulate($iterable, $closure = 'add')
  */
 function reduce($iterable, $closure = 'add', $initializer = null)
 {
-    $closure = $closure instanceof \Closure ? $closure : reductions\get_reduction($closure);
-    $iterable = conversions\mixed_to_iterator($iterable);
-    $iterable->rewind();
-
-    if (null === $initializer) {
-        if ($iterable->valid()) {
-            $initializer = $iterable->current();
-            $iterable->next();
-        }
+    if (!($iterable instanceof ReduceInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    $accumulatedValue = $initializer;
-    while ($iterable->valid()) {
-        $accumulatedValue = $closure($accumulatedValue, $iterable->current());
-        $iterable->next();
-    }
-
-    return $accumulatedValue;
+    return $iterable->reduce($closure, $initializer);
 }
 
 /**
