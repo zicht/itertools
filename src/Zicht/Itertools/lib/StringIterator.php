@@ -6,18 +6,17 @@
 
 namespace Zicht\Itertools\lib;
 
-use Zicht\Itertools\lib\Traits\CountableTrait;
-use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
+use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
 /**
  * Class StringIterator
  *
  * @package Zicht\Itertools\lib
  */
-class StringIterator implements \Iterator, \Countable
+class StringIterator implements FiniteIterableInterface
 {
-    use CountableTrait;
-    use DebugInfoTrait;
+    use FiniteIterableTrait;
 
     /** @var string */
     protected $string;
