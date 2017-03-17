@@ -12,7 +12,7 @@ trait MapByTrait
 {
     /**
      * Make an iterator returning values from  this iterable and keys
-     * from $STRATEGY.
+     * from $strategy.
      *
      * When $strategy is a string, the key is obtained through one of
      * the following:

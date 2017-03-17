@@ -12,7 +12,7 @@ trait SortedTrait
 {
     /**
      * Make an iterator that returns the values from this iterable
-     * sorted by $STRATEGY
+     * sorted by $strategy
      *
      * When determining the order of two entries the $strategy is called
      * twice, once for each value, and the results are used to determine

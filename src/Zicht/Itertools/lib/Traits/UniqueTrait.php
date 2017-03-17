@@ -11,7 +11,7 @@ use Zicht\Itertools as iter;
 trait UniqueTrait
 {
     /**
-     * Returns an iterator where the values from $STRATEGY are unique
+     * Returns an iterator where the values from $strategy are unique
      *
      * The $strategy is used to get values for every element in this iterable,
      * when this value has already been encountered the element is not
