@@ -5,7 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-Nothing so far
+- Nothing so far
+### Added
+- $strategy will use twig strategy when getting values, i.e.
+  1. array keys
+  2. object public property
+  3. object public method
+  4. object public method with 'get' prefixed [NEW]
+  5. object public method with 'is' prefixed [NEW]
+  6. object public method with 'has' prefixed [NEW]
+  7. object public method __get
+  8. otherwise, returns null
 
 ## 2.8.26 - 2017-02-27
 ### Changed
