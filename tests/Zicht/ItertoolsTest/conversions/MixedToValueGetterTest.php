@@ -7,6 +7,11 @@
 namespace Zicht\ItertoolsTest\mappings;
 
 use Zicht\Itertools\conversions;
+use Zicht\ItertoolsTest\Dummies\GetMethodObject;
+use Zicht\ItertoolsTest\Dummies\GettableObject;
+use Zicht\ItertoolsTest\Dummies\HasMethodObject;
+use Zicht\ItertoolsTest\Dummies\IsMethodObject;
+use Zicht\ItertoolsTest\Dummies\PublicPropertyObject;
 use Zicht\ItertoolsTest\Dummies\SimpleGettableObject;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
@@ -226,5 +231,71 @@ class MixedToValueGetterTest extends MixedToClosureTest
         $this->assertTrue(is_callable($result));
         $object = new SimpleGettableObject(new SimpleGettableObject('foo'));
         $this->assertEquals(null, $result($object));
+    }
+
+    /**
+     * Test getter strategy
+     *
+     * @dataProvider testGetterStrategyProvider
+     */
+    public function testGetters($strategy, $object, $expect)
+    {
+        $result = conversions\mixed_to_value_getter($strategy);
+        $this->assertTrue(is_callable($result));
+        $this->assertEquals($expect, $result($object));
+    }
+
+    public function testGetterStrategyProvider()
+    {
+        return [
+            // find key in array
+            ['key', ['key' => 'foo'], 'foo'],
+            ['invalid', ['key' => 'foo'], null],
+            ['key.key', ['key' => ['key' => 'foo']], 'foo'],
+            ['key.invalid', ['key' => ['key' => 'foo']], null],
+            ['invalid.key', ['key' => ['key' => 'foo']], null],
+
+            // find public property in object
+            ['prop', new PublicPropertyObject('foo'), 'foo'],
+            ['invalid', new PublicPropertyObject('foo'), null],
+            ['prop.prop', new PublicPropertyObject(new PublicPropertyObject('foo')), 'foo'],
+            ['prop.invalid', new PublicPropertyObject(new PublicPropertyObject('foo')), null],
+            ['invalid.prop', new PublicPropertyObject(new PublicPropertyObject('foo')), null],
+
+            // find getProp in object (explicit prefixing 'get')
+            ['getProp', new GetMethodObject('foo'), 'foo'],
+            ['getInvalid', new GetMethodObject('foo'), null],
+            ['getProp.getProp', new GetMethodObject(new GetMethodObject('foo')), 'foo'],
+            ['getProp.invalid', new GetMethodObject(new GetMethodObject('foo')), null],
+            ['invalid.getProp', new GetMethodObject(new GetMethodObject('foo')), null],
+
+            // find getProp in object (implicit prefixing 'get')
+            ['prop', new GetMethodObject('foo'), 'foo'],
+            ['invalid', new GetMethodObject('foo'), null],
+            ['prop.prop', new GetMethodObject(new GetMethodObject('foo')), 'foo'],
+            ['prop.invalid', new GetMethodObject(new GetMethodObject('foo')), null],
+            ['invalid.prop', new GetMethodObject(new GetMethodObject('foo')), null],
+
+            // find isProp (implicit prefixing 'is')
+            ['prop', new IsMethodObject('foo'), 'foo'],
+            ['invalid', new IsMethodObject('foo'), null],
+            ['prop.prop', new IsMethodObject(new IsMethodObject('foo')), 'foo'],
+            ['prop.invalid', new IsMethodObject(new IsMethodObject('foo')), null],
+            ['invalid.prop', new IsMethodObject(new IsMethodObject('foo')), null],
+
+            // find hasProp (implicit prefixing 'has')
+            ['prop', new HasMethodObject('foo'), 'foo'],
+            ['invalid', new HasMethodObject('foo'), null],
+            ['prop.prop', new HasMethodObject(new HasMethodObject('foo')), 'foo'],
+            ['prop.invalid', new HasMethodObject(new HasMethodObject('foo')), null],
+            ['invalid.prop', new HasMethodObject(new HasMethodObject('foo')), null],
+
+            // find __get (implicit call to __get('prop')
+            ['prop', new GettableObject('foo'), 'foo'],
+            ['invalid', new GettableObject('foo'), null],
+            ['prop.prop', new GettableObject(new GettableObject('foo')), 'foo'],
+            ['prop.invalid', new GettableObject(new GettableObject('foo')), null],
+            ['invalid.prop', new GettableObject(new GettableObject('foo')), null],
+        ];
     }
 }
