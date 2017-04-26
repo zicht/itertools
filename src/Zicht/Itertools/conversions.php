@@ -91,18 +91,18 @@ function mixed_to_closure($closure)
 }
 
 /**
- * Try to transforms something into a Closure that gets a value from $STRATEGY.
+ * Try to transforms something into a Closure that gets a value from $strategy.
  *
- * When $STRATEGY is null the returned Closure behaves like an identity function,
+ * When $strategy is null the returned Closure behaves like an identity function,
  * i.e. it will return the value that it is given.
  *
- * When $STRATEGY is a string the returned Closure tries to find a properties,
- * methods, or array indexes named by the string.  Multiple property, method,
- * or index names can be separated by a dot.
- * - 'getId'
- * - 'getData.key'
+ * When $strategy is callable it is converted into a Closure (see mixedToClosure).
  *
- * When $STRATEGY is callable it is converted into a Closure (see mixedToClosure).
+ * When $strategy is a string the returned Closure tries to find properties,
+ * methods, or array indexes named by the string.  Multiple property, method,
+ * or index names can be separated by a dot.  The same behavior as Twig is
+ * used, see http://twig.sensiolabs.org/doc/2.x/templates.html#variables
+ *
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
@@ -113,6 +113,11 @@ function mixed_to_value_getter($strategy)
         $keyParts = explode('.', $strategy);
         $strategy = function ($value) use ($keyParts) {
             foreach ($keyParts as $keyPart) {
+                if (is_array($value) && array_key_exists($keyPart, $value)) {
+                    $value = $value[$keyPart];
+                    continue;
+                }
+
                 if (is_object($value)) {
                     // property_exists does not distinguish between public, protected, or private properties, hence we need to use reflection
                     $reflection = new \ReflectionObject($value);
@@ -123,21 +128,19 @@ function mixed_to_value_getter($strategy)
                             continue;
                         }
                     }
-                }
 
-                if (is_callable([$value, $keyPart])) {
-                    $value = call_user_func([$value, $keyPart]);
-                    continue;
-                }
+                    foreach (['', 'get', 'is', 'has'] as $prefix) {
+                        $method = sprintf('%s%s', $prefix, $keyPart);
+                        if (is_callable([$value, $method])) {
+                            $value = call_user_func([$value, $method]);
+                            continue 2;
+                        }
+                    }
 
-                if (is_array($value) && array_key_exists($keyPart, $value)) {
-                    $value = $value[$keyPart];
-                    continue;
-                }
-
-                if (is_object($value) && method_exists($value, '__get')) {
-                    $value = $value->$keyPart;
-                    continue;
+                    if (method_exists($value, '__get')) {
+                        $value = $value->$keyPart;
+                        continue;
+                    }
                 }
 
                 // no match found
