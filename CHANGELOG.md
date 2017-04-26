@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.0 [Unreleased]
+### Added
+- DifferenceTrait, this allows you to call $a->difference($b)
+
 ## 2.9.0 - 2017-04-04
 ### Added
 - $strategy will use twig strategy when getting values, i.e.

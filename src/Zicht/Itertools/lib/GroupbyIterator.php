@@ -12,6 +12,7 @@ use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\ChainTrait;
 use Zicht\Itertools\lib\Traits\CycleTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\DifferenceTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GetterTrait;
@@ -48,6 +49,7 @@ class GroupedIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     use AnyTrait;
     use ChainTrait;
     use CycleTrait;
+    use DifferenceTrait;
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
@@ -139,6 +141,7 @@ class GroupbyIterator extends \IteratorIterator implements \Countable, \ArrayAcc
     use AnyTrait;
     use ChainTrait;
     use CycleTrait;
+    use DifferenceTrait;
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;

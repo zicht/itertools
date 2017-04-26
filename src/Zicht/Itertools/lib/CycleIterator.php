@@ -11,6 +11,7 @@ use Zicht\Itertools\lib\Traits\AllTrait;
 use Zicht\Itertools\lib\Traits\AnyTrait;
 use Zicht\Itertools\lib\Traits\ChainTrait;
 use Zicht\Itertools\lib\Traits\CycleTrait;
+use Zicht\Itertools\lib\Traits\DifferenceTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
@@ -36,6 +37,7 @@ class CycleIterator extends \InfiniteIterator
     use AnyTrait;
     use ChainTrait;
     use CycleTrait;
+    use DifferenceTrait;
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
