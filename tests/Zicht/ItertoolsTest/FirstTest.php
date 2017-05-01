@@ -54,6 +54,46 @@ class FirstTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider goodKeySequenceProvider
+     */
+    public function testKeyGoodSequence(array $arguments, $expected)
+    {
+        $value = call_user_func_array('\Zicht\Itertools\first_key', $arguments);
+        $this->assertEquals($value, $expected);
+    }
+
+    /**
+     * Provides good sequence tests
+     */
+    public function goodKeySequenceProvider()
+    {
+        return [
+            // test default values
+            [
+                [[]],
+                null,
+            ],
+            [
+                [[], 'default'],
+                'default',
+            ],
+            [
+                ['', 'default'],
+                'default',
+            ],
+            // test first
+            [
+                [['a' => 0]],
+                'a',
+            ],
+            [
+                [['a' => 0, 'b' => 1, 'c' => 2, 'd' => 3]],
+                'a',
+            ],
+        ];
+    }
+
+    /**
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */

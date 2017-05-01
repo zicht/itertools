@@ -8,7 +8,6 @@ namespace Zicht\Itertools\lib;
 
 use Zicht\Itertools\lib\Traits\AllTrait;
 use Zicht\Itertools\lib\Traits\AnyTrait;
-use Zicht\Itertools\lib\Traits\ArrayAccessTrait;
 use Zicht\Itertools\lib\Traits\ChainTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\CycleTrait;
@@ -30,15 +29,15 @@ use Zicht\Itertools\lib\Traits\ToArrayTrait;
 use Zicht\Itertools\lib\Traits\UniqueTrait;
 use Zicht\Itertools\lib\Traits\ValuesTrait;
 use Zicht\Itertools\lib\Traits\ZipTrait;
+use Zicht\Itertools;
 
 /**
- * Class ReversedIterator
+ * Class DifferenceIterator
  *
  * @package Zicht\Itertools\lib
  */
-class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Countable
+class DifferenceIterator extends \FilterIterator implements \Countable
 {
-    use ArrayAccessTrait;
     use CountableTrait;
     use DebugInfoTrait;
 
@@ -65,35 +64,34 @@ class ReversedIterator extends \IteratorIterator implements \ArrayAccess, \Count
     use ValuesTrait;
     use ZipTrait;
 
+    /** @var \Closure */
+    private $func;
+
+    /** @var mixed[] */
+    private $excludes;
+
     /**
-     * ReversedIterator constructor.
+     * DifferenceIterator constructor.
      *
      * @param \Iterator $iterable
+     * @param \Iterator $excludesIterable
+     * @param \Closure $func
      */
-    public function __construct(\Iterator $iterable)
+    public function __construct(\Iterator $iterable, \Iterator $excludesIterable, \Closure $func)
     {
-        $data = [];
-        foreach ($iterable as $key => $value) {
-            $data [] = [$key, $value];
-        }
-        parent::__construct(new \ArrayIterator(array_reverse($data)));
+        $this->func = $func;
+        $this->excludes = Itertools\iterable($excludesIterable)->map($this->func)->values();
+        parent::__construct($iterable);
     }
 
     /**
      * @{inheritDoc}
      */
-    public function key()
+    public function accept()
     {
-        list($key, $value) = parent::current();
-        return $key;
-    }
-
-    /**
-     * @{inheritDoc}
-     */
-    public function current()
-    {
-        list($key, $value) = parent::current();
-        return $value;
+        return !in_array(
+            call_user_func_array($this->func, [$this->current(), $this->key()]),
+            $this->excludes
+        );
     }
 }

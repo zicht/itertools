@@ -10,7 +10,7 @@ Python itertools.
 
 Common operations include:
 - [mapping](#mapping): `map` and `mapBy`
-- [filtering](#filtering): `filter`
+- [filtering](#filtering): `filter`, `difference`
 - [sorting](#sorting): `sorted`
 - [grouping](#grouping): `groupBy`
 - [reducing](#reducing): `accumulate` and `reduce`

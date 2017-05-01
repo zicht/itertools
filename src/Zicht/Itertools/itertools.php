@@ -841,6 +841,24 @@ function first($iterable, $default = null)
 }
 
 /**
+ * Returns the key of the first element of $iterable or returns $default when $iterable is empty
+ *
+ * > first_key([1, 2, 3])
+ * 0
+ *
+ * > first_key([])
+ * null
+ *
+ * @param array|string|\Iterator $iterable
+ * @param mixed $default
+ * @return mixed
+ */
+function first_key($iterable, $default = null)
+{
+    return iterable($iterable)->firstKey($default);
+}
+
+/**
  * Returns the last element of $iterable or returns $default when $iterable is empty
  *
  * > last([1, 2, 3])
@@ -859,6 +877,24 @@ function last($iterable, $default = null)
     foreach (conversions\mixed_to_iterator($iterable) as $item) {
     }
     return $item;
+}
+
+/**
+ * Returns the key of the last element of $iterable or returns $default when $iterable is empty
+ *
+ * > last_key([1, 2, 3])
+ * 2
+ *
+ * > last_key([])
+ * null
+ *
+ * @param array|string|\Iterator $iterable
+ * @param mixed $default
+ * @return mixed
+ */
+function last_key($iterable, $default = null)
+{
+    return iterable($iterable)->lastKey($default);
 }
 
 /**

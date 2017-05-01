@@ -12,6 +12,7 @@ use Zicht\Itertools\lib\Traits\ChainTrait;
 use Zicht\Itertools\lib\Traits\CountableTrait;
 use Zicht\Itertools\lib\Traits\CycleTrait;
 use Zicht\Itertools\lib\Traits\DebugInfoTrait;
+use Zicht\Itertools\lib\Traits\DifferenceTrait;
 use Zicht\Itertools\lib\Traits\FilterTrait;
 use Zicht\Itertools\lib\Traits\FirstTrait;
 use Zicht\Itertools\lib\Traits\GroupByTrait;
@@ -43,6 +44,7 @@ class ZipIterator extends \MultipleIterator implements \Countable
     use AnyTrait;
     use ChainTrait;
     use CycleTrait;
+    use DifferenceTrait;
     use FilterTrait;
     use FirstTrait;
     use GroupByTrait;
