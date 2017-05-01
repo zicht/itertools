@@ -16,14 +16,18 @@ trait DifferenceTrait
      *
      * @param array|string|\Iterator $iterable
      * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
-     * @return DifferenceIterator
+     * @return null|DifferenceIterator
      */
     public function difference($iterable, $strategy = null)
     {
-        return new DifferenceIterator(
-            conversions\mixed_to_iterator($this),
-            conversions\mixed_to_iterator($iterable),
-            conversions\mixed_to_value_getter($strategy)
-        );
+        if ($this instanceof \Iterator) {
+            return new DifferenceIterator(
+                $this,
+                conversions\mixed_to_iterator($iterable),
+                conversions\mixed_to_value_getter($strategy)
+            );
+        }
+
+        return null;
     }
 }
