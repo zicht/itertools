@@ -54,6 +54,46 @@ class LastTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider goodKeySequenceProvider
+     */
+    public function testKeyGoodSequence(array $arguments, $expected)
+    {
+        $value = call_user_func_array('\Zicht\Itertools\last_key', $arguments);
+        $this->assertEquals($value, $expected);
+    }
+
+    /**
+     * Provides good sequence tests
+     */
+    public function goodKeySequenceProvider()
+    {
+        return array(
+            // test default values
+            array(
+                array(array()),
+                null,
+            ),
+            array(
+                array(array(), 'default'),
+                'default',
+            ),
+            array(
+                array('', 'default'),
+                'default',
+            ),
+            // test last
+            array(
+                array(array('a' => 0)),
+                'a',
+            ),
+            array(
+                [['a' => 0, 'b' => 1, 'c' => 2, 'd' => 3]],
+                'd',
+            ),
+        );
+    }
+
+    /**
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */

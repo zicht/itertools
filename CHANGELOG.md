@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.0 [Unreleased]
+### Added
+- DifferenceTrait, this allows a call like $a->difference($b)
+- first_key and FirstTrait::firstKey, allowing to get the key of the first element in the iterable
+- last_key and LastTrait::lastKey, allowing to get the key of the last element in the iterable
+
 ## 2.9.0 - 2017-04-04
 ### Added
 - $strategy will use twig strategy when getting values, i.e.

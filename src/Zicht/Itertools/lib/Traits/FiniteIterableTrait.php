@@ -18,6 +18,7 @@ trait FiniteIterableTrait
     // Fluent interface traits
     use AllTrait;
     use AnyTrait;
+    use DifferenceTrait;
     use ChainTrait;
     use CycleTrait;
     use FilterTrait;
