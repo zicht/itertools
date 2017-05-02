@@ -26,6 +26,7 @@ use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\Interfaces\ReversedInterface;
 use Zicht\Itertools\lib\Interfaces\SliceInterface;
 use Zicht\Itertools\lib\Interfaces\SortedInterface;
+use Zicht\Itertools\lib\Interfaces\UniqueInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -675,10 +676,11 @@ function unique()
             throw new \InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    return new UniqueIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    if (!($iterable instanceof UniqueInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->unique($strategy);
 }
 
 /**
@@ -692,10 +694,7 @@ function unique()
  */
 function uniqueBy($strategy, $iterable)
 {
-    return new UniqueIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    return unique($strategy, $iterable);
 }
 
 /**
