@@ -19,6 +19,7 @@ use Zicht\Itertools\lib\Interfaces\ChainInterface;
 use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\FirstInterface;
+use Zicht\Itertools\lib\Interfaces\GroupByInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -430,14 +431,11 @@ function repeat($mixed, $times = null)
  */
 function group_by($strategy, $iterable, $sort = true)
 {
-    if (!is_bool($sort)) {
-        throw new \InvalidArgumentException('Argument $sort must be a boolean');
+    if (!($iterable instanceof GroupByInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return new GroupbyIterator(
-        conversions\mixed_to_value_getter($strategy),
-        $sort ? sorted($strategy, $iterable) : conversions\mixed_to_iterator($iterable)
-    );
+    return $iterable->groupBy($strategy, $sort);
 }
 
 /**
