@@ -24,6 +24,7 @@ use Zicht\Itertools\lib\Interfaces\LastInterface;
 use Zicht\Itertools\lib\Interfaces\MapByInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\Interfaces\ReversedInterface;
+use Zicht\Itertools\lib\Interfaces\SliceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -815,13 +816,11 @@ function all()
  */
 function slice($iterable, $start, $end = null)
 {
-    if (!is_int($start)) {
-        throw new \InvalidArgumentException('Argument $start must be an integer');
+    if (!($iterable instanceof SliceInterface)) {
+        $iterable = iterable($iterable);
     }
-    if (!(is_null($end) || is_int($end))) {
-        throw new \InvalidArgumentException('Argument $end must be an integer or null');
-    }
-    return new SliceIterator(conversions\mixed_to_iterator($iterable), $start, $end);
+
+    return $iterable->slice($start, $end);
 }
 
 /**
