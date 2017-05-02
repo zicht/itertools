@@ -21,6 +21,7 @@ use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\FirstInterface;
 use Zicht\Itertools\lib\Interfaces\GroupByInterface;
 use Zicht\Itertools\lib\Interfaces\LastInterface;
+use Zicht\Itertools\lib\Interfaces\MapByInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -264,10 +265,11 @@ function map_by($strategy, $iterable)
     // In version 3.0 mapBy and map_by will be removed
     // as its functionality will be merged into map.
 
-    return new MapByIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    if (!($iterable instanceof MapByInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->mapBy($strategy);
 }
 
 /**
@@ -278,7 +280,7 @@ function map_by($strategy, $iterable)
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
- * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
+ * @deprecated Please use map_by, will be removed in version 3.0
  */
 function mapBy($strategy, $iterable)
 {
@@ -293,11 +295,11 @@ function mapBy($strategy, $iterable)
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
- * @deprecated use mapBy() in stead, will be removed in version 3.0
+ * @deprecated use map_by() instead, will be removed in version 3.0
  */
 function keyCallback($strategy, $iterable)
 {
-    return mapBy($strategy, $iterable);
+    return map_by($strategy, $iterable);
 }
 
 /**
