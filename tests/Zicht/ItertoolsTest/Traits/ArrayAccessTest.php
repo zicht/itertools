@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterators\ArrayAccessNonIterator;
 
 /**
  * Class ArrayAccessTest
@@ -16,11 +17,20 @@ use Zicht\Itertools as iter;
 class ArrayAccessTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new ArrayAccessNonIterator();
+        $this->assertNull($nonIterator[42]);
+    }
+
+    /**
      * Test offsetExists
      */
     public function testOffsetExists()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $this->assertTrue($iterable->offsetExists(0));
         $this->assertTrue($iterable->offsetExists(1));
         $this->assertTrue($iterable->offsetExists(2));
@@ -33,7 +43,7 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetGet()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $this->assertEquals(1, $iterable->offsetGet(0));
         $this->assertEquals(2, $iterable->offsetGet(1));
         $this->assertEquals(3, $iterable->offsetGet(2));
@@ -53,7 +63,7 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetSet()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetSet(0, 1);
     }
 
@@ -64,7 +74,7 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
      */
     public function testOffsetUnset()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetUnset(0);
     }
 }
