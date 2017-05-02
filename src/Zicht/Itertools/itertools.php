@@ -25,6 +25,7 @@ use Zicht\Itertools\lib\Interfaces\MapByInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\Interfaces\ReversedInterface;
 use Zicht\Itertools\lib\Interfaces\SliceInterface;
+use Zicht\Itertools\lib\Interfaces\SortedInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -491,14 +492,11 @@ function groupBy($strategy, $iterable, $sort = true)
  */
 function sorted($strategy, $iterable, $reverse = false)
 {
-    if (!is_bool($reverse)) {
-        throw new \InvalidArgumentException('Argument $reverse must be boolean');
+    if (!($iterable instanceof SortedInterface)) {
+        $iterable = iterable($iterable);
     }
-    return new SortedIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable),
-        $reverse
-    );
+
+    return $iterable->sorted($strategy, $reverse);
 }
 
 /**

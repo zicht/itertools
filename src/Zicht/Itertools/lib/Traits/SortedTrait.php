@@ -6,7 +6,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\conversions;
+use Zicht\Itertools\lib\SortedIterator;
 
 trait SortedTrait
 {
@@ -33,10 +34,22 @@ trait SortedTrait
      *
      * @param null|string|\Closure $strategy
      * @param bool $reverse
-     * @return iter\lib\SortedIterator
+     * @return SortedIterator
      */
     public function sorted($strategy = null, $reverse = false)
     {
-        return iter\sorted($strategy, $this, $reverse);
+        if (!is_bool($reverse)) {
+            throw new \InvalidArgumentException('Argument $reverse must be boolean');
+        }
+
+        if ($this instanceof \Iterator) {
+            return new SortedIterator(
+                conversions\mixed_to_value_getter($strategy),
+                $this,
+                $reverse
+            );
+        }
+
+        return null;
     }
 }
