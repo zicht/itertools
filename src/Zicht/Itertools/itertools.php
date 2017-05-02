@@ -17,6 +17,7 @@ use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
 use Zicht\Itertools\lib\Interfaces\AllInterface;
 use Zicht\Itertools\lib\Interfaces\ChainInterface;
 use Zicht\Itertools\lib\Interfaces\CycleInterface;
+use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -527,13 +528,11 @@ function filter()
             throw new \InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    $isValid = function ($value, $key) use ($strategy) {
-        $tempVarPhp54 = $strategy($value, $key);
-        return !empty($tempVarPhp54);
-    };
+    if (!($iterable instanceof FilterInterface)) {
+        $iterable = iterable($iterable);
+    }
 
-    return new FilterIterator($isValid, conversions\mixed_to_iterator($iterable));
+    return $iterable->filter($strategy);
 }
 
 /**
