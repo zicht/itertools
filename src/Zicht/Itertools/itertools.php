@@ -16,6 +16,7 @@ use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
 use Zicht\Itertools\lib\Interfaces\AllInterface;
 use Zicht\Itertools\lib\Interfaces\ChainInterface;
+use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -221,7 +222,11 @@ function count($start = 0, $step = 1)
  */
 function cycle($iterable)
 {
-    return new CycleIterator(conversions\mixed_to_iterator($iterable));
+    if (!($iterable instanceof CycleInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->cycle();
 }
 
 /**

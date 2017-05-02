@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\lib\CycleIterator;
 
 trait CycleTrait
 {
@@ -15,13 +15,17 @@ trait CycleTrait
      * copy of each.  When the iterable is exhausted, return elements from
      * the saved copy.  Repeats indefinitely.
      *
-     * > iter\iterable('ABCD')->cycle()
+     * > iterable('ABCD')->cycle()
      * A B C D A B C D A B C D ...
      *
-     * @return iter\lib\CycleIterator
+     * @return CycleIterator
      */
     public function cycle()
     {
-        return iter\cycle($this);
+        if ($this instanceof \Iterator) {
+            return new CycleIterator($this);
+        }
+
+        return null;
     }
 }
