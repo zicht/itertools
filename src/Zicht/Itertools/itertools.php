@@ -23,6 +23,7 @@ use Zicht\Itertools\lib\Interfaces\GroupByInterface;
 use Zicht\Itertools\lib\Interfaces\LastInterface;
 use Zicht\Itertools\lib\Interfaces\MapByInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
+use Zicht\Itertools\lib\Interfaces\ReversedInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -631,7 +632,11 @@ function zip($iterable)
  */
 function reversed($iterable)
 {
-    return new ReversedIterator(conversions\mixed_to_iterator($iterable));
+    if (!($iterable instanceof ReversedInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->reversed();
 }
 
 /**

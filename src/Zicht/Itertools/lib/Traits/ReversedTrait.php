@@ -6,17 +6,21 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\lib\ReversedIterator;
 
 trait ReversedTrait
 {
     /**
      * Returns an iterable with all the elements from this iterable reversed
      *
-     * @return iter\lib\ReversedIterator
+     * @return ReversedIterator
      */
     public function reversed()
     {
-        return iter\reversed($this);
+        if ($this instanceof \Iterator) {
+            return new ReversedIterator($this);
+        }
+
+        return null;
     }
 }
