@@ -20,6 +20,7 @@ use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\FirstInterface;
 use Zicht\Itertools\lib\Interfaces\GroupByInterface;
+use Zicht\Itertools\lib\Interfaces\LastInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -872,10 +873,11 @@ function first_key($iterable, $default = null)
  */
 function last($iterable, $default = null)
 {
-    $item = $default;
-    foreach (conversions\mixed_to_iterator($iterable) as $item) {
+    if (!($iterable instanceof LastInterface)) {
+        $iterable = iterable($iterable);
     }
-    return $item;
+
+    return $iterable->last($default);
 }
 
 /**
@@ -893,7 +895,11 @@ function last($iterable, $default = null)
  */
 function last_key($iterable, $default = null)
 {
-    return iterable($iterable)->lastKey($default);
+    if (!($iterable instanceof LastInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->lastKey($default);
 }
 
 /**
