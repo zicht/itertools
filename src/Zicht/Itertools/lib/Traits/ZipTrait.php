@@ -27,6 +27,15 @@ trait ZipTrait
      */
     public function zip(/* $iterable2, ... */)
     {
-        return call_user_func_array('\Zicht\itertools\zip', array_merge([$this], func_get_args()));
+        if ($this instanceof \Iterator) {
+            $iterables = array_map(
+                '\Zicht\Itertools\conversions\mixed_to_iterator',
+                func_get_args()
+            );
+            $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
+            return $reflectorClass->newInstanceArgs(array_merge([$this], $iterables));
+        }
+
+        return null;
     }
 }

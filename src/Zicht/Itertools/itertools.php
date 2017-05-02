@@ -27,6 +27,7 @@ use Zicht\Itertools\lib\Interfaces\ReversedInterface;
 use Zicht\Itertools\lib\Interfaces\SliceInterface;
 use Zicht\Itertools\lib\Interfaces\SortedInterface;
 use Zicht\Itertools\lib\Interfaces\UniqueInterface;
+use Zicht\Itertools\lib\Interfaces\ZipInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -614,14 +615,17 @@ function zip($iterable)
     // to the zip(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        func_get_args()
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
-    return $reflectorClass->newInstanceArgs($iterables);
+    if (func_num_args() > 1) {
+        $iterables = array_slice(func_get_args(), 1);
+    } else {
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ZipInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'zip'], $iterables);
 }
 
 /**
