@@ -18,6 +18,7 @@ use Zicht\Itertools\lib\Interfaces\AllInterface;
 use Zicht\Itertools\lib\Interfaces\ChainInterface;
 use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
+use Zicht\Itertools\lib\Interfaces\FirstInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -829,11 +830,11 @@ function slice($iterable, $start, $end = null)
  */
 function first($iterable, $default = null)
 {
-    $item = $default;
-    foreach (conversions\mixed_to_iterator($iterable) as $item) {
-        break;
+    if (!($iterable instanceof FirstInterface)) {
+        $iterable = iterable($iterable);
     }
-    return $item;
+
+    return $iterable->first($default);
 }
 
 /**
@@ -851,7 +852,11 @@ function first($iterable, $default = null)
  */
 function first_key($iterable, $default = null)
 {
-    return iterable($iterable)->firstKey($default);
+    if (!($iterable instanceof FirstInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->firstKey($default);
 }
 
 /**

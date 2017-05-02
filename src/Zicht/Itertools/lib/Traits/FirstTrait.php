@@ -6,8 +6,6 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
-
 trait FirstTrait
 {
     /**
@@ -19,7 +17,15 @@ trait FirstTrait
      */
     public function first($default = null)
     {
-        return iter\first($this, $default);
+        if ($this instanceof \Iterator) {
+            $item = $default;
+            foreach ($this as $item) {
+                break;
+            }
+            return $item;
+        }
+
+        return null;
     }
 
     /**
@@ -31,10 +37,14 @@ trait FirstTrait
      */
     public function firstKey($default = null)
     {
-        $key = $default;
-        foreach ($this as $key => $value) {
-            break;
+        if ($this instanceof \Iterator) {
+            $key = $default;
+            foreach ($this as $key => $value) {
+                break;
+            }
+            return $key;
         }
-        return $key;
+
+        return null;
     }
 }
