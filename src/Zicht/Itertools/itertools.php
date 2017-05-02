@@ -14,6 +14,8 @@ use Zicht\Itertools\lib\CycleIterator;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
+use Zicht\Itertools\lib\Interfaces\AllInterface;
+use Zicht\Itertools\lib\Interfaces\ChainInterface;
 use Zicht\Itertools\lib\Interfaces\ReduceInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
@@ -163,14 +165,20 @@ function chain()
     // to the chain(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        func_get_args()
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
-    return $reflectorClass->newInstanceArgs($iterables);
+    $args = func_get_args();
+    if (sizeof($args) > 0) {
+        list($iterable) = array_slice($args, 0, 1);
+        $iterables = array_slice($args, 1);
+    } else {
+        $iterable = null;
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ChainInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'chain'], $iterables);
 }
 
 /**
@@ -702,27 +710,24 @@ function any()
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixed_to_value_getter(null);
-            $iterable = conversions\mixed_to_iterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
-            $iterable = conversions\mixed_to_iterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
             throw new \InvalidArgumentException('any requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    foreach ($iterable as $item) {
-        $tempVarPhp54 = call_user_func($strategy, $item);
-        if (!empty($tempVarPhp54)) {
-            return true;
-        }
+    if (!($iterable instanceof AllInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return false;
+    return $iterable->any($strategy);
 }
 
 /**
@@ -750,27 +755,24 @@ function all()
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixed_to_value_getter(null);
-            $iterable = conversions\mixed_to_iterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
-            $iterable = conversions\mixed_to_iterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
             throw new \InvalidArgumentException('all requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    foreach ($iterable as $item) {
-        $tempVarPhp54 = call_user_func($strategy, $item);
-        if (empty($tempVarPhp54)) {
-            return false;
-        }
+    if (!($iterable instanceof AllInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return true;
+    return $iterable->all($strategy);
 }
 
 /**

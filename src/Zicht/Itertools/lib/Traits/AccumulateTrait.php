@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools;
+use Zicht\Itertools\reductions;
 use Zicht\Itertools\lib\AccumulateIterator;
 
 trait AccumulateTrait
@@ -32,7 +32,7 @@ trait AccumulateTrait
         if ($this instanceof \Iterator) {
             return new AccumulateIterator(
                 $this,
-                $closure instanceof \Closure ? $closure : Itertools\reductions\get_reduction($closure)
+                $closure instanceof \Closure ? $closure : reductions\get_reduction($closure)
             );
         }
 

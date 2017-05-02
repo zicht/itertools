@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\conversions;
 
 trait AnyTrait
 {
@@ -16,17 +16,30 @@ trait AnyTrait
      * When the optional $STRATEGY argument is given, this argument is used to obtain the
      * value which is tested to be empty.
      *
-     * > any([0, '', false])
+     * > iterable([0, '', false])->any()
      * false
      *
-     * > any([1, null, 3])
+     * > iterable([1, null, 3])->any()
      * true
      *
      * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
-     * @return bool
+     * @return null|bool
      */
     public function any($strategy = null)
     {
-        return iter\any($strategy, $this);
+        if ($this instanceof \Iterator) {
+            $strategy = conversions\mixed_to_value_getter($strategy);
+
+            foreach ($this as $item) {
+                $tempVarPhp54 = call_user_func($strategy, $item);
+                if (!empty($tempVarPhp54)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return null;
     }
 }
