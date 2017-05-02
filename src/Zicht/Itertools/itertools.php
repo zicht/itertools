@@ -335,14 +335,17 @@ function map($strategy, $iterable)
     // to the map(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        array_slice(func_get_args(), 1)
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
-    return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixed_to_value_getter($strategy)), $iterables));
+    if (func_num_args() > 2) {
+        $iterables = array_slice(func_get_args(), 2);
+    } else {
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ChainInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'map'], array_merge([$strategy], $iterables));
 }
 
 /**

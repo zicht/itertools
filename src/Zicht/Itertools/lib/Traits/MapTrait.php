@@ -6,7 +6,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\conversions;
+use Zicht\Itertools\lib\MapIterator;
 
 trait MapTrait
 {
@@ -35,10 +36,25 @@ trait MapTrait
      *
      * @param null|string|\Closure $strategy
      * @param array|string|\Iterator $iterable2
-     * @return iter\lib\MapIterator
+     * @return MapIterator
      */
     public function map($strategy /*, $iterable2, ... */)
     {
-        return call_user_func_array('\Zicht\itertools\map', array_merge([$strategy, $this], array_slice(func_get_args(), 1)));
+        if ($this instanceof \Iterator) {
+            if (func_num_args() > 1) {
+                $iterables = array_map(
+                    '\Zicht\Itertools\conversions\mixed_to_iterator',
+                    array_slice(func_get_args(), 1)
+                );
+            } else {
+                $iterables = [];
+            }
+            $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
+            return $reflectorClass->newInstanceArgs(
+                array_merge([conversions\mixed_to_value_getter($strategy), $this], $iterables)
+            );
+        }
+
+        return null;
     }
 }
