@@ -7,7 +7,7 @@
 namespace Zicht\Itertools\filters;
 
 use Zicht\Itertools\conversions;
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Returns a filter closure that only accepts values that are instances of $CLASS.
@@ -55,7 +55,7 @@ function in($haystack, $strategy = null, $strict = false)
         throw new \InvalidArgumentException('$STRICT must be a boolean');
     }
     if (!is_array($haystack)) {
-        $haystack = iter\iterable($haystack)->values();
+        $haystack = Itertools\iterable($haystack)->values();
     }
     $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value, $key = null) use ($haystack, $strategy, $strict) {
@@ -77,7 +77,7 @@ function not_in($haystack, $strategy = null, $strict = false)
         throw new \InvalidArgumentException('$STRICT must be a boolean');
     }
     if (!is_array($haystack)) {
-        $haystack = iter\iterable($haystack)->values();
+        $haystack = Itertools\iterable($haystack)->values();
     }
     $strategy = conversions\mixed_to_value_getter($strategy);
     return function ($value, $key = null) use ($haystack, $strategy, $strict) {

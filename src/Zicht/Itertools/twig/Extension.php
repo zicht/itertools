@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\twig;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Twig extension.
@@ -77,11 +77,11 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param mixed $strategy
-     * @return iter\lib\UniqueIterator
+     * @return Itertools\lib\UniqueIterator
      */
     public function unique($iterable, $strategy = null)
     {
-        return iter\unique($strategy, $iterable);
+        return Itertools\unique($strategy, $iterable);
     }
 
     /**
@@ -101,7 +101,7 @@ class Extension extends \Twig_Extension
      */
     public function reduce($iterable, $closure = 'add', $initializer = null)
     {
-        return iter\reduce($iterable, $closure, $initializer);
+        return Itertools\reduce($iterable, $closure, $initializer);
     }
 
     /**
@@ -111,11 +111,11 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\GroupbyIterator
+     * @return Itertools\lib\GroupbyIterator
      */
     public function groupBy($iterable, $strategy)
     {
-        return iter\group_by($strategy, $iterable);
+        return Itertools\group_by($strategy, $iterable);
     }
 
     /**
@@ -124,11 +124,11 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param null $strategy
-     * @return iter\lib\FilterIterator
+     * @return Itertools\lib\FilterIterator
      */
     public function filter($iterable, $strategy = null)
     {
-        return iter\filter($strategy, $iterable);
+        return Itertools\filter($strategy, $iterable);
     }
 
     /**
@@ -138,11 +138,11 @@ class Extension extends \Twig_Extension
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
      * @param bool $reverse
-     * @return iter\lib\SortedIterator
+     * @return Itertools\lib\SortedIterator
      */
     public function sorted($iterable, $strategy = null, $reverse = false)
     {
-        return iter\sorted($strategy, $iterable, $reverse);
+        return Itertools\sorted($strategy, $iterable, $reverse);
     }
 
     /**
@@ -150,11 +150,11 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\MapIterator
+     * @return Itertools\lib\MapIterator
      */
     public function map($iterable, $strategy)
     {
-        return iter\map($strategy, $iterable);
+        return Itertools\map($strategy, $iterable);
     }
 
     /**
@@ -163,11 +163,11 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\MapByIterator
+     * @return Itertools\lib\MapByIterator
      */
     public function mapBy($iterable, $strategy)
     {
-        return iter\map_by($strategy, $iterable);
+        return Itertools\map_by($strategy, $iterable);
     }
 
 
@@ -246,13 +246,13 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\FilterIterator
+     * @return Itertools\lib\FilterIterator
      *
      * @deprecated Use filter instead!
      */
     public function deprecatedFilterBy($iterable, $strategy)
     {
-        return iter\filter($strategy, $iterable);
+        return Itertools\filter($strategy, $iterable);
     }
 
 
@@ -263,13 +263,13 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\GroupbyIterator
+     * @return Itertools\lib\GroupbyIterator
      *
      * @deprecated Use group_by instead!
      */
     public function deprecatedGroupBy($iterable, $strategy)
     {
-        return iter\group_by($strategy, $iterable);
+        return Itertools\group_by($strategy, $iterable);
     }
 
     /**
@@ -278,13 +278,13 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
-     * @return iter\lib\MapByIterator
+     * @return Itertools\lib\MapByIterator
      *
      * @deprecated Use map_by instead!
      */
     public function deprecatedMapBy($iterable, $strategy)
     {
-        return iter\mapBy($strategy, $iterable);
+        return Itertools\mapBy($strategy, $iterable);
     }
 
     /**
@@ -299,7 +299,7 @@ class Extension extends \Twig_Extension
     public function deprecatedSum($iterable, $default = 0)
     {
         $result = $default;
-        foreach (iter\accumulate($iterable) as $result) {
+        foreach (Itertools\accumulate($iterable) as $result) {
         };
         return $result;
     }
@@ -309,13 +309,13 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param mixed $strategy
-     * @return iter\lib\UniqueIterator
+     * @return Itertools\lib\UniqueIterator
      *
      * @deprecated Use unique instead!
      */
     public function deprecatedUniqueBy($iterable, $strategy = null)
     {
-        return iter\unique($strategy, $iterable);
+        return Itertools\unique($strategy, $iterable);
     }
 
     /**
