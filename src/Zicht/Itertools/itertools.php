@@ -18,6 +18,7 @@ use Zicht\Itertools\lib\Interfaces\AllInterface;
 use Zicht\Itertools\lib\Interfaces\ChainInterface;
 use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Interfaces\FirstInterface;
 use Zicht\Itertools\lib\Interfaces\GroupByInterface;
 use Zicht\Itertools\lib\Interfaces\LastInterface;
@@ -89,7 +90,7 @@ function mixedToValueGetter($strategy)
 function mixedToOperationClosure($closure)
 {
     if (is_string($closure)) {
-        $closure = reductions\getReduction($closure, $closure);
+        $closure = reductions\get_reduction($closure, $closure);
     }
 
     if (!($closure instanceof \Closure)) {
@@ -913,14 +914,18 @@ function last_key($iterable, $default = null)
 }
 
 /**
- * Returns a IterableIterator providing a fluent interface to itertools
+ * Returns an FiniteIterableInterface, providing a fluent interface to itertools
  *
  * > iterable([1, 2, 3])->filter(...)->map(...)->first(...)
  *
  * @param array|string|\Iterator $iterable
- * @return IterableIterator
+ * @return FiniteIterableInterface
  */
 function iterable($iterable)
 {
+    if ($iterable instanceof FiniteIterableInterface) {
+        return $iterable;
+    }
+
     return new IterableIterator(conversions\mixed_to_iterator($iterable));
 }
