@@ -72,7 +72,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
             [(object)[1, 2, 3]],
         ];
     }
-m
+
     /**
      * Test invalid arguments
      *
