@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class MapTest
@@ -20,7 +21,16 @@ class MapTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = iter\iterable([1, 2, 3])->map(null);
-        $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $iterable->map(null));
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->map(null));
     }
 }

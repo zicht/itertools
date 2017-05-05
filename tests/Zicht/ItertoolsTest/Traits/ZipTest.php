@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class ZipTest
@@ -20,7 +21,16 @@ class ZipTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = iter\iterable([1, 2, 3])->zip();
-        $this->assertInstanceOf('Zicht\Itertools\lib\ZipIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\ZipIterator', $iterable->zip());
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->zip());
     }
 }

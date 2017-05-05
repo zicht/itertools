@@ -7,7 +7,7 @@
 namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools;
-use Zicht\ItertoolsTest\Dummies\NonIterators\ArrayAccessNonIterator;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class ArrayAccessTest
@@ -21,7 +21,7 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
      */
     public function testTraitOnNonIterator()
     {
-        $nonIterator = new ArrayAccessNonIterator();
+        $nonIterator = new NonIterator();
         $this->assertNull($nonIterator[42]);
     }
 

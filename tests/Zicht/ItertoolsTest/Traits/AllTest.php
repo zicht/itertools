@@ -7,7 +7,7 @@
 namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools;
-use Zicht\ItertoolsTest\Dummies\NonIterators\AllNonIterator;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class AllTest
@@ -21,8 +21,8 @@ class AllTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = Itertools\iterable([1, 2, 3])->all();
-        $this->assertEquals(true, $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertEquals(true, $iterable->all());
     }
 
     /**
@@ -30,7 +30,7 @@ class AllTest extends \PHPUnit_Framework_TestCase
      */
     public function testTraitOnNonIterator()
     {
-        $nonIterator = new AllNonIterator();
+        $nonIterator = new NonIterator();
         $this->assertNull($nonIterator->all());
     }
 }

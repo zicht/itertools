@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as Itertools;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
 /**
@@ -21,8 +22,17 @@ class DifferenceTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = Itertools\iterable([1, 2, 3])->difference([3, 4, 5]);
-        $this->assertInstanceOf('Zicht\Itertools\lib\DifferenceIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\DifferenceIterator', $iterable->difference([3, 4, 5]));
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->difference([]));
     }
 
     /**

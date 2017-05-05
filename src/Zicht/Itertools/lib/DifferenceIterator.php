@@ -7,6 +7,7 @@
 namespace Zicht\Itertools\lib;
 
 use Zicht\Itertools;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
 /**
@@ -14,7 +15,7 @@ use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
  *
  * @package Zicht\Itertools\lib
  */
-class DifferenceIterator extends \FilterIterator implements \Countable
+class DifferenceIterator extends \FilterIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 

@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class LastTest
@@ -20,7 +21,18 @@ class LastTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = iter\iterable([1, 2, 3])->last();
-        $this->assertEquals(3, $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertEquals(3, $iterable->last());
+        $this->assertEquals(2, $iterable->lastKey());
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->last());
+        $this->assertNull($nonIterator->lastKey());
     }
 }

@@ -7,7 +7,7 @@
 namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools;
-use Zicht\ItertoolsTest\Dummies\NonIterators\ChainNonIterator;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class ChainTest
@@ -21,8 +21,8 @@ class ChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = Itertools\iterable([1, 2, 3])->chain([4, 5, 6]);
-        $this->assertInstanceOf('Zicht\Itertools\lib\ChainIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\ChainIterator', $iterable->chain([4, 5, 6]));
     }
 
     /**
@@ -30,7 +30,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
      */
     public function testTraitOnNonIterator()
     {
-        $nonIterator = new ChainNonIterator();
+        $nonIterator = new NonIterator();
         $this->assertNull($nonIterator->chain());
     }
 }
