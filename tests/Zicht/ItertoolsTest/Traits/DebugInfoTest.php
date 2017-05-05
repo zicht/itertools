@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class DebugInfoTest
@@ -20,14 +20,14 @@ class DebugInfoTest extends \PHPUnit_Framework_TestCase
      */
     public function testSimple()
     {
-        $result = iter\iterable([1, 2, 3])->__debugInfo();
+        $iterable = Itertools\iterable([1, 2, 3]);
         $expected = [
             '__length__' => 3,
             0 => 1,
             1 => 2,
             2 => 3,
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $iterable->__debugInfo());
     }
 
     /**
@@ -35,7 +35,7 @@ class DebugInfoTest extends \PHPUnit_Framework_TestCase
      */
     public function testDuplicateKeys()
     {
-        $result = iter\iterable([1, 2, 3])->chain([4, 5, 6])->__debugInfo();
+        $iterable = Itertools\iterable([1, 2, 3])->chain([4, 5, 6]);
         $expected = [
             '__length__' => 6,
             0 => 1,
@@ -45,6 +45,6 @@ class DebugInfoTest extends \PHPUnit_Framework_TestCase
             '1__#1__' => 5,
             '2__#1__' => 6,
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $iterable->__debugInfo());
     }
 }

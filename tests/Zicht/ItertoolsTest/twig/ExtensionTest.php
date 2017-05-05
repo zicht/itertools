@@ -6,12 +6,6 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
-use Zicht\Itertools\lib\FilterIterator;
-use Zicht\Itertools\lib\GroupbyIterator;
-use Zicht\Itertools\lib\MapByIterator;
-use Zicht\Itertools\lib\MapIterator;
-use Zicht\Itertools\lib\SortedIterator;
-use Zicht\Itertools\lib\UniqueIterator;
 use Zicht\Itertools\twig\Extension;
 
 /**

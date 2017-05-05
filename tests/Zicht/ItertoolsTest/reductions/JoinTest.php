@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\reductions;
 
 /**
  * Class JoinTest
@@ -26,9 +27,9 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodArguments($glue, array $data, $expected)
     {
-        $closure = iter\reductions\join($glue);
+        $closure = reductions\join($glue);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**
@@ -55,7 +56,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidGlue($glue)
     {
-        iter\reductions\join($glue);
+        reductions\join($glue);
     }
 
     /**
@@ -71,7 +72,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
             [(object)[1, 2, 3]],
         ];
     }
-
+m
     /**
      * Test invalid arguments
      *
@@ -83,7 +84,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArguments($a, $b)
     {
-        $closure = iter\reductions\join();
+        $closure = reductions\join();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);
     }
@@ -125,7 +126,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     {
         $closure = call_user_func_array('\Zicht\Itertools\reductions\get_reduction', $arguments);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**
@@ -141,7 +142,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     {
         $closure = call_user_func_array('\Zicht\Itertools\reductions\getReduction', $arguments);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**

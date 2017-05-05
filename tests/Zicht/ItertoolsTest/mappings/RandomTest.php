@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\mappings;
 
 /**
  * Class RandomTest
@@ -22,8 +23,8 @@ class RandomTest extends \PHPUnit_Framework_TestCase
     {
         $data = ['a' => 1, 'b' => 2, 'c' => 3];
         $expected = ['a' => 42, 'b' => 42, 'c' => 42];
-        $closure = iter\mappings\random(42, 42);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\random(42, 42);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 
     /**
@@ -33,8 +34,8 @@ class RandomTest extends \PHPUnit_Framework_TestCase
     {
         $data = ['a' => 1, 'b' => 2, 'c' => 3];
         $expected = ['a' => -42, 'b' => -42, 'c' => -42];
-        $closure = iter\mappings\random(-42, -42);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\random(-42, -42);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 
     /**
@@ -45,8 +46,8 @@ class RandomTest extends \PHPUnit_Framework_TestCase
         $maxrand = getrandmax();
         $data = ['a' => 1, 'b' => 2, 'c' => 3];
         $expected = ['a' => $maxrand, 'b' => $maxrand, 'c' => $maxrand];
-        $closure = iter\mappings\random($maxrand);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\random($maxrand);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 
     /**
@@ -61,7 +62,7 @@ class RandomTest extends \PHPUnit_Framework_TestCase
     public function testGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -76,7 +77,7 @@ class RandomTest extends \PHPUnit_Framework_TestCase
     public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**

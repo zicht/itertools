@@ -6,7 +6,6 @@
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapIterator;
 
 /**

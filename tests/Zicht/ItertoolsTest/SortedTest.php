@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class SortedTest
@@ -27,7 +27,7 @@ class SortedTest extends \PHPUnit_Framework_TestCase
         };
         $data = [1, 3, 5, 2, 4];
 
-        $this->assertEquals([0 => 1, 3 => 2, 1 => 3, 4 => 4, 2 => 5], iter\sorted($getSortKey, $data)->toArray());
+        $this->assertEquals([0 => 1, 3 => 2, 1 => 3, 4 => 4, 2 => 5], Itertools\sorted($getSortKey, $data)->toArray());
         $this->assertEquals(sizeof($data), $counter);
     }
 

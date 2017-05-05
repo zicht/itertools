@@ -16,8 +16,8 @@ namespace Zicht\Itertools\lib\Interfaces;
  * @package Zicht\Itertools\lib\Interfaces
  */
 interface FiniteIterableInterface extends
-    \Countable,
     \ArrayAccess,
+    \Countable,
     InfiniteIterableInterface,
     AllInterface,
     AnyInterface,

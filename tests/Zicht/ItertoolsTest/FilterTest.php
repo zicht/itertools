@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class FilterTest
@@ -174,7 +174,7 @@ class FilterTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeprecatedFilterByBadArgument()
     {
-        iter\filterBy(1, 2, 3, 4);
+        Itertools\filterBy(1, 2, 3, 4);
     }
 
     /**

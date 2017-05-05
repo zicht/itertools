@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class SelectTest
@@ -25,7 +25,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($data, array $expected)
     {
-        $this->assertEquals($expected, iter\select(null, $data));
+        $this->assertEquals($expected, Itertools\select(null, $data));
     }
 
     /**
@@ -44,7 +44,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             ],
             // duplicate keys
             [
-                iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
+                Itertools\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
                 [-1, -2, -3, 1, 2, 3],
             ],
         ];
@@ -58,7 +58,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $data = [1, 2, 3];
         $expected = [1, 2, 3];
 
-        $result = iter\select(null, $data, false);
+        $result = Itertools\select(null, $data, false);
         $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $result);
         $this->assertEquals($expected, $result->toArray());
     }
@@ -70,6 +70,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument()
     {
-        iter\select('strategy', [], 'wrong-argument');
+        Itertools\select('strategy', [], 'wrong-argument');
     }
 }

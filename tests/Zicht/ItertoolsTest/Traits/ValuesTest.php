@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class ValuesTest
@@ -35,16 +35,16 @@ class ValuesTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [
-                iter\iterable([1, 2, 3]),
+                Itertools\iterable([1, 2, 3]),
                 [1, 2, 3],
             ],
             [
-                iter\iterable(['a' => 1, 'b' => 2, 'c' => 3]),
+                Itertools\iterable(['a' => 1, 'b' => 2, 'c' => 3]),
                 [1, 2, 3],
             ],
             // duplicate keys
             [
-                iter\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
+                Itertools\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
                 [-1, -2, -3, 1, 2, 3],
             ],
         ];

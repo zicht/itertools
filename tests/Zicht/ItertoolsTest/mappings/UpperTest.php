@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\mappings;
 
 /**
  * Class UpperTest
@@ -29,7 +30,7 @@ class UpperTest extends \PHPUnit_Framework_TestCase
 
         $expected = ['FOO', 'key 1' => 'BAR', 'key 2' => 'MOO', 'MILK'];
 
-        $closure = iter\mappings\upper();
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\upper();
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 }

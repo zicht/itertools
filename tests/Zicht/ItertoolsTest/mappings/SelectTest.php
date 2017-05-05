@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\mappings;
 
 /**
  * Class SelectTest
@@ -20,7 +21,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStrategies()
     {
-        $closure = iter\mappings\select([]);
+        $closure = mappings\select([]);
         $this->assertEquals([], $closure(null, 0));
         $this->assertEquals([], $closure([], 0));
         $this->assertEquals([], $closure('foo', 0));
@@ -102,8 +103,8 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             return $value['Value']['Score'] * 2;
         };
 
-        $closure = iter\mappings\select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 
     /**
@@ -118,7 +119,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     public function testGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -133,7 +134,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
