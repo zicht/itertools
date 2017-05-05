@@ -24,4 +24,13 @@ interface LastInterface
      * @return mixed
      */
     public function last($default = null);
+
+    /**
+     * Returns the key of the last element of this iterable or
+     * returns $DEFAULT when this iterable is empty
+     *
+     * @param mixed $default
+     * @return mixed
+     */
+    public function lastKey($default = null);
 }
