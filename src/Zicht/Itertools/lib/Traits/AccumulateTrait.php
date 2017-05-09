@@ -6,7 +6,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\reductions;
+use Zicht\Itertools\lib\AccumulateIterator;
 
 trait AccumulateTrait
 {
@@ -24,10 +25,17 @@ trait AccumulateTrait
      * 'One' 'OneTwo' 'OneTwoThree'
      *
      * @param string|\Closure $closure
-     * @return iter\lib\AccumulateIterator
+     * @return null|AccumulateIterator
      */
     public function accumulate($closure = 'add')
     {
-        return iter\accumulate($this, $closure);
+        if ($this instanceof \Iterator) {
+            return new AccumulateIterator(
+                $this,
+                $closure instanceof \Closure ? $closure : reductions\get_reduction($closure)
+            );
+        }
+
+        return null;
     }
 }

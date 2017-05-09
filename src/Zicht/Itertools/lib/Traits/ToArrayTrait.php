@@ -9,11 +9,10 @@ namespace Zicht\Itertools\lib\Traits;
 trait ToArrayTrait
 {
     /**
-     * Returns an unsafe array build from this iterator
+     * Returns an unsafe array built from this iterator
      *
-     * Note that the resulting array may contain overlapping keys!
-     * If this is the case, the resulting array will contain fewer
-     * items than the original iterator!
+     * Note that when the iterator contains overlapping keys, that
+     * these will be *lost* when converting to an array.
      *
      * A safer option is to use either
      * - $iterable->keys(),

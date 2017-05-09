@@ -20,9 +20,9 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     {
         $iterator = \Zicht\Itertools\repeat($object, $times);
         $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);
-        $this->assertEquals(sizeof($iterator), null === $times ? -1 : $times);
+        $this->assertEquals(sizeof($iterator), null === $times ? -1 : $times, 'Failure in $iterator->count() [1]');
         if (null !== $times) {
-            $this->assertEquals(iterator_count($iterator), $times);
+            $this->assertEquals(iterator_count($iterator), $times, 'Failure in $iterator->count() [2]');
         }
         $iterator->rewind();
 

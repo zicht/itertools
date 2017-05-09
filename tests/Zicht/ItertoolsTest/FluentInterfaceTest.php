@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class FluentInterfaceTest
@@ -27,7 +27,7 @@ class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
 
         // get iterable
         $originalData = $expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-        $iterator = iter\iterable($expected);
+        $iterator = Itertools\iterable($expected);
         $this->assertInstanceOf('\Zicht\Itertools\lib\IterableIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
 
@@ -52,12 +52,12 @@ class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
         # todo: add more!
 
         // entire chain in one go
-        $iterator = iter\chain($originalData)->map($multiply)->filter($isSmall)->sorted();
+        $iterator = Itertools\chain($originalData)->map($multiply)->filter($isSmall)->sorted();
         $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
 
         // entire chain written without the chaining feature
-        $iterator = iter\sorted(null, iter\filter($isSmall, iter\map($multiply, iter\chain($originalData))));
+        $iterator = Itertools\sorted(null, Itertools\filter($isSmall, Itertools\map($multiply, Itertools\chain($originalData))));
         $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
     }

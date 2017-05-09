@@ -7,7 +7,7 @@
 namespace Zicht\ItertoolsTest\filters;
 
 use Zicht\Itertools\filters;
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class InTest
@@ -74,7 +74,7 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function testDuplicateKeyInHaystack()
     {
-        $filter = filters\in(iter\chain(['a', 'b', 'c'], ['d', 'e', 'f']));
+        $filter = filters\in(Itertools\chain(['a', 'b', 'c'], ['d', 'e', 'f']));
         $this->assertInstanceOf('\Closure', $filter);
         foreach (['a', 'b', 'c', 'd', 'e', 'f'] as $value) {
             $this->assertTrue($filter($value));

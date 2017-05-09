@@ -13,6 +13,22 @@ use Zicht\Itertools\lib\CountIterator;
 use Zicht\Itertools\lib\CycleIterator;
 use Zicht\Itertools\lib\FilterIterator;
 use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
+use Zicht\Itertools\lib\Interfaces\AllInterface;
+use Zicht\Itertools\lib\Interfaces\ChainInterface;
+use Zicht\Itertools\lib\Interfaces\CycleInterface;
+use Zicht\Itertools\lib\Interfaces\FilterInterface;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
+use Zicht\Itertools\lib\Interfaces\FirstInterface;
+use Zicht\Itertools\lib\Interfaces\GroupByInterface;
+use Zicht\Itertools\lib\Interfaces\LastInterface;
+use Zicht\Itertools\lib\Interfaces\MapByInterface;
+use Zicht\Itertools\lib\Interfaces\ReduceInterface;
+use Zicht\Itertools\lib\Interfaces\ReversedInterface;
+use Zicht\Itertools\lib\Interfaces\SliceInterface;
+use Zicht\Itertools\lib\Interfaces\SortedInterface;
+use Zicht\Itertools\lib\Interfaces\UniqueInterface;
+use Zicht\Itertools\lib\Interfaces\ZipInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\lib\MapByIterator;
 use Zicht\Itertools\lib\MapIterator;
@@ -74,7 +90,7 @@ function mixedToValueGetter($strategy)
 function mixedToOperationClosure($closure)
 {
     if (is_string($closure)) {
-        $closure = reductions\getReduction($closure, $closure);
+        $closure = reductions\get_reduction($closure, $closure);
     }
 
     if (!($closure instanceof \Closure)) {
@@ -103,10 +119,11 @@ function mixedToOperationClosure($closure)
  */
 function accumulate($iterable, $closure = 'add')
 {
-    return new AccumulateIterator(
-        conversions\mixed_to_iterator($iterable),
-        $closure instanceof \Closure ? $closure : reductions\getReduction($closure)
-    );
+    if (!($iterable instanceof AccumulateInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->accumulate($closure);
 }
 
 /**
@@ -131,24 +148,11 @@ function accumulate($iterable, $closure = 'add')
  */
 function reduce($iterable, $closure = 'add', $initializer = null)
 {
-    $closure = $closure instanceof \Closure ? $closure : reductions\get_reduction($closure);
-    $iterable = conversions\mixed_to_iterator($iterable);
-    $iterable->rewind();
-
-    if (null === $initializer) {
-        if ($iterable->valid()) {
-            $initializer = $iterable->current();
-            $iterable->next();
-        }
+    if (!($iterable instanceof ReduceInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    $accumulatedValue = $initializer;
-    while ($iterable->valid()) {
-        $accumulatedValue = $closure($accumulatedValue, $iterable->current());
-        $iterable->next();
-    }
-
-    return $accumulatedValue;
+    return $iterable->reduce($closure, $initializer);
 }
 
 /**
@@ -173,14 +177,20 @@ function chain()
     // to the chain(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        func_get_args()
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
-    return $reflectorClass->newInstanceArgs($iterables);
+    $args = func_get_args();
+    if (sizeof($args) > 0) {
+        list($iterable) = array_slice($args, 0, 1);
+        $iterables = array_slice($args, 1);
+    } else {
+        $iterable = null;
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ChainInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'chain'], $iterables);
 }
 
 /**
@@ -223,7 +233,11 @@ function count($start = 0, $step = 1)
  */
 function cycle($iterable)
 {
-    return new CycleIterator(conversions\mixed_to_iterator($iterable));
+    if (!($iterable instanceof CycleInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->cycle();
 }
 
 /**
@@ -257,10 +271,11 @@ function map_by($strategy, $iterable)
     // In version 3.0 mapBy and map_by will be removed
     // as its functionality will be merged into map.
 
-    return new MapByIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    if (!($iterable instanceof MapByInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->mapBy($strategy);
 }
 
 /**
@@ -271,7 +286,7 @@ function map_by($strategy, $iterable)
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
- * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
+ * @deprecated Please use map_by, will be removed in version 3.0
  */
 function mapBy($strategy, $iterable)
 {
@@ -286,11 +301,11 @@ function mapBy($strategy, $iterable)
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
  *
- * @deprecated use mapBy() in stead, will be removed in version 3.0
+ * @deprecated use map_by() instead, will be removed in version 3.0
  */
 function keyCallback($strategy, $iterable)
 {
-    return mapBy($strategy, $iterable);
+    return map_by($strategy, $iterable);
 }
 
 /**
@@ -326,14 +341,17 @@ function map($strategy, $iterable)
     // to the map(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        array_slice(func_get_args(), 1)
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\MapIterator');
-    return $reflectorClass->newInstanceArgs(array_merge(array(conversions\mixed_to_value_getter($strategy)), $iterables));
+    if (func_num_args() > 2) {
+        $iterables = array_slice(func_get_args(), 2);
+    } else {
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ChainInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'map'], array_merge([$strategy], $iterables));
 }
 
 /**
@@ -425,14 +443,11 @@ function repeat($mixed, $times = null)
  */
 function group_by($strategy, $iterable, $sort = true)
 {
-    if (!is_bool($sort)) {
-        throw new \InvalidArgumentException('Argument $sort must be a boolean');
+    if (!($iterable instanceof GroupByInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return new GroupbyIterator(
-        conversions\mixed_to_value_getter($strategy),
-        $sort ? sorted($strategy, $iterable) : conversions\mixed_to_iterator($iterable)
-    );
+    return $iterable->groupBy($strategy, $sort);
 }
 
 /**
@@ -480,14 +495,11 @@ function groupBy($strategy, $iterable, $sort = true)
  */
 function sorted($strategy, $iterable, $reverse = false)
 {
-    if (!is_bool($reverse)) {
-        throw new \InvalidArgumentException('Argument $reverse must be boolean');
+    if (!($iterable instanceof SortedInterface)) {
+        $iterable = iterable($iterable);
     }
-    return new SortedIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable),
-        $reverse
-    );
+
+    return $iterable->sorted($strategy, $reverse);
 }
 
 /**
@@ -524,13 +536,11 @@ function filter()
             throw new \InvalidArgumentException('filter requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    $isValid = function ($value, $key) use ($strategy) {
-        $tempVarPhp54 = $strategy($value, $key);
-        return !empty($tempVarPhp54);
-    };
+    if (!($iterable instanceof FilterInterface)) {
+        $iterable = iterable($iterable);
+    }
 
-    return new FilterIterator($isValid, conversions\mixed_to_iterator($iterable));
+    return $iterable->filter($strategy);
 }
 
 /**
@@ -606,14 +616,17 @@ function zip($iterable)
     // to the zip(...$iterables) structure.
     // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-    $iterables = array_map(
-        function ($iterable) {
-            return conversions\mixed_to_iterator($iterable);
-        },
-        func_get_args()
-    );
-    $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
-    return $reflectorClass->newInstanceArgs($iterables);
+    if (func_num_args() > 1) {
+        $iterables = array_slice(func_get_args(), 1);
+    } else {
+        $iterables = [];
+    }
+
+    if (!($iterable instanceof ZipInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return call_user_func_array([$iterable, 'zip'], $iterables);
 }
 
 /**
@@ -624,7 +637,11 @@ function zip($iterable)
  */
 function reversed($iterable)
 {
-    return new ReversedIterator(conversions\mixed_to_iterator($iterable));
+    if (!($iterable instanceof ReversedInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->reversed();
 }
 
 /**
@@ -664,10 +681,11 @@ function unique()
             throw new \InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    return new UniqueIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    if (!($iterable instanceof UniqueInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->unique($strategy);
 }
 
 /**
@@ -681,10 +699,7 @@ function unique()
  */
 function uniqueBy($strategy, $iterable)
 {
-    return new UniqueIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
-    );
+    return unique($strategy, $iterable);
 }
 
 /**
@@ -712,27 +727,24 @@ function any()
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixed_to_value_getter(null);
-            $iterable = conversions\mixed_to_iterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
-            $iterable = conversions\mixed_to_iterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
             throw new \InvalidArgumentException('any requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    foreach ($iterable as $item) {
-        $tempVarPhp54 = call_user_func($strategy, $item);
-        if (!empty($tempVarPhp54)) {
-            return true;
-        }
+    if (!($iterable instanceof AllInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return false;
+    return $iterable->any($strategy);
 }
 
 /**
@@ -760,27 +772,24 @@ function all()
     $args = func_get_args();
     switch (sizeof($args)) {
         case 1:
-            $strategy = conversions\mixed_to_value_getter(null);
-            $iterable = conversions\mixed_to_iterator($args[0]);
+            $strategy = null;
+            $iterable = $args[0];
             break;
 
         case 2:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
-            $iterable = conversions\mixed_to_iterator($args[1]);
+            $strategy = $args[0];
+            $iterable = $args[1];
             break;
 
         default:
             throw new \InvalidArgumentException('all requires either one (iterable) or two (strategy, iterable) arguments');
     }
 
-    foreach ($iterable as $item) {
-        $tempVarPhp54 = call_user_func($strategy, $item);
-        if (empty($tempVarPhp54)) {
-            return false;
-        }
+    if (!($iterable instanceof AllInterface)) {
+        $iterable = iterable($iterable);
     }
 
-    return true;
+    return $iterable->all($strategy);
 }
 
 /**
@@ -809,13 +818,11 @@ function all()
  */
 function slice($iterable, $start, $end = null)
 {
-    if (!is_int($start)) {
-        throw new \InvalidArgumentException('Argument $start must be an integer');
+    if (!($iterable instanceof SliceInterface)) {
+        $iterable = iterable($iterable);
     }
-    if (!(is_null($end) || is_int($end))) {
-        throw new \InvalidArgumentException('Argument $end must be an integer or null');
-    }
-    return new SliceIterator(conversions\mixed_to_iterator($iterable), $start, $end);
+
+    return $iterable->slice($start, $end);
 }
 
 /**
@@ -833,11 +840,11 @@ function slice($iterable, $start, $end = null)
  */
 function first($iterable, $default = null)
 {
-    $item = $default;
-    foreach (conversions\mixed_to_iterator($iterable) as $item) {
-        break;
+    if (!($iterable instanceof FirstInterface)) {
+        $iterable = iterable($iterable);
     }
-    return $item;
+
+    return $iterable->first($default);
 }
 
 /**
@@ -855,7 +862,11 @@ function first($iterable, $default = null)
  */
 function first_key($iterable, $default = null)
 {
-    return iterable($iterable)->firstKey($default);
+    if (!($iterable instanceof FirstInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->firstKey($default);
 }
 
 /**
@@ -873,10 +884,11 @@ function first_key($iterable, $default = null)
  */
 function last($iterable, $default = null)
 {
-    $item = $default;
-    foreach (conversions\mixed_to_iterator($iterable) as $item) {
+    if (!($iterable instanceof LastInterface)) {
+        $iterable = iterable($iterable);
     }
-    return $item;
+
+    return $iterable->last($default);
 }
 
 /**
@@ -894,18 +906,26 @@ function last($iterable, $default = null)
  */
 function last_key($iterable, $default = null)
 {
-    return iterable($iterable)->lastKey($default);
+    if (!($iterable instanceof LastInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->lastKey($default);
 }
 
 /**
- * Returns a IterableIterator providing a fluent interface to itertools
+ * Returns an FiniteIterableInterface, providing a fluent interface to itertools
  *
  * > iterable([1, 2, 3])->filter(...)->map(...)->first(...)
  *
  * @param array|string|\Iterator $iterable
- * @return IterableIterator
+ * @return FiniteIterableInterface
  */
 function iterable($iterable)
 {
+    if ($iterable instanceof FiniteIterableInterface) {
+        return $iterable;
+    }
+
     return new IterableIterator(conversions\mixed_to_iterator($iterable));
 }

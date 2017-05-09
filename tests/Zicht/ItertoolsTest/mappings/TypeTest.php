@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\mappings;
 
 /**
  * Class TypeTest
@@ -31,8 +32,8 @@ class TypeTest extends \PHPUnit_Framework_TestCase
 
         $expected = ['NULL', 'integer', 'boolean', 'array', 'string', 'Exception'];
 
-        $closure = iter\mappings\type();
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->values());
+        $closure = mappings\type();
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
     }
 
     /**
@@ -51,8 +52,8 @@ class TypeTest extends \PHPUnit_Framework_TestCase
 
         $expected = ['integer', 'Exception'];
 
-        $closure = iter\mappings\type('key');
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->values());
+        $closure = mappings\type('key');
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
     }
 
     /**
@@ -67,7 +68,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
     public function testGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -82,7 +83,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
     public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**

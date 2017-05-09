@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\lib\ZipIterator;
 
 trait ZipTrait
 {
@@ -23,10 +23,19 @@ trait ZipTrait
      * [1, 'a'] [2, 'b'] [3, 'c']
      *
      * @param array|string|\Iterator $iterable2
-     * @return iter\lib\ZipIterator
+     * @return ZipIterator
      */
     public function zip(/* $iterable2, ... */)
     {
-        return call_user_func_array('\Zicht\itertools\zip', array_merge([$this], func_get_args()));
+        if ($this instanceof \Iterator) {
+            $iterables = array_map(
+                '\Zicht\Itertools\conversions\mixed_to_iterator',
+                func_get_args()
+            );
+            $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
+            return $reflectorClass->newInstanceArgs(array_merge([$this], $iterables));
+        }
+
+        return null;
     }
 }

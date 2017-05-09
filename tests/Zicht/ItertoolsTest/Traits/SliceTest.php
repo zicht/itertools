@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class SliceTest
@@ -20,7 +21,16 @@ class SliceTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = iter\iterable([1, 2, 3])->slice(1);
-        $this->assertInstanceOf('Zicht\Itertools\lib\SliceIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\SliceIterator', $iterable->slice(1));
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->slice(1));
     }
 }

@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\reductions;
 
 /**
  * Class SubTest
@@ -25,9 +26,9 @@ class SubTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodArguments(array $data, $expected)
     {
-        $closure = iter\reductions\sub();
+        $closure = reductions\sub();
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**
@@ -58,7 +59,7 @@ class SubTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArguments($a, $b)
     {
-        $closure = iter\reductions\sub();
+        $closure = reductions\sub();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);
     }
@@ -98,7 +99,7 @@ class SubTest extends \PHPUnit_Framework_TestCase
     {
         $closure = call_user_func_array('\Zicht\Itertools\reductions\get_reduction', $arguments);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**
@@ -114,7 +115,7 @@ class SubTest extends \PHPUnit_Framework_TestCase
     {
         $closure = call_user_func_array('\Zicht\Itertools\reductions\getReduction', $arguments);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, iter\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
     }
 
     /**

@@ -6,12 +6,13 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\conversions;
+use Zicht\Itertools\lib\UniqueIterator;
 
 trait UniqueTrait
 {
     /**
-     * Returns an iterator where the values from $STRATEGY are unique
+     * Returns an iterator where the values from $strategy are unique
      *
      * The $strategy is used to get values for every element in this iterable,
      * when this value has already been encountered the element is not
@@ -24,10 +25,17 @@ trait UniqueTrait
      * ['id' => 1, 'value' => 'a']  # one element in this list
      *
      * @param null|string|\Closure $strategy
-     * @return iter\lib\UniqueIterator
+     * @return UniqueIterator
      */
     public function unique($strategy = null)
     {
-        return iter\unique($strategy, $this);
+        if ($this instanceof \Iterator) {
+            return new UniqueIterator(
+                conversions\mixed_to_value_getter($strategy),
+                $this
+            );
+        }
+
+        return null;
     }
 }

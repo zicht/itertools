@@ -6,20 +6,25 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
-
 trait LastTrait
 {
     /**
      * Returns the last element of this iterable or
-     * returns $DEFAULT when this iterable is empty
+     * returns $default when this iterable is empty
      *
      * @param mixed $default
      * @return mixed
      */
     public function last($default = null)
     {
-        return iter\last($this, $default);
+        if ($this instanceof \Iterator) {
+            $item = $default;
+            foreach ($this as $item) {
+            }
+            return $item;
+        }
+
+        return null;
     }
 
     /**
@@ -31,9 +36,13 @@ trait LastTrait
      */
     public function lastKey($default = null)
     {
-        $key = $default;
-        foreach ($this as $key => $value) {
+        if ($this instanceof \Iterator) {
+            $key = $default;
+            foreach ($this as $key => $value) {
+            }
+            return $key;
         }
-        return $key;
+
+        return null;
     }
 }

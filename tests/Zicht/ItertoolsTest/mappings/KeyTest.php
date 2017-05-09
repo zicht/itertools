@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\Itertools\mappings;
 
 /**
  * Class KeyTest
@@ -29,8 +30,8 @@ class KeyTest extends \PHPUnit_Framework_TestCase
 
         $expected = [0, 'key 1' => 'key 1', 'key 2' => 'key 2', 1];
 
-        $closure = iter\mappings\key();
-        $this->assertEquals($expected, iter\map($closure, $data)->toArray());
+        $closure = mappings\key();
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
     }
 
     /**
@@ -45,7 +46,7 @@ class KeyTest extends \PHPUnit_Framework_TestCase
     public function testGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -60,7 +61,7 @@ class KeyTest extends \PHPUnit_Framework_TestCase
     public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
     {
         $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
-        $this->assertEquals($expected, iter\iterable($data)->map($closure)->toArray());
+        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -82,6 +83,6 @@ class KeyTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInvalidMapping()
     {
-        iter\mappings\get_mapping('foo');
+        mappings\get_mapping('foo');
     }
 }

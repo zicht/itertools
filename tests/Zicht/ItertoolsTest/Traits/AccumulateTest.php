@@ -6,7 +6,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
+use Zicht\ItertoolsTest\Dummies\NonIterator;
 
 /**
  * Class AccumulateTest
@@ -20,7 +21,16 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $result = iter\iterable([1, 2, 3])->accumulate();
-        $this->assertInstanceOf('Zicht\Itertools\lib\AccumulateIterator', $result);
+        $iterable = Itertools\iterable([1, 2, 3]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\AccumulateIterator', $iterable->accumulate());
+    }
+
+    /**
+     * Test that the trait, when applied to a non-iterator, returns null
+     */
+    public function testTraitOnNonIterator()
+    {
+        $nonIterator = new NonIterator();
+        $this->assertNull($nonIterator->accumulate());
     }
 }

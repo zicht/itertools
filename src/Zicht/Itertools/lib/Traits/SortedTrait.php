@@ -6,13 +6,14 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools\conversions;
+use Zicht\Itertools\lib\SortedIterator;
 
 trait SortedTrait
 {
     /**
      * Make an iterator that returns the values from this iterable
-     * sorted by $STRATEGY
+     * sorted by $strategy
      *
      * When determining the order of two entries the $strategy is called
      * twice, once for each value, and the results are used to determine
@@ -33,10 +34,22 @@ trait SortedTrait
      *
      * @param null|string|\Closure $strategy
      * @param bool $reverse
-     * @return iter\lib\SortedIterator
+     * @return SortedIterator
      */
     public function sorted($strategy = null, $reverse = false)
     {
-        return iter\sorted($strategy, $this, $reverse);
+        if (!is_bool($reverse)) {
+            throw new \InvalidArgumentException('Argument $reverse must be boolean');
+        }
+
+        if ($this instanceof \Iterator) {
+            return new SortedIterator(
+                conversions\mixed_to_value_getter($strategy),
+                $this,
+                $reverse
+            );
+        }
+
+        return null;
     }
 }

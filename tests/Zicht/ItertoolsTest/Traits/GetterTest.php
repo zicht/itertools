@@ -6,7 +6,7 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 /**
  * Class GetterTest
@@ -20,7 +20,7 @@ class GetterTest extends \PHPUnit_Framework_TestCase
      */
     public function testHas()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $this->assertTrue($iterable->has(0));
         $this->assertTrue($iterable->has(1));
         $this->assertTrue($iterable->has(2));
@@ -33,7 +33,7 @@ class GetterTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        $iterable = iter\iterable([1, 2, 3]);
+        $iterable = Itertools\iterable([1, 2, 3]);
         $this->assertEquals(1, $iterable->get(0));
         $this->assertEquals(2, $iterable->get(1));
         $this->assertEquals(3, $iterable->get(2));

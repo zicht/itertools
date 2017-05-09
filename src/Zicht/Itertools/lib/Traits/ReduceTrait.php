@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools as iter;
+use Zicht\Itertools;
 
 trait ReduceTrait
 {
@@ -25,13 +25,33 @@ trait ReduceTrait
      * > iter\iterable([])->reduce('min', 1)
      * 1
      *
-     * @param array|string|\Iterator $iterable
      * @param string|\Closure $closure
      * @param mixed $initializer
      * @return mixed
      */
     public function reduce($closure = 'add', $initializer = null)
     {
-        return iter\reduce($this, $closure, $initializer);
+        if ($this instanceof \Iterator) {
+
+            $closure = $closure instanceof \Closure ? $closure : Itertools\reductions\get_reduction($closure);
+            $this->rewind();
+
+            if (null === $initializer) {
+                if ($this->valid()) {
+                    $initializer = $this->current();
+                    $this->next();
+                }
+            }
+
+            $accumulatedValue = $initializer;
+            while ($this->valid()) {
+                $accumulatedValue = $closure($accumulatedValue, $this->current());
+                $this->next();
+            }
+
+            return $accumulatedValue;
+        }
+
+        return null;
     }
 }
