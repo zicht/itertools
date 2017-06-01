@@ -26,6 +26,7 @@ interface FiniteIterableInterface extends
     DifferenceInterface,
     FilterInterface,
     GroupByInterface,
+    IntersectionInterface,
     ItemsInterface,
     KeysInterface,
     LastInterface,

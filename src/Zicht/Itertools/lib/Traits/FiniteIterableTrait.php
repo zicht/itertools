@@ -23,6 +23,7 @@ trait FiniteIterableTrait
     use CycleTrait;
     use FilterTrait;
     use GroupByTrait;
+    use IntersectionTrait;
     use ItemsTrait;
     use KeysTrait;
     use LastTrait;

@@ -13,6 +13,7 @@ use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\DifferenceInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\GroupByInterface;
+use Zicht\Itertools\lib\Interfaces\IntersectionInterface;
 use Zicht\Itertools\lib\Interfaces\ItemsInterface;
 use Zicht\Itertools\lib\Interfaces\KeysInterface;
 use Zicht\Itertools\lib\Interfaces\LastInterface;
@@ -43,6 +44,7 @@ class NonIterator implements
     DifferenceInterface,
     FilterInterface,
     GroupByInterface,
+    IntersectionInterface,
     ItemsInterface,
     KeysInterface,
     LastInterface,

@@ -6,21 +6,21 @@
 
 namespace Zicht\Itertools\lib\Interfaces;
 
-use Zicht\Itertools\lib\DifferenceIterator;
+use Zicht\Itertools\lib\IntersectionIterator;
 
 /**
- * Interface DifferenceInterface
+ * Interface IntersectionInterface
  *
  * @package Zicht\Itertools\lib\Interfaces
  */
-interface DifferenceInterface
+interface IntersectionInterface
 {
     /**
-     * Returns a DifferenceIterator containing elements in $this but not in $iterable
+     * Returns an IntersectionIterator containing elements in $this that are also in $iterable
      *
      * @param array|string|\Iterator $iterable
      * @param null|string|\Closure $strategy Optional
-     * @return DifferenceIterator
+     * @return IntersectionIterator
      */
-    public function difference($iterable, $strategy = null);
+    public function intersection($iterable, $strategy = null);
 }
