@@ -19,7 +19,7 @@ interface DifferenceInterface
      * Returns a DifferenceIterator containing elements in $this but not in $iterable
      *
      * @param array|string|\Iterator $iterable
-     * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
+     * @param null|string|\Closure $strategy Optional
      * @return DifferenceIterator
      */
     public function difference($iterable, $strategy = null);

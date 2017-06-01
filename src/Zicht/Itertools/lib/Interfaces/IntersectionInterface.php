@@ -6,7 +6,7 @@
 
 namespace Zicht\Itertools\lib\Interfaces;
 
-use Zicht\Itertools\lib\DifferenceIterator;
+use Zicht\Itertools\lib\IntersectionIterator;
 
 /**
  * Interface IntersectionInterface
@@ -16,10 +16,10 @@ use Zicht\Itertools\lib\DifferenceIterator;
 interface IntersectionInterface
 {
     /**
-     * Returns a DifferenceIterator containing elements in $this but not in $iterable
+     * Returns an IntersectionIterator containing elements in $this that are also in $iterable
      *
      * @param array|string|\Iterator $iterable
-     * @param null|string|\Closure $strategy Optional, when not specified !empty will be used
+     * @param null|string|\Closure $strategy Optional
      * @return IntersectionIterator
      */
     public function intersection($iterable, $strategy = null);
