@@ -7,21 +7,21 @@
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\conversions;
-use Zicht\Itertools\lib\DifferenceIterator;
+use Zicht\Itertools\lib\IntersectionIterator;
 
-trait DifferenceTrait
+trait IntersectionTrait
 {
     /**
-     * Returns a DifferenceIterator containing elements in $this but not in $iterable
+     * Returns an IntersectionIterator containing elements in $this that are also in $iterable
      *
      * @param array|string|\Iterator $iterable
      * @param null|string|\Closure $strategy Optional
-     * @return null|DifferenceIterator
+     * @return null|IntersectionIterator
      */
-    public function difference($iterable, $strategy = null)
+    public function intersection($iterable, $strategy = null)
     {
         if ($this instanceof \Iterator) {
-            return new DifferenceIterator(
+            return new IntersectionIterator(
                 $this,
                 conversions\mixed_to_iterator($iterable),
                 conversions\mixed_to_value_getter($strategy)

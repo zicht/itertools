@@ -10,9 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.10.0 [Unreleased]
 ### Added
 - DifferenceTrait, this allows a call like $a->difference($b)
+- IntersectionTrait, this allows a call like $a->intersection($b)
 - first_key and FirstTrait::firstKey, allowing to get the key of the first element in the iterable
 - last_key and LastTrait::lastKey, allowing to get the key of the last element in the iterable
-- Interface definitions for every trait, allowing for optimizations by not having to convert certain 
+### Changed
+- Interface definitions for every trait, allowing for optimizations by not having to convert certain
   instances when it is known to be of the correct type already
 - InfiniteIterableInterface and InfiniteIterableTrait: these represent all Interfaces and traits
   that apply to an infinite iterable
