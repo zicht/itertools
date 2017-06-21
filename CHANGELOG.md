@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.1 - 2017-06-21
+### Added
+- Added `$strategy` parameter to `mappings/select`
+- Added `$discardNull` parameter to `mappings/select`
+
 ## 2.10.0 - 2017-06-01
 ### Added
 - DifferenceTrait, this allows a call like $a->difference($b)
