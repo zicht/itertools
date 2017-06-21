@@ -108,6 +108,88 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test the $strategy (singular) parameter
+     */
+    public function testStrategyParameter()
+    {
+        $data = [
+            [
+                'field' => [
+                    'a' => 'A1',
+                    'b' => 'B1',
+                    'c' => 'C1',
+                ],
+            ],
+            [
+                'field' => [
+                    'a' => 'A2',
+                    'b' => 'B2',
+                    'c' => 'C2',
+                ],
+            ],
+        ];
+
+        $expected = [
+            [
+                '-b-' => 'B1',
+            ],
+            [
+                '-b-' => 'B2',
+            ],
+        ];
+
+        // test *without* using the $strategy = 'field'
+        $closure = mappings\select(['-b-' => 'field.b']);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+
+        // test using the $strategy = 'field'
+        $closure = mappings\select(['-b-' => 'b'], 'field');
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+    }
+
+    /**
+     * Test the $discardNull parameter
+     */
+    public function testDiscardNullParameter()
+    {
+        $data = [
+            [
+                'a' => null,
+                'b' => 'B1',
+                'c' => 'C1',
+            ],
+            [
+                'a' => 'A2',
+                'b' => null,
+                'c' => 'C2',
+            ],
+        ];
+
+        // test *without* the $discardNull option
+        $expected = [
+            [
+                '-b-' => 'B1',
+            ],
+            [
+                '-b-' => null,
+            ],
+        ];
+        $closure = mappings\select(['-b-' => 'b']);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+
+        // test *with* the $discardNull option
+        $expected = [
+            [
+                '-b-' => 'B1',
+            ],
+            [
+            ],
+        ];
+        $closure = mappings\select(['-b-' => 'b'], null, true);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+    }
+
+    /**
      * Test get_mapping
      *
      * @param array $arguments
