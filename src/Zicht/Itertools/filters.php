@@ -138,7 +138,7 @@ function equals($expected, $strategy = null, $strict = false)
  * For example, the following will return a list where none
  * of the items equal 'bar'
  * > $list = iterable(['foo', 'bar']);
- * > $result = $data->filter(not(equals('bar')));
+ * > $result = $list->filter(not(equals('bar')));
  * > // {0: 'foo'}
  *
  * @param null|string|\Closure $strategy
