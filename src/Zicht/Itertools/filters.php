@@ -78,6 +78,8 @@ function in($haystack, $strategy = null, $strict = false)
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
+ *
+ * @deprecated Instead use not(in(...))
  */
 function not_in($haystack, $strategy = null, $strict = false)
 {
@@ -128,4 +130,24 @@ function equals($expected, $strategy = null, $strict = false)
             return $expected == $strategy($value, $key);
         };
     }
+}
+
+/**
+ * Returns a filter closure that inverts the value
+ *
+ * For example, the following will return a list where none
+ * of the items equal 'bar'
+ * > $list = iterable(['foo', 'bar']);
+ * > $result = $data->filter(not(equals('bar')));
+ * > // {0: 'foo'}
+ *
+ * @param null|string|\Closure $strategy
+ * @return \Closure
+ */
+function not($strategy = null)
+{
+    $strategy = conversions\mixed_to_value_getter($strategy);
+    return function ($value, $key = null) use ($strategy) {
+        return !($strategy($value, $key));
+    };
 }
