@@ -13,13 +13,17 @@ use Zicht\Itertools;
  * Returns a filter closure that only accepts values that are instances of $CLASS.
  *
  * For example, the following will return a list where all items
- * are instances of class Foo:
- * > Itertools\filter(filters\type('Foo'), $list);
+ * are instances of class Bar:
+ * > $list = iterable([new Foo(), new Bar(), new Moo()]);
+ * > $result = $list->filter(type(Bar::class));
+ * > // {1: Bar}
  *
  * For example, the following will return a list where all items
- * have a property or array index 'prop' that is an instance
+ * have a property or array index 'key' that is an instance
  * of class Foo:
- * > Itertools\filter(filters\type('Foo', 'prop'), $list);
+ * > $list = iterable([['key' => new Foo()], ['key => new Bar()], ['key' => new Moo()]]);
+ * > $result = $list->filter(type(Bar::class, 'key'));
+ * > // {1: ['key' => Bar]}
  *
  * @param string $class
  * @param null|string|\Closure $strategy
@@ -37,12 +41,16 @@ function type($class, $strategy = null)
  * Returns a filter closure that only accepts values that are in $HAYSTACK.
  *
  * For example, the following will return a list where all items
- * are either 'a' or 'b':
- * > Itertools\filter(filters\in(['a', 'b']), $list)
+ * are either 'b' or 'c':
+ * > $list = iterable(['a', 'b', 'c', 'd', 'e']);
+ * > $result = $list->filter(in(['b', 'c']));
+ * > // {1: 'b', 2: 'c'}
  *
  * For example, the following will return a list where all items
- * have a property or array index 'foo' that is either 'a' or 'b':
- * > Itertools\filter(filters\in(['a', 'b'], 'prop'), $list)
+ * have a property or array index 'key' that is either 'b' or 'c':
+ * > $list = iterable([['key' => 'a'], ['key' => 'b'], ['key' => 'c'], ['key' => 'd'], ['key' => 'e']]);
+ * > $result = $list->filter(in(['b', 'c'], 'key'));
+ * > // {1: ['key' => 'b'], 2: ['key' => 'c']}
  *
  * @param null|array|string|\Iterator $haystack
  * @param null|string|\Closure $strategy
@@ -70,6 +78,8 @@ function in($haystack, $strategy = null, $strict = false)
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
+ *
+ * @deprecated Instead use not(in(...))
  */
 function not_in($haystack, $strategy = null, $strict = false)
 {
@@ -90,11 +100,15 @@ function not_in($haystack, $strategy = null, $strict = false)
  *
  * For example, the following will return a list where all items
  * equal 'bar':
- * > Itertools\filter(filters\equals('bar'), $list)
+ * > $list = iterable(['foo', 'bar']);
+ * > $result = $list->filter(equals('bar'));
+ * > // {1: 'bar'}
  *
  * For example, the following will return a list where all items
  * have a property or array index 'foo' that equals 'bar':
- * > Itertools\filter(filters\equals('bar', 'foo'), $list)
+ * > $list = iterable([['key' => 'foo'], ['key' => 'bar']]);
+ * > $result = $list->filter(equals('bar', 'key'));
+ * > // {1: ['key' => 'bar']}
  *
  * @param mixed $expected
  * @param null|string|\Closure $strategy
@@ -116,4 +130,24 @@ function equals($expected, $strategy = null, $strict = false)
             return $expected == $strategy($value, $key);
         };
     }
+}
+
+/**
+ * Returns a filter closure that inverts the value
+ *
+ * For example, the following will return a list where none
+ * of the items equal 'bar'
+ * > $list = iterable(['foo', 'bar']);
+ * > $result = $list->filter(not(equals('bar')));
+ * > // {0: 'foo'}
+ *
+ * @param null|string|\Closure $strategy
+ * @return \Closure
+ */
+function not($strategy = null)
+{
+    $strategy = conversions\mixed_to_value_getter($strategy);
+    return function ($value, $key = null) use ($strategy) {
+        return !($strategy($value, $key));
+    };
 }

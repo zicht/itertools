@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.2 - 2017-06-22
+### Added
+- Added `not` filter to `filters.php`
+### Deprecated
+- We should no longer use `not_in(...)` and instead use `not(in(...))`
+
 ## 2.10.1 - 2017-06-21
 ### Added
 - Added `$strategy` parameter to `mappings/select`
