@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.3 - 2017-06-30
+### Added
+- Added `$discardEmptyContainer` parameter to `mappings/select`
+
 ## 2.10.2 - 2017-06-22
 ### Added
 - Added `not` filter to `filters.php`

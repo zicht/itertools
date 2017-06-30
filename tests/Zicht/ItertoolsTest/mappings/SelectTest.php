@@ -190,6 +190,48 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test the $discardEmpty parameter
+     */
+    public function testDiscardEmptyParameter()
+    {
+        $data = [
+            [
+                'a' => [],
+                'b' => 'B1',
+                'c' => 'C1',
+            ],
+            [
+                'a' => 'A2',
+                'b' => [],
+                'c' => 'C2',
+            ],
+        ];
+
+        // test *without* the $discardEmpty option
+        $expected = [
+            [
+                '-b-' => 'B1',
+            ],
+            [
+                '-b-' => [],
+            ],
+        ];
+        $closure = mappings\select(['-b-' => 'b']);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+
+        // test *with* the $discardEmpty option
+        $expected = [
+            [
+                '-b-' => 'B1',
+            ],
+            [
+            ],
+        ];
+        $closure = mappings\select(['-b-' => 'b'], null, false, true);
+        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+    }
+
+    /**
      * Test get_mapping
      *
      * @param array $arguments

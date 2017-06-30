@@ -130,24 +130,33 @@ function upper()
  * @param array $strategies
  * @param null|string|\Closure $strategy
  * @param boolean $discardNull
+ * @param boolean $discardEmptyContainer
  * @return \Closure
  */
-function select(array $strategies, $strategy = null, $discardNull = false)
+function select(array $strategies, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
 {
     $strategies = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', $strategies);
     $strategy = conversions\mixed_to_value_getter($strategy);
 
-    return function ($value, $key) use ($strategies, $strategy, $discardNull) {
+    return function ($value, $key) use ($strategies, $strategy, $discardNull, $discardEmptyContainer) {
         $value = $strategy($value);
         $res = [];
         foreach ($strategies as $strategyKey => $strategy) {
             $res[$strategyKey] = $strategy($value, $key);
         }
-        if ($discardNull) {
+        if ($discardNull || $discardEmptyContainer) {
             $res = array_filter(
                 $res,
-                function ($value) {
-                    return null !== $value;
+                function ($value) use ($discardNull, $discardEmptyContainer) {
+                    if (null === $value) {
+                        return !$discardNull;
+                    }
+
+                    if (is_array($value) && 0 === sizeof($value)) {
+                        return !$discardEmptyContainer;
+                    }
+
+                    return true;
                 }
             );
         }
