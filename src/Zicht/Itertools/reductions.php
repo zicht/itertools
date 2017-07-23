@@ -17,10 +17,10 @@ function add()
 {
     return function ($a, $b) {
         if (!is_numeric($a)) {
-            throw new \InvalidArgumentException('Argument $A must be numeric to perform addition');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform addition, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_numeric($b)) {
-            throw new \InvalidArgumentException('Argument $B must be numeric to perform addition');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform addition, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a + $b;
     };
@@ -35,10 +35,10 @@ function sub()
 {
     return function ($a, $b) {
         if (!is_numeric($a)) {
-            throw new \InvalidArgumentException('Argument $A must be numeric to perform subtraction');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform subtraction, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_numeric($b)) {
-            throw new \InvalidArgumentException('Argument $B must be numeric to perform subtraction');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform subtraction, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a - $b;
     };
@@ -53,10 +53,10 @@ function mul()
 {
     return function ($a, $b) {
         if (!is_numeric($a)) {
-            throw new \InvalidArgumentException('Argument $A must be numeric to perform multiplication');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform multiplication, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_numeric($b)) {
-            throw new \InvalidArgumentException('Argument $B must be numeric to perform multiplication');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform multiplication, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a * $b;
     };
@@ -71,10 +71,10 @@ function min()
 {
     return function ($a, $b) {
         if (!is_numeric($a)) {
-            throw new \InvalidArgumentException('Argument $A must be numeric to determine minimum');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine minimum, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_numeric($b)) {
-            throw new \InvalidArgumentException('Argument $B must be numeric to determine minimum');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine minimum, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a < $b ? $a : $b;
     };
@@ -89,10 +89,10 @@ function max()
 {
     return function ($a, $b) {
         if (!is_numeric($a)) {
-            throw new \InvalidArgumentException('Argument $A must be numeric to determine maximum');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine maximum, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_numeric($b)) {
-            throw new \InvalidArgumentException('Argument $B must be numeric to determine maximum');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine maximum, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a < $b ? $b : $a;
     };
@@ -107,14 +107,14 @@ function max()
 function join($glue = '')
 {
     if (!is_string($glue)) {
-        throw new \InvalidArgumentException('Argument $GLUE must be a string to join');
+        throw new \InvalidArgumentException(sprintf('Argument $GLUE must be a string to join, not %s', is_object($glue) ? get_class($glue) : gettype($glue)));
     }
     return function ($a, $b) use ($glue) {
         if (!is_string($a)) {
-            throw new \InvalidArgumentException('Argument $A must be a string to join');
+            throw new \InvalidArgumentException(sprintf('Argument $A must be a string to join, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
         if (!is_string($b)) {
-            throw new \InvalidArgumentException('Argument $B must be a string to join');
+            throw new \InvalidArgumentException(sprintf('Argument $B must be a string to join, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return \join($glue, [$a, $b]);
     };
