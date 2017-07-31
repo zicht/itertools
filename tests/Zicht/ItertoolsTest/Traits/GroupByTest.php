@@ -64,7 +64,7 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test that groupBy can compare array values when determining is something is part of a group
+     * Test that groupBy can compare array values when determining if something is part of a group.
      */
     public function testUseArrayToGroupBy()
     {
