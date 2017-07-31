@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.4 - 2017-07-31
+### Changed
+- Calling `values()` on `GroupByIterator` will return the `values()` of every
+  item in the group, instead of the `GroupedIterator` instances.
+
 ## 2.10.3 - 2017-06-30
 ### Added
 - Added `$discardEmptyContainer` parameter to `mappings/select`
