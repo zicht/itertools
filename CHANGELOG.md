@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.5 - 2017-08-04
+### Added
+- Added a new filter helper `filters\match`
+
 ## 2.10.4 - 2017-07-31
 ### Changed
 - Calling `values()` on `GroupByIterator` will return the `values()` of every

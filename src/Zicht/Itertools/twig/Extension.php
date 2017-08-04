@@ -233,7 +233,7 @@ class Extension extends \Twig_Extension
         // to the reducing($name, ...$args) structure.
         // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-        if (is_string($name) && in_array($name, ['type', 'in', 'not_in', 'equals'])) {
+        if (is_string($name) && in_array($name, ['type', 'in', 'not_in', 'equals', 'not', 'match'])) {
             return call_user_func_array(sprintf('\Zicht\Itertools\filters\%s', $name), array_slice(func_get_args(), 1));
         }
 
