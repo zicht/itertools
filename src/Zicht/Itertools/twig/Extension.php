@@ -111,11 +111,12 @@ class Extension extends \Twig_Extension
      *
      * @param array|string|\Iterator $iterable
      * @param string|\Closure $strategy
+     * @param boolean $sort
      * @return Itertools\lib\GroupbyIterator
      */
-    public function groupBy($iterable, $strategy)
+    public function groupBy($iterable, $strategy, $sort = true)
     {
-        return Itertools\group_by($strategy, $iterable);
+        return Itertools\group_by($strategy, $iterable, $sort);
     }
 
     /**

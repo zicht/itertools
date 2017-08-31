@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 - Nothing so far
 
+## 2.10.6 - 2017-08-31
+### Fixed
+- Added missing `$sort` parameter to the `group_by` twig filter extension.
+
 ## 2.10.5 - 2017-08-04
 ### Added
-- Added a new filter helper `filters\match`
+- Added a new filter helper `filters\match`.
 
 ## 2.10.4 - 2017-07-31
 ### Changed
@@ -18,32 +22,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.10.3 - 2017-06-30
 ### Added
-- Added `$discardEmptyContainer` parameter to `mappings/select`
+- Added `$discardEmptyContainer` parameter to `mappings/select`.
 
 ## 2.10.2 - 2017-06-22
 ### Added
 - Added `not` filter to `filters.php`
 ### Deprecated
-- We should no longer use `not_in(...)` and instead use `not(in(...))`
+- We should no longer use `not_in(...)` and instead use `not(in(...))`.
 
 ## 2.10.1 - 2017-06-21
 ### Added
-- Added `$strategy` parameter to `mappings/select`
-- Added `$discardNull` parameter to `mappings/select`
+- Added `$strategy` parameter to `mappings/select`.
+- Added `$discardNull` parameter to `mappings/select`.
 
 ## 2.10.0 - 2017-06-01
 ### Added
-- DifferenceTrait, this allows a call like $a->difference($b)
-- IntersectionTrait, this allows a call like $a->intersection($b)
-- first_key and FirstTrait::firstKey, allowing to get the key of the first element in the iterable
-- last_key and LastTrait::lastKey, allowing to get the key of the last element in the iterable
+- DifferenceTrait, this allows a call like $a->difference($b).
+- IntersectionTrait, this allows a call like $a->intersection($b).
+- first_key and FirstTrait::firstKey, allowing to get the key of the first element in the iterable.
+- last_key and LastTrait::lastKey, allowing to get the key of the last element in the iterable.
 ### Changed
 - Interface definitions for every trait, allowing for optimizations by not having to convert certain
-  instances when it is known to be of the correct type already
+  instances when it is known to be of the correct type already.
 - InfiniteIterableInterface and InfiniteIterableTrait: these represent all Interfaces and traits
-  that apply to an infinite iterable
+  that apply to an infinite iterable.
 - FiniteIterableInterface and FiniteIterableTrait: these represent all Interfaces and traits
-  that apply to a finite iterable
+  that apply to a finite iterable.
 
 ## 2.9.0 - 2017-04-04
 ### Added
