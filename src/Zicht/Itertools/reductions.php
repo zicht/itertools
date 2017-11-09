@@ -16,6 +16,12 @@ use Zicht\Itertools\lib\ChainIterator;
 function add()
 {
     return function ($a, $b) {
+        if (!is_numeric($a)) {
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform addition, not %s', is_object($a) ? get_class($a) : gettype($a)));
+        }
+        if (!is_numeric($b)) {
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform addition, not %s', is_object($b) ? get_class($b) : gettype($b)));
+        }
         return $a + $b;
     };
 }
@@ -28,6 +34,12 @@ function add()
 function sub()
 {
     return function ($a, $b) {
+        if (!is_numeric($a)) {
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform subtraction, not %s', is_object($a) ? get_class($a) : gettype($a)));
+        }
+        if (!is_numeric($b)) {
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform subtraction, not %s', is_object($b) ? get_class($b) : gettype($b)));
+        }
         return $a - $b;
     };
 }
@@ -40,6 +52,12 @@ function sub()
 function mul()
 {
     return function ($a, $b) {
+        if (!is_numeric($a)) {
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform multiplication, not %s', is_object($a) ? get_class($a) : gettype($a)));
+        }
+        if (!is_numeric($b)) {
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform multiplication, not %s', is_object($b) ? get_class($b) : gettype($b)));
+        }
         return $a * $b;
     };
 }
@@ -52,6 +70,12 @@ function mul()
 function min()
 {
     return function ($a, $b) {
+        if (!is_numeric($a)) {
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine minimum, not %s', is_object($a) ? get_class($a) : gettype($a)));
+        }
+        if (!is_numeric($b)) {
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine minimum, not %s', is_object($b) ? get_class($b) : gettype($b)));
+        }
         return $a < $b ? $a : $b;
     };
 }
@@ -64,6 +88,12 @@ function min()
 function max()
 {
     return function ($a, $b) {
+        if (!is_numeric($a)) {
+            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine maximum, not %s', is_object($a) ? get_class($a) : gettype($a)));
+        }
+        if (!is_numeric($b)) {
+            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine maximum, not %s', is_object($b) ? get_class($b) : gettype($b)));
+        }
         return $a < $b ? $b : $a;
     };
 }
