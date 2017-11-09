@@ -70,10 +70,10 @@ function mul()
 function min()
 {
     return function ($a, $b) {
-        if (!is_numeric($a)) {
+        if (!(is_numeric($a) || $a instanceof \DateTime)) {
             throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine minimum, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
-        if (!is_numeric($b)) {
+        if (!(is_numeric($b) || $b instanceof \DateTime)) {
             throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine minimum, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a < $b ? $a : $b;
@@ -88,10 +88,10 @@ function min()
 function max()
 {
     return function ($a, $b) {
-        if (!is_numeric($a)) {
+        if (!(is_numeric($a) || $a instanceof \DateTime)) {
             throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine maximum, not %s', is_object($a) ? get_class($a) : gettype($a)));
         }
-        if (!is_numeric($b)) {
+        if (!(is_numeric($b) || $b instanceof \DateTime)) {
             throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine maximum, not %s', is_object($b) ? get_class($b) : gettype($b)));
         }
         return $a < $b ? $b : $a;

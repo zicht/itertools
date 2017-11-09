@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.8 - 2017-11-09
+### Fixed
+- Reducing using `min` or `max` now supports `\DateTime` instances.
+- Reverted 2.10.8
+
 ## 2.10.7 - 2017-11-09
 ### Fixed
 - Will no longer throw an exception when reducing non-numeric values.

@@ -45,6 +45,9 @@ class MaxTest extends \PHPUnit_Framework_TestCase
 
             // mixed types
             [[1, '-1.0'], 1.0],
+
+            // \DateTime types
+            [[new \DateTime('2017-11-10 16:23'), new \DateTime('2017-11-09 16:23'), new \DateTime('2017-11-11 16:23')], new \DateTime('2017-11-11 16:23')],
         ];
     }
 
