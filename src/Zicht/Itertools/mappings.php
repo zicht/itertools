@@ -104,6 +104,35 @@ function upper()
 }
 
 /**
+ * Returns a closure that returns the value as a json_encoded string
+ *
+ * @param integer $options
+ * @param integer $depth
+ * @return \Closure
+ */
+function json_encode($options = 0, $depth = 512)
+{
+    return function ($value) use ($options, $depth) {
+        return \json_encode($value, $options, $depth);
+    };
+}
+
+/**
+ * Returns a closure that returns the json_encoded value as decoded value
+ *
+ * @param boolean $assoc
+ * @param integer $depth
+ * @param integer $options
+ * @return \Closure
+ */
+function json_decode($assoc = false, $depth = 512, $options = 0)
+{
+    return function ($value) use ($assoc, $depth, $options) {
+        return \json_decode($value, $assoc, $depth, $options);
+    };
+}
+
+/**
  * Returns a closure that applies multiple $STRATEGIES to the value and returns the results
  *
  * > $compute = function ($value, $key) {
