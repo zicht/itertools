@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.8 - 2017-12-14
+### Added
+- Added mappers `json_encode` and `json_decode`.
+
 ## 2.10.7 - 2017-11-09
 ### Fixed
 - Reducing using `min` or `max` now supports `\DateTime` instances.
