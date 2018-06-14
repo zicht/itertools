@@ -15,7 +15,7 @@ Nothing so far
   those iterators in a nested way (php does not properly support this).
 
   In the below example, the `.values` is used to created a *nested* array, i.e.
-  both the `GroupByIterator` and the nested `GroupedIterator` are replaces by an
+  both the `GroupByIterator` and the nested `GroupedIterator` are replaced by an
   array, this allows multiple iterations to occur at the same time.
 
   ```twig
