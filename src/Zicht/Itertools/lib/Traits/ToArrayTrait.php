@@ -6,6 +6,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
+
 trait ToArrayTrait
 {
     /**
@@ -24,7 +26,16 @@ trait ToArrayTrait
     public function toArray()
     {
         if ($this instanceof \Traversable) {
-            return iterator_to_array($this);
+            $array = iterator_to_array($this);
+            array_walk(
+                $array,
+                function (&$value) {
+                    if ($value instanceof FiniteIterableInterface) {
+                        $value = $value->toArray();
+                    }
+                }
+            );
+            return $array;
         } else {
             return [];
         }

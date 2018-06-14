@@ -129,34 +129,4 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
     {
         return iterator_count($this->getInnerIterator());
     }
-
-    /**
-     * @{inheritDoc}
-     */
-    public function toArray()
-    {
-        $array = iterator_to_array($this);
-        array_walk(
-            $array,
-            function (&$value) {
-                /** @var GroupedIterator $value */
-                $value = $value->toArray();
-            }
-        );
-        return $array;
-    }
-
-    /**
-     * @{inheritDoc}
-     */
-    public function values()
-    {
-        $values = [];
-        if ($this instanceof \Traversable) {
-            foreach ($this as $key => $value) {
-                $values [] = $value->values();
-            }
-        }
-        return $values;
-    }
 }
