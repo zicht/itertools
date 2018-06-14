@@ -11,7 +11,7 @@ Nothing so far
 ## 2.10.9 - 2018-06-14
 ### Fixed
 - The `values`, `toArray`, and `items` traits will now work recursively.
-  This is useful when you have a nested iterator and also iterator over
+  This is useful when you have a nested iterator and also iterate over
   those iterators in a nested way (php does not properly support this).
 
   In the below example, the `.values` is used to created a *nested* array, i.e.
