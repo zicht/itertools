@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.9 - 2018-06-14
+### Fixed
+- The `values`, `toArray`, and `items` traits will now work recursively.
+  This is useful when you have a nested iterator and also iterator over
+  those iterators in a nested way (php does not properly support this).
+
+  In the below example, the `.values` is used to created a *nested* array, i.e.
+  both the `GroupByIterator` and the nested `GroupedIterator` are replaces by an
+  array, this allows multiple iterations to occur at the same time.
+
+  ```twig
+    {% for grouped in items|group_by('EventId')|sorted('first.EventDateTime').values %}
+       {% set first_item = grouped|first %}
+       ...
+    {% endfor %}
+  ```
+
 ## 2.10.8 - 2017-12-14
 ### Added
 - Added mappers `json_encode` and `json_decode`.

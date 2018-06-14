@@ -89,4 +89,43 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
             ],
         ];
     }
+
+
+    /**
+     * Test good recursive sequences
+     */
+    public function testGoodRecursiveSequence()
+    {
+        $items = Itertools\iterable([Itertools\iterable([1, 2, 3]), Itertools\iterable([4, 5, 6])])->items();
+        $this->assertTrue(is_array($items));
+        $this->assertEquals(2, sizeof($items));
+
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[0]);
+        $this->assertEquals(0, $items[0]->key);
+        $this->assertTrue(is_array($items[0]->value));
+        $this->assertEquals(3, sizeof($items[0]->value));
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[0]->value[0]);
+        $this->assertEquals(0, $items[0]->value[0]->key);
+        $this->assertEquals(1, $items[0]->value[0]->value);
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[0]->value[1]);
+        $this->assertEquals(1, $items[0]->value[1]->key);
+        $this->assertEquals(2, $items[0]->value[1]->value);
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[0]->value[2]);
+        $this->assertEquals(2, $items[0]->value[2]->key);
+        $this->assertEquals(3, $items[0]->value[2]->value);
+
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[1]);
+        $this->assertEquals(1, $items[1]->key);
+        $this->assertTrue(is_array($items[1]->value));
+        $this->assertEquals(3, sizeof($items[1]->value));
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[1]->value[0]);
+        $this->assertEquals(0, $items[1]->value[0]->key);
+        $this->assertEquals(4, $items[1]->value[0]->value);
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[1]->value[1]);
+        $this->assertEquals(1, $items[1]->value[1]->key);
+        $this->assertEquals(5, $items[1]->value[1]->value);
+        $this->assertInstanceOf('Zicht\Itertools\lib\Containers\KeyValuePair', $items[1]->value[2]);
+        $this->assertEquals(2, $items[1]->value[2]->key);
+        $this->assertEquals(6, $items[1]->value[2]->value);
+    }
 }

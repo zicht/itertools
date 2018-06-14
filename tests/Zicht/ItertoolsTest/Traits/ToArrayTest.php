@@ -48,6 +48,11 @@ class ToArrayTest extends \PHPUnit_Framework_TestCase
                 Itertools\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
                 ['a' => 1, 'b' => 2, 'c' => 3],
             ],
+            // calling values is recursive
+            [
+                Itertools\iterable(['A' => Itertools\iterable(['a' => 1, 'b' => 2, 'c' => 3]), 'B' => Itertools\iterable(['d' => 4, 'e' => 5, 'f' => 6])]),
+                ['A' => ['a' => 1, 'b' => 2, 'c' => 3], 'B' => ['d' => 4, 'e' => 5, 'f' => 6]],
+            ],
         ];
     }
 

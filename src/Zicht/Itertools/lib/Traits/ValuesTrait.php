@@ -6,6 +6,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
+
 trait ValuesTrait
 {
     /**
@@ -18,7 +20,7 @@ trait ValuesTrait
         $values = [];
         if ($this instanceof \Traversable) {
             foreach ($this as $key => $value) {
-                $values [] = $value;
+                $values [] = $value instanceof FiniteIterableInterface ? $value->values() : $value;
             }
         }
         return $values;

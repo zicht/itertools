@@ -7,6 +7,7 @@
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\Containers\KeyValuePair;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 
 trait ItemsTrait
 {
@@ -20,7 +21,7 @@ trait ItemsTrait
         $items = [];
         if ($this instanceof \Traversable) {
             foreach ($this as $key => $value) {
-                $items [] = new KeyValuePair($key, $value);
+                $items [] = new KeyValuePair($key, $value instanceof FiniteIterableInterface ? $value->items() : $value);
             }
         }
         return $items;

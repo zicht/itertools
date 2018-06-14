@@ -50,6 +50,23 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that toArray also converts the GroupedItems into arrays
+     */
+    public function testToArrayRecursively()
+    {
+        $list = Itertools\iterable(['A' => Itertools\iterable(['a' => 1, 'b' => 2, 'c' => 3]), 'B' => Itertools\iterable(['d' => 4, 'e' => 5, 'f' => 6])]);
+        $expected = [
+            'A' => [
+                'A' => ['a' => 1, 'b' => 2, 'c' => 3],
+            ],
+            'B' => [
+                'B' => ['d' => 4, 'e' => 5, 'f' => 6],
+            ],
+        ];
+        $this->assertEquals($expected, $list->groupBy(mappings\key())->toArray());
+    }
+
+    /**
      * Test that values also converts the GroupedItems into values
      */
     public function testValues()
@@ -61,6 +78,23 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
             [0 => 3, 1 => 3],
         ];
         $this->assertEquals($expected, $list->groupBy(null)->values());
+    }
+
+    /**
+     * Test that values also converts the GroupedItems into values (recursively)
+     */
+    public function testValuesRecursively()
+    {
+        $list = Itertools\iterable(['A' => Itertools\iterable([1, 2, 3]), 'B' => Itertools\iterable([4, 5, 6])]);
+        $expected = [
+            [
+                [1, 2, 3],
+            ],
+            [
+                [4, 5, 6],
+            ],
+        ];
+        $this->assertEquals($expected, $list->groupBy(mappings\key())->values());
     }
 
     /**
