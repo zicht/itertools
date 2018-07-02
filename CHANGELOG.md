@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.10 - 2018-07-02
+### Added
+- Support for Twig v2
+
 ## 2.10.9 - 2018-06-14
 ### Fixed
 - The `values`, `toArray`, and `items` traits will now work recursively.
