@@ -648,9 +648,9 @@ function reversed($iterable)
  * Returns an iterator where the values from $strategy are unique
  *
  * An optional $strategy may be given to specify the value which is used
- * to determine weather the element is unique.  When no $strategy is
+ * to determine whether the element is unique.  When no $strategy is
  * given, the identity function is used, i.e. the value of the element
- * itself is used to determine weather the element is unique.
+ * itself is used to determine whether the element is unique.
  *
  * Following the optional $strategy, a $iterable must be given.  Otherwise,
  * an \InvalidArgumentException will be raised.
