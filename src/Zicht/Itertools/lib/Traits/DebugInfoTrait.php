@@ -6,6 +6,9 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
+/**
+ * Trait DebugInfoTrait
+ */
 trait DebugInfoTrait
 {
     /**
@@ -14,7 +17,7 @@ trait DebugInfoTrait
      * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
      * @return array
      */
-    public function __debugInfo()
+    public function __debugInfo() // phpcs:ignore Zicht.NamingConventions.Functions.MethodNaming
     {
         $duplicateKeys = [];
         $info = ['__length__' => 0];

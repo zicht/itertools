@@ -9,6 +9,9 @@ namespace Zicht\Itertools\lib\Traits;
 use Zicht\Itertools\reductions;
 use Zicht\Itertools\lib\AccumulateIterator;
 
+/**
+ * Trait AccumulateTrait
+ */
 trait AccumulateTrait
 {
     /**

@@ -86,7 +86,7 @@ class CountIterator implements InfiniteIterableInterface
      * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
      * @return array
      */
-    public function __debugInfo()
+    public function __debugInfo() // phpcs:ignore Zicht.NamingConventions.Functions.MethodNaming
     {
         $info = ['__length__' => 'infinite'];
         $count = 0;

@@ -75,7 +75,6 @@ function mixed_to_closure($closure)
     }
 
     if (!($closure instanceof \Closure)) {
-
         // A \Closure is always callable, but a callable is not always a \Closure.
         // Checking within this if statement is a slight optimization, preventing an unnecessary function wrap
         if (is_callable($closure)) {
@@ -162,7 +161,7 @@ function mixed_to_value_getter($strategy)
  * @return \Iterator
  * @deprecated Use mixed_to_iterator() instead, will be removed in version 3.0
  */
-function mixedToIterator($iterable)
+function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return mixed_to_iterator($iterable);
 }
@@ -175,7 +174,7 @@ function mixedToIterator($iterable)
  * @return \Closure
  * @deprecated Use mixed_to_closure() instead, will be removed in version 3.0
  */
-function mixedToClosure($closure)
+function mixedToClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return mixed_to_closure($closure);
 }
@@ -188,7 +187,7 @@ function mixedToClosure($closure)
  * @return \Closure
  * @deprecated Use mixed_to_closure() instead, will be removed in version 3.0
  */
-function mixedToValueGetter($strategy)
+function mixedToValueGetter($strategy) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return mixed_to_value_getter($strategy);
 }

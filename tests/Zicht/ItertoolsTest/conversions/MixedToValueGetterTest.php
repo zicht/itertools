@@ -245,6 +245,9 @@ class MixedToValueGetterTest extends MixedToClosureTest
         $this->assertEquals($expect, $result($object));
     }
 
+    /**
+     * @return array
+     */
     public function testGetterStrategyProvider()
     {
         return [

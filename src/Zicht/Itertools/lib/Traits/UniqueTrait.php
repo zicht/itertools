@@ -9,6 +9,9 @@ namespace Zicht\Itertools\lib\Traits;
 use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\UniqueIterator;
 
+/**
+ * Trait UniqueTrait
+ */
 trait UniqueTrait
 {
     /**

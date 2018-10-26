@@ -10,6 +10,7 @@ use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
 // todo: place the two classed in their own file
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 
 /**
  * Class GroupedIterator

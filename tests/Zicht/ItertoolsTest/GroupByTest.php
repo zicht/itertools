@@ -6,6 +6,7 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
 use Zicht\Itertools\lib\GroupedIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
@@ -27,7 +28,7 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
 
         $list = [$obj('1group', '1A'), $obj('1group', '1B'), $obj('2group', '2A'), $obj('2group', '2B'), $obj('1group', '1C')];
 
-        $iterator = \Zicht\Itertools\groupby('prop', $list, false);
+        $iterator = Itertools\groupby('prop', $list, false);
         $this->assertInstanceOf('\Zicht\Itertools\lib\GroupbyIterator', $iterator);
         $iterator->rewind();
 
@@ -186,7 +187,7 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $iterable = \Zicht\Itertools\iterable([0 => 1, 1 => 2, 2 => 3, 3 => 2, 4 => 3, 5 => 3]);
+        $iterable = Itertools\iterable([0 => 1, 1 => 2, 2 => 3, 3 => 2, 4 => 3, 5 => 3]);
         $grouped = $iterable->groupBy(null);
         $this->assertEquals([1 => [0 => 1], 2 => [1 => 2, 3 => 2], 3 => [2 => 3, 4 => 3, 5 => 3]], $grouped->toArray());
     }

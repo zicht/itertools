@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class RepeatTest
  *
@@ -18,7 +20,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($object, $times)
     {
-        $iterator = \Zicht\Itertools\repeat($object, $times);
+        $iterator = Itertools\repeat($object, $times);
         $this->assertInstanceOf('\Zicht\Itertools\lib\RepeatIterator', $iterator);
         $this->assertEquals(sizeof($iterator), null === $times ? -1 : $times, 'Failure in $iterator->count() [1]');
         if (null !== $times) {
@@ -44,13 +46,13 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
      */
     public function goodSequenceProvider()
     {
-        return array(
-            array(0, 0),
-            array(0, 1),
-            array(0, 3),
-            array(0, 42),
-            array(0, null),
-        );
+        return [
+            [0, 0],
+            [0, 1],
+            [0, 3],
+            [0, 42],
+            [0, null],
+        ];
     }
 
     /**
@@ -59,7 +61,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($object, $times)
     {
-        \Zicht\Itertools\repeat($object, $times);
+        Itertools\repeat($object, $times);
     }
 
     /**
@@ -67,11 +69,11 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
      */
     public function badArgumentProvider()
     {
-        return array(
-            array(0, '1'),
-            array(0, 1.0),
-            array(0, -1),
-            array(0, array()),
-        );
+        return [
+            [0, '1'],
+            [0, 1.0],
+            [0, -1],
+            [0, []],
+        ];
     }
 }

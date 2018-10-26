@@ -8,6 +8,9 @@ namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ReversedIterator;
 
+/**
+ * Trait ReversedTrait
+ */
 trait ReversedTrait
 {
     /**

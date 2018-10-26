@@ -48,7 +48,7 @@ use Zicht\Itertools\reductions;
  *
  * @deprecated Use conversions\mixed_to_iterator instead, will be removed in version 3.0
  */
-function mixedToIterator($iterable)
+function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return conversions\mixed_to_iterator($iterable);
 }
@@ -61,7 +61,7 @@ function mixedToIterator($iterable)
  *
  * @deprecated Use conversions\mixed_to_closure instead, will be removed in version 3.0
  */
-function mixedToClosure($closure)
+function mixedToClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return conversions\mixed_to_closure($closure);
 }
@@ -74,7 +74,7 @@ function mixedToClosure($closure)
  *
  * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
  */
-function mixedToValueGetter($strategy)
+function mixedToValueGetter($strategy) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return conversions\mixed_to_value_getter($strategy);
 }
@@ -87,7 +87,7 @@ function mixedToValueGetter($strategy)
  *
  * @deprecated Will be removed in version 3.0, no replacement will be needed
  */
-function mixedToOperationClosure($closure)
+function mixedToOperationClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     if (is_string($closure)) {
         $closure = reductions\get_reduction($closure, $closure);
@@ -288,7 +288,7 @@ function map_by($strategy, $iterable)
  *
  * @deprecated Please use map_by, will be removed in version 3.0
  */
-function mapBy($strategy, $iterable)
+function mapBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return map_by($strategy, $iterable);
 }
@@ -303,7 +303,7 @@ function mapBy($strategy, $iterable)
  *
  * @deprecated use map_by() instead, will be removed in version 3.0
  */
-function keyCallback($strategy, $iterable)
+function keyCallback($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return map_by($strategy, $iterable);
 }
@@ -462,7 +462,7 @@ function group_by($strategy, $iterable, $sort = true)
  *
  * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
  */
-function groupBy($strategy, $iterable, $sort = true)
+function groupBy($strategy, $iterable, $sort = true) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return group_by($strategy, $iterable, $sort);
 }
@@ -562,7 +562,7 @@ function filter()
  *
  * @deprecated Use filter() instead, will be removed in version 3.0
  */
-function filterBy()
+function filterBy() // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     // note, once we stop supporting php 5.5, we can rewrite the code below
     // to the filterBy(...$iterables) structure.
@@ -697,7 +697,7 @@ function unique()
  *
  * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
  */
-function uniqueBy($strategy, $iterable)
+function uniqueBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return unique($strategy, $iterable);
 }

@@ -6,6 +6,9 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
+/**
+ * Trait InfiniteIterableTrait
+ */
 trait InfiniteIterableTrait
 {
     use AccumulateTrait;

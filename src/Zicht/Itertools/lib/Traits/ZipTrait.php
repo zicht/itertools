@@ -8,6 +8,9 @@ namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ZipIterator;
 
+/**
+ * Trait ZipTrait
+ */
 trait ZipTrait
 {
     /**
@@ -24,6 +27,7 @@ trait ZipTrait
      *
      * @param array|string|\Iterator $iterable2
      * @return ZipIterator
+     * @throws \ReflectionException
      */
     public function zip(/* $iterable2, ... */)
     {

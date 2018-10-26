@@ -15,6 +15,10 @@ Common operations include:
 - [grouping](#grouping): `groupBy`
 - [reducing](#reducing): `accumulate` and `reduce`
 
+## Scripts
+- unit test: `composer test`
+- lint test: `composer lint`
+
 ## Example data
 The examples below will use the following data to illustrate how
 various Iterator tools work:

@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class ReduceTest
  *
@@ -18,7 +20,7 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($iterable, $closure, $default, $expected)
     {
-        $result = \Zicht\Itertools\reduce($iterable, $closure, $default);
+        $result = Itertools\reduce($iterable, $closure, $default);
         $this->assertEquals($expected, $result);
     }
 
@@ -50,7 +52,7 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($iterable, $closure, $default)
     {
-        \Zicht\Itertools\reduce($iterable, $closure, $default);
+        Itertools\reduce($iterable, $closure, $default);
     }
 
     /**

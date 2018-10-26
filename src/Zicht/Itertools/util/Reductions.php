@@ -6,6 +6,8 @@
 
 namespace Zicht\Itertools\util;
 
+use Zicht\Itertools;
+
 /**
  * @deprecated Use \Zicht\Itertools\reductions, will be removed in version 3.0
  */
@@ -16,7 +18,7 @@ class Reductions
      */
     public static function add()
     {
-        return \Zicht\Itertools\reductions\add();
+        return Itertools\reductions\add();
     }
 
     /**
@@ -24,7 +26,7 @@ class Reductions
      */
     public static function sub()
     {
-        return \Zicht\Itertools\reductions\sub();
+        return Itertools\reductions\sub();
     }
 
     /**
@@ -32,7 +34,7 @@ class Reductions
      */
     public static function mul()
     {
-        return \Zicht\Itertools\reductions\mul();
+        return Itertools\reductions\mul();
     }
 
     /**
@@ -40,7 +42,7 @@ class Reductions
      */
     public static function min()
     {
-        return \Zicht\Itertools\reductions\min();
+        return Itertools\reductions\min();
     }
 
     /**
@@ -48,7 +50,7 @@ class Reductions
      */
     public static function max()
     {
-        return \Zicht\Itertools\reductions\max();
+        return Itertools\reductions\max();
     }
 
     /**
@@ -56,7 +58,7 @@ class Reductions
      */
     public static function join($glue = '')
     {
-        return \Zicht\Itertools\reductions\join($glue);
+        return Itertools\reductions\join($glue);
     }
 
     /**
@@ -72,17 +74,17 @@ class Reductions
     {
         switch ($name) {
             case 'add':
-                return \Zicht\Itertools\reductions\add();
+                return Itertools\reductions\add();
             case 'sub':
-                return \Zicht\Itertools\reductions\sub();
+                return Itertools\reductions\sub();
             case 'mul':
-                return \Zicht\Itertools\reductions\mul();
+                return Itertools\reductions\mul();
             case 'min':
-                return \Zicht\Itertools\reductions\min();
+                return Itertools\reductions\min();
             case 'max':
-                return \Zicht\Itertools\reductions\max();
+                return Itertools\reductions\max();
             case 'join':
-                return \Zicht\Itertools\reductions\join();
+                return Itertools\reductions\join();
             default:
                 return $default;
         }

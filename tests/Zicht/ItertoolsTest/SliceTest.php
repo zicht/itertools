@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class SliceTest
  *
@@ -19,7 +21,7 @@ class SliceTest extends \PHPUnit_Framework_TestCase
     public function testCombinedWithCountStartingAtZero()
     {
         // [0, 1, 2, 3, ...][0:3] -> [0, 1, 2]
-        $iterator = \Zicht\Itertools\count(0)->slice(0, 3);
+        $iterator = Itertools\count(0)->slice(0, 3);
         $this->assertEquals(3, sizeof($iterator));
 
         $iterator->rewind();
@@ -47,7 +49,7 @@ class SliceTest extends \PHPUnit_Framework_TestCase
     public function testCombinedWithCountStartingAtNonZero()
     {
         // [0, 1, 2, 3, ...][2:5] -> [2, 3, 4]
-        $iterator = \Zicht\Itertools\count(0)->slice(2, 5);
+        $iterator = Itertools\count(0)->slice(2, 5);
         $this->assertEquals(3, sizeof($iterator));
 
         $iterator->rewind();
