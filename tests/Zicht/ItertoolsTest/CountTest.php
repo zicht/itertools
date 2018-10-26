@@ -8,6 +8,8 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools\lib\CountIterator;
 
+use Zicht\Itertools;
+
 /**
  * Class CountTest
  *
@@ -20,7 +22,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($start, $step, array $expectedKeys, array $expectedValues)
     {
-        $iterator = \Zicht\Itertools\count($start, $step);
+        $iterator = Itertools\count($start, $step);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
 
@@ -43,9 +45,9 @@ class CountTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodSequence_foreach($start, $step, array $expectedKeys, array $expectedValues)
+    public function testGoodSequenceForeach($start, $step, array $expectedKeys, array $expectedValues)
     {
-        $iterator = \Zicht\Itertools\count($start, $step);
+        $iterator = Itertools\count($start, $step);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CountIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
 
@@ -96,7 +98,7 @@ class CountTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($start, $step)
     {
-        \Zicht\Itertools\count($start, $step);
+        Itertools\count($start, $step);
     }
 
     /**

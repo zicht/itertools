@@ -8,6 +8,9 @@ namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools;
 
+/**
+ * Trait ReduceTrait
+ */
 trait ReduceTrait
 {
     /**
@@ -32,7 +35,6 @@ trait ReduceTrait
     public function reduce($closure = 'add', $initializer = null)
     {
         if ($this instanceof \Iterator) {
-
             $closure = $closure instanceof \Closure ? $closure : Itertools\reductions\get_reduction($closure);
             $this->rewind();
 

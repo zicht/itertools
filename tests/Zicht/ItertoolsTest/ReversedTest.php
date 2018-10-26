@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class ReversedTest
  *
@@ -18,7 +20,7 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($iterable, array $expectedKeys, array $expectedValues)
     {
-        $iterator = \Zicht\Itertools\reversed($iterable);
+        $iterator = Itertools\reversed($iterable);
         $this->assertInstanceOf('\Zicht\Itertools\lib\ReversedIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         $this->assertEquals(sizeof($iterator), sizeof($expectedKeys));
@@ -57,7 +59,7 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
 
             // test duplicate keys reversal
             [
-                \Zicht\Itertools\chain([1, 2, 3], [4, 5, 6]),
+                Itertools\chain([1, 2, 3], [4, 5, 6]),
                 [2, 1, 0, 2, 1, 0],
                 [6, 5, 4, 3, 2, 1]],
         ];
@@ -69,7 +71,7 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($iterable)
     {
-        $iterator = \Zicht\Itertools\reversed($iterable);
+        $iterator = Itertools\reversed($iterable);
     }
 
     /**

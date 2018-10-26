@@ -8,6 +8,9 @@ namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 
+/**
+ * Trait ValuesTrait
+ */
 trait ValuesTrait
 {
     /**

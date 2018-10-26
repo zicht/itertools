@@ -8,6 +8,9 @@ namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\SliceIterator;
 
+/**
+ * Trait SliceTrait
+ */
 trait SliceTrait
 {
     /**

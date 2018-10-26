@@ -9,6 +9,9 @@ namespace Zicht\Itertools\lib\Traits;
 use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\MapIterator;
 
+/**
+ * Trait MapTrait
+ */
 trait MapTrait
 {
     /**
@@ -37,6 +40,7 @@ trait MapTrait
      * @param null|string|\Closure $strategy
      * @param array|string|\Iterator $iterable2
      * @return MapIterator
+     * @throws \ReflectionException
      */
     public function map($strategy /*, $iterable2, ... */)
     {

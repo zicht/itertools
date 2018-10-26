@@ -6,6 +6,9 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
+/**
+ * Trait FiniteIterableTrait
+ */
 trait FiniteIterableTrait
 {
     use InfiniteIterableTrait;

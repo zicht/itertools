@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class AccumulateTest
  *
@@ -18,7 +20,7 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($iterable, $func, array $expectedKeys, array $expectedValues)
     {
-        $iterator = \Zicht\Itertools\accumulate($iterable, $func);
+        $iterator = Itertools\accumulate($iterable, $func);
         $this->assertInstanceOf('\Zicht\Itertools\lib\AccumulateIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
         $this->assertEquals(sizeof($iterator), sizeof($expectedKeys));
@@ -104,7 +106,7 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
 
             // test specific bug encountered when using an empty MapIterator as input
             [
-                \Zicht\Itertools\map(null, []),
+                Itertools\map(null, []),
                 'add',
                 [],
                 [],
@@ -118,7 +120,7 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($iterable, $func)
     {
-        \Zicht\Itertools\accumulate($iterable, $func);
+        Itertools\accumulate($iterable, $func);
     }
 
     /**

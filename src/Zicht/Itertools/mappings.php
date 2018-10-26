@@ -278,7 +278,7 @@ function get_mapping($name /* [argument, [arguments, ...] */)
  *
  * @deprecated please use the mapping functions directly, will be removed in version 3.0
  */
-function getMapping($name /* [argument, [arguments, ...] */)
+function getMapping($name /* [argument, [arguments, ...] */) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return call_user_func_array('\Zicht\Itertools\mappings\get_mapping', func_get_args());
 }

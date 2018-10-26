@@ -9,6 +9,9 @@ namespace Zicht\Itertools\lib\Traits;
 use Zicht\Itertools\lib\Containers\KeyValuePair;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 
+/**
+ * Trait ItemsTrait
+ */
 trait ItemsTrait
 {
     /**

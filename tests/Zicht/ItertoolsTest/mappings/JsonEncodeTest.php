@@ -27,8 +27,8 @@ class JsonEncodeTest extends \PHPUnit_Framework_TestCase
             true,
             [],
             'Hello World',
-            [null, 1, 1.14, "Hello World"],
-            (object)[null, 1, 1.14, "Hello World"],
+            [null, 1, 1.14, 'Hello World'],
+            (object)[null, 1, 1.14, 'Hello World'],
         ];
 
         $expected = [

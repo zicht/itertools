@@ -6,6 +6,8 @@
 
 namespace Zicht\ItertoolsTest;
 
+use Zicht\Itertools;
+
 /**
  * Class CycleTest
  *
@@ -18,7 +20,7 @@ class CycleTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($p, array $expectedKeys, array $expectedValues)
     {
-        $iterator = \Zicht\Itertools\cycle($p);
+        $iterator = Itertools\cycle($p);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CycleIterator', $iterator);
         $iterator->rewind();
 
@@ -83,7 +85,7 @@ class CycleTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArgument($p)
     {
-        \Zicht\Itertools\cycle($p);
+        Itertools\cycle($p);
     }
 
     /**

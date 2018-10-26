@@ -175,9 +175,15 @@ function get_reduction($name)
 }
 
 /**
+ * Returns a reduction closure
+ *
+ * @param mixed $name
+ * @return \Closure
+ * @throws \InvalidArgumentException
+ *
  * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
-function getReduction($name)
+function getReduction($name) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
     return call_user_func_array('\Zicht\Itertools\reductions\get_reduction', func_get_args());
 }

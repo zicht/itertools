@@ -27,30 +27,30 @@ class LastTest extends \PHPUnit_Framework_TestCase
      */
     public function goodSequenceProvider()
     {
-        return array(
+        return [
             // test default values
-            array(
-                array(array()),
+            [
+                [[]],
                 null,
-            ),
-            array(
-                array(array(), 'default'),
+            ],
+            [
+                [[], 'default'],
                 'default',
-            ),
-            array(
-                array('', 'default'),
+            ],
+            [
+                ['', 'default'],
                 'default',
-            ),
+            ],
             // test last
-            array(
-                array(array(0)),
+            [
+                [[0]],
                 0,
-            ),
-            array(
-                array(array(0, 1, 2, 3)),
+            ],
+            [
+                [[0, 1, 2, 3]],
                 3,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -67,30 +67,30 @@ class LastTest extends \PHPUnit_Framework_TestCase
      */
     public function goodKeySequenceProvider()
     {
-        return array(
+        return [
             // test default values
-            array(
-                array(array()),
+            [
+                [[]],
                 null,
-            ),
-            array(
-                array(array(), 'default'),
+            ],
+            [
+                [[], 'default'],
                 'default',
-            ),
-            array(
-                array('', 'default'),
+            ],
+            [
+                ['', 'default'],
                 'default',
-            ),
+            ],
             // test last
-            array(
-                array(array('a' => 0)),
+            [
+                [['a' => 0]],
                 'a',
-            ),
-            array(
+            ],
+            [
                 [['a' => 0, 'b' => 1, 'c' => 2, 'd' => 3]],
                 'd',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -107,10 +107,13 @@ class LastTest extends \PHPUnit_Framework_TestCase
      */
     public function badArgumentProvider()
     {
-        return array(
-            array(array(0)),
-            array(array(1.0)),
-            array(array(true)),
-            array(array(function () { return []; })),
-        );
-    }}
+        return [
+            [[0]],
+            [[1.0]],
+            [[true]],
+            [[function () {
+                return [];
+            }]],
+        ];
+    }
+}
