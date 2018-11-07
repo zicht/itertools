@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.11 - 2018-11-07
+### Fixed
+- Changed the auto loader to only include the src directory.
+
 ## 2.10.10 - 2018-07-02
 ### Added
-- Support for Twig v2
+- Support for Twig v2.
 
 ## 2.10.9 - 2018-06-14
 ### Fixed
