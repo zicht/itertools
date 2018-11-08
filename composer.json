@@ -27,14 +27,21 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-      "psr-0": { "Zicht\\": ["src/", "tests/"] },
-      "files": [
-          "src/Zicht/Itertools/conversions.php",
-          "src/Zicht/Itertools/filters.php",
-          "src/Zicht/Itertools/itertools.php",
-          "src/Zicht/Itertools/mappings.php",
-          "src/Zicht/Itertools/reductions.php"
-      ]
+        "psr-0": {
+            "Zicht": "src/"
+        },
+        "files": [
+            "src/Zicht/Itertools/conversions.php",
+            "src/Zicht/Itertools/filters.php",
+            "src/Zicht/Itertools/itertools.php",
+            "src/Zicht/Itertools/mappings.php",
+            "src/Zicht/Itertools/reductions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "Zicht": "tests/"
+        }
     },
     "require": {
     }
