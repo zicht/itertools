@@ -40,7 +40,6 @@ trait MapTrait
      * @param null|string|\Closure $strategy
      * @param array|string|\Iterator $iterable2
      * @return MapIterator
-     * @throws \ReflectionException
      */
     public function map($strategy /*, $iterable2, ... */)
     {

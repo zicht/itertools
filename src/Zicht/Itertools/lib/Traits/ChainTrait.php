@@ -32,7 +32,6 @@ trait ChainTrait
      * @param array|string|\Iterator $iterable
      * @param array|string|\Iterator $iterable2
      * @return null|ChainIterator
-     * @throws \ReflectionException
      */
     public function chain(/* $iterable, $iterable2, ... */)
     {
