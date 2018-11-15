@@ -27,7 +27,6 @@ trait ZipTrait
      *
      * @param array|string|\Iterator $iterable2
      * @return ZipIterator
-     * @throws \ReflectionException
      */
     public function zip(/* $iterable2, ... */)
     {

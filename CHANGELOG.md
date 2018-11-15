@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.12 - 2018-11-12
+### Fixed
+- `ChainTrait`, `MapTrait`, and `ZipTrait` would indicate that they throw `\ReflectionException`, 
+  while this never happens.  This caused other code to give unnecessary warnings. 
+
 ## 2.10.11 - 2018-11-07
 ### Fixed
 - Changed the auto loader to only include the src directory.
