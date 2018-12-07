@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
+
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\conversions;
@@ -34,10 +36,11 @@ trait MapTrait
      * 2.5 3.5 4.5
      *
      * @param null|string|\Closure $strategy
+     * @param array|string|\Iterator $iterable
      * @param array|string|\Iterator $iterable2
      * @return MapIterator
      */
-    public function map($strategy /*, $iterable2, ... */)
+    public function map($strategy /*, $iterable, $iterable2, ... */)
     {
         if ($this instanceof \Iterator) {
             if (func_num_args() > 1) {

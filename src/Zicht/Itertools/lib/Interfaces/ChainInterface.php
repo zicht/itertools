@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
+
 namespace Zicht\Itertools\lib\Interfaces;
 
 use Zicht\Itertools;

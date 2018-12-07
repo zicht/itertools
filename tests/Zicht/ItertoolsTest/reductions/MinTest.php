@@ -59,6 +59,8 @@ class MinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides arguments that should result in \InvalidArgumentException
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

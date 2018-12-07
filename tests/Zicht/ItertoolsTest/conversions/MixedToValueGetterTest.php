@@ -198,6 +198,9 @@ class MixedToValueGetterTest extends MixedToClosureTest
     /**
      * Test getter strategy
      *
+     * @param null|string|\Closure $strategy
+     * @param mixed $object
+     * @param mixed $expect
      * @dataProvider testGetterStrategyProvider
      */
     public function testGetters($strategy, $object, $expect)

@@ -15,7 +15,6 @@ interface ReduceInterface
     /**
      * Reduce an iterator to a single value
      *
-     * @param array|string|\Iterator $iterable
      * @param string|\Closure $closure
      * @param mixed $initializer
      * @return mixed

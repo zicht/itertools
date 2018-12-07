@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
+
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ZipIterator;
@@ -21,10 +23,11 @@ trait ZipTrait
      * > zip([1, 2, 3], ['a', 'b', 'c'])
      * [1, 'a'] [2, 'b'] [3, 'c']
      *
+     * @param array|string|\Iterator $iterable
      * @param array|string|\Iterator $iterable2
      * @return ZipIterator
      */
-    public function zip(/* $iterable2, ... */)
+    public function zip(/* $iterable, $iterable2, ... */)
     {
         if ($this instanceof \Iterator) {
             $iterables = array_map(

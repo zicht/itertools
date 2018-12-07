@@ -10,6 +10,10 @@ use Zicht\Itertools;
 class ReduceTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param array $iterable
+     * @param string $closure
+     * @param mixed $default
+     * @param mixed $expected
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($iterable, $closure, $default, $expected)
@@ -20,6 +24,8 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -41,6 +47,9 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $iterable
+     * @param mixed $closure
+     * @param mixed $default
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -51,6 +60,8 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

@@ -10,6 +10,8 @@ use Zicht\Itertools;
 class RepeatTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $object
+     * @param mixed $times
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($object, $times)
@@ -37,6 +39,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -50,6 +54,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $object
+     * @param mixed $times
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -60,6 +66,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

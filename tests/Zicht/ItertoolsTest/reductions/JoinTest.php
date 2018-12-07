@@ -51,6 +51,8 @@ class JoinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides invalid glue arguments
+     *
+     * @return array
      */
     public function badGlueProvider()
     {
@@ -79,6 +81,8 @@ class JoinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides arguments that should result in \InvalidArgumentException
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

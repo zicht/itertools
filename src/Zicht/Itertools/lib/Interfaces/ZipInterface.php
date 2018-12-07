@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
+
 namespace Zicht\Itertools\lib\Interfaces;
 
 use Zicht\Itertools;
@@ -15,10 +17,11 @@ interface ZipInterface
     /**
      * Returns an iterator where one or more iterables are zipped together
      *
+     * @param array|string|\Iterator $iterable
      * @param array|string|\Iterator $iterable2
      * @return Itertools\lib\ZipIterator
      *
      * @see Itertools\lib\Traits\ZipTrait::zip
      */
-    public function zip(/* $iterable2, ... */);
+    public function zip(/* $iterable, $iterable2, ... */);
 }

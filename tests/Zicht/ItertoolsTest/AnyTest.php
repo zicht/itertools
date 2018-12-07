@@ -8,6 +8,8 @@ namespace Zicht\ItertoolsTest;
 class AnyTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param array $arguments
+     * @param mixed $expected
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence(array $arguments, $expected)
@@ -18,6 +20,8 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -101,6 +105,8 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

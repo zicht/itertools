@@ -27,7 +27,7 @@ class GettableObject
     /**
      * Get a value
      *
-     * @param $name
+     * @param mixed $name
      * @return mixed|null
      */
     public function __get($name)

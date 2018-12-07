@@ -29,6 +29,8 @@ class MixedToTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodArgumentProvider()
     {
@@ -66,6 +68,8 @@ class MixedToTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

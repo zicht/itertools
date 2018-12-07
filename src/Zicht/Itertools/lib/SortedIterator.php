@@ -77,7 +77,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
      *
      * http://www.php.net/manual/en/function.usort.php#38827
      *
-     * @param array &$array
+     * @param array $array
      * @param \Closure $cmp_function
      */
     protected function mergeSort(array &$array, \Closure $cmp_function)
