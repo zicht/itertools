@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 

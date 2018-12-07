@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,18 +9,10 @@ use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class ChainIterator
- *
- * @package Zicht\Itertools\lib
- */
 class ChainIterator extends \AppendIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 
-    /**
-     * ChainIterator constructor.
-     */
     public function __construct()
     {
         parent::__construct();

@@ -1,14 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Traits;
 
-/**
- * Trait ArrayAccessTrait
- */
 trait ArrayAccessTrait
 {
     /**

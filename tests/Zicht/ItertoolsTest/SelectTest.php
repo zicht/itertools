@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,16 +7,9 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class SelectTest
- *
- * @package Zicht\ItertoolsTest
- */
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test good sequences
-     *
      * @param mixed $data
      * @param array $expected
      *

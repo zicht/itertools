@@ -1,16 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-/**
- * Class UniqueTest
- *
- * @package Zicht\ItertoolsTest
- */
 class UniqueTest extends \PHPUnit_Framework_TestCase
 {
     /**

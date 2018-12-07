@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,18 +8,11 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class SortedIterator
- *
- * @package Zicht\Itertools\lib
- */
 class SortedIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 
     /**
-     * SortedIterator constructor.
-     *
      * @param \Closure $func
      * @param \Iterator $iterable
      * @param bool $reverse
@@ -52,7 +44,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -60,7 +52,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {

@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools\lib\CountIterator;
 
 use Zicht\Itertools;
 
-/**
- * Class CountTest
- *
- * @package Zicht\ItertoolsTest
- */
 class CountTest extends \PHPUnit_Framework_TestCase
 {
     /**

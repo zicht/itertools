@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,10 +8,7 @@ namespace Zicht\Itertools\lib\Interfaces;
 use Zicht\Itertools;
 
 /**
- * Interface SliceInterface
- *
  * @see Itertools\lib\Traits\SliceTrait
- * @package Zicht\Itertools\lib\Interfaces
  */
 interface SliceInterface
 {

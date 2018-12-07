@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class MapByIterator
- *
- * @package Zicht\Itertools\lib
- */
 class MapByIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -24,8 +18,6 @@ class MapByIterator extends \IteratorIterator implements FiniteIterableInterface
     private $func;
 
     /**
-     * MapByIterator constructor.
-     *
      * @param \Closure $func
      * @param \Iterator $iterable
      */
@@ -36,7 +28,7 @@ class MapByIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {

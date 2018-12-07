@@ -1,16 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-/**
- * Class AllTest
- *
- * @package Zicht\ItertoolsTest
- */
 class AllTest extends \PHPUnit_Framework_TestCase
 {
     /**

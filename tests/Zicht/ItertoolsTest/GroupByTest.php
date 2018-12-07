@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools;
 use Zicht\Itertools\lib\GroupedIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-/**
- * Class GroupByTest
- *
- * @package Zicht\ItertoolsTest
- */
 class GroupByTest extends \PHPUnit_Framework_TestCase
 {
     /**

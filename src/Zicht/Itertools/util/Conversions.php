@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,10 +8,7 @@ namespace Zicht\Itertools\util;
 use Zicht\Itertools\conversions as conversion_functions;
 
 /**
- * Class Conversions
- *
  * @deprecated Use \Zicht\Itertools\conversions, will be removed in version 3.0
- * @package Zicht\Itertools\util
  */
 class Conversions
 {

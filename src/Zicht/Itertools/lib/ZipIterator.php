@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class ZipIterator
- *
- * @package Zicht\Itertools\lib
- */
 class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -21,9 +15,6 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     /** @var int */
     private $key;
 
-    /**
-     * ZipIterator constructor.
-     */
     public function __construct()
     {
         parent::__construct(\MultipleIterator::MIT_NEED_ALL | \MultipleIterator::MIT_KEYS_NUMERIC);
@@ -37,7 +28,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -46,7 +37,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -54,7 +45,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {

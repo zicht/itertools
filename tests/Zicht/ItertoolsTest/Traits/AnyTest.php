@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -12,7 +11,6 @@ use Zicht\ItertoolsTest\Dummies\NonIterator;
 /**
  * Class AllTest
  *
- * @package Zicht\ItertoolsTest\Traits
  */
 class AnyTest extends \PHPUnit_Framework_TestCase
 {

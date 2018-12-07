@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\ItertoolsTest\mappings;
 use Zicht\Itertools;
 use Zicht\Itertools\mappings;
 
-/**
- * Class SelectTest
- *
- * @package Zicht\ItertoolsTest\mappings
- */
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -232,8 +226,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get_mapping
-     *
      * @param array $arguments
      * @param array $data
      * @param array $expected
@@ -247,8 +239,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test deprecated getMapping
-     *
      * @param array $arguments
      * @param array $data
      * @param array $expected

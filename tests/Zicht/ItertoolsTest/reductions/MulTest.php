@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,16 +8,9 @@ namespace Zicht\ItertoolsTest\reductions;
 use Zicht\Itertools;
 use Zicht\Itertools\reductions;
 
-/**
- * Class MulTest
- *
- * @package Zicht\ItertoolsTest\reductions
- */
 class MulTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test good arguments
-     *
      * @param array $data
      * @param mixed $expected
      *
@@ -49,8 +41,6 @@ class MulTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test invalid arguments
-     *
      * @param mixed $a
      * @param mixed $b
      *
@@ -87,8 +77,6 @@ class MulTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get_reduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected
@@ -103,8 +91,6 @@ class MulTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test deprecated getReduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected

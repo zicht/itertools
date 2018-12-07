@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,16 +7,8 @@ namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools;
 
-/**
- * Class GetterTest
- *
- * @package Zicht\ItertoolsTest\Traits
- */
 class GetterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test has
-     */
     public function testHas()
     {
         $iterable = Itertools\iterable([1, 2, 3]);
@@ -28,9 +19,6 @@ class GetterTest extends \PHPUnit_Framework_TestCase
         $this->assertNotTrue($iterable->has(3));
     }
 
-    /**
-     * Test get
-     */
     public function testGet()
     {
         $iterable = Itertools\iterable([1, 2, 3]);

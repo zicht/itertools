@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\ItertoolsTest\mappings;
 use Zicht\Itertools;
 use Zicht\Itertools\mappings;
 
-/**
- * Class JsonDecodeTest
- *
- * @package Zicht\ItertoolsTest\mappings
- */
 class JsonDecodeTest extends \PHPUnit_Framework_TestCase
 {
     /**

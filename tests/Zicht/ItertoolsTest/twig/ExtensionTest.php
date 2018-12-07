@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,18 +7,13 @@ namespace Zicht\ItertoolsTest\twig;
 
 use Zicht\Itertools\twig\Extension;
 
-/**
- * Class ExtensionTest
- *
- * @package Zicht\ItertoolsTest\twig
- */
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Extension */
     protected $extension;
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     protected function setUp()
     {

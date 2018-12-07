@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,9 +8,6 @@ namespace Zicht\Itertools\lib\Traits;
 use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\GroupbyIterator;
 
-/**
- * Trait GroupByTrait
- */
 trait GroupByTrait
 {
     /**

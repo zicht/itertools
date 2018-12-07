@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,10 +8,7 @@ namespace Zicht\Itertools\lib\Interfaces;
 use Zicht\Itertools;
 
 /**
- * Interface FilterInterface
- *
  * @see Itertools\lib\Traits\FilterTrait
- * @package Zicht\Itertools\lib\Interfaces
  */
 interface FilterInterface
 {

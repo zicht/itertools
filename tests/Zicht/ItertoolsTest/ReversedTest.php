@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,11 +7,6 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class ReversedTest
- *
- * @package Zicht\ItertoolsTest
- */
 class ReversedTest extends \PHPUnit_Framework_TestCase
 {
     /**

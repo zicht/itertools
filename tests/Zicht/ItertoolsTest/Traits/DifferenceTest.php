@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-/**
- * Class DifferenceTest
- *
- * @package Zicht\ItertoolsTest\Traits
- */
 class DifferenceTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -36,8 +30,6 @@ class DifferenceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test good sequences
-     *
      * @param mixed $baseIterable
      * @param mixed $compareIterable
      * @param mixed $strategy
