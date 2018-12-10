@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class IntersectionIterator
- *
- * @package Zicht\Itertools\lib
- */
 class IntersectionIterator extends \FilterIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -26,8 +20,6 @@ class IntersectionIterator extends \FilterIterator implements FiniteIterableInte
     private $includes;
 
     /**
-     * IntersectionIterator constructor.
-     *
      * @param \Iterator $iterable
      * @param \Iterator $includesIterator
      * @param \Closure $func
@@ -40,7 +32,7 @@ class IntersectionIterator extends \FilterIterator implements FiniteIterableInte
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function accept()
     {

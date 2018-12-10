@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,14 +7,13 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class AccumulateTest
- *
- * @package Zicht\ItertoolsTest
- */
 class AccumulateTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $iterable
+     * @param mixed $func
+     * @param array $expectedKeys
+     * @param array $expectedValues
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($iterable, $func, array $expectedKeys, array $expectedValues)
@@ -40,6 +38,8 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -115,6 +115,8 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $iterable
+     * @param mixed $func
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -125,6 +127,8 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

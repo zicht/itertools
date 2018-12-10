@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,7 +8,6 @@ namespace Zicht\Itertools\lib\Containers;
 /**
  * Class Pair
  *
- * @package Zicht\Itertools\lib\Containers
  */
 class KeyValuePair implements \ArrayAccess
 {
@@ -32,7 +30,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -40,7 +38,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -56,7 +54,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -74,7 +72,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {

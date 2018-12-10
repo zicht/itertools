@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Zicht\Itertools\conversions;
 use Zicht\ItertoolsTest\Dummies\DummyTraversable;
 
-/**
- * Class MixedToIteratorTest
- *
- * @package Zicht\ItertoolsTest\mappings
- */
 class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
 {
     /**

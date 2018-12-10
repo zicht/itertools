@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,16 +8,9 @@ namespace Zicht\ItertoolsTest\reductions;
 use Zicht\Itertools;
 use Zicht\Itertools\reductions;
 
-/**
- * Class JoinTest
- *
- * @package Zicht\ItertoolsTest\reductions
- */
 class JoinTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test good arguments
-     *
      * @param string $glue
      * @param array $data
      * @param mixed $expected
@@ -47,8 +39,6 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test invalid glue
-     *
      * @param mixed $glue
      *
      * @dataProvider badGlueProvider
@@ -61,6 +51,8 @@ class JoinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides invalid glue arguments
+     *
+     * @return array
      */
     public function badGlueProvider()
     {
@@ -74,8 +66,6 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test invalid arguments
-     *
      * @param mixed $a
      * @param mixed $b
      *
@@ -91,6 +81,8 @@ class JoinTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides arguments that should result in \InvalidArgumentException
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {
@@ -114,8 +106,6 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get_reduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected
@@ -130,8 +120,6 @@ class JoinTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test deprecated getReduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected

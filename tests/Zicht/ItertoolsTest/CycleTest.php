@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,19 +7,17 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class CycleTest
- *
- * @package Zicht\ItertoolsTest
- */
 class CycleTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $iterable
+     * @param array $expectedKeys
+     * @param array $expectedValues
      * @dataProvider goodSequenceProvider
      */
-    public function testGoodSequence($p, array $expectedKeys, array $expectedValues)
+    public function testGoodSequence($iterable, array $expectedKeys, array $expectedValues)
     {
-        $iterator = Itertools\cycle($p);
+        $iterator = Itertools\cycle($iterable);
         $this->assertInstanceOf('\Zicht\Itertools\lib\CycleIterator', $iterator);
         $iterator->rewind();
 
@@ -35,6 +32,8 @@ class CycleTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -80,16 +79,19 @@ class CycleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $iterable
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
-    public function testBadArgument($p)
+    public function testBadArgument($iterable)
     {
-        Itertools\cycle($p);
+        Itertools\cycle($iterable);
     }
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

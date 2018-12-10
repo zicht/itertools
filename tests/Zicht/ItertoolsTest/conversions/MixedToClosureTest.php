@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,11 +7,6 @@ namespace Zicht\ItertoolsTest\mappings;
 
 use Zicht\Itertools\conversions;
 
-/**
- * Class MixedToClosureTest
- *
- * @package Zicht\ItertoolsTest\mappings
- */
 class MixedToClosureTest extends \PHPUnit_Framework_TestCase
 {
     /**

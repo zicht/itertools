@@ -1,16 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-/**
- * Class ChainTest
- *
- * @package Zicht\ItertoolsTest
- */
 class ChainTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -38,6 +32,8 @@ class ChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -78,6 +74,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $iterables
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -98,6 +95,8 @@ class ChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

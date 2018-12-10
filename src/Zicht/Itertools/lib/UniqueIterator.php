@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class UniqueIterator
- *
- * @package Zicht\Itertools\lib
- */
 class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -25,8 +19,6 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     private $seen;
 
     /**
-     * UniqueIterator constructor.
-     *
      * @param \Closure $func
      * @param \Iterator $iterable
      */
@@ -38,7 +30,7 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function accept()
     {
@@ -52,7 +44,7 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {

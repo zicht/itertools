@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class DifferenceIterator
- *
- * @package Zicht\Itertools\lib
- */
 class DifferenceIterator extends \FilterIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -26,8 +20,6 @@ class DifferenceIterator extends \FilterIterator implements FiniteIterableInterf
     private $excludes;
 
     /**
-     * DifferenceIterator constructor.
-     *
      * @param \Iterator $iterable
      * @param \Iterator $excludesIterable
      * @param \Closure $func
@@ -40,7 +32,7 @@ class DifferenceIterator extends \FilterIterator implements FiniteIterableInterf
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function accept()
     {

@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -12,11 +11,6 @@ use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 // todo: place the two classed in their own file
 // phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 
-/**
- * Class GroupedIterator
- *
- * @package Zicht\Itertools\lib
- */
 class GroupedIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -25,8 +19,6 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     protected $groupKey;
 
     /**
-     * GroupedIterator constructor.
-     *
      * @param mixed $groupKey
      */
     public function __construct($groupKey)
@@ -55,7 +47,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -63,7 +55,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -71,7 +63,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -79,18 +71,11 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 }
 
-/**
- * Class GroupbyIterator
- *
- * @package Zicht\Itertools\lib
- */
 class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 
     /**
-     * GroupbyIterator constructor.
-     *
      * @param \Closure $func
      * @param \Iterator $iterable
      */
@@ -116,7 +101,7 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -124,7 +109,7 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {

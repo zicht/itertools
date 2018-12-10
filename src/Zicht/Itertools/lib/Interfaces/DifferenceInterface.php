@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,11 +7,6 @@ namespace Zicht\Itertools\lib\Interfaces;
 
 use Zicht\Itertools\lib\DifferenceIterator;
 
-/**
- * Interface DifferenceInterface
- *
- * @package Zicht\Itertools\lib\Interfaces
- */
 interface DifferenceInterface
 {
     /**

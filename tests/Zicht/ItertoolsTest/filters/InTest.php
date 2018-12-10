@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\ItertoolsTest\filters;
 use Zicht\Itertools\filters;
 use Zicht\Itertools;
 
-/**
- * Class InTest
- *
- * @package Zicht\ItertoolsTest\filters
- */
 class InTest extends \PHPUnit_Framework_TestCase
 {
     /**

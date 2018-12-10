@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,11 +7,6 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools\lib\MapIterator;
 
-/**
- * Class MapTest
- *
- * @package Zicht\ItertoolsTest
- */
 class MapTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -78,6 +72,8 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -228,6 +224,8 @@ class MapTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $closure
+     * @param mixed $iterable
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -250,6 +248,8 @@ class MapTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

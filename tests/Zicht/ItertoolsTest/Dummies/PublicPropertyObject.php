@@ -1,16 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest\Dummies;
 
-/**
- * Class PublicPropertyObject
- *
- * @package Zicht\ItertoolsTest\Dummies
- */
 class PublicPropertyObject
 {
     /** @var mixed */

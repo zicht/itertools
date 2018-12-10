@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -15,12 +14,11 @@ use Zicht\Itertools;
  *    <tag name="twig.extension"/>
  * </service>
  *
- * @package Zicht\Itertools\twig
  */
 class Extension extends \Twig_Extension
 {
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getFilters()
     {
@@ -53,7 +51,7 @@ class Extension extends \Twig_Extension
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -371,7 +369,7 @@ class Extension extends \Twig_Extension
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

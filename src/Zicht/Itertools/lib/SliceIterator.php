@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class SliceIterator
- *
- * @package Zicht\Itertools\lib
- */
 class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -28,8 +22,6 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     private $end;
 
     /**
-     * SliceIterator constructor.
-     *
      * @param \Iterator $iterable
      * @param integer $start
      * @param null|integer $end
@@ -50,7 +42,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
@@ -71,7 +63,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -80,7 +72,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {

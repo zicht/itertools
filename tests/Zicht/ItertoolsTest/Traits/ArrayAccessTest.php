@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\ItertoolsTest\Traits;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 
-/**
- * Class ArrayAccessTest
- *
- * @package Zicht\ItertoolsTest\Traits
- */
 class ArrayAccessTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -25,9 +19,6 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($nonIterator[42]);
     }
 
-    /**
-     * Test offsetExists
-     */
     public function testOffsetExists()
     {
         $iterable = Itertools\iterable([1, 2, 3]);
@@ -38,9 +29,6 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
         $this->assertNotTrue($iterable->offsetExists(3));
     }
 
-    /**
-     * Test offsetGet
-     */
     public function testOffsetGet()
     {
         $iterable = Itertools\iterable([1, 2, 3]);
@@ -57,8 +45,6 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test offsetSet
-     *
      * @expectedException \RuntimeException
      */
     public function testOffsetSet()
@@ -68,8 +54,6 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test offsetUnset
-     *
      * @expectedException \RuntimeException
      */
     public function testOffsetUnset()

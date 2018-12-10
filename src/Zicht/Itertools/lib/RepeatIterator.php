@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\InfiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\InfiniteIterableTrait;
 
-/**
- * Class RepeatIterator
- *
- * @package Zicht\Itertools\lib
- */
 class RepeatIterator implements \Countable, InfiniteIterableInterface
 {
     use InfiniteIterableTrait;
@@ -28,8 +22,6 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     private $key;
 
     /**
-     * RepeatIterator constructor.
-     *
      * @param mixed $mixed
      * @param integer $times
      */
@@ -41,7 +33,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -49,7 +41,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -57,7 +49,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -65,7 +57,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -73,7 +65,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
@@ -81,7 +73,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function count()
     {

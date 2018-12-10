@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,14 +7,11 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class RepeatTest
- *
- * @package Zicht\ItertoolsTest
- */
 class RepeatTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $object
+     * @param mixed $times
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($object, $times)
@@ -29,7 +25,7 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
         $iterator->rewind();
 
         $actialTestTimes = $times === null ? 2 : $times;
-        for ($key=0; $key<$actialTestTimes; $key++) {
+        for ($key = 0; $key < $actialTestTimes; $key++) {
             $this->assertTrue($iterator->valid(), 'Failure in $iterator->valid()');
             $this->assertEquals($key, $iterator->key(), 'Failure in $iterator->key()');
             $this->assertEquals($object, $iterator->current(), 'Failure in $iterator->current()');
@@ -43,6 +39,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -56,6 +54,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $object
+     * @param mixed $times
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -66,6 +66,8 @@ class RepeatTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

@@ -1,19 +1,15 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-/**
- * Class LastTest
- *
- * @package Zicht\ItertoolsTest
- */
 class LastTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param array $arguments
+     * @param mixed $expected
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence(array $arguments, $expected)
@@ -24,6 +20,8 @@ class LastTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -54,6 +52,8 @@ class LastTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $arguments
+     * @param mixed $expected
      * @dataProvider goodKeySequenceProvider
      */
     public function testKeyGoodSequence(array $arguments, $expected)
@@ -64,6 +64,8 @@ class LastTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodKeySequenceProvider()
     {
@@ -104,6 +106,8 @@ class LastTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

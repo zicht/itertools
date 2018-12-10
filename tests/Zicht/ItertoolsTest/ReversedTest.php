@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,14 +7,12 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class ReversedTest
- *
- * @package Zicht\ItertoolsTest
- */
 class ReversedTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param mixed $iterable
+     * @param array $expectedKeys
+     * @param array $expectedValues
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($iterable, array $expectedKeys, array $expectedValues)
@@ -40,6 +37,8 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -66,6 +65,7 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $iterable
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -76,6 +76,8 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

@@ -1,16 +1,14 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
+
+// phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
 
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ChainIterator;
 
-/**
- * Trait ChainTrait
- */
 trait ChainTrait
 {
     /**

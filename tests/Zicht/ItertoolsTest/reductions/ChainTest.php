@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,11 +9,6 @@ use Zicht\Itertools;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\reductions;
 
-/**
- * Class ChainTest
- *
- * @package Zicht\ItertoolsTest\reductions
- */
 class ChainTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -29,9 +23,6 @@ class ChainTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9], $result->values());
     }
 
-    /**
-     * Test empty
-     */
     public function testEmpty()
     {
         $lists = [];
@@ -54,8 +45,6 @@ class ChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test get_reduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected
@@ -70,8 +59,6 @@ class ChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test deprecated getReduction
-     *
      * @param array $arguments
      * @param array $data
      * @param mixed $expected

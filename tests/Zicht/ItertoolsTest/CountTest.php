@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -10,14 +9,13 @@ use Zicht\Itertools\lib\CountIterator;
 
 use Zicht\Itertools;
 
-/**
- * Class CountTest
- *
- * @package Zicht\ItertoolsTest
- */
 class CountTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param integer $start
+     * @param integer $step
+     * @param array $expectedKeys
+     * @param array $expectedValues
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence($start, $step, array $expectedKeys, array $expectedValues)
@@ -43,6 +41,10 @@ class CountTest extends \PHPUnit_Framework_TestCase
      *
      * Using foreach or valid(), next(), etc, should always result in the same behavior
      *
+     * @param integer $start
+     * @param integer $step
+     * @param array $expectedKeys
+     * @param array $expectedValues
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequenceForeach($start, $step, array $expectedKeys, array $expectedValues)
@@ -70,6 +72,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -93,6 +97,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param mixed $start
+     * @param mixed $step
      * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
@@ -103,6 +109,8 @@ class CountTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

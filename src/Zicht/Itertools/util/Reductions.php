@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -14,6 +13,7 @@ use Zicht\Itertools;
 class Reductions
 {
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\add, will be removed in version 3.0
      */
     public static function add()
@@ -22,6 +22,7 @@ class Reductions
     }
 
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\sub, will be removed in version 3.0
      */
     public static function sub()
@@ -30,6 +31,7 @@ class Reductions
     }
 
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\mul, will be removed in version 3.0
      */
     public static function mul()
@@ -38,6 +40,7 @@ class Reductions
     }
 
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\min, will be removed in version 3.0
      */
     public static function min()
@@ -46,6 +49,7 @@ class Reductions
     }
 
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\max, will be removed in version 3.0
      */
     public static function max()
@@ -54,6 +58,8 @@ class Reductions
     }
 
     /**
+     * @param string $glue
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\reductions\join, will be removed in version 3.0
      */
     public static function join($glue = '')

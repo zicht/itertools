@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -32,7 +31,6 @@ use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
  * implement the itertools traits, allowing us to test the behavior of the trait
  * in this (highly unlikely to occur) situation.
  *
- * @package Zicht\ItertoolsTest\Dummies
  */
 class NonIterator implements
     \ArrayAccess,

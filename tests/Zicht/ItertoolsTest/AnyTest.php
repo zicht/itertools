@@ -1,19 +1,15 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-/**
- * Class AnyTest
- *
- * @package Zicht\ItertoolsTest
- */
 class AnyTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @param array $arguments
+     * @param mixed $expected
      * @dataProvider goodSequenceProvider
      */
     public function testGoodSequence(array $arguments, $expected)
@@ -24,6 +20,8 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -107,6 +105,8 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides bad sequence tests
+     *
+     * @return array
      */
     public function badArgumentProvider()
     {

@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,16 +7,9 @@ namespace Zicht\ItertoolsTest\Traits;
 
 use Zicht\Itertools;
 
-/**
- * Class ItemsTest
- *
- * @package Zicht\ItertoolsTest\Traits
- */
 class ItemsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test good sequences
-     *
      * @param mixed $iterable
      * @param array $expectedList
      *
@@ -55,6 +47,8 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {
@@ -91,9 +85,6 @@ class ItemsTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    /**
-     * Test good recursive sequences
-     */
     public function testGoodRecursiveSequence()
     {
         $items = Itertools\iterable([Itertools\iterable([1, 2, 3]), Itertools\iterable([4, 5, 6])])->items();

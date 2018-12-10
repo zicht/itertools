@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\InfiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\InfiniteIterableTrait;
 
-/**
- * Class CountIterator
- *
- * @package Zicht\Itertools\lib
- */
 class CountIterator implements InfiniteIterableInterface
 {
     use InfiniteIterableTrait;
@@ -28,8 +22,6 @@ class CountIterator implements InfiniteIterableInterface
     protected $key;
 
     /**
-     * CountIterator constructor.
-     *
      * @param integer $start
      * @param integer $step
      */
@@ -41,7 +33,7 @@ class CountIterator implements InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -49,7 +41,7 @@ class CountIterator implements InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -57,7 +49,7 @@ class CountIterator implements InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -65,7 +57,7 @@ class CountIterator implements InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -73,7 +65,7 @@ class CountIterator implements InfiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {

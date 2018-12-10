@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,7 +8,6 @@ namespace Zicht\ItertoolsTest\Dummies;
 /**
  * Class SimpleGettableObject
  *
- * @package Zicht\ItertoolsTest\Containers
  */
 class GettableObject
 {
@@ -29,7 +27,7 @@ class GettableObject
     /**
      * Get a value
      *
-     * @param $name
+     * @param mixed $name
      * @return mixed|null
      */
     public function __get($name)

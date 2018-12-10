@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -12,6 +11,8 @@ namespace Zicht\Itertools\util;
 class Mappings
 {
     /**
+     * @param string $chars
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\mappings\lstrip, will be removed in version 3.0
      */
     public static function lstrip($chars = " \t\n\r\0\x0B")
@@ -22,6 +23,8 @@ class Mappings
     }
 
     /**
+     * @param string $chars
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\mappings\rstrip, will be removed in version 3.0
      */
     public static function rstrip($chars = " \t\n\r\0\x0B")
@@ -32,6 +35,8 @@ class Mappings
     }
 
     /**
+     * @param string $chars
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\mappings\strip, will be removed in version 3.0
      */
     public static function strip($chars = " \t\n\r\0\x0B")
@@ -42,6 +47,7 @@ class Mappings
     }
 
     /**
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\mappings\length, will be removed in version 3.0
      */
     public static function length()
@@ -52,6 +58,8 @@ class Mappings
     }
 
     /**
+     * @param string $name
+     * @return \Closure
      * @deprecated Use \Zicht\Itertools\mappings\getMapping, will be removed in version 3.0
      */
     public static function getMapping($name /* [argument, [arguments, ...] */)

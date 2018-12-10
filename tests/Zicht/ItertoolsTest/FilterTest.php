@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,16 +7,9 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\Itertools;
 
-/**
- * Class FilterTest
- *
- * @package Zicht\ItertoolsTest
- */
 class FilterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test good sequences
-     *
      * @param array $arguments
      * @param array $expectedKeys
      * @param array $expectedValues
@@ -76,6 +68,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodBackwardsCompatibleSequenceProvider()
     {
@@ -128,6 +122,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Provides good sequence tests
+     *
+     * @return array
      */
     public function goodSequenceProvider()
     {

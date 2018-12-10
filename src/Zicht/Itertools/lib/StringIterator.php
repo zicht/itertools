@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class StringIterator
- *
- * @package Zicht\Itertools\lib
- */
 class StringIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -25,8 +19,6 @@ class StringIterator implements FiniteIterableInterface
     protected $key;
 
     /**
-     * StringIterator constructor.
-     *
      * @param string $string
      */
     public function __construct($string)
@@ -36,7 +28,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -44,7 +36,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -52,7 +44,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -60,7 +52,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -68,7 +60,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {

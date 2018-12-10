@@ -1,16 +1,10 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest\Dummies;
 
-/**
- * Class IsMethodObject
- *
- * @package Zicht\ItertoolsTest\Dummies
- */
 class IsMethodObject
 {
     /** @var mixed */

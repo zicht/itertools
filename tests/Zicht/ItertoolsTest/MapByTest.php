@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -8,11 +7,6 @@ namespace Zicht\ItertoolsTest;
 
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-/**
- * Class MapByTest
- *
- * @package Zicht\ItertoolsTest
- */
 class MapByTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -45,8 +39,6 @@ class MapByTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test deprecated keyCallback
-     *
      * @param array $arguments
      * @param array $expectedKeys
      * @param array $expectedValues

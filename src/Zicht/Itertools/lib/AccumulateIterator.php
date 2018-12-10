@@ -1,6 +1,5 @@
 <?php
 /**
- * @author Boudewijn Schoon <boudewijn@zicht.nl>
  * @copyright Zicht Online <http://zicht.nl>
  */
 
@@ -9,11 +8,6 @@ namespace Zicht\Itertools\lib;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
 
-/**
- * Class AccumulateIterator
- *
- * @package Zicht\Itertools\lib
- */
 class AccumulateIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
@@ -28,8 +22,6 @@ class AccumulateIterator implements FiniteIterableInterface
     protected $value;
 
     /**
-     * AccumulateIterator constructor.
-     *
      * @param \Iterator $iterable
      * @param \Closure $func
      */
@@ -41,7 +33,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function rewind()
     {
@@ -50,7 +42,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function current()
     {
@@ -58,7 +50,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function key()
     {
@@ -66,7 +58,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function next()
     {
@@ -81,7 +73,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritdoc}
      */
     public function valid()
     {
