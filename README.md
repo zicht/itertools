@@ -15,6 +15,14 @@ Common operations include:
 - [grouping](#grouping): `groupBy`
 - [reducing](#reducing): `accumulate` and `reduce`
 
+## Usage
+In order to use the available  itertools filters/functions via Twig, simply add this service definition in your `services.xml`
+```php
+<service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
+    <tag name="twig.extension"/>
+</service>
+
+```
 ## Scripts
 - unit test: `composer test`
 - lint test: `composer lint`
