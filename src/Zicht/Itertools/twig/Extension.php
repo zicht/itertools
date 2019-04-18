@@ -9,11 +9,6 @@ use Zicht\Itertools;
 
 /**
  * Twig extension.
- *
- * <service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
- *    <tag name="twig.extension"/>
- * </service>
- *
  */
 class Extension extends \Twig_Extension
 {
