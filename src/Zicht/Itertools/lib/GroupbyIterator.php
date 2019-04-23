@@ -3,15 +3,14 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// todo: place the two classed in their own file
+// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 // phpcs:disable Zicht.Commenting.PropertyComment.VarTypeAvoidMixed
 
 namespace Zicht\Itertools\lib;
 
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
-
-// todo: place the two classed in their own file
-// phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 
 class GroupedIterator extends \IteratorIterator implements FiniteIterableInterface
 {
