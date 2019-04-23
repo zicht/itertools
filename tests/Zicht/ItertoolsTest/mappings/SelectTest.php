@@ -176,9 +176,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
     }
 
-    /**
-     * Test the $discardNull parameter
-     */
     public function testDiscardNullParameter()
     {
         $data = [
@@ -221,8 +218,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             [
                 '-b-' => 'B1',
             ],
-            [
-            ],
+            [],
         ];
 
         // Test for array
@@ -234,9 +230,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
     }
 
-    /**
-     * Test the $discardEmpty parameter
-     */
     public function testDiscardEmptyParameter()
     {
         $data = [
@@ -279,8 +272,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             [
                 '-b-' => 'B1',
             ],
-            [
-            ],
+            [],
         ];
 
         // Test for array

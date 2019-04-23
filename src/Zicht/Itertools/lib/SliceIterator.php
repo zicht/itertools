@@ -12,10 +12,10 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 
-    /** @var integer */
+    /** @var int */
     private $index;
 
-    /** @var integer */
+    /** @var int */
     private $start;
 
     /** @var null|int */
@@ -23,8 +23,8 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
 
     /**
      * @param \Iterator $iterable
-     * @param integer $start
-     * @param null|integer $end
+     * @param int $start
+     * @param null|int $end
      */
     public function __construct(\Iterator $iterable, $start, $end = null)
     {

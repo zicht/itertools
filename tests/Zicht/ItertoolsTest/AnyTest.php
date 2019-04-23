@@ -118,9 +118,12 @@ class AnyTest extends \PHPUnit_Framework_TestCase
 
             // wrong argument count
             [[]],
-            [[function ($value) {
-                return $value;
-            }, [1, 2, 3], 'one argument to many']],
+            [[
+                function ($value) {
+                    return $value;
+                }, [1, 2, 3], 'one argument to many',
+            ],
+            ],
         ];
     }
 }

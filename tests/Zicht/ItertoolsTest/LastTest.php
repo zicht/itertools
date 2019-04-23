@@ -117,7 +117,9 @@ class LastTest extends \PHPUnit_Framework_TestCase
             [[true]],
             [[function () {
                 return [];
-            }]],
+            },
+            ],
+            ],
         ];
     }
 }

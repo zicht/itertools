@@ -811,8 +811,8 @@ function all()
  * 'b', 'c', 'd'
  *
  * @param array|string|\Iterator $iterable
- * @param integer $start
- * @param null|integer $end
+ * @param int $start
+ * @param null|int $end
  * @return SliceIterator
  */
 function slice($iterable, $start, $end = null)

@@ -181,18 +181,19 @@ class Extension extends \Twig_Extension
         // to the reducing($name, ...$args) structure.
         // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-        if (is_string($name) && in_array(
-            $name,
-            [
-                'add',
-                'chain',
-                'join',
-                'max',
-                'min',
-                'mul',
-                'sub',
-            ]
-        )) {
+        if (is_string($name) &&
+            in_array(
+                $name,
+                [
+                    'add',
+                    'chain',
+                    'join',
+                    'max',
+                    'min',
+                    'mul',
+                    'sub',
+                ]
+            )) {
             return call_user_func_array(sprintf('\Zicht\Itertools\reductions\%s', $name), array_slice(func_get_args(), 1));
         }
 
@@ -215,23 +216,24 @@ class Extension extends \Twig_Extension
         // to the reducing($name, ...$args) structure.
         // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-        if (is_string($name) && in_array(
-            $name,
-            [
-                'json_decode',
-                'json_encode',
-                'key',
-                'length',
-                'lower',
-                'lstrip',
-                'random',
-                'rstrip',
-                'select',
-                'strip',
-                'type',
-                'upper',
-            ]
-        )) {
+        if (is_string($name) &&
+            in_array(
+                $name,
+                [
+                    'json_decode',
+                    'json_encode',
+                    'key',
+                    'length',
+                    'lower',
+                    'lstrip',
+                    'random',
+                    'rstrip',
+                    'select',
+                    'strip',
+                    'type',
+                    'upper',
+                ]
+            )) {
             return call_user_func_array(sprintf('\Zicht\Itertools\mappings\%s', $name), array_slice(func_get_args(), 1));
         }
 
@@ -254,17 +256,18 @@ class Extension extends \Twig_Extension
         // to the reducing($name, ...$args) structure.
         // http://php.net/manual/en/functions.arguments.php#functions.variable-arg-list
 
-        if (is_string($name) && in_array(
-            $name,
-            [
-                'equals',
-                'in',
-                'match',
-                'not',
-                'not_in',
-                'type',
-            ]
-        )) {
+        if (is_string($name) &&
+            in_array(
+                $name,
+                [
+                    'equals',
+                    'in',
+                    'match',
+                    'not',
+                    'not_in',
+                    'type',
+                ]
+            )) {
             return call_user_func_array(sprintf('\Zicht\Itertools\filters\%s', $name), array_slice(func_get_args(), 1));
         }
 

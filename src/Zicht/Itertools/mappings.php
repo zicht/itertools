@@ -105,8 +105,8 @@ function upper()
 /**
  * Returns a closure that returns the value as a json_encoded string
  *
- * @param integer $options
- * @param integer $depth
+ * @param int $options
+ * @param int $depth
  * @return \Closure
  */
 function json_encode($options = 0, $depth = 512)
@@ -120,8 +120,8 @@ function json_encode($options = 0, $depth = 512)
  * Returns a closure that returns the json_encoded value as decoded value
  *
  * @param boolean $assoc
- * @param integer $depth
- * @param integer $options
+ * @param int $depth
+ * @param int $options
  * @return \Closure
  */
 function json_decode($assoc = false, $depth = 512, $options = 0)

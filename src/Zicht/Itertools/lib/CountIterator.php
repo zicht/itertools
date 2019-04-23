@@ -12,18 +12,18 @@ class CountIterator implements InfiniteIterableInterface
 {
     use InfiniteIterableTrait;
 
-    /** @var integer */
+    /** @var int */
     protected $start;
 
-    /** @var integer */
+    /** @var int */
     protected $step;
 
-    /** @var integer */
+    /** @var int */
     protected $key;
 
     /**
-     * @param integer $start
-     * @param integer $step
+     * @param int $start
+     * @param int $step
      */
     public function __construct($start, $step)
     {

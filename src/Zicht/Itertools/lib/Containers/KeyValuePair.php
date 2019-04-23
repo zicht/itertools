@@ -3,12 +3,10 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.PropertyComment.VarTypeAvoidMixed
+
 namespace Zicht\Itertools\lib\Containers;
 
-/**
- * Class Pair
- *
- */
 class KeyValuePair implements \ArrayAccess
 {
     /** @var mixed */

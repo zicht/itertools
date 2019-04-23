@@ -62,85 +62,124 @@ class SortedTest extends \PHPUnit_Framework_TestCase
         return [
             // callback
             [
-                [function ($a) {
-                    return $a;
-                }, [1, 2, 3]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [1, 2, 3],
+                ],
                 [0, 1, 2],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, ['a' => 1, 'b' => 2, 'c' => 3]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, ['a' => 1, 'b' => 2, 'c' => 3],
+                ],
                 ['a', 'b', 'c'],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, [1, 3, 2]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [1, 3, 2],
+                ],
                 [0, 2, 1],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, ['a' => 1, 'c' => 3, 'b' => 2]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, ['a' => 1, 'c' => 3, 'b' => 2],
+                ],
                 ['a', 'b', 'c'],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, [2, 1, 3]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [2, 1, 3],
+                ],
                 [1, 0, 2],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, [2, 3, 1]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [2, 3, 1],
+                ],
                 [2, 0, 1],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, [3, 2, 1]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [3, 2, 1],
+                ],
                 [2, 1, 0],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
-                [function ($a) {
-                    return $a;
-                }, [3, 1, 2]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [3, 1, 2],
+                ],
                 [1, 2, 0],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             // the same key value
             [
-                [function ($a) {
-                    return $a;
-                }, [1, 2, 1]],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [1, 2, 1],
+                ],
                 [0, 2, 1],
-                [1, 1, 2]],
+                [1, 1, 2],
+            ],
             [
-                [function ($o) {
-                    return $o->prop;
-                }, [$obj(1, 4), $obj(1, 2), $obj(1, 3)]],
+                [
+                    function ($o) {
+                        return $o->prop;
+                    }, [$obj(1, 4), $obj(1, 2), $obj(1, 3)],
+                ],
                 [0, 1, 2],
-                [$obj(1, 4), $obj(1, 2), $obj(1, 3)]],
+                [$obj(1, 4), $obj(1, 2), $obj(1, 3)],
+            ],
             [
-                [function ($o) {
-                    return $o->prop;
-                }, [$obj(1, 1), $obj(1, 3), $obj(1, 2)]],
+                [
+                    function ($o) {
+                        return $o->prop;
+                    }, [$obj(1, 1), $obj(1, 3), $obj(1, 2)],
+                ],
                 [0, 1, 2],
-                [$obj(1, 1), $obj(1, 3), $obj(1, 2)]],
+                [$obj(1, 1), $obj(1, 3), $obj(1, 2)],
+            ],
             [
-                [function ($o) {
-                    return $o->prop;
-                }, [$obj(1, 1), $obj(2, 1), $obj(1, 2)]],
+                [
+                    function ($o) {
+                        return $o->prop;
+                    }, [$obj(1, 1), $obj(2, 1), $obj(1, 2)],
+                ],
                 [0, 2, 1],
-                [$obj(1, 1), $obj(1, 2), $obj(2, 1)]],
+                [$obj(1, 1), $obj(1, 2), $obj(2, 1)],
+            ],
             // reverse
             [
-                [function ($a) {
-                    return $a;
-                }, [1, 3, 2], true],
+                [
+                    function ($a) {
+                        return $a;
+                    }, [1, 3, 2], true,
+                ],
                 [1, 2, 0],
-                [3, 2, 1]],
+                [3, 2, 1],
+            ],
 
             /*
               Reverse sorting with keys that have the same value.
@@ -167,9 +206,11 @@ class SortedTest extends \PHPUnit_Framework_TestCase
             ['2:first 2', '2:second 2', '1:first 1', '1:second 1']
             */
             [
-                [function ($o) {
-                    return $o->prop;
-                }, [$obj(1, 'first 1'), $obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'second 1')], true],
+                [
+                    function ($o) {
+                        return $o->prop;
+                    }, [$obj(1, 'first 1'), $obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'second 1')], true,
+                ],
                 [1, 2, 0, 3],
                 [$obj(2, 'first 2'), $obj(2, 'second 2'), $obj(1, 'first 1'), $obj(1, 'second 1')],
             ],
@@ -183,9 +224,11 @@ class SortedTest extends \PHPUnit_Framework_TestCase
 
             // the callback should contain both the key (2nd parameter) and the value (1st parameter)
             [
-                [function ($value, $key) {
-                    return $key;
-                }, ['c' => 1, 'b' => 2, 'a' => 3]],
+                [
+                    function ($value, $key) {
+                        return $key;
+                    }, ['c' => 1, 'b' => 2, 'a' => 3],
+                ],
                 ['a', 'b', 'c'],
                 [3, 2, 1],
             ],
@@ -211,9 +254,12 @@ class SortedTest extends \PHPUnit_Framework_TestCase
         return [
             [[123, [1, 2, 3]]],
             [[true, [1, 2, 3]]],
-            [[function () {
-                return 1;
-            }, [1, 2, 3], 'this is not a boolean']],
+            [[
+                function () {
+                    return 1;
+                }, [1, 2, 3], 'this is not a boolean',
+            ],
+            ],
         ];
     }
 }

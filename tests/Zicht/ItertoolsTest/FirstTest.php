@@ -117,7 +117,9 @@ class FirstTest extends \PHPUnit_Framework_TestCase
             [[true]],
             [[function () {
                 return [];
-            }]],
+            },
+            ],
+            ],
         ];
     }
 }
