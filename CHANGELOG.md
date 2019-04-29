@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.10.14 - 2019-04-23
+### Fixed
+- The `select` mapper now accepts either an array or an object as its first parameter,
+  when an object is given then`select` will create an array with objects, when an array is
+  given then `select` will create an array with arrays, as before.
+
 ## 2.10.13 - 2018-12-07
 ### Fixed
 - Update `composer.lock`.

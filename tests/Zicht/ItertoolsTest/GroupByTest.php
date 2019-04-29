@@ -121,46 +121,61 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
         return [
             // callback
             [
-                [function ($a) {
-                    return $a + 10;
-                }, [1, 2, 2, 3, 3, 3], false],
-                [11 => [0 => 1], 12 => [1 => 2, 2 => 2], 13 => [3 => 3, 4 => 3, 5 => 3]]],
+                [
+                    function ($a) {
+                        return $a + 10;
+                    }, [1, 2, 2, 3, 3, 3], false,
+                ],
+                [11 => [0 => 1], 12 => [1 => 2, 2 => 2], 13 => [3 => 3, 4 => 3, 5 => 3]],
+            ],
 
             // callback using auto-sort
             [
-                [function ($a) {
-                    return $a + 10;
-                }, [3, 2, 1, 2, 3, 3], true],
-                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]]],
+                [
+                    function ($a) {
+                        return $a + 10;
+                    }, [3, 2, 1, 2, 3, 3], true,
+                ],
+                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]],
+            ],
             [
-                [function ($a) {
-                    return $a + 10;
-                }, [3, 2, 1, 2, 3, 3]],
-                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]]],
+                [
+                    function ($a) {
+                        return $a + 10;
+                    }, [3, 2, 1, 2, 3, 3],
+                ],
+                [11 => [2 => 1], 12 => [1 => 2, 3 => 2], 13 => [0 => 3, 4 => 3, 5 => 3]],
+            ],
 
             // use string to identify array key
             [
                 ['key', [['key' => 'k1'], ['key' => 'k2'], ['key' => 'k2']]],
-                ['k1' => [0 => ['key' => 'k1']], 'k2' => [1 => ['key' => 'k2'], 2 => ['key' => 'k2']]]],
+                ['k1' => [0 => ['key' => 'k1']], 'k2' => [1 => ['key' => 'k2'], 2 => ['key' => 'k2']]],
+            ],
             [
                 ['key', [['key' => 1], ['key' => 2], ['key' => 2]], false],
-                [1 => [0 => ['key' => 1]], 2 => [1 => ['key' => 2], 2 => ['key' => 2]]]],
+                [1 => [0 => ['key' => 1]], 2 => [1 => ['key' => 2], 2 => ['key' => 2]]],
+            ],
 
             // use string to identify object property
             [
                 ['prop', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p2')]],
-                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]]],
+                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]],
+            ],
             [
                 ['prop', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(2)]],
-                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]]],
+                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]],
+            ],
 
             // use string to identify object get method
             [
                 ['getProp', [new SimpleObject('p1'), new SimpleObject('p2'), new SimpleObject('p2')]],
-                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]]],
+                ['p1' => [0 => new SimpleObject('p1')], 'p2' => [1 => new SimpleObject('p2'), 2 => new SimpleObject('p2')]],
+            ],
             [
                 ['getProp', [new SimpleObject(1), new SimpleObject(2), new SimpleObject(2)]],
-                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]]],
+                [1 => [0 => new SimpleObject(1)], 2 => [1 => new SimpleObject(2), 2 => new SimpleObject(2)]],
+            ],
 
             // use null as value getter, this returns the value itself
             [
@@ -170,17 +185,16 @@ class GroupByTest extends \PHPUnit_Framework_TestCase
 
             // the callback should contain both the key (2nd parameter) and the value (1st parameter)
             [
-                [function ($value, $key) {
-                    return $key;
-                }, ['c' => 1, 'b' => 2, 'a' => 3]],
+                [
+                    function ($value, $key) {
+                        return $key;
+                    }, ['c' => 1, 'b' => 2, 'a' => 3],
+                ],
                 ['a' => ['a' => 3], 'b' => ['b' => 2], 'c' => ['c' => 1]],
             ],
         ];
     }
 
-    /**
-     * Test the toArray method
-     */
     public function testToArray()
     {
         $iterable = Itertools\iterable([0 => 1, 1 => 2, 2 => 3, 3 => 2, 4 => 3, 5 => 3]);

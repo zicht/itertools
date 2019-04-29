@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.PropertyComment.VarTypeAvoidMixed
+
 namespace Zicht\Itertools\lib;
 
 use Zicht\Itertools\lib\Interfaces\InfiniteIterableInterface;
@@ -15,15 +17,15 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     /** @var mixed */
     private $mixed;
 
-    /** @var integer */
+    /** @var int */
     private $times;
 
-    /** @var integer */
+    /** @var int */
     private $key;
 
     /**
      * @param mixed $mixed
-     * @param integer $times
+     * @param int $times
      */
     public function __construct($mixed, $times)
     {

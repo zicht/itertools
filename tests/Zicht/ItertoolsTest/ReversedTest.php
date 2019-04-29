@@ -54,13 +54,15 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
             [
                 [1, 2, 3],
                 [2, 1, 0],
-                [3, 2, 1]],
+                [3, 2, 1],
+            ],
 
             // test duplicate keys reversal
             [
                 Itertools\chain([1, 2, 3], [4, 5, 6]),
                 [2, 1, 0, 2, 1, 0],
-                [6, 5, 4, 3, 2, 1]],
+                [6, 5, 4, 3, 2, 1],
+            ],
         ];
     }
 
@@ -86,7 +88,8 @@ class ReversedTest extends \PHPUnit_Framework_TestCase
             [1.0],
             [function () {
                 return '';
-            }],
+            },
+            ],
         ];
     }
 }

@@ -94,29 +94,35 @@ class FilterTest extends \PHPUnit_Framework_TestCase
             [
                 [$trueClosure, [0, -1, 2, -3]],
                 [0, 1, 2, 3],
-                [0, -1, 2, -3]],
+                [0, -1, 2, -3],
+            ],
             [
                 [$falseClosure, [0, -1, 2, -3]],
                 [],
-                []],
+                [],
+            ],
             [
                 [$isPositiveClosure, [0, -1, 2, -3]],
                 [2],
-                [2]],
+                [2],
+            ],
             [
                 [$isNegativeClosure, [0, -1, 2, -3]],
                 [1, 3],
-                [-1, -3]],
+                [-1, -3],
+            ],
 
             // without closure (this uses !empty as a closure)
             [
                 [[1, 2, 3]],
                 [0, 1, 2],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
                 [[null, '', 0, '0']],
                 [],
-                []],
+                [],
+            ],
         ];
     }
 

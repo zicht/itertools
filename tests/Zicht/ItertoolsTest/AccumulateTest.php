@@ -57,52 +57,61 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
                 new \ArrayIterator([1, 2, 3]),
                 'add',
                 [0, 1, 2],
-                [1, 3, 6]],
+                [1, 3, 6],
+            ],
             [
                 [1, 2, 3],
                 'add',
                 [0, 1, 2],
-                [1, 3, 6]],
+                [1, 3, 6],
+            ],
             [
                 [1, 2, 3],
                 'sub',
                 [0, 1, 2],
-                [1, -1, -4]],
+                [1, -1, -4],
+            ],
             [
                 [1, 2, 3],
                 'mul',
                 [0, 1, 2],
-                [1, 2, 6]],
+                [1, 2, 6],
+            ],
             [
                 [1, 2, 3],
                 'min',
                 [0, 1, 2],
-                [1, 1, 1]],
+                [1, 1, 1],
+            ],
 
             [
                 [1, 2, 3],
                 'max',
                 [0, 1, 2],
-                [1, 2, 3]],
+                [1, 2, 3],
+            ],
             [
                 [1, 2, 3],
                 function ($a, $b) {
                     return $a + $b;
                 },
                 [0, 1, 2],
-                [1, 3, 6]],
+                [1, 3, 6],
+            ],
             [
                 'Foo',
                 function ($a, $b) {
                     return $a . $b;
                 },
                 [0, 1, 2],
-                ['F', 'Fo', 'Foo']],
+                ['F', 'Fo', 'Foo'],
+            ],
             [
                 ['a' => 1, 'b' => 2, 'c' => 3],
                 'add',
                 ['a', 'b', 'c'],
-                [1, 3, 6]],
+                [1, 3, 6],
+            ],
 
             // test specific bug encountered when using an empty MapIterator as input
             [

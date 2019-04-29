@@ -15,8 +15,8 @@ interface SliceInterface
     /**
      * TODO: document!
      *
-     * @param integer $start
-     * @param null|integer $end
+     * @param int $start
+     * @param null|int $end
      * @return Itertools\lib\SliceIterator
      *
      * @see Itertools\lib\Traits\SliceTrait::slice

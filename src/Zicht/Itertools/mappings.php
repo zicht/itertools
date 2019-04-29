@@ -105,8 +105,8 @@ function upper()
 /**
  * Returns a closure that returns the value as a json_encoded string
  *
- * @param integer $options
- * @param integer $depth
+ * @param int $options
+ * @param int $depth
  * @return \Closure
  */
 function json_encode($options = 0, $depth = 512)
@@ -120,8 +120,8 @@ function json_encode($options = 0, $depth = 512)
  * Returns a closure that returns the json_encoded value as decoded value
  *
  * @param boolean $assoc
- * @param integer $depth
- * @param integer $options
+ * @param int $depth
+ * @param int $options
  * @return \Closure
  */
 function json_decode($assoc = false, $depth = 512, $options = 0)
@@ -155,18 +155,19 @@ function json_decode($assoc = false, $depth = 512, $options = 0)
  *    ],
  * ]
  *
- * @param array $strategies
+ * @param array|object $strategies
  * @param null|string|\Closure $strategy
  * @param boolean $discardNull
  * @param boolean $discardEmptyContainer
  * @return \Closure
  */
-function select(array $strategies, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
+function select($strategies, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
 {
-    $strategies = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', $strategies);
+    $castToObject = is_object($strategies);
+    $strategies = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', (array)$strategies);
     $strategy = conversions\mixed_to_value_getter($strategy);
 
-    return function ($value, $key) use ($strategies, $strategy, $discardNull, $discardEmptyContainer) {
+    return function ($value, $key) use ($strategies, $strategy, $discardNull, $discardEmptyContainer, $castToObject) {
         $value = $strategy($value);
         $res = [];
         foreach ($strategies as $strategyKey => $strategy) {
@@ -188,7 +189,7 @@ function select(array $strategies, $strategy = null, $discardNull = false, $disc
                 }
             );
         }
-        return $res;
+        return $castToObject ? (object)$res : $res;
     };
 }
 

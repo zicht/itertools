@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Squiz.Arrays.ArrayDeclaration.KeySpecified
+
 namespace Zicht\ItertoolsTest\mappings;
 
 use Zicht\Itertools;

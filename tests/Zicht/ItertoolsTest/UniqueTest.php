@@ -72,23 +72,29 @@ class UniqueTest extends \PHPUnit_Framework_TestCase
                 [1, 2, 3],
             ],
             [
-                [function ($value) {
-                    return $value;
-                }, [1, 1, 2, 2, 3, 3]],
+                [
+                    function ($value) {
+                        return $value;
+                    }, [1, 1, 2, 2, 3, 3],
+                ],
                 [0, 2, 4],
                 [1, 2, 3],
             ],
             [
-                [function ($value, $key) {
-                    return $key;
-                }, [1, 2, 3]],
+                [
+                    function ($value, $key) {
+                        return $key;
+                    }, [1, 2, 3],
+                ],
                 [0, 1, 2],
                 [1, 2, 3],
             ],
             [
-                [function ($value, $key) {
-                    return 'A';
-                }, [1, 2, 3]],
+                [
+                    function ($value, $key) {
+                        return 'A';
+                    }, [1, 2, 3],
+                ],
                 [0],
                 [1],
             ],
@@ -119,9 +125,12 @@ class UniqueTest extends \PHPUnit_Framework_TestCase
 
             // wrong argument count
             [[]],
-            [[function ($value) {
-                return $value;
-            }, [1, 2, 3], 'one argument to many']],
+            [[
+                function ($value) {
+                    return $value;
+                }, [1, 2, 3], 'one argument to many',
+            ],
+            ],
         ];
     }
 }

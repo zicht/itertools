@@ -43,7 +43,8 @@ class ZipTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [[1, 2, 3]],
-                [[1], [2], [3]]],
+                [[1], [2], [3]],
+            ],
             // double iterable
             [
                 [[], []],
@@ -51,7 +52,8 @@ class ZipTest extends \PHPUnit_Framework_TestCase
             ],
             [
                 [[1, 2, 3], [4, 5, 6]],
-                [[1, 4], [2, 5], [3, 6]]],
+                [[1, 4], [2, 5], [3, 6]],
+            ],
             // unequal input length
             [
                 [[], [4, 5, 6]],

@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.PropertyComment.VarTypeAvoidMixed
+
 namespace Zicht\ItertoolsTest\Dummies;
 
 class SimpleObject
