@@ -15,6 +15,7 @@ use Zicht\Itertools\lib\GroupbyIterator;
 use Zicht\Itertools\lib\Interfaces\AccumulateInterface;
 use Zicht\Itertools\lib\Interfaces\AllInterface;
 use Zicht\Itertools\lib\Interfaces\ChainInterface;
+use Zicht\Itertools\lib\Interfaces\CollapseInterface;
 use Zicht\Itertools\lib\Interfaces\CycleInterface;
 use Zicht\Itertools\lib\Interfaces\FilterInterface;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
@@ -152,6 +153,24 @@ function reduce($iterable, $closure = 'add', $initializer = null)
     }
 
     return $iterable->reduce($closure, $initializer);
+}
+
+/**
+ * Collapse a two dimentional iterator into a one dimentional iterator
+ *
+ * > collapse([1, 2], [3, 4])
+ * 1, 2, 3, 4
+ *
+ * @param array|string|\Iterator $iterable
+ * @return lib\CollapseIterator
+ */
+function collapse($iterable)
+{
+    if (!($iterable instanceof CollapseInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->collapse();
 }
 
 /**

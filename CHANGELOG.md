@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.11.0 - 2019-04-29
+### Added
+- Added `CollapseIterator` usable from php or twig.
+
 ## 2.10.14 - 2019-04-23
 ### Fixed
 - The `select` mapper now accepts either an array or an object as its first parameter,

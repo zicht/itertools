@@ -19,6 +19,7 @@ trait FiniteIterableTrait
     use AnyTrait;
     use DifferenceTrait;
     use ChainTrait;
+    use CollapseTrait;
     use CycleTrait;
     use FilterTrait;
     use GroupByTrait;

@@ -38,7 +38,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             # main filters
-            'all', 'any', 'chain', 'filter', 'first', 'group_by', 'last', 'map', 'map_by', 'reduce', 'reversed', 'sorted', 'unique', 'zip',
+            'all', 'any', 'chain', 'collapse', 'filter', 'first', 'group_by', 'last', 'map', 'map_by', 'reduce', 'reversed', 'sorted', 'unique', 'zip',
             # deprecated filters
             'filterby', 'groupBy', 'groupby', 'mapBy', 'mapby', 'sum', 'uniqueby',
         ];

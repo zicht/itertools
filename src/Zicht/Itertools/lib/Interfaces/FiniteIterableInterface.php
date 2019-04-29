@@ -20,6 +20,7 @@ interface FiniteIterableInterface extends
     AllInterface,
     AnyInterface,
     ChainInterface,
+    CollapseInterface,
     CycleInterface,
     DifferenceInterface,
     FilterInterface,
