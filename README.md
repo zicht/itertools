@@ -13,7 +13,7 @@ Common operations include:
 - [filtering](#filtering): `filter`, `difference`
 - [sorting](#sorting): `sorted`
 - [grouping](#grouping): `groupBy`
-- [reducing](#reducing): `accumulate` and `reduce`
+- [reducing](#reducing): `accumulate`, `collapse`, and `reduce`
 
 ## Usage
 In order to use the available  itertools filters/functions via Twig, simply add this service definition in your `services.xml`
@@ -349,6 +349,20 @@ $scentence = iterable($words)->reduce(reductions\join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
 ```
+
+Another common reduction is chaining multiple lists together into one list.
+We call this process collapse.  This process can also be achieved using `reduce`
+and `chain` together, however, because it is used frequently the `collapse` helper
+makes its usage easier, for example:
+
+```php
+use function Zicht\Itertools\iterable;
+
+$flat = iterable([['one', 'two'], ['three']])->collapse();
+var_dump($flat);
+// {0: 'one', 1: 'two', 0: 'three'}
+```
+
 
 # Maintainer(s)
 * Boudewijn Schoon <boudewijn@zicht.nl>

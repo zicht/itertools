@@ -22,6 +22,7 @@ class Extension extends \Twig_Extension
             new \Twig_SimpleFilter('all', '\Zicht\Itertools\all'),
             new \Twig_SimpleFilter('any', '\Zicht\Itertools\any'),
             new \Twig_SimpleFilter('chain', '\Zicht\Itertools\chain'),
+            new \Twig_SimpleFilter('collapse', '\Zicht\Itertools\collapse'),
             new \Twig_SimpleFilter('filter', [$this, 'filter']),
             new \Twig_SimpleFilter('first', '\Zicht\Itertools\first'),
             new \Twig_SimpleFilter('group_by', [$this, 'groupBy']),
