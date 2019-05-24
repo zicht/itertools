@@ -11,9 +11,9 @@ use Zicht\Itertools\lib\CollapseIterator;
 trait CollapseTrait
 {
     /**
-     * Collapse a two dimentional iterator into a one dimentional iterator
+     * Collapse a two dimensional iterator into a one dimensional iterator
      *
-     * @return Itertools\lib\CollapseIterator
+     * @return CollapseIterator
      */
     public function collapse()
     {
