@@ -5,7 +5,8 @@
 
 namespace Zicht\Itertools;
 
-use Zicht\Itertools\conversions;
+// cause error
+// use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
