@@ -51,7 +51,9 @@ use Zicht\Itertools\reductions;
  */
 function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return conversions\mixed_to_iterator($iterable);
+// cause error
+    return 'ERROR';
+    //return conversions\mixed_to_iterator($iterable);
 }
 
 /**
