@@ -11,6 +11,7 @@ Nothing so far
 ## 2.12.0 - 2020-01-08 [unreleased]
 ### Added
 - Added `cache` mapping helper.
+- Added `before` and `after` filter helpers.
 
 ## 2.11.0 - 2019-04-29
 ### Added
