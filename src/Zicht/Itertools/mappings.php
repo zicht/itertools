@@ -103,6 +103,18 @@ function upper()
 }
 
 /**
+ * Returns a closure that returns the value cast to a string
+ *
+ * @return \Closure
+ */
+function string()
+{
+    return function ($value) {
+        return (string)$value;
+    };
+}
+
+/**
  * Returns a closure that returns the value as a json_encoded string
  *
  * @param int $options
