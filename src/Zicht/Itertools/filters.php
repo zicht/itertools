@@ -166,7 +166,7 @@ function after($expected, $strategy = null, $orEqual = false)
     }
 
     // Everything else fails
-    return function() {
+    return function () {
         return false;
     };
 }
@@ -206,7 +206,7 @@ function before($expected, $strategy = null, $orEqual = false)
     }
 
     // Everything else fails
-    return function() {
+    return function () {
         return false;
     };
 }

@@ -12,6 +12,9 @@ class AfterTest extends \PHPUnit_Framework_TestCase
     /**
      * Should accept
      *
+     * @param mixed $expected
+     * @param mixed $input
+     * @param bool $orEqual
      * @dataProvider acceptProvider
      */
     public function testAccept($expected, $input, $orEqual = false)
@@ -47,6 +50,8 @@ class AfterTest extends \PHPUnit_Framework_TestCase
     /**
      * Should reject
      *
+     * @param mixed $expected
+     * @param mixed $input
      * @dataProvider rejectProvider
      */
     public function testReject($expected, $input)

@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.12.1 - 2020-01-08
+### Fixed
+- Linter fixes.
+
 ## 2.12.0 - 2020-01-08
 ### Added
 - Added `cache` and `string` mapping helper.

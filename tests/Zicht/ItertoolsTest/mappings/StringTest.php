@@ -18,7 +18,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
             1,
             true,
             '',
-            new ToStringObject('__toString result')
+            new ToStringObject('__toString result'),
         ];
 
         $expected = [
