@@ -132,6 +132,86 @@ function equals($expected, $strategy = null, $strict = false)
 }
 
 /**
+ * Returns a filter closute that only accepts values that are after $EXPECTED
+ *
+ * For example, the following will return a list where only
+ * returns entries that are after 2020-04-01:
+ * > $list = iterable([new \DateTime('2020-01-01'), new \DateTime('2020-03-01'), new \DateTime('2020-05-01')])
+ * > $result = $list->filer(after(new \DateTimeImmutable('2020-04-01')));
+ * > // [new \DateTime('2020-05-01')]
+ *
+ * @param \DateTimeInterface|int|float $expected
+ * @param null|string|\Closure $strategy
+ * @param bool $orEqual
+ * @return \Closure
+ */
+function after($expected, $strategy = null, $orEqual = false)
+{
+    $strategy = conversions\mixed_to_value_getter($strategy);
+
+    // Support DateTimeInterface
+    if ($expected instanceof \DateTimeInterface) {
+        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
+            $value = $strategy($value, $key);
+            return $value instanceof \DateTimeInterface && ($orEqual ? $expected <= $value : $expected < $value);
+        };
+    }
+
+    // Support numbers
+    if (is_int($expected) || is_float($expected)) {
+        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
+            $value = $strategy($value, $key);
+            return (is_int($value) || is_float($value)) && ($orEqual ? $expected <= $value : $expected < $value);
+        };
+    }
+
+    // Everything else fails
+    return function () {
+        return false;
+    };
+}
+
+/**
+ * Returns a filter closute that only accepts values that are before $EXPECTED
+ *
+ * For example, the following will return a list where only
+ * returns entries that are before 2020-04-01:
+ * > $list = iterable([new \DateTime('2020-01-01'), new \DateTime('2020-03-01'), new \DateTime('2020-05-01')])
+ * > $result = $list->filer(before(new \DateTimeImmutable('2020-04-01')));
+ * > // [new \DateTime('2020-01-01'), new \DateTime('2020-03-01')]
+ *
+ * @param \DateTimeInterface|int|float $expected
+ * @param null|string|\Closure $strategy
+ * @param bool $orEqual
+ * @return \Closure
+ */
+function before($expected, $strategy = null, $orEqual = false)
+{
+    $strategy = conversions\mixed_to_value_getter($strategy);
+
+    // Support DateTimeInterface
+    if ($expected instanceof \DateTimeInterface) {
+        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
+            $value = $strategy($value, $key);
+            return $value instanceof \DateTimeInterface && ($orEqual ? $expected >= $value : $expected > $value);
+        };
+    }
+
+    // Support numbers
+    if (is_int($expected) || is_float($expected)) {
+        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
+            $value = $strategy($value, $key);
+            return (is_int($value) || is_float($value)) && ($orEqual ? $expected >= $value : $expected > $value);
+        };
+    }
+
+    // Everything else fails
+    return function () {
+        return false;
+    };
+}
+
+/**
  * Returns a filter closure that inverts the value
  *
  * For example, the following will return a list where none

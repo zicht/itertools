@@ -103,6 +103,18 @@ function upper()
 }
 
 /**
+ * Returns a closure that returns the value cast to a string
+ *
+ * @return \Closure
+ */
+function string()
+{
+    return function ($value) {
+        return (string)$value;
+    };
+}
+
+/**
  * Returns a closure that returns the value as a json_encoded string
  *
  * @param int $options
@@ -155,22 +167,22 @@ function json_decode($assoc = false, $depth = 512, $options = 0)
  *    ],
  * ]
  *
- * @param array|object $strategies
+ * @param array|object $mappings
  * @param null|string|\Closure $strategy
  * @param boolean $discardNull
  * @param boolean $discardEmptyContainer
  * @return \Closure
  */
-function select($strategies, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
+function select($mappings, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
 {
-    $castToObject = is_object($strategies);
-    $strategies = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', (array)$strategies);
+    $castToObject = is_object($mappings);
+    $mappings = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', (array)$mappings);
     $strategy = conversions\mixed_to_value_getter($strategy);
 
-    return function ($value, $key) use ($strategies, $strategy, $discardNull, $discardEmptyContainer, $castToObject) {
+    return function ($value, $key) use ($mappings, $strategy, $discardNull, $discardEmptyContainer, $castToObject) {
         $value = $strategy($value);
         $res = [];
-        foreach ($strategies as $strategyKey => $strategy) {
+        foreach ($mappings as $strategyKey => $strategy) {
             $res[$strategyKey] = $strategy($value, $key);
         }
         if ($discardNull || $discardEmptyContainer) {
@@ -223,6 +235,38 @@ function type($strategy = null)
     return function ($value) use ($strategy) {
         $value = $strategy($value);
         return is_object($value) ? get_class($value) : gettype($value);
+    };
+}
+
+/**
+ * Returns a closure that calls the mapping on each element once.
+ *
+ * > $compute = function ($value, $key) {
+ * >    return 'some expensive computation result';
+ * > };
+ * > $list = iter\iterable([['id' => 42, ...], ['id' => 43, ...], ['id' => 42, ...]]);
+ * > $list->map(cache($compute, 'id'));
+ * [
+ *    $compute(['id' => 42, ...]), // <-- calls the $compute method
+ *    $compute(['id' => 43, ...]), // <-- calls the $compute method
+ *    $compute(['id' => 42, ...])  // <-- does not call, instead, populates with cached values
+ * ]
+ *
+ * @param null|string|\Closure $mapping
+ * @param null|string|\Closure $strategy
+ * @return \Closure
+ */
+function cache($mapping, $strategy = null)
+{
+    $mapping = conversions\mixed_to_value_getter($mapping);
+    $strategy = conversions\mixed_to_value_getter($strategy);
+    $cache = [];
+    return function ($value, $key = null) use ($mapping, $strategy, &$cache) {
+        $cacheKey = \json_encode($strategy($value, $key));
+        if (!array_key_exists($cacheKey, $cache)) {
+            $cache[$cacheKey] = $mapping($value, $key);
+        }
+        return $cache[$cacheKey];
     };
 }
 
