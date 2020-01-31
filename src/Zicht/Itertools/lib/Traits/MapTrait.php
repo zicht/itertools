@@ -19,8 +19,8 @@ trait MapTrait
      * in the $iterable, where the first argument is the value and the
      * second argument is the key of the entry
      *
-     * If additional iterabvles are passed, $strategy is called with the
-     * values and the keys from the iterables.  For example, the first
+     * If additional iterables are passed, $strategy is called with the
+     * values and the keys from the iterables. For example, the first
      * call to $strategy will be:
      * $strategy($value_iterable1, $value_iterable2, $key_iterable2, $key_iterable2)
      *
