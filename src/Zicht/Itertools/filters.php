@@ -132,7 +132,7 @@ function equals($expected, $strategy = null, $strict = false)
 }
 
 /**
- * Returns a filter closute that only accepts values that are after $EXPECTED
+ * Returns a filter closure that only accepts values that are after $EXPECTED
  *
  * For example, the following will return a list where only
  * returns entries that are after 2020-04-01:
@@ -153,6 +153,14 @@ function after($expected, $strategy = null, $orEqual = false)
     if ($expected instanceof \DateTimeInterface) {
         return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
             $value = $strategy($value, $key);
+            // Try to convert strings that are longer than 3 characters.  This simple test will ensure
+            // that '' or 'now' will not be accepted.
+            if (is_string($value) && strlen($value) > 3) {
+                try {
+                    $value = new \DateTimeImmutable($value);
+                } catch (\Exception $exception) {
+                }
+            }
             return $value instanceof \DateTimeInterface && ($orEqual ? $expected <= $value : $expected < $value);
         };
     }
@@ -172,7 +180,7 @@ function after($expected, $strategy = null, $orEqual = false)
 }
 
 /**
- * Returns a filter closute that only accepts values that are before $EXPECTED
+ * Returns a filter closure that only accepts values that are before $EXPECTED
  *
  * For example, the following will return a list where only
  * returns entries that are before 2020-04-01:
@@ -193,6 +201,14 @@ function before($expected, $strategy = null, $orEqual = false)
     if ($expected instanceof \DateTimeInterface) {
         return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
             $value = $strategy($value, $key);
+            // Try to convert strings that are longer than 3 characters.  This simple test will ensure
+            // that '' or 'now' will not be accepted.
+            if (is_string($value) && strlen($value) > 3) {
+                try {
+                    $value = new \DateTimeImmutable($value);
+                } catch (\Exception $exception) {
+                }
+            }
             return $value instanceof \DateTimeInterface && ($orEqual ? $expected >= $value : $expected > $value);
         };
     }
