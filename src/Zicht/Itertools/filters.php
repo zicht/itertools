@@ -20,7 +20,7 @@ use Zicht\Itertools;
  * For example, the following will return a list where all items
  * have a property or array index 'key' that is an instance
  * of class Foo:
- * > $list = iterable([['key' => new Foo()], ['key => new Bar()], ['key' => new Moo()]]);
+ * > $list = iterable([['key' => new Foo()], ['key' => new Bar()], ['key' => new Moo()]]);
  * > $result = $list->filter(type(Bar::class, 'key'));
  * > // {1: ['key' => Bar]}
  *
