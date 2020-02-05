@@ -8,6 +8,8 @@ convenience tools to handle sequences of data such as arrays,
 iterators, and strings.  Some of the naming and API is based on the
 Python itertools.
 
+[Examples](#examples)
+
 Common operations include:
 - [mapping](#mapping): `map` and `mapBy`
 - [filtering](#filtering): `filter`, `difference`
@@ -21,8 +23,8 @@ In order to use the available  itertools filters/functions via Twig, simply add 
 <service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
     <tag name="twig.extension"/>
 </service>
-
 ```
+
 ## Scripts
 - unit test: `composer test`
 - lint test: `composer lint`
@@ -68,8 +70,38 @@ $vehicles = [
         'price' => 100000,
     ],
 ];
-
 ```
+
+## Examples
+
+With the example data above, this is how you could use itertools to get all unique colors of the cars in alphabetical order:
+
+```php
+use function Zicht\Itertools\iterable;
+use function Zicht\Itertools\filters\equals;
+
+$vehicles = iterable($vehicles)
+    ->filter(equals('car', 'type')) // {[vehicle...], [vehicle...]}
+    ->map('colors') // {0: ['red', 'green', 'blue'], 1: ['blue']}
+    ->collapse() // {0: 'red', 1: 'green', 2: 'blue', 3: 'blue'}
+    ->unique() // {0: 'red', 1: 'green', 2: 'blue'}
+    ->sorted(); // {2: 'blue', 1: 'green', 0: 'red'}
+```
+
+
+You can achieve the same in Twig:
+```twig
+{% for vehicle_color in vehicles
+    |filter(filtering('equals', 'car', 'type'))
+    |map('colors')
+    |collapse
+    |unique
+    |sorted
+%}
+    {{ vehicle_color }}
+{% endfor %}
+```
+
 
 ## Getter strategy
 Many itertools can be passed a `$strategy` parameter.  This parameter
