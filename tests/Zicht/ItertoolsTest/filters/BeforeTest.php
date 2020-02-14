@@ -33,7 +33,8 @@ class BeforeTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // Test with DateTimeInterface
-            ['$expected' => new \DateTimeImmutable('2020-05-01'), '$input' => new \DateTime('2020-04-01')],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => new \DateTime('2020-03-01')],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => '2020-03-01'],
 
             // Test with numbers
             ['$expected' => 5, '$input' => 4],
@@ -70,7 +71,8 @@ class BeforeTest extends \PHPUnit_Framework_TestCase
     {
         return [
             // Test with DateTimeInterface
-            ['$expected' => new \DateTimeImmutable('2020-03-01'), '$input' => new \DateTime('2020-04-01')],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => new \DateTime('2020-05-01')],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => '2020-05-01'],
 
             // Test with numbers
             ['$expected' => 3, '$input' => 4],
@@ -84,6 +86,13 @@ class BeforeTest extends \PHPUnit_Framework_TestCase
 
             // Mismatching types are rejected
             ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => 4],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => ''],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => 'now'],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => 'non-iso-date-string'],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => ' 2020-03-01'],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => 'X2020-03-01'],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => '2020-03-01 non-iso-date-string'],
+            ['$expected' => new \DateTimeImmutable('2020-04-01'), '$input' => '2020-03-01Tnon-iso-date-string'],
             ['$expected' => 4, '$input' => new \DateTimeImmutable('2020-04-01')],
 
             // Unsuppoted types are rejected
