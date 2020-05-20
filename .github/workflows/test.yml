@@ -1,0 +1,36 @@
+name: Unit test
+
+on:
+    push:
+        branches:
+            - release/*
+    pull_request:
+        branches:
+            - release/*
+
+jobs:
+    build:
+
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node: ['8', '10', '12']
+
+        name: On Node v${{ matrix.node }}
+
+        steps:
+            - uses: actions/checkout@v1
+            - uses: actions/setup-node@v1
+              with:
+                  always-auth: true
+                  node-version: ${{ matrix.node }}
+                  registry-url: https://registry.npmjs.org
+            - uses: actions/checkout@v1
+            - name: Versions
+              run: |
+                  echo "Node: " `node -v`
+                  echo "Npm: " `npm -v`
+
+            # Finally... run the test
+            - run: npm run test
