@@ -5,7 +5,6 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\CollapseIterator;
 
 trait CollapseTrait
