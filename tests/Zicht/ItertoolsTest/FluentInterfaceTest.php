@@ -9,9 +9,6 @@ use Zicht\Itertools;
 
 class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test fluent interface
-     */
     public function test()
     {
         // utility functions

@@ -83,7 +83,7 @@ class MapIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -91,7 +91,7 @@ class MapIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -99,7 +99,7 @@ class MapIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {

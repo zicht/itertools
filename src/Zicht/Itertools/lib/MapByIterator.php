@@ -28,7 +28,7 @@ class MapByIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {

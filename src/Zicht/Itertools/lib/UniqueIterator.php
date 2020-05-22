@@ -30,7 +30,7 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function accept()
     {
@@ -44,7 +44,7 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {

@@ -34,7 +34,7 @@ class DifferenceIterator extends \FilterIterator implements FiniteIterableInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function accept()
     {

@@ -35,7 +35,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {
@@ -44,7 +44,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -52,7 +52,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -60,7 +60,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -75,7 +75,7 @@ class AccumulateIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid()
     {

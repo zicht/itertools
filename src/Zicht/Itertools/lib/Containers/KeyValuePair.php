@@ -16,8 +16,6 @@ class KeyValuePair implements \ArrayAccess
     public $value;
 
     /**
-     * Pair constructor.
-     *
      * @param mixed $key
      * @param mixed $value
      */
@@ -28,7 +26,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetExists($offset)
     {
@@ -36,7 +34,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -52,7 +50,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -70,7 +68,7 @@ class KeyValuePair implements \ArrayAccess
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function offsetUnset($offset)
     {

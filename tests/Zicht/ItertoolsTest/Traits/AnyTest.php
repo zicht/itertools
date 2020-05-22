@@ -8,10 +8,6 @@ namespace Zicht\ItertoolsTest\Traits;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 
-/**
- * Class AllTest
- *
- */
 class AnyTest extends \PHPUnit_Framework_TestCase
 {
     /**

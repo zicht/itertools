@@ -28,7 +28,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {
@@ -36,7 +36,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -44,7 +44,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -52,7 +52,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -60,7 +60,7 @@ class StringIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid()
     {

@@ -35,7 +35,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {
@@ -43,7 +43,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -51,7 +51,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -59,7 +59,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -67,7 +67,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid()
     {
@@ -75,7 +75,7 @@ class RepeatIterator implements \Countable, InfiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count()
     {

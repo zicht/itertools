@@ -9,9 +9,6 @@ use Zicht\Itertools;
 
 class DebugInfoTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Test __debugInfo
-     */
     public function testSimple()
     {
         $iterable = Itertools\iterable([1, 2, 3]);
@@ -24,9 +21,6 @@ class DebugInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $iterable->__debugInfo());
     }
 
-    /**
-     * Test __debugInfo with duplicate keys
-     */
     public function testDuplicateKeys()
     {
         $iterable = Itertools\iterable([1, 2, 3])->chain([4, 5, 6]);

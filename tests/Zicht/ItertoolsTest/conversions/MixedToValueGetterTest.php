@@ -3,6 +3,8 @@
  * @copyright Zicht Online <http://zicht.nl>
  */
 
+// phpcs:disable Zicht.Commenting.FunctionComment.Superfluous
+
 namespace Zicht\ItertoolsTest\mappings;
 
 use Zicht\Itertools\conversions;

@@ -13,7 +13,7 @@ use Zicht\Itertools;
 class Extension extends \Twig_Extension
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilters()
     {
@@ -47,7 +47,7 @@ class Extension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFunctions()
     {
@@ -368,7 +368,7 @@ class Extension extends \Twig_Extension
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getName()
     {
