@@ -1,0 +1,38 @@
+name: Lint
+
+on:
+    push:
+        branches:
+            - master
+            - release/*
+    pull_request:
+        branches:
+            - master
+            - release/*
+
+jobs:
+    run:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                php: ['7.3']
+        name: PHP ${{ matrix.php }}
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v2
+
+            # https://github.com/shivammathur/setup-php
+            -   name: Setup
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: Validate
+                run: composer validate
+
+            -   name: Install
+                run: composer install --prefer-dist --no-progress
+
+            -   name: Lint
+                run: composer run-script lint

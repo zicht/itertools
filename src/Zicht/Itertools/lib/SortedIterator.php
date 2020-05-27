@@ -44,7 +44,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -52,7 +52,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {

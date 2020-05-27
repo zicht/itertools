@@ -29,7 +29,7 @@ class CollapseIterator extends \IteratorIterator implements FiniteIterableInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -38,7 +38,7 @@ class CollapseIterator extends \IteratorIterator implements FiniteIterableInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {

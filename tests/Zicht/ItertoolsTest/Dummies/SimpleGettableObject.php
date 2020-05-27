@@ -13,8 +13,6 @@ class SimpleGettableObject
     protected $prop;
 
     /**
-     * SimpleObject constructor.
-     *
      * @param mixed $value
      */
     public function __construct($value)

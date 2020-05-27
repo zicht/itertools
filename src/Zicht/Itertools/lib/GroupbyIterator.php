@@ -48,7 +48,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {
@@ -56,7 +56,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -64,7 +64,7 @@ class GroupedIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count()
     {
@@ -102,7 +102,7 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -110,7 +110,7 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count()
     {

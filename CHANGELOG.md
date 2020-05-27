@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 2.13.0 - 2020-05-22
+### Added
+- Added `constant` mapping helper.
+
 ## 2.12.3 - 2020-02-14
 ### Fixed
 - Small code improvement on how `before` and `after` convert ISO date strings.

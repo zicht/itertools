@@ -8,15 +8,15 @@ namespace Zicht\ItertoolsTest\Traits;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 
-class AnyTest extends \PHPUnit_Framework_TestCase
+class CollapseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the trait returns the proper type
      */
     public function testReturnType()
     {
-        $iterable = Itertools\iterable([1, 2, 3]);
-        $this->assertEquals(true, $iterable->any());
+        $iterable = Itertools\iterable([[1, 2], [3]]);
+        $this->assertInstanceOf('Zicht\Itertools\lib\CollapseIterator', $iterable->collapse());
     }
 
     /**
@@ -25,6 +25,6 @@ class AnyTest extends \PHPUnit_Framework_TestCase
     public function testTraitOnNonIterator()
     {
         $nonIterator = new NonIterator();
-        $this->assertNull($nonIterator->any());
+        $this->assertNull($nonIterator->collapse());
     }
 }

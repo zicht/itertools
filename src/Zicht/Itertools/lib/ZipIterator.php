@@ -28,7 +28,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {
@@ -37,7 +37,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -45,7 +45,7 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {

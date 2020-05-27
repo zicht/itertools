@@ -26,7 +26,7 @@ class FilterIterator extends \FilterIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function accept()
     {

@@ -34,7 +34,7 @@ class IntersectionIterator extends \FilterIterator implements FiniteIterableInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function accept()
     {

@@ -271,6 +271,19 @@ function cache($mapping, $strategy = null)
 }
 
 /**
+ * Returns a closure that returns the same value every time it is called.
+ *
+ * @param null|string|int|float|bool|object|array $value
+ * @return \Closure
+ */
+function constant($value)
+{
+    return function () use ($value) {
+        return $value;
+    };
+}
+
+/**
  * Returns a mapping closure
  *
  * @param string $name

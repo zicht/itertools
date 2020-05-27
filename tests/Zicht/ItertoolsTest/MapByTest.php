@@ -10,8 +10,6 @@ use Zicht\ItertoolsTest\Dummies\SimpleObject;
 class MapByTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test mapBy
-     *
      * @param array $arguments
      * @param array $expectedKeys
      * @param array $expectedValues

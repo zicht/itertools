@@ -13,7 +13,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     protected $extension;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function setUp()
     {

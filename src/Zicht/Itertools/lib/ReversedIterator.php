@@ -25,7 +25,7 @@ class ReversedIterator extends \IteratorIterator implements FiniteIterableInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function key()
     {
@@ -34,7 +34,7 @@ class ReversedIterator extends \IteratorIterator implements FiniteIterableInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function current()
     {

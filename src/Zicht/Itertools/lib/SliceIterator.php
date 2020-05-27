@@ -42,7 +42,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function valid()
     {
@@ -63,7 +63,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function next()
     {
@@ -72,7 +72,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function rewind()
     {
