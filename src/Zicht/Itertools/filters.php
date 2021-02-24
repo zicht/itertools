@@ -245,27 +245,29 @@ function not($strategy = null)
     };
 }
 
-/**
- * Returns a filter closure that only accepts values that match the given regular expression.
- *
- * For example, the following will return a list where all items
- * match 'bar':
- * > $list = iterable(['-= foo =-', '-= bar =-']);
- * > $result = $list->filter(match('/bar/i'));
- * > // {1: '-= bar =-'}
- *
- * @param string $pattern
- * @param null|string|\Closure $strategy
- * @return \Closure
- */
-function match($pattern, $strategy = null)
-{
-    if (!is_string($pattern)) {
-        throw new \InvalidArgumentException('$PATTERN must be a string');
-    }
+if (\PHP_VERSION_ID < 80000) {
+    /**
+     * Returns a filter closure that only accepts values that match the given regular expression.
+     *
+     * For example, the following will return a list where all items
+     * match 'bar':
+     * > $list = iterable(['-= foo =-', '-= bar =-']);
+     * > $result = $list->filter(match('/bar/i'));
+     * > // {1: '-= bar =-'}
+     *
+     * @param string $pattern
+     * @param null|string|\Closure $strategy
+     * @return \Closure
+     */
+    function match($pattern, $strategy = null)
+    {
+        if (!is_string($pattern)) {
+            throw new \InvalidArgumentException('$PATTERN must be a string');
+        }
 
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value, $key = null) use ($pattern, $strategy) {
-        return (bool)preg_match($pattern, $strategy($value, $key));
-    };
+        $strategy = conversions\mixed_to_value_getter($strategy);
+        return function ($value, $key = null) use ($pattern, $strategy) {
+            return (bool)preg_match($pattern, $strategy($value, $key));
+        };
+    }
 }

@@ -14,6 +14,10 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
+        if (\PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped();
+            return;
+        }
         $filter = filters\match('/foo/');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('pre foo post'));
@@ -25,6 +29,10 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrategy()
     {
+        if (\PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped();
+            return;
+        }
         $filter = filters\match('/foo/', 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => 'pre foo post']));
@@ -37,6 +45,10 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testKeyPropagation()
     {
+        if (\PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped();
+            return;
+        }
         $strategy = function ($value, $key) {
             $this->assertEquals('value', $value);
             $this->assertEquals('key', $key);
@@ -59,6 +71,10 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArgumentException($expected, $strategy)
     {
+        if (\PHP_VERSION_ID >= 80000) {
+            $this->markTestSkipped();
+            return;
+        }
         filters\match($expected, $strategy);
     }
 
