@@ -6,95 +6,61 @@
 namespace Zicht\Itertools\reductions;
 
 use Zicht\Itertools\lib\ChainIterator;
+use Zicht\Itertools\util\Reductions;
 
 /**
  * Returns a closure that adds two numbers together
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::add(), will be removed in version 3.0
  */
 function add()
 {
-    return function ($a, $b) {
-        if (!is_numeric($a)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform addition, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!is_numeric($b)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform addition, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return $a + $b;
-    };
+    return Reductions::add();
 }
 
 /**
  * Returns a closure that subtracts one number from another
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::sub(), will be removed in version 3.0
  */
 function sub()
 {
-    return function ($a, $b) {
-        if (!is_numeric($a)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform subtraction, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!is_numeric($b)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform subtraction, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return $a - $b;
-    };
+    return Reductions::sub();
 }
 
 /**
  * Returns a closure that multiplies two numbers
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::mul(), will be removed in version 3.0
  */
 function mul()
 {
-    return function ($a, $b) {
-        if (!is_numeric($a)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform multiplication, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!is_numeric($b)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform multiplication, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return $a * $b;
-    };
+    return Reductions::mul();
 }
 
 /**
  * Returns a closure that returns the smallest of two numbers
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::min(), will be removed in version 3.0
  */
 function min()
 {
-    return function ($a, $b) {
-        if (!(is_numeric($a) || $a instanceof \DateTime)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine minimum, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!(is_numeric($b) || $b instanceof \DateTime)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine minimum, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return $a < $b ? $a : $b;
-    };
+    return Reductions::min();
 }
 
 /**
  * Returns a closure that returns the largest of two numbers
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::max(), will be removed in version 3.0
  */
 function max()
 {
-    return function ($a, $b) {
-        if (!(is_numeric($a) || $a instanceof \DateTime)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine maximum, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!(is_numeric($b) || $b instanceof \DateTime)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine maximum, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return $a < $b ? $b : $a;
-    };
+    return Reductions::max();
 }
 
 /**
@@ -102,21 +68,11 @@ function max()
  *
  * @param string $glue
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Reductions::join($glue), will be removed in version 3.0
  */
 function join($glue = '')
 {
-    if (!is_string($glue)) {
-        throw new \InvalidArgumentException(sprintf('Argument $GLUE must be a string to join, not %s', is_object($glue) ? get_class($glue) : gettype($glue)));
-    }
-    return function ($a, $b) use ($glue) {
-        if (!is_string($a)) {
-            throw new \InvalidArgumentException(sprintf('Argument $A must be a string to join, not %s', is_object($a) ? get_class($a) : gettype($a)));
-        }
-        if (!is_string($b)) {
-            throw new \InvalidArgumentException(sprintf('Argument $B must be a string to join, not %s', is_object($b) ? get_class($b) : gettype($b)));
-        }
-        return \join($glue, [$a, $b]);
-    };
+    return Reductions::join($glue);
 }
 
 /**
@@ -127,6 +83,7 @@ function join($glue = '')
  * results in a ChainIterator: 1, 2, 3, 4, 5, 6
  *
  * @return \Closure
+ * @deprecated Use iterable($lists)->collapse(), will be removed in version 3.0
  */
 function chain()
 {
@@ -146,7 +103,6 @@ function chain()
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
- *
  * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
 function get_reduction($name)
@@ -179,7 +135,6 @@ function get_reduction($name)
  * @param mixed $name
  * @return \Closure
  * @throws \InvalidArgumentException
- *
  * @deprecated please use the reduction functions directly, will be removed in version 3.0
  */
 function getReduction($name) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming

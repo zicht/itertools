@@ -5,7 +5,11 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\twig\Extension;
+use Zicht\Itertools\util\Filters;
+use Zicht\Itertools\util\Mappings;
+use Zicht\Itertools\util\Reductions;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,6 +26,17 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->extension = new Extension();
     }
 
+    /**
+     * Ensure specific globals are available
+     */
+    public function testAvailableGlobals()
+    {
+        $globals = $this->extension->getGlobals();
+        $this->assertEquals(['itf', 'itm', 'itr'], array_keys($globals));
+        $this->assertInstanceOf(Filters::class, $globals['itf']);
+        $this->assertInstanceOf(Mappings::class, $globals['itm']);
+        $this->assertInstanceOf(Reductions::class, $globals['itr']);
+    }
 
     /**
      * Ensure specific filters are available
@@ -37,7 +52,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         }
 
         $expected = [
-            # main filters
+            # main filter
+            'it',
+            # deprecated filters (because 'it' was introduced)
             'all', 'any', 'chain', 'collapse', 'filter', 'first', 'group_by', 'last', 'map', 'map_by', 'reduce', 'reversed', 'sorted', 'unique', 'zip',
             # deprecated filters
             'filterby', 'groupBy', 'groupby', 'mapBy', 'mapby', 'sum', 'uniqueby',
@@ -69,6 +86,15 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         ];
 
         $this->assertEquals($expected, $functions);
+    }
+
+    /**
+     * Ensure '[1, 2, 3]|it' returns an iterable
+     */
+    public function testIt()
+    {
+        $result = $this->extension->it([1, 2, 3]);
+        $this->assertInstanceOf(FiniteIterableInterface::class, $result);
     }
 
     /**

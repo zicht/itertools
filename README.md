@@ -18,7 +18,7 @@ Common operations include:
 - [reducing](#reducing): `accumulate`, `collapse`, and `reduce`
 
 ## Usage
-In order to use the available  itertools filters/functions via Twig, simply add this service definition in your `services.xml`
+In order to use the available itertools filters/functions via Twig, simply add this service definition in your `services.xml`
 ```php
 <service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
     <tag name="twig.extension"/>
@@ -35,7 +35,7 @@ various Iterator tools work:
 
 ```php
 $words = ['Useful', 'Goonies', 'oven', 'Bland', 'notorious'];
-$numbers = [1, 3, 2, 5, 4],
+$numbers = [1, 3, 2, 5, 4];
 $vehicles = [
     [
         'id' => 1,
@@ -73,7 +73,6 @@ $vehicles = [
 ```
 
 ## Examples
-
 With the example data above, this is how you could use itertools to get all unique colors of the cars in alphabetical order:
 
 ```php
@@ -88,20 +87,18 @@ $vehicles = iterable($vehicles)
     ->sorted(); // {2: 'blue', 1: 'green', 0: 'red'}
 ```
 
-
 You can achieve the same in Twig:
 ```twig
 {% for vehicle_color in vehicles
-    |filter(filtering('equals', 'car', 'type'))
-    |map('colors')
-    |collapse
-    |unique
-    |sorted
+    |it.filter(itf.equals('car', 'type'))
+    |it.map('colors')
+    |it.collapse
+    |it.unique
+    |it.sorted
 %}
     {{ vehicle_color }}
 {% endfor %}
 ```
-
 
 ## Getter strategy
 Many itertools can be passed a `$strategy` parameter.  This parameter
@@ -210,10 +207,10 @@ functions returns a closure that can be passed to `map` and `mapBy`.
 For example:
 
 ```php
+use \Zicht\Itertools\util\Mappings;
 use function Zicht\Itertools\iterable;
-use function Zicht\Itertools\mappings\length;
 
-$lengths = iterable($words)->map(length());
+$lengths = iterable($words)->map(Mappings::length());
 var_dump($lengths);
 // {0: 6, 1: 3, 2: 4, 3: 5, 4: 9}
 ```
@@ -234,7 +231,7 @@ use function Zicht\Itertools\iterable;
 
 $isExpensive = function($value, $key) {
     return $value['price'] >= 10000;
-}
+};
 $expensiveTypes = iterable($vehicles)->filter($isExpensive)->map('type');
 var_dump($expensiveTypes);
 // {1: 'car', 9: 'car'}
@@ -257,10 +254,10 @@ function returns a closure that can be passed to `filter`.  For
 example:
 
 ```php
+use \Zicht\Itertools\util\Filters;
 use function Zicht\Itertools\iterable;
-use function Zicht\Itertools\filters\in;
 
-$movieWords = iterable($words)->filter(in(['Shining', 'My little pony', 'Goonies']));
+$movieWords = iterable($words)->filter(Filters::in(['Shining', 'My little pony', 'Goonies']));
 var_dump($movieWords);
 // {1: 'Goonies'}
 ```
@@ -374,10 +371,10 @@ these functions returns a closure that can be passed to `reduction`.
 For example:
 
 ```php
+use \Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
-use Zicht\Itertools\reductions;
 
-$scentence = iterable($words)->reduce(reductions\join(' - '));
+$scentence = iterable($words)->reduce(Reductions::join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
 ```
@@ -396,5 +393,5 @@ var_dump($flat);
 ```
 
 
-# Maintainer(s)
+# Maintainer
 * Boudewijn Schoon <boudewijn@zicht.nl>

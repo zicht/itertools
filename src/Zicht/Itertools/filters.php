@@ -7,6 +7,7 @@ namespace Zicht\Itertools\filters;
 
 use Zicht\Itertools\conversions;
 use Zicht\Itertools;
+use Zicht\Itertools\util\Filters;
 
 /**
  * Returns a filter closure that only accepts values that are instances of $CLASS.
@@ -27,13 +28,11 @@ use Zicht\Itertools;
  * @param string $class
  * @param null|string|\Closure $strategy
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::type($class, $strategy), will be removed in version 3.0
  */
 function type($class, $strategy = null)
 {
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value, $key = null) use ($class, $strategy) {
-        return $strategy($value, $key) instanceof $class;
-    };
+    return Filters::type($class, $strategy);
 }
 
 /**
@@ -55,19 +54,11 @@ function type($class, $strategy = null)
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::type($heystack, $strategy, $strict), will be removed in version 3.0
  */
 function in($haystack, $strategy = null, $strict = false)
 {
-    if (!is_bool($strict)) {
-        throw new \InvalidArgumentException('$STRICT must be a boolean');
-    }
-    if (!is_array($haystack)) {
-        $haystack = Itertools\iterable($haystack)->values();
-    }
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value, $key = null) use ($haystack, $strategy, $strict) {
-        return in_array($strategy($value, $key), $haystack, $strict);
-    };
+    return Filters::in($haystack, $strategy, $strict);
 }
 
 /**
@@ -77,7 +68,6 @@ function in($haystack, $strategy = null, $strict = false)
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
- *
  * @deprecated Instead use not(in(...))
  */
 function not_in($haystack, $strategy = null, $strict = false)
@@ -113,22 +103,11 @@ function not_in($haystack, $strategy = null, $strict = false)
  * @param null|string|\Closure $strategy
  * @param boolean $strict
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::equals($heystack, $strategy, $strict), will be removed in version 3.0
  */
 function equals($expected, $strategy = null, $strict = false)
 {
-    if (!is_bool($strict)) {
-        throw new \InvalidArgumentException('$STRICT must be a boolean');
-    }
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    if ($strict) {
-        return function ($value, $key = null) use ($expected, $strategy) {
-            return $expected === $strategy($value, $key);
-        };
-    } else {
-        return function ($value, $key = null) use ($expected, $strategy) {
-            return $expected == $strategy($value, $key);
-        };
-    }
+    return Filters::equals($expected, $strategy, $strict);
 }
 
 /**
@@ -144,38 +123,11 @@ function equals($expected, $strategy = null, $strict = false)
  * @param null|string|\Closure $strategy
  * @param bool $orEqual
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::after($expected, $strategy, $orEqual), will be removed in version 3.0
  */
 function after($expected, $strategy = null, $orEqual = false)
 {
-    $strategy = conversions\mixed_to_value_getter($strategy);
-
-    // Support DateTimeInterface
-    if ($expected instanceof \DateTimeInterface) {
-        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
-            $value = $strategy($value, $key);
-            // Try to convert strings that look like ISO date format
-            if (is_string($value) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}/', $value)) {
-                try {
-                    $value = new \DateTimeImmutable($value);
-                } catch (\Exception $exception) {
-                }
-            }
-            return $value instanceof \DateTimeInterface && ($orEqual ? $expected <= $value : $expected < $value);
-        };
-    }
-
-    // Support numbers
-    if (is_int($expected) || is_float($expected)) {
-        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
-            $value = $strategy($value, $key);
-            return (is_int($value) || is_float($value)) && ($orEqual ? $expected <= $value : $expected < $value);
-        };
-    }
-
-    // Everything else fails
-    return function () {
-        return false;
-    };
+    return Filters::after($expected, $strategy, $orEqual);
 }
 
 /**
@@ -191,40 +143,12 @@ function after($expected, $strategy = null, $orEqual = false)
  * @param null|string|\Closure $strategy
  * @param bool $orEqual
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::before($expected, $strategy, $orEqual), will be removed in version 3.0
  */
 function before($expected, $strategy = null, $orEqual = false)
 {
-    $strategy = conversions\mixed_to_value_getter($strategy);
-
-    // Support DateTimeInterface
-    if ($expected instanceof \DateTimeInterface) {
-        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
-            $value = $strategy($value, $key);
-            // Try to convert strings that look like ISO date format
-            if (is_string($value) && preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}/', $value)) {
-                try {
-                    $value = new \DateTimeImmutable($value);
-                } catch (\Exception $exception) {
-                }
-            }
-            return $value instanceof \DateTimeInterface && ($orEqual ? $expected >= $value : $expected > $value);
-        };
-    }
-
-    // Support numbers
-    if (is_int($expected) || is_float($expected)) {
-        return function ($value, $key = null) use ($expected, $strategy, $orEqual) {
-            $value = $strategy($value, $key);
-            return (is_int($value) || is_float($value)) && ($orEqual ? $expected >= $value : $expected > $value);
-        };
-    }
-
-    // Everything else fails
-    return function () {
-        return false;
-    };
+    return Filters::before($expected, $strategy, $orEqual);
 }
-
 /**
  * Returns a filter closure that inverts the value
  *
@@ -236,13 +160,11 @@ function before($expected, $strategy = null, $orEqual = false)
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::not($strategy), will be removed in version 3.0
  */
 function not($strategy = null)
 {
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value, $key = null) use ($strategy) {
-        return !($strategy($value, $key));
-    };
+    return Filters::not($strategy);
 }
 
 /**
@@ -257,15 +179,9 @@ function not($strategy = null)
  * @param string $pattern
  * @param null|string|\Closure $strategy
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Filters::match($pattern, $strategy), will be removed in version 3.0
  */
 function match($pattern, $strategy = null)
 {
-    if (!is_string($pattern)) {
-        throw new \InvalidArgumentException('$PATTERN must be a string');
-    }
-
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value, $key = null) use ($pattern, $strategy) {
-        return (bool)preg_match($pattern, $strategy($value, $key));
-    };
+    return Filters::match($pattern, $strategy);
 }
