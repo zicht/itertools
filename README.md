@@ -76,11 +76,11 @@ $vehicles = [
 With the example data above, this is how you could use itertools to get all unique colors of the cars in alphabetical order:
 
 ```php
+use Zicht\Itertools\util\Filters;
 use function Zicht\Itertools\iterable;
-use function Zicht\Itertools\filters\equals;
 
 $vehicles = iterable($vehicles)
-    ->filter(equals('car', 'type')) // {[vehicle...], [vehicle...]}
+    ->filter(Filters::equals('car', 'type')) // {[vehicle...], [vehicle...]}
     ->map('colors') // {0: ['red', 'green', 'blue'], 1: ['blue']}
     ->collapse() // {0: 'red', 1: 'green', 2: 'blue', 3: 'blue'}
     ->unique() // {0: 'red', 1: 'green', 2: 'blue'}
@@ -88,9 +88,10 @@ $vehicles = iterable($vehicles)
 ```
 
 You can achieve the same in Twig:
+
 ```twig
 {% for vehicle_color in vehicles
-    |it.filter(itf.equals('car', 'type'))
+    |it.filter(it.filters.equals('car', 'type'))
     |it.map('colors')
     |it.collapse
     |it.unique
@@ -115,6 +116,12 @@ is used to obtain a value from the elements in the collection.  The
     // {0: 'Useful', 1: 'Goonies', 2: 'oven', 3: 'Bland', 4: 'notorious'}
     ```
 
+    Or in Twig:
+
+    ```twig
+   {{ dump(word|it.map) }}
+    ```
+
 2. a closure, in which case the closure is called with the element
    value and key as parameters to be used to compute a return value.
    For example:
@@ -130,6 +137,11 @@ is used to obtain a value from the elements in the collection.  The
     // {0: 2, 1: 6, 2: 4, 3: 10, 4: 8}
     ```
 
+   Or in Twig:
+    ```twig
+   {{ dump(numbers|it.map(num => 2 * num)) }}
+    ```
+
 3. a string, in which case this string is used to create a closure
    that tries to find public properties, methods, or array indexes.
    For example:
@@ -142,11 +154,17 @@ is used to obtain a value from the elements in the collection.  The
     // {0: 'car', 1: 'bike', 2: 'unicicle', 3: 'car'}
     ```
 
+   Or in Twig:
+
+    ```twig
+   {{ dump(word|it.map) }}
+    ```
+
    The string can consist of multiple dot separated words, allowing
    access to nested properties, methods, and array indexes.
 
    If one of the words in the string can not be resolved into an
-   existing propety, method, or array index, the value `null` will be
+   existing property, method, or array index, the value `null` will be
    returned.  For example:
 
     ```php
@@ -155,6 +173,12 @@ is used to obtain a value from the elements in the collection.  The
     $result = iterable($vehicles)->map('colors.2');
     var_dump($result);
     // {0: 'blue', 1: 'blue', 2: null, 3: null}
+    ```
+
+   Or in Twig:
+
+    ```twig
+   {{ dump(vehicles|it.map('colors.2')) }}
     ```
 
 ## Fluent interface
@@ -168,6 +192,12 @@ use function Zicht\Itertools\iterable;
 $result = iterable($vehicles)->filter('is_cool')->mapBy('id')->map('type');
 var_dump($result);
 // {5: 'unicicle', 9: 'car'}
+```
+
+Or in Twig:
+
+```twig
+{{ dump(vehicles|it.filter('is_cool').mapBy('id').map('type')) }}
 ```
 
 ## Mapping
@@ -201,18 +231,31 @@ var_dump($types);
 // {1: 'car', 2: 'bike', 5: 'unicicle', 9: 'car'}
 ```
 
+Or in Twig:
+
+```twig
+{{ dump(vehicles|it.mapBy('id').map('type')) }}
+```
+
+
 There are several common mapping closures available
-in [mappings.php](src/Zicht/Itertools/mappings.php).  Calling these
+in [mappings.php](src/Zicht/Itertools/util/Mappings.php).  Calling these
 functions returns a closure that can be passed to `map` and `mapBy`.
 For example:
 
 ```php
-use \Zicht\Itertools\util\Mappings;
+use Zicht\Itertools\util\Mappings;
 use function Zicht\Itertools\iterable;
 
 $lengths = iterable($words)->map(Mappings::length());
 var_dump($lengths);
 // {0: 6, 1: 3, 2: 4, 3: 5, 4: 9}
+```
+
+Or in Twig:
+
+```twig
+{{ dump(words|it.map(it.mappings.length)) }}
 ```
 
 ## Filtering
@@ -237,6 +280,12 @@ var_dump($expensiveTypes);
 // {1: 'car', 9: 'car'}
 ```
 
+Or in Twig:
+
+```twig
+{{ dump(vehicles|it.filter(vehicle => vehicle.price >= 10000).map('type')) }}
+```
+
 Using the string [getter strategy](#getter-strategy) we can get only
 the `$vehicles` that are considered to be cool.  For example:
 
@@ -248,18 +297,30 @@ var_dump($coolVehicleTypes);
 // {5: 'unicicle', 9: 'car'}
 ```
 
+Or in Twig:
+
+```twig
+{{ dump(vehicles|it.filter('is_cool').map('type')) }}
+```
+
 There are several common filter closures available
-in [filters.php](src/Zicht/Itertools/filters.php).  Calling these
+in [filters.php](src/Zicht/Itertools/util/Filters.php).  Calling these
 function returns a closure that can be passed to `filter`.  For
 example:
 
 ```php
-use \Zicht\Itertools\util\Filters;
+use Zicht\Itertools\util\Filters;
 use function Zicht\Itertools\iterable;
 
 $movieWords = iterable($words)->filter(Filters::in(['Shining', 'My little pony', 'Goonies']));
 var_dump($movieWords);
 // {1: 'Goonies'}
+```
+
+Or in Twig:
+
+```twig
+{{ dump(words|it.filter(it.filters.in(['Shining', "My little pony', 'Goonies'])) }}
 ```
 
 ## Sorting
@@ -278,9 +339,15 @@ var_dump($ordered);
 // {0: 1, 2: 2, 1: 3, 4: 4, 3: 5}
 ```
 
-The sorting algorithm will preserve the keys and is guarateed to be
+Or in Twig:
+
+```twig
+{{ dump(numbers|it.sorted }}
+```
+
+The sorting algorithm will preserve the keys and is guaranteed to be
 stable.  I.e. when elements are sorted using the same value, then the
-sorted order is guarateed to be the same as the order of the input
+sorted order is guaranteed to be the same as the order of the input
 elements.  This is contrary to the standard PHP sorting functions.
 
 Using the closure [getter strategy](#getter-strategy) the returned
@@ -299,17 +366,23 @@ var_dump($ordered);
 // {3: 'Bland', 1: 'Goonies', 2: 'oven', 0: 'Useful', 4: 'notorious'};
 ```
 
-The [mappings.php](src/Zicht/Itertools/mappings.php) provides a
+The [mappings.php](src/Zicht/Itertools/util/Mappings.php) provides a
 mapping closure which returns a random number.  This can be used to
 sort a collection in a random order.  For example:
 
 ```php
+use Zicht\Itertools\util\Mappings;
 use function Zicht\Itertools\iterable;
-use function Zicht\Itertools\mappings\random;
 
-$randomized = iterable($words)->sorted(random());
+$randomized = iterable($words)->sorted(Mappings::random());
 var_dump($randomized);
 // {... randomly ordere words ...}
+```
+
+Or in Twig:
+
+```twig
+{{ dump(words|it.sorted(it.mappings.random)) }}
 ```
 
 ## Grouping
@@ -327,6 +400,12 @@ var_dump($vehiclesByType);
 // {'bike': {1: [...]}, 'car': {0: [...], 3: [...]} 'unicicle': {2: [...]}}
 ```
 
+Or in Twig:
+
+```twig
+{{ dump(vehicles|it.groupBy('type')) }}
+```
+
 Not that the original keys of the vehicles are still part of the
 resulting groups, and the elements within each group keep the order
 that they had in the input, i.e. it uses the stable sorting provided
@@ -334,7 +413,7 @@ by [`sorted`](#sorting).
 
 ## Reducing
 `reduce` converts a collection into a single value by calling a
-closure of two arguments comulatively to the elements in the
+closure of two arguments cumulatively to the elements in the
 collection, from left to right.
 
 For example, without any arguments `reduce` will add all elements of
@@ -348,7 +427,13 @@ var_dump($sum);
 // 15
 ```
 
-In the above exmple, the default closure that is used looks like this:
+Or in Twig:
+
+```twig
+{{ dump(numbers|it.reduce) }}
+```
+
+In the above example, the default closure that is used looks like this:
 
 ```php
 function add($a, $b) {
@@ -366,17 +451,23 @@ var_dump($sum);
 ```
 
 There are several common reduction closures available
-in [reductions.php](src/Zicht/Itertools/reductions.php).  Calling
+in [reductions.php](src/Zicht/Itertools/util/Reductions.php).  Calling
 these functions returns a closure that can be passed to `reduction`.
 For example:
 
 ```php
-use \Zicht\Itertools\util\Reductions;
+use Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
 
 $scentence = iterable($words)->reduce(Reductions::join(' - '));
 var_dump($scentence);
 // 'Useful - Goonies - oven - Bland - notorious'
+```
+
+Or in Twig:
+
+```twig
+{{ dump(words|it.reduce(it.reductions.join(' - ')) }}
 ```
 
 Another common reduction is chaining multiple lists together into one list.
@@ -392,6 +483,12 @@ var_dump($flat);
 // {0: 'one', 1: 'two', 0: 'three'}
 ```
 
+Or in Twig:
+
+```twig
+{% set data = [['one', 'two'], ['three']] %}
+{{ dump(data|it.collapse) }}
+```
 
 # Maintainer
 * Boudewijn Schoon <boudewijn@zicht.nl>

@@ -19,9 +19,11 @@ class Extension extends \Twig_Extension implements GlobalsInterface
     public function getGlobals()
     {
         return [
-            'itf' => new Itertools\util\Filters(),
-            'itm' => new Itertools\util\Mappings(),
-            'itr' => new Itertools\util\Reductions(),
+            'it' => (object)[
+                'filters' => new Itertools\util\Filters(),
+                'mappings' => new Itertools\util\Mappings(),
+                'reductions' => new Itertools\util\Reductions(),
+            ],
         ];
     }
 
@@ -67,15 +69,17 @@ class Extension extends \Twig_Extension implements GlobalsInterface
     public function getFunctions()
     {
         return [
+            new \Twig_SimpleFunction('it', [$this, 'it']),
+
             // deprecated functions (because 'it' was introduced)
             new \Twig_SimpleFunction('chain', '\Zicht\Itertools\chain', ['deprecated' => true, 'alternative' => '|it.chain']),
             new \Twig_SimpleFunction('first', '\Zicht\Itertools\first', ['deprecated' => true, 'alternative' => '|it.first']),
             new \Twig_SimpleFunction('last', '\Zicht\Itertools\last', ['deprecated' => true, 'alternative' => '|it.last']),
 
-            // deprecated functions (because 'itr', 'itm', and 'itf' were introduced)
-            new \Twig_SimpleFunction('reducing', [$this, 'reducing'], ['deprecated' => true, 'alternative' => 'itr']),
-            new \Twig_SimpleFunction('mapping', [$this, 'mapping'], ['deprecated' => true, 'alternative' => 'itm']),
-            new \Twig_SimpleFunction('filtering', [$this, 'filtering'], ['deprecated' => true, 'alternative' => 'itf']),
+            // deprecated functions (because 'it' was introduced)
+            new \Twig_SimpleFunction('reducing', [$this, 'reducing'], ['deprecated' => true, 'alternative' => 'it.reductions']),
+            new \Twig_SimpleFunction('mapping', [$this, 'mapping'], ['deprecated' => true, 'alternative' => 'it.mappings']),
+            new \Twig_SimpleFunction('filtering', [$this, 'filtering'], ['deprecated' => true, 'alternative' => 'it.filters']),
 
             // deprecated functions
             new \Twig_SimpleFunction('reduction', [$this, 'deprecatedGetReduction'], ['deprecated' => true, 'alternative' => 'reducing']),

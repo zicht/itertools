@@ -32,10 +32,13 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     public function testAvailableGlobals()
     {
         $globals = $this->extension->getGlobals();
-        $this->assertEquals(['itf', 'itm', 'itr'], array_keys($globals));
-        $this->assertInstanceOf(Filters::class, $globals['itf']);
-        $this->assertInstanceOf(Mappings::class, $globals['itm']);
-        $this->assertInstanceOf(Reductions::class, $globals['itr']);
+        $this->assertEquals(['it'], array_keys($globals));
+        $this->assertObjectHasAttribute('filters', $globals['it']);
+        $this->assertInstanceOf(Filters::class, $globals['it']->filters);
+        $this->assertObjectHasAttribute('mappings', $globals['it']);
+        $this->assertInstanceOf(Mappings::class, $globals['it']->mappings);
+        $this->assertObjectHasAttribute('reductions', $globals['it']);
+        $this->assertInstanceOf(Reductions::class, $globals['it']->reductions);
     }
 
     /**
@@ -77,9 +80,10 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         }
 
         $expected = [
-            # main functions
+            # main function
+            'it',
+            # deprecated functions (because 'it' was introduced)
             'chain', 'first', 'last',
-            # closure functions
             'reducing', 'mapping', 'filtering',
             # deprecated functions
             'reduction',

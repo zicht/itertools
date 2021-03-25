@@ -12,6 +12,7 @@ Nothing so far
 ### Added
 - Added support for php 8.
 ### Removed
+- Removed support for php 5.
 - Removed everything marked deprecated in the previous major release.
 
 ## 2.14.0 - 2021-03-25
@@ -20,10 +21,8 @@ Nothing so far
   This is in preparation of the 3.0 release that will be compatible with php 8, which ships with a
   global `match` statement of its own.
 - Marked many twig filters and functions as deprecated, i.e. `[1, 2, 3]|filter` is now available as
-  `[1, 2, 3]|it.filter`.
+  `[1, 2, 3]|it.filter` or `it([1, 2, 3]).filter`.
   This is because twig has been adding filters that use the same names as itertools does.
-### Removed
-- Removed support for php 5, php 7.0, 7.1, 7.2, and 7.3.
 
 ## 2.13.0 - 2020-05-22
 ### Added

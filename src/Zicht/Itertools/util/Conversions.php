@@ -7,7 +7,6 @@ namespace Zicht\Itertools\util;
 
 use Doctrine\Common\Collections\Collection;
 use Zicht\Itertools\lib\StringIterator;
-use function Zicht\Itertools\conversions\mixed_to_closure;
 
 class Conversions
 {
@@ -53,7 +52,12 @@ class Conversions
 
         // by now it should be an Iterator, otherwise throw an exception
         if (!($iterable instanceof \Iterator)) {
-            throw new \InvalidArgumentException('Argument $ITERABLE must be a Traversable');
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Argument $iterable must be a Traversable, instead %s was given',
+                    is_object($iterable) ? get_class($iterable) : gettype($iterable)
+                )
+            );
         }
 
         return $iterable;
@@ -84,7 +88,12 @@ class Conversions
                     return call_user_func_array($closure, func_get_args());
                 };
             } else {
-                throw new \InvalidArgumentException('Argument $CLOSURE must be a Closure');
+                throw new \InvalidArgumentException(
+                    sprintf(
+                        'Argument $closure must be a Closure, instead %s was given',
+                        is_object($closure) ? get_class($closure) : gettype($closure)
+                    )
+                );
             }
         }
 
