@@ -8,6 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 3.0.0 - [unreleased]
+### Added
+- Added support for php 8.
+- Added support for Twig 3.
+### Removed
+- Removed support for php 5.
+- Removed support for Twig 1.
+- Removed everything marked deprecated in the previous major release.
+
+## 2.14.0 - 2021-03-25
+### Changed
+- Marked many functions as deprecated, i.e. `filters\match` is now available as `Filters::match`.
+  This is in preparation of the 3.0 release that will be compatible with php 8, which ships with a
+  global `match` statement of its own.
+- Marked many twig filters and functions as deprecated, i.e. `[1, 2, 3]|filter` is now available as
+  `[1, 2, 3]|it.filter` or `it([1, 2, 3]).filter`.
+  This is because twig has been adding filters that use the same names as itertools does.
+
 ## 2.13.0 - 2020-05-22
 ### Added
 - Added `constant` mapping helper.

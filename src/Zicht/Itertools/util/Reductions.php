@@ -7,71 +7,122 @@ namespace Zicht\Itertools\util;
 
 use Zicht\Itertools;
 
-/**
- * @deprecated Use \Zicht\Itertools\reductions, will be removed in version 3.0
- */
 class Reductions
 {
     /**
+     * Returns a closure that adds two numbers together
+     *
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\add, will be removed in version 3.0
      */
     public static function add()
     {
-        return Itertools\reductions\add();
+        return function ($a, $b) {
+            if (!is_numeric($a)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform addition, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!is_numeric($b)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform addition, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return $a + $b;
+        };
     }
 
     /**
+     * Returns a closure that subtracts one number from another
+     *
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\sub, will be removed in version 3.0
      */
     public static function sub()
     {
-        return Itertools\reductions\sub();
+        return function ($a, $b) {
+            if (!is_numeric($a)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform subtraction, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!is_numeric($b)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform subtraction, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return $a - $b;
+        };
     }
 
     /**
+     * Returns a closure that multiplies two numbers
+     *
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\mul, will be removed in version 3.0
      */
     public static function mul()
     {
-        return Itertools\reductions\mul();
+        return function ($a, $b) {
+            if (!is_numeric($a)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to perform multiplication, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!is_numeric($b)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to perform multiplication, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return $a * $b;
+        };
     }
 
     /**
+     * Returns a closure that returns the smallest of two numbers
+     *
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\min, will be removed in version 3.0
      */
     public static function min()
     {
-        return Itertools\reductions\min();
+        return function ($a, $b) {
+            if (!(is_numeric($a) || $a instanceof \DateTime)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine minimum, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!(is_numeric($b) || $b instanceof \DateTime)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine minimum, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return $a < $b ? $a : $b;
+        };
     }
 
     /**
+     * Returns a closure that returns the largest of two numbers
+     *
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\max, will be removed in version 3.0
      */
     public static function max()
     {
-        return Itertools\reductions\max();
+        return function ($a, $b) {
+            if (!(is_numeric($a) || $a instanceof \DateTime)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be numeric to determine maximum, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!(is_numeric($b) || $b instanceof \DateTime)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be numeric to determine maximum, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return $a < $b ? $b : $a;
+        };
     }
 
     /**
+     * Returns a closure that concatenates two strings using $glue
+     *
      * @param string $glue
      * @return \Closure
-     * @deprecated Use \Zicht\Itertools\reductions\join, will be removed in version 3.0
      */
     public static function join($glue = '')
     {
-        return Itertools\reductions\join($glue);
+        if (!is_string($glue)) {
+            throw new \InvalidArgumentException(sprintf('Argument $GLUE must be a string to join, not %s', is_object($glue) ? get_class($glue) : gettype($glue)));
+        }
+        return function ($a, $b) use ($glue) {
+            if (!is_string($a)) {
+                throw new \InvalidArgumentException(sprintf('Argument $A must be a string to join, not %s', is_object($a) ? get_class($a) : gettype($a)));
+            }
+            if (!is_string($b)) {
+                throw new \InvalidArgumentException(sprintf('Argument $B must be a string to join, not %s', is_object($b) ? get_class($b) : gettype($b)));
+            }
+            return \join($glue, [$a, $b]);
+        };
     }
 
     /**
-     * @todo Remove the default parameter.  It should behave like getMappings,
-     * @todo i.e. allowing parameters to pass to the specific reductions and throwing
-     * @todo an exception when $NAME does not correspond to a known reduction
-     * @deprecated Use \Zicht\Itertools\reductions\getReduction, note that this has a different API, will be removed in version 3.0
+     * @deprecated please use the reduction functions directly, will be removed in version 3.0
      * @param string $name
      * @param null $default
      * @return \Closure|null
@@ -80,17 +131,17 @@ class Reductions
     {
         switch ($name) {
             case 'add':
-                return Itertools\reductions\add();
+                return self::add();
             case 'sub':
-                return Itertools\reductions\sub();
+                return self::sub();
             case 'mul':
-                return Itertools\reductions\mul();
+                return self::mul();
             case 'min':
-                return Itertools\reductions\min();
+                return self::min();
             case 'max':
-                return Itertools\reductions\max();
+                return self::max();
             case 'join':
-                return Itertools\reductions\join();
+                return self::join();
             default:
                 return $default;
         }

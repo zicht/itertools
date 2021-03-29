@@ -5,7 +5,6 @@
 
 namespace Zicht\Itertools;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\AccumulateIterator;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\Itertools\lib\CountIterator;
@@ -39,18 +38,18 @@ use Zicht\Itertools\lib\SortedIterator;
 use Zicht\Itertools\lib\UniqueIterator;
 use Zicht\Itertools\lib\ZipIterator;
 use Zicht\Itertools\reductions;
+use Zicht\Itertools\util\Conversions;
 
 /**
  * Transforms anything into an \Iterator or throws an \InvalidArgumentException
  *
  * @param array|string|\Iterator $iterable
  * @return \Iterator
- *
- * @deprecated Use conversions\mixed_to_iterator instead, will be removed in version 3.0
+ * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToIterator, will be removed in version 3.0
  */
 function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return conversions\mixed_to_iterator($iterable);
+    return Conversions::mixedToIterator($iterable);
 }
 
 /**
@@ -58,12 +57,11 @@ function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Func
  *
  * @param null|\Closure $closure
  * @return \Closure
- *
- * @deprecated Use conversions\mixed_to_closure instead, will be removed in version 3.0
+ * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToClosure, will be removed in version 3.0
  */
 function mixedToClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return conversions\mixed_to_closure($closure);
+    return Conversions::mixedToClosure($closure);
 }
 
 /**
@@ -71,12 +69,11 @@ function mixedToClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functi
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
- *
- * @deprecated Use Conversions::mixedToValueGetter instead, will be removed in version 3.0
+ * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToValueGetter, will be removed in version 3.0
  */
 function mixedToValueGetter($strategy) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return conversions\mixed_to_value_getter($strategy);
+    return Conversions::mixedToValueGetter($strategy);
 }
 
 /**
@@ -84,7 +81,6 @@ function mixedToValueGetter($strategy) // phpcs:ignore Zicht.NamingConventions.F
  *
  * @param string|\Closure $closure
  * @return \Closure
- *
  * @deprecated Will be removed in version 3.0, no replacement will be needed
  */
 function mixedToOperationClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
@@ -116,6 +112,7 @@ function mixedToOperationClosure($closure) // phpcs:ignore Zicht.NamingConventio
  * @param array|string|\Iterator $iterable
  * @param string|\Closure $closure
  * @return AccumulateIterator
+ * @deprecated Use iterable($iterable)->accumulate($closure), will be removed in version 3.0
  */
 function accumulate($iterable, $closure = 'add')
 {
@@ -145,6 +142,7 @@ function accumulate($iterable, $closure = 'add')
  * @param string|\Closure $closure
  * @param mixed $initializer
  * @return mixed
+ * @deprecated Use iterable($iterable)->reduce($closure, $initializer), will be removed in version 3.0
  */
 function reduce($iterable, $closure = 'add', $initializer = null)
 {
@@ -163,6 +161,7 @@ function reduce($iterable, $closure = 'add', $initializer = null)
  *
  * @param array|string|\Iterator $iterable
  * @return lib\CollapseIterator
+ * @deprecated Use iterable($iterable)->collapse(), will be removed in version 3.0
  */
 function collapse($iterable)
 {
@@ -188,6 +187,7 @@ function collapse($iterable)
  * A B C D E F
  *
  * @return ChainIterator
+ * @deprecated Use iterable($iterable)->chain($iterable, ...), will be removed in version 3.0
  */
 function chain()
 {
@@ -224,6 +224,7 @@ function chain()
  * @param int|float $start
  * @param int|float $step
  * @return CountIterator
+ * @deprecated Use new CountIterator($start, $step), will be removed in version 3.0
  */
 function count($start = 0, $step = 1)
 {
@@ -248,6 +249,7 @@ function count($start = 0, $step = 1)
  *
  * @param array|string|\Iterator $iterable
  * @return CycleIterator
+ * @deprecated Use iterable($iterable)->cycle(), will be removed in version 3.0
  */
 function cycle($iterable)
 {
@@ -283,6 +285,7 @@ function cycle($iterable)
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
+ * @deprecated Use iterable($iterable)->mapBy($strategy), will be removed in version 3.0
  */
 function map_by($strategy, $iterable)
 {
@@ -303,12 +306,16 @@ function map_by($strategy, $iterable)
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
- *
  * @deprecated Please use map_by, will be removed in version 3.0
+ * @deprecated Use iterable($iterable)->mapBy($strategy), will be removed in version 3.0
  */
 function mapBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return map_by($strategy, $iterable);
+    if (!($iterable instanceof MapByInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->mapBy($strategy);
 }
 
 /**
@@ -318,8 +325,7 @@ function mapBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Fun
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return MapByIterator
- *
- * @deprecated use map_by() instead, will be removed in version 3.0
+ * @deprecated Use iterable($iterable)->mapBy($strategy), will be removed in version 3.0
  */
 function keyCallback($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
@@ -352,6 +358,7 @@ function keyCallback($strategy, $iterable) // phpcs:ignore Zicht.NamingConventio
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable Additional $iterable parameters may follow
  * @return MapIterator
+ * @deprecated Use iterable($iterable)->map($strategy, [$iterable2, ...]), will be removed in version 3.0
  */
 function map($strategy, $iterable)
 {
@@ -380,8 +387,7 @@ function map($strategy, $iterable)
  * @param array|string|\Iterator $iterable
  * @param bool $flatten
  * @return array|MapIterator
- *
- * @deprecated Please use map(...)->values() instead (when flatten true), will be removed in version 3.0
+ * @deprecated Use map(...)->values() instead (when flatten true), will be removed in version 3.0
  */
 function select($strategy, $iterable, $flatten = true)
 {
@@ -390,8 +396,8 @@ function select($strategy, $iterable, $flatten = true)
     }
 
     $ret = new MapIterator(
-        conversions\mixed_to_value_getter($strategy),
-        conversions\mixed_to_iterator($iterable)
+        Conversions::mixedToValueGetter($strategy),
+        Conversions::mixedToIterator($iterable)
     );
     if ($flatten) {
         return $ret->values();
@@ -412,6 +418,7 @@ function select($strategy, $iterable, $flatten = true)
  * @param mixed $mixed
  * @param null|int $times
  * @return RepeatIterator
+ * @deprecated Use new RepeatIterator(mixed, $times), will be removed in version 3.0
  */
 function repeat($mixed, $times = null)
 {
@@ -458,6 +465,7 @@ function repeat($mixed, $times = null)
  * @param array|string|\Iterator $iterable
  * @param boolean $sort
  * @return GroupbyIterator
+ * @deprecated Use iterable($iterable)->groupBy($strategy, $sort), will be removed in version 3.0
  */
 function group_by($strategy, $iterable, $sort = true)
 {
@@ -477,12 +485,15 @@ function group_by($strategy, $iterable, $sort = true)
  * @param array|string|\Iterator $iterable
  * @param boolean $sort
  * @return GroupbyIterator
- *
- * @deprecated Please use group_by(...)->values() instead (when flatten true), will be removed in version 3.0
+ * @deprecated Use iterable($iterable)->groupBy($strategy, $sort), will be removed in version 3.0
  */
 function groupBy($strategy, $iterable, $sort = true) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return group_by($strategy, $iterable, $sort);
+    if (!($iterable instanceof GroupByInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->groupBy($strategy, $sort);
 }
 
 /**
@@ -510,6 +521,7 @@ function groupBy($strategy, $iterable, $sort = true) // phpcs:ignore Zicht.Namin
  * @param array|string|\Iterator $iterable
  * @param boolean $reverse
  * @return SortedIterator
+ * @deprecated Use iterable($iterable)->sorted($strategy, $reverse), will be removed in version 3.0
  */
 function sorted($strategy, $iterable, $reverse = false)
 {
@@ -531,6 +543,7 @@ function sorted($strategy, $iterable, $reverse = false)
  * must be given.  They must be either an array, a string, or an \Iterator.
  *
  * @return FilterIterator
+ * @deprecated Use iterable($iterable)->filter($strategy), will be removed in version 3.0
  */
 function filter()
 {
@@ -577,8 +590,7 @@ function filter()
  * must be given.  They must be either an array, a string, or an \Iterator.
  *
  * @return FilterIterator
- *
- * @deprecated Use filter() instead, will be removed in version 3.0
+ * @deprecated Use iterable($iterable)->filter($strategy), will be removed in version 3.0
  */
 function filterBy() // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
@@ -589,21 +601,21 @@ function filterBy() // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNami
     $args = func_get_args();
     switch (sizeof($args)) {
         case 2:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
+            $strategy = Conversions::mixedToValueGetter($args[0]);
             $closure = function ($value, $key) use ($strategy) {
                 $tempVarPhp54 = call_user_func($strategy, $value, $key);
                 return !empty($tempVarPhp54);
             };
-            $iterable = conversions\mixed_to_iterator($args[1]);
+            $iterable = Conversions::mixedToIterator($args[1]);
             break;
 
         case 3:
-            $strategy = conversions\mixed_to_value_getter($args[0]);
+            $strategy = Conversions::mixedToValueGetter($args[0]);
             $userClosure = $args[1];
             $closure = function ($value, $key) use ($strategy, $userClosure) {
                 return call_user_func($userClosure, call_user_func($strategy, $value, $key));
             };
-            $iterable = conversions\mixed_to_iterator($args[2]);
+            $iterable = Conversions::mixedToIterator($args[2]);
             break;
 
         default:
@@ -627,6 +639,7 @@ function filterBy() // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNami
  *
  * @param array|string|\Iterator $iterable Additional $iterable parameters may follow
  * @return ZipIterator
+ * @deprecated Use iterable($iterable)->zip($iterable2, [$iterable3, ...]), will be removed in version 3.0
  */
 function zip($iterable)
 {
@@ -652,6 +665,7 @@ function zip($iterable)
  *
  * @param array|string|\Iterator $iterable
  * @return ReversedIterator
+ * @deprecated Use iterable($iterable)->reversed(), will be removed in version 3.0
  */
 function reversed($iterable)
 {
@@ -680,6 +694,7 @@ function reversed($iterable)
  * ['id' => 1, 'value' => 'a']  # one element in this list
  *
  * @return UniqueIterator
+ * @deprecated Use iterable($iterable)->unique($strategy), will be removed in version 3.0
  */
 function unique()
 {
@@ -712,12 +727,31 @@ function unique()
  * @param null|string|\Closure $strategy
  * @param array|string|\Iterator $iterable
  * @return UniqueIterator
- *
- * @deprecated use unique($strategy, $iterable) instead, will be removed in version 3.0
+ * @deprecated Use iterable($iterable)->unique($strategy), will be removed in version 3.0
  */
 function uniqueBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
 {
-    return unique($strategy, $iterable);
+    $args = func_get_args();
+    switch (sizeof($args)) {
+        case 1:
+            $strategy = null;
+            $iterable = $args[0];
+            break;
+
+        case 2:
+            $strategy = $args[0];
+            $iterable = $args[1];
+            break;
+
+        default:
+            throw new \InvalidArgumentException('unique requires either one (iterable) or two (strategy, iterable) arguments');
+    }
+
+    if (!($iterable instanceof UniqueInterface)) {
+        $iterable = iterable($iterable);
+    }
+
+    return $iterable->unique($strategy);
 }
 
 /**
@@ -739,6 +773,7 @@ function uniqueBy($strategy, $iterable) // phpcs:ignore Zicht.NamingConventions.
  * true
  *
  * @return boolean
+ * @deprecated Use iterable($iterable)->any($strategy), will be removed in version 3.0
  */
 function any()
 {
@@ -784,6 +819,7 @@ function any()
  * false
  *
  * @return boolean
+ * @deprecated Use iterable($iterable)->all($strategy), will be removed in version 3.0
  */
 function all()
 {
@@ -833,6 +869,7 @@ function all()
  * @param int $start
  * @param null|int $end
  * @return SliceIterator
+ * @deprecated Use iterable($iterable)->slice($start, $end), will be removed in version 3.0
  */
 function slice($iterable, $start, $end = null)
 {
@@ -855,6 +892,7 @@ function slice($iterable, $start, $end = null)
  * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
+ * @deprecated Use iterable($iterable)->first($default), will be removed in version 3.0
  */
 function first($iterable, $default = null)
 {
@@ -877,6 +915,7 @@ function first($iterable, $default = null)
  * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
+ * @deprecated Use iterable($iterable)->firstKey($default), will be removed in version 3.0
  */
 function first_key($iterable, $default = null)
 {
@@ -899,6 +938,7 @@ function first_key($iterable, $default = null)
  * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
+ * @deprecated Use iterable($iterable)->last($default), will be removed in version 3.0
  */
 function last($iterable, $default = null)
 {
@@ -921,6 +961,7 @@ function last($iterable, $default = null)
  * @param array|string|\Iterator $iterable
  * @param mixed $default
  * @return mixed
+ * @deprecated Use iterable($iterable)->lastKey($default), will be removed in version 3.0
  */
 function last_key($iterable, $default = null)
 {
@@ -945,5 +986,5 @@ function iterable($iterable)
         return $iterable;
     }
 
-    return new IterableIterator(conversions\mixed_to_iterator($iterable));
+    return new IterableIterator(Conversions::mixedToIterator($iterable));
 }

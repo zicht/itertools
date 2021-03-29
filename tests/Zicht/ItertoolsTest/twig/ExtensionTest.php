@@ -5,7 +5,13 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\twig\Extension;
+use Zicht\Itertools\util\Filters;
+use Zicht\Itertools\util\Mappings;
+use Zicht\Itertools\util\Reductions;
 
 class ExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,6 +28,20 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
         $this->extension = new Extension();
     }
 
+    /**
+     * Ensure specific globals are available
+     */
+    public function testAvailableGlobals()
+    {
+        $globals = $this->extension->getGlobals();
+        $this->assertEquals(['it'], array_keys($globals));
+        $this->assertObjectHasAttribute('filters', $globals['it']);
+        $this->assertInstanceOf(Filters::class, $globals['it']->filters);
+        $this->assertObjectHasAttribute('mappings', $globals['it']);
+        $this->assertInstanceOf(Mappings::class, $globals['it']->mappings);
+        $this->assertObjectHasAttribute('reductions', $globals['it']);
+        $this->assertInstanceOf(Reductions::class, $globals['it']->reductions);
+    }
 
     /**
      * Ensure specific filters are available
@@ -30,14 +50,16 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $filters = [];
 
-        /** @var \Twig_SimpleFilter $filter */
+        /** @var TwigFilter $filter */
         foreach ($this->extension->getFilters() as $filter) {
-            $this->assertInstanceOf('\Twig_SimpleFilter', $filter);
+            $this->assertInstanceOf(TwigFilter::class, $filter);
             $filters [] = $filter->getName();
         }
 
         $expected = [
-            # main filters
+            # main filter
+            'it',
+            # deprecated filters (because 'it' was introduced)
             'all', 'any', 'chain', 'collapse', 'filter', 'first', 'group_by', 'last', 'map', 'map_by', 'reduce', 'reversed', 'sorted', 'unique', 'zip',
             # deprecated filters
             'filterby', 'groupBy', 'groupby', 'mapBy', 'mapby', 'sum', 'uniqueby',
@@ -53,22 +75,32 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $functions = [];
 
-        /** @var \Twig_SimpleFunction $function */
+        /** @var TwigFunction $function */
         foreach ($this->extension->getFunctions() as $function) {
-            $this->assertInstanceOf('\Twig_SimpleFunction', $function);
+            $this->assertInstanceOf(TwigFunction::class, $function);
             $functions [] = $function->getName();
         }
 
         $expected = [
-            # main functions
+            # main function
+            'it',
+            # deprecated functions (because 'it' was introduced)
             'chain', 'first', 'last',
-            # closure functions
             'reducing', 'mapping', 'filtering',
             # deprecated functions
             'reduction',
         ];
 
         $this->assertEquals($expected, $functions);
+    }
+
+    /**
+     * Ensure '[1, 2, 3]|it' returns an iterable
+     */
+    public function testIt()
+    {
+        $result = $this->extension->it([1, 2, 3]);
+        $this->assertInstanceOf(FiniteIterableInterface::class, $result);
     }
 
     /**

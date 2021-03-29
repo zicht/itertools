@@ -5,19 +5,18 @@
 
 namespace Zicht\Itertools\mappings;
 
-use Zicht\Itertools\conversions;
+use Zicht\Itertools\util\Mappings;
 
 /**
  * Returns a closure that strips any matching $CHARS from the left of the input string
  *
  * @param string $chars
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::lstrip($chars), will be removed in version 3.0
  */
 function lstrip($chars = " \t\n\r\0\x0B")
 {
-    return function ($value) use ($chars) {
-        return ltrim($value, $chars);
-    };
+    return Mappings::lstrip($chars);
 }
 
 /**
@@ -25,12 +24,11 @@ function lstrip($chars = " \t\n\r\0\x0B")
  *
  * @param string $chars
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::lstrip($chars), will be removed in version 3.0
  */
 function rstrip($chars = " \t\n\r\0\x0B")
 {
-    return function ($value) use ($chars) {
-        return rtrim($value, $chars);
-    };
+    return Mappings::rstrip($chars);
 }
 
 /**
@@ -38,80 +36,66 @@ function rstrip($chars = " \t\n\r\0\x0B")
  *
  * @param string $chars
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::strip($chars), will be removed in version 3.0
  */
 function strip($chars = " \t\n\r\0\x0B")
 {
-    return function ($value) use ($chars) {
-        return trim($value, $chars);
-    };
+    return Mappings::strip($chars);
 }
 
 /**
  * Returns a closure that returns the length of the input
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::length(), will be removed in version 3.0
  */
 function length()
 {
-    return function ($value) {
-        if (is_null($value)) {
-            return 0;
-        }
-
-        if (is_string($value)) {
-            return strlen($value);
-        }
-
-        return sizeof($value);
-    };
+    return Mappings::length();
 }
 
 /**
  * Returns a closure that returns the key
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::key(), will be removed in version 3.0
  */
 function key()
 {
-    return function ($value, $key) {
-        return $key;
-    };
+    return Mappings::key();
 }
 
 /**
  * Returns a closure that returns the string value lower cased
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::lower(), will be removed in version 3.0
  */
 function lower()
 {
-    return function ($value) {
-        return strtolower($value);
-    };
+    return Mappings::lower();
 }
 
 /**
  * Returns a closure that returns the string value upper cased
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::upper(), will be removed in version 3.0
  */
 function upper()
 {
-    return function ($value) {
-        return strtoupper($value);
-    };
+    return Mappings::upper();
 }
 
 /**
  * Returns a closure that returns the value cast to a string
  *
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::string(), will be removed in version 3.0
  */
 function string()
 {
-    return function ($value) {
-        return (string)$value;
-    };
+    return Mappings::string();
 }
 
 /**
@@ -120,12 +104,11 @@ function string()
  * @param int $options
  * @param int $depth
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::jsonEncode($options, $depth), will be removed in version 3.0
  */
 function json_encode($options = 0, $depth = 512)
 {
-    return function ($value) use ($options, $depth) {
-        return \json_encode($value, $options, $depth);
-    };
+    return Mappings::jsonEncode($options, $depth);
 }
 
 /**
@@ -135,12 +118,11 @@ function json_encode($options = 0, $depth = 512)
  * @param int $depth
  * @param int $options
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::jsonDecode($assoc, $options, $depth), will be removed in version 3.0
  */
 function json_decode($assoc = false, $depth = 512, $options = 0)
 {
-    return function ($value) use ($assoc, $depth, $options) {
-        return \json_decode($value, $assoc, $depth, $options);
-    };
+    return Mappings::jsonDecode($assoc, $options, $depth);
 }
 
 /**
@@ -172,37 +154,11 @@ function json_decode($assoc = false, $depth = 512, $options = 0)
  * @param boolean $discardNull
  * @param boolean $discardEmptyContainer
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::select($mappings, $strategy, $discardNull, $discardEmptyContainer), will be removed in version 3.0
  */
 function select($mappings, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
 {
-    $castToObject = is_object($mappings);
-    $mappings = array_map('\Zicht\Itertools\conversions\mixed_to_value_getter', (array)$mappings);
-    $strategy = conversions\mixed_to_value_getter($strategy);
-
-    return function ($value, $key) use ($mappings, $strategy, $discardNull, $discardEmptyContainer, $castToObject) {
-        $value = $strategy($value);
-        $res = [];
-        foreach ($mappings as $strategyKey => $strategy) {
-            $res[$strategyKey] = $strategy($value, $key);
-        }
-        if ($discardNull || $discardEmptyContainer) {
-            $res = array_filter(
-                $res,
-                function ($value) use ($discardNull, $discardEmptyContainer) {
-                    if (null === $value) {
-                        return !$discardNull;
-                    }
-
-                    if (is_array($value) && 0 === sizeof($value)) {
-                        return !$discardEmptyContainer;
-                    }
-
-                    return true;
-                }
-            );
-        }
-        return $castToObject ? (object)$res : $res;
-    };
+    return Mappings::select($mappings, $strategy, $discardNull, $discardEmptyContainer);
 }
 
 /**
@@ -211,16 +167,11 @@ function select($mappings, $strategy = null, $discardNull = false, $discardEmpty
  * @param int $min
  * @param null|int $max
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::random($min, $max), will be removed in version 3.0
  */
 function random($min = 0, $max = null)
 {
-    if (null === $max) {
-        $max = getrandmax();
-    }
-
-    return function () use ($min, $max) {
-        return rand($min, $max);
-    };
+    return Mappings::random($min, $max);
 }
 
 /**
@@ -228,14 +179,11 @@ function random($min = 0, $max = null)
  *
  * @param null|string|\Closure $strategy
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::type($strategy), will be removed in version 3.0
  */
 function type($strategy = null)
 {
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    return function ($value) use ($strategy) {
-        $value = $strategy($value);
-        return is_object($value) ? get_class($value) : gettype($value);
-    };
+    return Mappings::type($strategy);
 }
 
 /**
@@ -255,19 +203,11 @@ function type($strategy = null)
  * @param null|string|\Closure $mapping
  * @param null|string|\Closure $strategy
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::cache($mapping, $strategy), will be removed in version 3.0
  */
 function cache($mapping, $strategy = null)
 {
-    $mapping = conversions\mixed_to_value_getter($mapping);
-    $strategy = conversions\mixed_to_value_getter($strategy);
-    $cache = [];
-    return function ($value, $key = null) use ($mapping, $strategy, &$cache) {
-        $cacheKey = \json_encode($strategy($value, $key));
-        if (!array_key_exists($cacheKey, $cache)) {
-            $cache[$cacheKey] = $mapping($value, $key);
-        }
-        return $cache[$cacheKey];
-    };
+    return Mappings::cache($mapping, $strategy);
 }
 
 /**
@@ -275,12 +215,11 @@ function cache($mapping, $strategy = null)
  *
  * @param null|string|int|float|bool|object|array $value
  * @return \Closure
+ * @deprecated Use \Zicht\Itertools\util\Mappings::constant($value), will be removed in version 3.0
  */
 function constant($value)
 {
-    return function () use ($value) {
-        return $value;
-    };
+    return Mappings::constant($value);
 }
 
 /**
@@ -289,7 +228,6 @@ function constant($value)
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
- *
  * @deprecated please use the mapping functions directly, will be removed in version 3.0
  */
 function get_mapping($name /* [argument, [arguments, ...] */)
@@ -332,7 +270,6 @@ function get_mapping($name /* [argument, [arguments, ...] */)
  * @param string $name
  * @return \Closure
  * @throws \InvalidArgumentException
- *
  * @deprecated please use the mapping functions directly, will be removed in version 3.0
  */
 function getMapping($name /* [argument, [arguments, ...] */) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
