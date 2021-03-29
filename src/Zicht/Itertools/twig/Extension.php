@@ -5,13 +5,16 @@
 
 namespace Zicht\Itertools\twig;
 
+use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 use Zicht\Itertools;
 
 /**
  * Twig extension.
  */
-class Extension extends \Twig_Extension implements GlobalsInterface
+class Extension extends AbstractExtension implements GlobalsInterface
 {
     /**
      * {@inheritDoc}
@@ -33,33 +36,33 @@ class Extension extends \Twig_Extension implements GlobalsInterface
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('it', [$this, 'it']),
+            new TwigFilter('it', [$this, 'it']),
 
             // deprecated filters (because 'it' was introduced)
-            new \Twig_SimpleFilter('all', '\Zicht\Itertools\all', ['deprecated' => true, 'alternative' => '|it.all']),
-            new \Twig_SimpleFilter('any', '\Zicht\Itertools\any', ['deprecated' => true, 'alternative' => '|it.any']),
-            new \Twig_SimpleFilter('chain', '\Zicht\Itertools\chain', ['deprecated' => true, 'alternative' => '|it.chain']),
-            new \Twig_SimpleFilter('collapse', '\Zicht\Itertools\collapse', ['deprecated' => true, 'alternative' => '|it.collapse']),
-            new \Twig_SimpleFilter('filter', [$this, 'filter'], ['deprecated' => true, 'alternative' => '|it.filter']),
-            new \Twig_SimpleFilter('first', '\Zicht\Itertools\first', ['deprecated' => true, 'alternative' => '|it.first']),
-            new \Twig_SimpleFilter('group_by', [$this, 'groupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
-            new \Twig_SimpleFilter('last', '\Zicht\Itertools\last', ['deprecated' => true, 'alternative' => '|it.last']),
-            new \Twig_SimpleFilter('map', [$this, 'map'], ['deprecated' => true, 'alternative' => '|it.map']),
-            new \Twig_SimpleFilter('map_by', [$this, 'mapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
-            new \Twig_SimpleFilter('reduce', '\Zicht\Itertools\reduce', ['deprecated' => true, 'alternative' => '|it.reduce']),
-            new \Twig_SimpleFilter('reversed', '\Zicht\Itertools\reversed', ['deprecated' => true, 'alternative' => '|it.reversed']),
-            new \Twig_SimpleFilter('sorted', [$this, 'sorted'], ['deprecated' => true, 'alternative' => '|it.sorted']),
-            new \Twig_SimpleFilter('unique', [$this, 'unique'], ['deprecated' => true, 'alternative' => '|it.unique']),
-            new \Twig_SimpleFilter('zip', '\Zicht\Itertools\zip', ['deprecated' => true, 'alternative' => '|it.zip']),
+            new TwigFilter('all', '\Zicht\Itertools\all', ['deprecated' => true, 'alternative' => '|it.all']),
+            new TwigFilter('any', '\Zicht\Itertools\any', ['deprecated' => true, 'alternative' => '|it.any']),
+            new TwigFilter('chain', '\Zicht\Itertools\chain', ['deprecated' => true, 'alternative' => '|it.chain']),
+            new TwigFilter('collapse', '\Zicht\Itertools\collapse', ['deprecated' => true, 'alternative' => '|it.collapse']),
+            new TwigFilter('filter', [$this, 'filter'], ['deprecated' => true, 'alternative' => '|it.filter']),
+            new TwigFilter('first', '\Zicht\Itertools\first', ['deprecated' => true, 'alternative' => '|it.first']),
+            new TwigFilter('group_by', [$this, 'groupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
+            new TwigFilter('last', '\Zicht\Itertools\last', ['deprecated' => true, 'alternative' => '|it.last']),
+            new TwigFilter('map', [$this, 'map'], ['deprecated' => true, 'alternative' => '|it.map']),
+            new TwigFilter('map_by', [$this, 'mapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
+            new TwigFilter('reduce', '\Zicht\Itertools\reduce', ['deprecated' => true, 'alternative' => '|it.reduce']),
+            new TwigFilter('reversed', '\Zicht\Itertools\reversed', ['deprecated' => true, 'alternative' => '|it.reversed']),
+            new TwigFilter('sorted', [$this, 'sorted'], ['deprecated' => true, 'alternative' => '|it.sorted']),
+            new TwigFilter('unique', [$this, 'unique'], ['deprecated' => true, 'alternative' => '|it.unique']),
+            new TwigFilter('zip', '\Zicht\Itertools\zip', ['deprecated' => true, 'alternative' => '|it.zip']),
 
             // deprecated filters
-            new \Twig_SimpleFilter('filterby', [$this, 'deprecatedFilterBy'], ['deprecated' => true, 'alternative' => '|it.filter']),
-            new \Twig_SimpleFilter('groupBy', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
-            new \Twig_SimpleFilter('groupby', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
-            new \Twig_SimpleFilter('mapBy', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
-            new \Twig_SimpleFilter('mapby', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
-            new \Twig_SimpleFilter('sum', [$this, 'deprecatedSum'], ['deprecated' => true, 'alternative' => '|it.reduce']),
-            new \Twig_SimpleFilter('uniqueby', [$this, 'deprecatedUniqueBy'], ['deprecated' => true, 'alternative' => '|it.unique']),
+            new TwigFilter('filterby', [$this, 'deprecatedFilterBy'], ['deprecated' => true, 'alternative' => '|it.filter']),
+            new TwigFilter('groupBy', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
+            new TwigFilter('groupby', [$this, 'deprecatedGroupBy'], ['deprecated' => true, 'alternative' => '|it.groupBy']),
+            new TwigFilter('mapBy', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
+            new TwigFilter('mapby', [$this, 'deprecatedMapBy'], ['deprecated' => true, 'alternative' => '|it.mapBy']),
+            new TwigFilter('sum', [$this, 'deprecatedSum'], ['deprecated' => true, 'alternative' => '|it.reduce']),
+            new TwigFilter('uniqueby', [$this, 'deprecatedUniqueBy'], ['deprecated' => true, 'alternative' => '|it.unique']),
         ];
     }
 
@@ -69,20 +72,20 @@ class Extension extends \Twig_Extension implements GlobalsInterface
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('it', [$this, 'it']),
+            new TwigFunction('it', [$this, 'it']),
 
             // deprecated functions (because 'it' was introduced)
-            new \Twig_SimpleFunction('chain', '\Zicht\Itertools\chain', ['deprecated' => true, 'alternative' => '|it.chain']),
-            new \Twig_SimpleFunction('first', '\Zicht\Itertools\first', ['deprecated' => true, 'alternative' => '|it.first']),
-            new \Twig_SimpleFunction('last', '\Zicht\Itertools\last', ['deprecated' => true, 'alternative' => '|it.last']),
+            new TwigFunction('chain', '\Zicht\Itertools\chain', ['deprecated' => true, 'alternative' => '|it.chain']),
+            new TwigFunction('first', '\Zicht\Itertools\first', ['deprecated' => true, 'alternative' => '|it.first']),
+            new TwigFunction('last', '\Zicht\Itertools\last', ['deprecated' => true, 'alternative' => '|it.last']),
 
             // deprecated functions (because 'it' was introduced)
-            new \Twig_SimpleFunction('reducing', [$this, 'reducing'], ['deprecated' => true, 'alternative' => 'it.reductions']),
-            new \Twig_SimpleFunction('mapping', [$this, 'mapping'], ['deprecated' => true, 'alternative' => 'it.mappings']),
-            new \Twig_SimpleFunction('filtering', [$this, 'filtering'], ['deprecated' => true, 'alternative' => 'it.filters']),
+            new TwigFunction('reducing', [$this, 'reducing'], ['deprecated' => true, 'alternative' => 'it.reductions']),
+            new TwigFunction('mapping', [$this, 'mapping'], ['deprecated' => true, 'alternative' => 'it.mappings']),
+            new TwigFunction('filtering', [$this, 'filtering'], ['deprecated' => true, 'alternative' => 'it.filters']),
 
             // deprecated functions
-            new \Twig_SimpleFunction('reduction', [$this, 'deprecatedGetReduction'], ['deprecated' => true, 'alternative' => 'reducing']),
+            new TwigFunction('reduction', [$this, 'deprecatedGetReduction'], ['deprecated' => true, 'alternative' => 'reducing']),
         ];
     }
 

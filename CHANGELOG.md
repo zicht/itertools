@@ -11,8 +11,10 @@ Nothing so far
 ## 3.0.0 - [unreleased]
 ### Added
 - Added support for php 8.
+- Added support for Twig 3.
 ### Removed
 - Removed support for php 5.
+- Removed support for Twig 1.
 - Removed everything marked deprecated in the previous major release.
 
 ## 2.14.0 - 2021-03-25

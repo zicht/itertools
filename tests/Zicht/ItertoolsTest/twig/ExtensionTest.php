@@ -5,6 +5,8 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\twig\Extension;
 use Zicht\Itertools\util\Filters;
@@ -48,9 +50,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $filters = [];
 
-        /** @var \Twig_SimpleFilter $filter */
+        /** @var TwigFilter $filter */
         foreach ($this->extension->getFilters() as $filter) {
-            $this->assertInstanceOf('\Twig_SimpleFilter', $filter);
+            $this->assertInstanceOf(TwigFilter::class, $filter);
             $filters [] = $filter->getName();
         }
 
@@ -73,9 +75,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $functions = [];
 
-        /** @var \Twig_SimpleFunction $function */
+        /** @var TwigFunction $function */
         foreach ($this->extension->getFunctions() as $function) {
-            $this->assertInstanceOf('\Twig_SimpleFunction', $function);
+            $this->assertInstanceOf(TwigFunction::class, $function);
             $functions [] = $function->getName();
         }
 
