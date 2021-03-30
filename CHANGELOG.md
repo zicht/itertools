@@ -22,9 +22,29 @@ Nothing so far
 - Marked many functions as deprecated, i.e. `filters\match` is now available as `Filters::match`.
   This is in preparation of the 3.0 release that will be compatible with php 8, which ships with a
   global `match` statement of its own.
+
+  ```php
+  // Deprecated
+  // function from filters.php, mappings.php, and reductions.php
+  use function Zicht\Iterable\reductions\join;
+  iterable(['a', 'b', 'c'])->reduce(join(' - '));
+
+  // New style
+  use Zicht\Itertools\util\Reductions;
+  iterable(['a', 'b', 'c'])->reduce(Reductions::join(' - '));
+  ```
+
 - Marked many twig filters and functions as deprecated, i.e. `[1, 2, 3]|filter` is now available as
   `[1, 2, 3]|it.filter` or `it([1, 2, 3]).filter`.
   This is because twig has been adding filters that use the same names as itertools does.
+
+  ```twig
+  {# Deprecated #}
+  {{ entries|group_by('key') }}
+
+  {# Everything was replaced by `it` #}
+  {{ entries|it.groupBy('key') }}
+  ```
 
 ## 2.13.0 - 2020-05-22
 ### Added
@@ -65,8 +85,8 @@ Nothing so far
 
 ## 2.10.12 - 2018-11-12
 ### Fixed
-- `ChainTrait`, `MapTrait`, and `ZipTrait` would indicate that they throw `\ReflectionException`, 
-  while this never happens.  This caused other code to give unnecessary warnings. 
+- `ChainTrait`, `MapTrait`, and `ZipTrait` would indicate that they throw `\ReflectionException`,
+  while this never happens.  This caused other code to give unnecessary warnings.
 
 ## 2.10.11 - 2018-11-07
 ### Fixed
