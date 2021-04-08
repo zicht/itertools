@@ -12,12 +12,7 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
 {
     use FiniteIterableTrait;
 
-    /**
-     * @param \Closure $func
-     * @param \Iterator $iterable
-     * @param bool $reverse
-     */
-    public function __construct(\Closure $func, \Iterator $iterable, $reverse = false)
+    public function __construct(\Closure $func, \Iterator $iterable, bool $reverse = false)
     {
         if ($reverse) {
             $cmp = function ($a, $b) use ($func) {
@@ -76,9 +71,6 @@ class SortedIterator extends \IteratorIterator implements FiniteIterableInterfac
      * bubblesort and insertion sort, which are O(n^2)).
      *
      * http://www.php.net/manual/en/function.usort.php#38827
-     *
-     * @param array $array
-     * @param \Closure $cmp_function
      */
     protected function mergeSort(array &$array, \Closure $cmp_function)
     {

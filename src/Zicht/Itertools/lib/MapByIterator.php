@@ -17,10 +17,6 @@ class MapByIterator extends \IteratorIterator implements FiniteIterableInterface
      */
     private $func;
 
-    /**
-     * @param \Closure $func
-     * @param \Iterator $iterable
-     */
     public function __construct(\Closure $func, \Iterator $iterable)
     {
         parent::__construct($iterable);

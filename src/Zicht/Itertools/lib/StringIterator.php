@@ -18,10 +18,7 @@ class StringIterator implements FiniteIterableInterface
     /** @var int */
     protected $key;
 
-    /**
-     * @param string $string
-     */
-    public function __construct($string)
+    public function __construct(string $string)
     {
         $this->string = $string;
         $this->key = 0;

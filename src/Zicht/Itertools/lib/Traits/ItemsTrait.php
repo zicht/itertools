@@ -12,10 +12,8 @@ trait ItemsTrait
 {
     /**
      * Returns an array with items, i.e. [$key, $value] pairs, from this iterator
-     *
-     * @return array
      */
-    public function items()
+    public function items(): array
     {
         $items = [];
         if ($this instanceof \Traversable) {

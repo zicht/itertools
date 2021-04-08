@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class JsonDecodeTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class JsonDecodeTest extends \PHPUnit_Framework_TestCase
             (object)[null, 1, 1.14, 'Hello World'],
         ];
 
-        $closure = mappings\json_decode();
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::jsonDecode();
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 }

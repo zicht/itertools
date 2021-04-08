@@ -22,11 +22,19 @@ class CountIterator implements InfiniteIterableInterface
     protected $key;
 
     /**
-     * @param int $start
-     * @param int $step
+     * @param int|float $start
+     * @param int|float $step
      */
-    public function __construct($start, $step)
+    public function __construct($start = 0, $step = 1)
     {
+        if (!(is_int($start) || is_float($start))) {
+            throw new \TypeError('Argument $start must be an integer or float');
+        }
+
+        if (!(is_int($step) || is_float($step))) {
+            throw new \TypeError('Argument $step must be an integer or float');
+        }
+
         $this->start = $start;
         $this->step = $step;
         $this->key = 0;

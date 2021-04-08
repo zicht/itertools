@@ -9,10 +9,8 @@ trait KeysTrait
 {
     /**
      * Returns an array with keys from this iterator
-     *
-     * @return array
      */
-    public function keys()
+    public function keys(): array
     {
         $keys = [];
         if ($this instanceof \Traversable) {

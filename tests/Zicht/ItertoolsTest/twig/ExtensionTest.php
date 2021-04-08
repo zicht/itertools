@@ -56,14 +56,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             $filters [] = $filter->getName();
         }
 
-        $expected = [
-            # main filter
-            'it',
-            # deprecated filters (because 'it' was introduced)
-            'all', 'any', 'chain', 'collapse', 'filter', 'first', 'group_by', 'last', 'map', 'map_by', 'reduce', 'reversed', 'sorted', 'unique', 'zip',
-            # deprecated filters
-            'filterby', 'groupBy', 'groupby', 'mapBy', 'mapby', 'sum', 'uniqueby',
-        ];
+        $expected = ['it'];
 
         $this->assertEquals($expected, $filters);
     }
@@ -81,15 +74,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
             $functions [] = $function->getName();
         }
 
-        $expected = [
-            # main function
-            'it',
-            # deprecated functions (because 'it' was introduced)
-            'chain', 'first', 'last',
-            'reducing', 'mapping', 'filtering',
-            # deprecated functions
-            'reduction',
-        ];
+        $expected = ['it'];
 
         $this->assertEquals($expected, $functions);
     }
@@ -101,149 +86,6 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->extension->it([1, 2, 3]);
         $this->assertInstanceOf(FiniteIterableInterface::class, $result);
-    }
-
-    /**
-     * Ensure unique returns a UniqueIterator
-     */
-    public function testUnique()
-    {
-        $result = $this->extension->unique([1, 2, 3]);
-        $this->assertInstanceOf('Zicht\Itertools\lib\UniqueIterator', $result);
-    }
-
-    /**
-     * Ensure reduce returns a single value
-     */
-    public function testReduce()
-    {
-        $result = $this->extension->reduce([1, 2, 3]);
-        $this->assertEquals(6, $result);
-    }
-
-    /**
-     * Ensure groupBy returns a GroupByIterator
-     */
-    public function testGroupBy()
-    {
-        $result = $this->extension->groupBy([1, 2, 3], null);
-        $this->assertInstanceOf('Zicht\Itertools\lib\GroupbyIterator', $result);
-    }
-
-    /**
-     * Ensure filter returns a FilterIterator
-     */
-    public function testFilter()
-    {
-        $result = $this->extension->filter([1, 2, 3]);
-        $this->assertInstanceOf('Zicht\Itertools\lib\FilterIterator', $result);
-    }
-
-    /**
-     * Ensure sorted returns a SortedIterator
-     */
-    public function testSorted()
-    {
-        $result = $this->extension->sorted([1, 2, 3]);
-        $this->assertInstanceOf('Zicht\Itertools\lib\SortedIterator', $result);
-    }
-
-    /**
-     * Ensure map returns a MapIterator
-     */
-    public function testMap()
-    {
-        $result = $this->extension->map([1, 2, 3], null);
-        $this->assertInstanceOf('Zicht\Itertools\lib\MapIterator', $result);
-    }
-
-    /**
-     * Ensure map returns a MapByIterator
-     */
-    public function testMapBy()
-    {
-        $result = $this->extension->mapBy([1, 2, 3], null);
-        $this->assertInstanceOf('Zicht\Itertools\lib\MapByIterator', $result);
-    }
-
-    /**
-     * Ensure reducing returns a closure
-     */
-    public function testReducing()
-    {
-        $result = $this->extension->reducing('add');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure reducing fails on unknown reduction
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidReducing()
-    {
-        $result = $this->extension->reducing('invalid');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure reducing returns a closure (deprecated)
-     */
-    public function testDeprecatedReduction()
-    {
-        $result = $this->extension->deprecatedGetReduction('add');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure reducing fails on unknown reduction (deprecated)
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testDeprecatedInvalidReduction()
-    {
-        $result = $this->extension->deprecatedGetReduction('invalid');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure mapping returns a closure
-     */
-    public function testMapping()
-    {
-        $result = $this->extension->mapping('strip');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure mapping fails on unknown map
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidMapping()
-    {
-        $result = $this->extension->mapping('invalid');
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure filtering returns a closure
-     */
-    public function testFiltering()
-    {
-        $result = $this->extension->filtering('type', 123);
-        $this->assertTrue(is_callable($result));
-    }
-
-    /**
-     * Ensure filtering fails on unknown filter
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInvalidFiltering()
-    {
-        $result = $this->extension->filtering('invalid');
-        $this->assertTrue(is_callable($result));
     }
 
     /**

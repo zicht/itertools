@@ -11,19 +11,15 @@ trait SliceTrait
 {
     /**
      * TODO: document!
-     *
-     * @param int $start
-     * @param null|int $end
-     * @return SliceIterator
      */
-    public function slice($start, $end = null)
+    public function slice(int $start = 0, ?int $end = null): ?SliceIterator
     {
         if (!is_int($start)) {
-            throw new \InvalidArgumentException('Argument $start must be an integer');
+            throw new \TypeError('Argument $start must be an integer');
         }
 
         if (!(is_null($end) || is_int($end))) {
-            throw new \InvalidArgumentException('Argument $end must be an integer or null');
+            throw new \TypeError('Argument $end must be an integer or null');
         }
 
         if ($this instanceof \Iterator) {

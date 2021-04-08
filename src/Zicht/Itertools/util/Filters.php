@@ -31,6 +31,9 @@ class Filters
      */
     public static function type($class, $strategy = null)
     {
+        if (!is_string($class)) {
+            throw new \TypeError('$class must be a string');
+        }
         $strategy = Conversions::mixedToValueGetter($strategy);
         return function ($value, $key = null) use ($class, $strategy) {
             return $strategy($value, $key) instanceof $class;
@@ -60,7 +63,7 @@ class Filters
     public static function in($haystack, $strategy = null, $strict = false)
     {
         if (!is_bool($strict)) {
-            throw new \InvalidArgumentException('$STRICT must be a boolean');
+            throw new \TypeError('$strict must be a boolean');
         }
         if (!is_array($haystack)) {
             $haystack = iterable($haystack)->values();
@@ -94,7 +97,7 @@ class Filters
     public static function equals($expected, $strategy = null, $strict = false)
     {
         if (!is_bool($strict)) {
-            throw new \InvalidArgumentException('$strict must be a boolean');
+            throw new \TypeError('$strict must be a boolean');
         }
         $strategy = Conversions::mixedToValueGetter($strategy);
         if ($strict) {
@@ -124,6 +127,10 @@ class Filters
      */
     public static function after($expected, $strategy = null, $orEqual = false)
     {
+        if (!is_bool($orEqual)) {
+            throw new \TypeError('$orEqual must be a boolean');
+        }
+
         $strategy = Conversions::mixedToValueGetter($strategy);
 
         // Support DateTimeInterface
@@ -171,6 +178,10 @@ class Filters
      */
     public static function before($expected, $strategy = null, $orEqual = false)
     {
+        if (!is_bool($orEqual)) {
+            throw new \TypeError('$orEqual must be a boolean');
+        }
+
         $strategy = Conversions::mixedToValueGetter($strategy);
 
         // Support DateTimeInterface
@@ -238,7 +249,7 @@ class Filters
     public static function match($pattern, $strategy = null)
     {
         if (!is_string($pattern)) {
-            throw new \InvalidArgumentException('$PATTERN must be a string');
+            throw new \TypeError('$pattern must be a string');
         }
 
         $strategy = Conversions::mixedToValueGetter($strategy);

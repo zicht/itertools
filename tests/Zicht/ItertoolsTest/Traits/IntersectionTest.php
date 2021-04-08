@@ -5,9 +5,9 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
+use function Zicht\Itertools\iterable;
 
 class IntersectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class IntersectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $iterable = Itertools\iterable([1, 2, 3]);
+        $iterable = iterable([1, 2, 3]);
         $this->assertInstanceOf('Zicht\Itertools\lib\IntersectionIterator', $iterable->intersection([3, 4, 5]));
     }
 
@@ -40,7 +40,7 @@ class IntersectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($baseIterable, $compareIterable, $strategy, array $expectedKeys, array $expectedValues)
     {
-        $intersection = Itertools\iterable($baseIterable)->intersection($compareIterable, $strategy);
+        $intersection = iterable($baseIterable)->intersection($compareIterable, $strategy);
         $this->assertEquals($expectedKeys, $intersection->keys());
         $this->assertEquals($expectedValues, $intersection->values());
     }

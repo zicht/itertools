@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use Zicht\Itertools;
-use Zicht\Itertools\reductions;
+use Zicht\Itertools\util\Reductions;
+use function Zicht\Itertools\iterable;
 
 class MaxTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,9 +18,9 @@ class MaxTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodArguments(array $data, $expected)
     {
-        $closure = reductions\max();
+        $closure = Reductions::max();
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, iterable($data)->reduce($closure));
     }
 
     /**
@@ -52,7 +52,7 @@ class MaxTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArguments($a, $b)
     {
-        $closure = reductions\max();
+        $closure = Reductions::max();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);
     }
@@ -78,46 +78,6 @@ class MaxTest extends \PHPUnit_Framework_TestCase
             [42, ''],
             [42, [1, 2, 3]],
             [42, (object)[1, 2, 3]],
-        ];
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param mixed $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testGetReduction(array $arguments, array $data, $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\reductions\get_reduction', $arguments);
-        $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param mixed $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testDeprecatedGetReduction(array $arguments, array $data, $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\reductions\getReduction', $arguments);
-        $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
-    }
-
-    /**
-     * Provides tests
-     *
-     * @return array
-     */
-    public function goodSequenceProvider()
-    {
-        return [
-            [['max'], [1, -2, 3], 3],
         ];
     }
 }

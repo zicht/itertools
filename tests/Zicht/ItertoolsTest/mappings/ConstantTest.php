@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class ConstantTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +25,7 @@ class ConstantTest extends \PHPUnit_Framework_TestCase
 
         $expected = [42, 42, 42, 42, 42];
 
-        $closure = mappings\constant(42);
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::constant(42);
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 }

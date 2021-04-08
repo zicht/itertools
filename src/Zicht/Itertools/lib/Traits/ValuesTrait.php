@@ -11,10 +11,8 @@ trait ValuesTrait
 {
     /**
      * Returns an array with values from this iterator
-     *
-     * @return array
      */
-    public function values()
+    public function values(): array
     {
         $values = [];
         if ($this instanceof \Traversable) {

@@ -11,9 +11,8 @@ trait CountableTrait
      * Count elements of an object
      *
      * @link http://php.net/manual/en/countable.count.php
-     * @return int
      */
-    public function count()
+    public function count(): ?int
     {
         if ($this instanceof \Iterator) {
             return iterator_count($this);

@@ -76,10 +76,6 @@ class GroupbyIterator extends \IteratorIterator implements FiniteIterableInterfa
 {
     use FiniteIterableTrait;
 
-    /**
-     * @param \Closure $func
-     * @param \Iterator $iterable
-     */
     public function __construct(\Closure $func, \Iterator $iterable)
     {
         // todo: this implementation pre-computes everything... this is

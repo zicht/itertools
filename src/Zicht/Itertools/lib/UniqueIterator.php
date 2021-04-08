@@ -18,10 +18,6 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
     /** @var array */
     private $seen;
 
-    /**
-     * @param \Closure $func
-     * @param \Iterator $iterable
-     */
     public function __construct(\Closure $func, \Iterator $iterable)
     {
         $this->func = $func;
@@ -37,10 +33,10 @@ class UniqueIterator extends \FilterIterator implements FiniteIterableInterface
         $checkValue = call_user_func($this->func, $this->current(), $this->key());
         if (in_array($checkValue, $this->seen)) {
             return false;
-        } else {
-            $this->seen [] = $checkValue;
-            return true;
         }
+
+        $this->seen [] = $checkValue;
+        return true;
     }
 
     /**

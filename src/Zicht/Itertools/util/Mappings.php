@@ -9,12 +9,12 @@ class Mappings
 {
     /**
      * Returns a closure that strips any matching $chars from the left of the input string
-     *
-     * @param string $chars
-     * @return \Closure
      */
-    public static function lstrip($chars = " \t\n\r\0\x0B")
+    public static function lstrip(string $chars = " \t\n\r\0\x0B"): \Closure
     {
+        if (!is_string($chars)) {
+            throw new \TypeError('$chars must be a string');
+        }
         return function ($value) use ($chars) {
             return ltrim($value, $chars);
         };
@@ -22,12 +22,12 @@ class Mappings
 
     /**
      * Returns a closure that strips any matching $chars from the right of the input string
-     *
-     * @param string $chars
-     * @return \Closure
      */
-    public static function rstrip($chars = " \t\n\r\0\x0B")
+    public static function rstrip(string $chars = " \t\n\r\0\x0B"): \Closure
     {
+        if (!is_string($chars)) {
+            throw new \TypeError('$chars must be a string');
+        }
         return function ($value) use ($chars) {
             return rtrim($value, $chars);
         };
@@ -35,12 +35,12 @@ class Mappings
 
     /**
      * Returns a closure that strips any matching $chars from the left and right of the input string
-     *
-     * @param string $chars
-     * @return \Closure
      */
-    public static function strip($chars = " \t\n\r\0\x0B")
+    public static function strip(string $chars = " \t\n\r\0\x0B"): \CLosure
     {
+        if (!is_string($chars)) {
+            throw new \TypeError('$chars must be a string');
+        }
         return function ($value) use ($chars) {
             return trim($value, $chars);
         };
@@ -48,10 +48,8 @@ class Mappings
 
     /**
      * Returns a closure that returns the length of the input
-     *
-     * @return \Closure
      */
-    public static function length()
+    public static function length(): \Closure
     {
         return function ($value) {
             if (is_null($value)) {
@@ -66,60 +64,40 @@ class Mappings
 
     /**
      * Returns a closure that returns the key
-     *
-     * @return \Closure
      */
-    public static function key()
+    public static function key(): \Closure
     {
-        return function ($value, $key) {
-            return $key;
-        };
+        return fn($value, $key) => $key;
     }
 
     /**
      * Returns a closure that returns the string value lower cased
-     *
-     * @return \Closure
      */
-    public static function lower()
+    public static function lower(): \Closure
     {
-        return function ($value) {
-            return strtolower($value);
-        };
+        return fn($value) => strtolower($value);
     }
 
     /**
      * Returns a closure that returns the string value upper cased
-     *
-     * @return \Closure
      */
-    public static function upper()
+    public static function upper(): \Closure
     {
-        return function ($value) {
-            return strtoupper($value);
-        };
+        return fn($value) => strtoupper($value);
     }
 
     /**
      * Returns a closure that returns the value cast to a string
-     *
-     * @return \Closure
      */
-    public static function string()
+    public static function string(): \Closure
     {
-        return function ($value) {
-            return (string)$value;
-        };
+        return fn($value) => (string)$value;
     }
 
     /**
      * Returns a closure that returns the value as a json_encoded string
-     *
-     * @param int $options
-     * @param int $depth
-     * @return \Closure
      */
-    public static function jsonEncode($options = 0, $depth = 512)
+    public static function jsonEncode(int $options = 0, int $depth = 512): \Closure
     {
         return function ($value) use ($options, $depth) {
             return \json_encode($value, $options, $depth);
@@ -128,13 +106,8 @@ class Mappings
 
     /**
      * Returns a closure that returns the json_encoded value as decoded value
-     *
-     * @param boolean $associative
-     * @param int $options
-     * @param int $depth
-     * @return \Closure
      */
-    public static function jsonDecode($associative = false, $options = 0, $depth = 512)
+    public static function jsonDecode(bool $associative = false, int $options = 0, int $depth = 512): \Closure
     {
         return function ($value) use ($associative, $options, $depth) {
             return \json_decode($value, $associative, $depth, $options);
@@ -171,7 +144,7 @@ class Mappings
      * @param boolean $discardEmptyContainer
      * @return \Closure
      */
-    public static function select($mappings, $strategy = null, $discardNull = false, $discardEmptyContainer = false)
+    public static function select($mappings, $strategy = null, bool $discardNull = false, bool $discardEmptyContainer = false): \Closure
     {
         $castToObject = is_object($mappings);
         $mappings = array_map('\Zicht\Itertools\util\Conversions::mixedToValueGetter', (array)$mappings);
@@ -205,12 +178,8 @@ class Mappings
 
     /**
      * Returns a closure that returns random integer numbers between $MIN and $MAX
-     *
-     * @param int $min
-     * @param null|int $max
-     * @return \Closure
      */
-    public static function random($min = 0, $max = null)
+    public static function random(int $min = 0, ?int $max = null): \Closure
     {
         if (null === $max) {
             $max = getrandmax();
@@ -227,7 +196,7 @@ class Mappings
      * @param null|string|\Closure $strategy
      * @return \Closure
      */
-    public static function type($strategy = null)
+    public static function type($strategy = null): \Closure
     {
         $strategy = Conversions::mixedToValueGetter($strategy);
         return function ($value) use ($strategy) {
@@ -254,7 +223,7 @@ class Mappings
      * @param null|string|\Closure $strategy
      * @return \Closure
      */
-    public static function cache($mapping, $strategy = null)
+    public static function cache($mapping, $strategy = null): \Closure
     {
         $mapping = Conversions::mixedToValueGetter($mapping);
         $strategy = Conversions::mixedToValueGetter($strategy);
@@ -274,38 +243,10 @@ class Mappings
      * @param null|string|int|float|bool|object|array $value
      * @return \Closure
      */
-    public static function constant($value)
+    public static function constant($value): \Closure
     {
         return function () use ($value) {
             return $value;
         };
-    }
-
-    /**
-     * @param string $name
-     * @return \Closure
-     * @deprecated will be removed in version 3.0
-     */
-    public static function getMapping($name /* [argument, [arguments, ...] */)
-    {
-        switch ($name) {
-            case 'ltrim':
-            case 'lstrip':
-                return call_user_func_array('\Zicht\Itertools\util\Mappings::lstrip', array_slice(func_get_args(), 1));
-
-            case 'rtrim':
-            case 'rstrip':
-                return call_user_func_array('\Zicht\Itertools\util\Mappings::rstrip', array_slice(func_get_args(), 1));
-
-            case 'trim':
-            case 'strip':
-                return call_user_func_array('\Zicht\Itertools\util\Mappings::strip', array_slice(func_get_args(), 1));
-
-            case 'length':
-                return call_user_func_array('\Zicht\Itertools\util\Mappings::length', array_slice(func_get_args(), 1));
-
-            default:
-                throw new \InvalidArgumentException(sprintf('$NAME "%s" is not a valid mapping.', $name));
-        }
     }
 }

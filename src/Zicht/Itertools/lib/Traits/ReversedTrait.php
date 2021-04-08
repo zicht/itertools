@@ -11,10 +11,8 @@ trait ReversedTrait
 {
     /**
      * Returns an iterable with all the elements from this iterable reversed
-     *
-     * @return ReversedIterator
      */
-    public function reversed()
+    public function reversed(): ?ReversedIterator
     {
         if ($this instanceof \Iterator) {
             return new ReversedIterator($this);

@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
+use Zicht\Itertools\util\Filters;
 
 class NotTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class NotTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $filter = filters\not(filters\equals('a'));
+        $filter = Filters::not(Filters::equals('a'));
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('b'));
         $this->assertFalse($filter('a'));
@@ -31,7 +31,7 @@ class NotTest extends \PHPUnit_Framework_TestCase
             return $value;
         };
 
-        $filter = filters\not(filters\equals('a', $strategy));
+        $filter = Filters::not(Filters::equals('a', $strategy));
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertFalse($filter('a', 'key'));
     }

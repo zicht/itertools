@@ -5,9 +5,9 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
 use Zicht\ItertoolsTest\Dummies\ToStringObject;
+use function Zicht\Itertools\iterable;
 
 class StringTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
             '__toString result',
         ];
 
-        $closure = mappings\string();
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::string();
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 }

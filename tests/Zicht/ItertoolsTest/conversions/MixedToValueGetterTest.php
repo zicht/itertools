@@ -5,9 +5,9 @@
 
 // phpcs:disable Zicht.Commenting.FunctionComment.Superfluous
 
-namespace Zicht\ItertoolsTest\mappings;
+namespace Zicht\ItertoolsTest\conversions;
 
-use Zicht\Itertools\conversions;
+use Zicht\Itertools\util\Conversions;
 use Zicht\ItertoolsTest\Dummies\GetMethodObject;
 use Zicht\ItertoolsTest\Dummies\GettableObject;
 use Zicht\ItertoolsTest\Dummies\HasMethodObject;
@@ -27,7 +27,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 {
     public function testSingleKey()
     {
-        $result = conversions\mixed_to_value_getter('key');
+        $result = Conversions::mixedToValueGetter('key');
         $this->assertTrue(is_callable($result));
 
         $array = ['key' => 'foo'];
@@ -36,7 +36,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidSingleKey()
     {
-        $result = conversions\mixed_to_value_getter('invalid');
+        $result = Conversions::mixedToValueGetter('invalid');
         $this->assertTrue(is_callable($result));
 
         $array = ['key' => 'foo'];
@@ -45,7 +45,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testMultipleKeys()
     {
-        $result = conversions\mixed_to_value_getter('key.key');
+        $result = Conversions::mixedToValueGetter('key.key');
         $this->assertTrue(is_callable($result));
 
         $array = ['key' => ['key' => 'foo']];
@@ -54,12 +54,12 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidMultipleKeys()
     {
-        $result = conversions\mixed_to_value_getter('invalid.key');
+        $result = Conversions::mixedToValueGetter('invalid.key');
         $this->assertTrue(is_callable($result));
         $array = ['key' => ['key' => 'foo']];
         $this->assertEquals(null, $result($array));
 
-        $result = conversions\mixed_to_value_getter('key.invalid');
+        $result = Conversions::mixedToValueGetter('key.invalid');
         $this->assertTrue(is_callable($result));
         $array = ['key' => ['key' => 'foo']];
         $this->assertEquals(null, $result($array));
@@ -67,7 +67,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testSingleProperty()
     {
-        $result = conversions\mixed_to_value_getter('prop');
+        $result = Conversions::mixedToValueGetter('prop');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject('foo');
@@ -76,7 +76,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidSingleProperty()
     {
-        $result = conversions\mixed_to_value_getter('invalid');
+        $result = Conversions::mixedToValueGetter('invalid');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject('foo');
@@ -85,7 +85,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testMultipleProperties()
     {
-        $result = conversions\mixed_to_value_getter('prop.prop');
+        $result = Conversions::mixedToValueGetter('prop.prop');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject(new SimpleObject('foo'));
@@ -94,12 +94,12 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidMultipleProperties()
     {
-        $result = conversions\mixed_to_value_getter('invalid.prop');
+        $result = Conversions::mixedToValueGetter('invalid.prop');
         $this->assertTrue(is_callable($result));
         $object = new SimpleObject(new SimpleObject('foo'));
         $this->assertEquals(null, $result($object));
 
-        $result = conversions\mixed_to_value_getter('prop.invalid');
+        $result = Conversions::mixedToValueGetter('prop.invalid');
         $this->assertTrue(is_callable($result));
         $object = new SimpleObject(new SimpleObject('foo'));
         $this->assertEquals(null, $result($object));
@@ -107,7 +107,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testSingleMethod()
     {
-        $result = conversions\mixed_to_value_getter('getProp');
+        $result = Conversions::mixedToValueGetter('getProp');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject('foo');
@@ -116,7 +116,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidSingleMethod()
     {
-        $result = conversions\mixed_to_value_getter('getInvalid');
+        $result = Conversions::mixedToValueGetter('getInvalid');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject('foo');
@@ -125,7 +125,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testMultipleMethods()
     {
-        $result = conversions\mixed_to_value_getter('getProp.getProp');
+        $result = Conversions::mixedToValueGetter('getProp.getProp');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleObject(new SimpleObject('foo'));
@@ -134,12 +134,12 @@ class MixedToValueGetterTest extends MixedToClosureTest
 
     public function testInvalidMultipleMethods()
     {
-        $result = conversions\mixed_to_value_getter('getInvalid.getProp');
+        $result = Conversions::mixedToValueGetter('getInvalid.getProp');
         $this->assertTrue(is_callable($result));
         $object = new SimpleObject(new SimpleObject('foo'));
         $this->assertEquals(null, $result($object));
 
-        $result = conversions\mixed_to_value_getter('getProp.getInvalid');
+        $result = Conversions::mixedToValueGetter('getProp.getInvalid');
         $this->assertTrue(is_callable($result));
         $object = new SimpleObject(new SimpleObject('foo'));
         $this->assertEquals(null, $result($object));
@@ -150,7 +150,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
      */
     public function testSingleGetter()
     {
-        $result = conversions\mixed_to_value_getter('prop');
+        $result = Conversions::mixedToValueGetter('prop');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleGettableObject('foo');
@@ -162,7 +162,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
      */
     public function testInvalidSingleGetter()
     {
-        $result = conversions\mixed_to_value_getter('invalid');
+        $result = Conversions::mixedToValueGetter('invalid');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleGettableObject('foo');
@@ -174,7 +174,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
      */
     public function testMultipleGetters()
     {
-        $result = conversions\mixed_to_value_getter('prop.prop');
+        $result = Conversions::mixedToValueGetter('prop.prop');
         $this->assertTrue(is_callable($result));
 
         $object = new SimpleGettableObject(new SimpleGettableObject('foo'));
@@ -186,12 +186,12 @@ class MixedToValueGetterTest extends MixedToClosureTest
      */
     public function testInvalidMultipleGetters()
     {
-        $result = conversions\mixed_to_value_getter('invalid.prop');
+        $result = Conversions::mixedToValueGetter('invalid.prop');
         $this->assertTrue(is_callable($result));
         $object = new SimpleGettableObject(new SimpleGettableObject('foo'));
         $this->assertEquals(null, $result($object));
 
-        $result = conversions\mixed_to_value_getter('prop.invalid');
+        $result = Conversions::mixedToValueGetter('prop.invalid');
         $this->assertTrue(is_callable($result));
         $object = new SimpleGettableObject(new SimpleGettableObject('foo'));
         $this->assertEquals(null, $result($object));
@@ -207,7 +207,7 @@ class MixedToValueGetterTest extends MixedToClosureTest
      */
     public function testGetters($strategy, $object, $expect)
     {
-        $result = conversions\mixed_to_value_getter($strategy);
+        $result = Conversions::mixedToValueGetter($strategy);
         $this->assertTrue(is_callable($result));
         $this->assertEquals($expect, $result($object));
     }

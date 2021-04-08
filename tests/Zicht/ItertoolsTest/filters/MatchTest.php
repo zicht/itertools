@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
+use Zicht\Itertools\util\Filters;
 
 class MatchTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $filter = filters\match('/foo/');
+        $filter = Filters::match('/foo/');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('pre foo post'));
         $this->assertFalse($filter('Hello world'));
@@ -25,7 +25,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrategy()
     {
-        $filter = filters\match('/foo/', 'prop');
+        $filter = Filters::match('/foo/', 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => 'pre foo post']));
         $this->assertFalse($filter(['Hello world']));
@@ -43,7 +43,7 @@ class MatchTest extends \PHPUnit_Framework_TestCase
             return $value;
         };
 
-        $filter = filters\match('/value/', $strategy);
+        $filter = Filters::match('/value/', $strategy);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('value', 'key'));
     }
@@ -54,12 +54,12 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      * @param mixed $expected
      * @param mixed $strategy
      *
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy)
     {
-        filters\match($expected, $strategy);
+        Filters::match($expected, $strategy);
     }
 
     /**

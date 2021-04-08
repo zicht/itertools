@@ -12,26 +12,25 @@ trait ReduceTrait
     /**
      * Reduce an iterator to a single value
      *
-     * > iter\iterable([1,2,3])->reduce()
+     * > iter\iterable([1,2,3])->reduce(Reductions::add())
      * 6
      *
-     * > iter\iterable([1,2,3])->reduce('max')
+     * > iter\iterable([1,2,3])->reduce(Reductions::max())
      * 3
      *
-     * > iter\iterable([1,2,3])->reduce('sub', 10)
+     * > iter\iterable([1,2,3])->reduce(Reductions::sub(), 10)
      * 4
      *
-     * > iter\iterable([])->reduce('min', 1)
+     * > iter\iterable([])->reduce(Reductions::min(), 1)
      * 1
      *
-     * @param string|\Closure $closure
+     * @param \Closure $closure
      * @param mixed $initializer
      * @return mixed
      */
-    public function reduce($closure = 'add', $initializer = null)
+    public function reduce(\Closure $closure, $initializer = null)
     {
         if ($this instanceof \Iterator) {
-            $closure = $closure instanceof \Closure ? $closure : Itertools\reductions\get_reduction($closure);
             $this->rewind();
 
             if (null === $initializer) {

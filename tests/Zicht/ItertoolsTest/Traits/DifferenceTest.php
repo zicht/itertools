@@ -5,9 +5,9 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
+use function Zicht\Itertools\iterable;
 
 class DifferenceTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class DifferenceTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $iterable = Itertools\iterable([1, 2, 3]);
+        $iterable = iterable([1, 2, 3]);
         $this->assertInstanceOf('Zicht\Itertools\lib\DifferenceIterator', $iterable->difference([3, 4, 5]));
     }
 
@@ -40,7 +40,7 @@ class DifferenceTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodSequence($baseIterable, $compareIterable, $strategy, array $expectedKeys, array $expectedValues)
     {
-        $difference = Itertools\iterable($baseIterable)->difference($compareIterable, $strategy);
+        $difference = iterable($baseIterable)->difference($compareIterable, $strategy);
         $this->assertEquals($expectedKeys, $difference->keys());
         $this->assertEquals($expectedValues, $difference->values());
     }

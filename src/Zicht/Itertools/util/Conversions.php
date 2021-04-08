@@ -11,7 +11,7 @@ use Zicht\Itertools\lib\StringIterator;
 class Conversions
 {
     /**
-     * Transforms anything into an Iterator or throws an InvalidArgumentException
+     * Transforms anything into an Iterator or throws a TypeError
      *
      * > mixedToIterator([1, 2, 3])
      * 1 2 3
@@ -27,32 +27,32 @@ class Conversions
         // NULL is often used to indicate that nothing is there,
         // for robustness we will deal with NULL as it is an empty array
         if (is_null($iterable)) {
-            $iterable = new \ArrayIterator([]);
+            return new \ArrayIterator([]);
         }
 
         // an array is *not* an instance of Traversable (as it is not an
         // object and hence can not 'implement Traversable')
         if (is_array($iterable)) {
-            $iterable = new \ArrayIterator($iterable);
+            return new \ArrayIterator($iterable);
         }
 
         // a string is considered iterable in Python
         if (is_string($iterable)) {
-            $iterable = new StringIterator($iterable);
+            return new StringIterator($iterable);
         }
 
         // a doctrine Collection (i.e. Array or Persistent) is also an iterator
         if ($iterable instanceof Collection) {
-            $iterable = $iterable->getIterator();
+            return $iterable->getIterator();
         }
 
         if ($iterable instanceof \Traversable and !($iterable instanceof \Iterator)) {
-            $iterable = new \IteratorIterator($iterable);
+            return new \IteratorIterator($iterable);
         }
 
         // by now it should be an Iterator, otherwise throw an exception
         if (!($iterable instanceof \Iterator)) {
-            throw new \InvalidArgumentException(
+            throw new \TypeError(
                 sprintf(
                     'Argument $iterable must be a Traversable, instead %s was given',
                     is_object($iterable) ? get_class($iterable) : gettype($iterable)
@@ -88,7 +88,7 @@ class Conversions
                     return call_user_func_array($closure, func_get_args());
                 };
             } else {
-                throw new \InvalidArgumentException(
+                throw new \TypeError(
                     sprintf(
                         'Argument $closure must be a Closure, instead %s was given',
                         is_object($closure) ? get_class($closure) : gettype($closure)

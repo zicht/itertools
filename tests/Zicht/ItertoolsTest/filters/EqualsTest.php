@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
+use Zicht\Itertools\util\Filters;
 
 class EqualsTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $filter = filters\equals('foo');
+        $filter = Filters::equals('foo');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('foo'));
         $this->assertFalse($filter('Hello world'));
@@ -25,7 +25,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrategy()
     {
-        $filter = filters\equals('foo', 'prop');
+        $filter = Filters::equals('foo', 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => 'foo']));
         $this->assertFalse($filter(['Hello world']));
@@ -37,12 +37,12 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrict()
     {
-        $filter = filters\equals(1, null, false);
+        $filter = Filters::equals(1, null, false);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(1), 'Non-strict should result in 1 == 1 --> true');
         $this->assertTrue($filter(1.0), 'Non-strict should result in 1 == 1.0 --> true');
 
-        $filter = filters\equals(1, null, true);
+        $filter = Filters::equals(1, null, true);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(1), 'Strict should result in 1 == 1 --> true');
         $this->assertFalse($filter(1.0), 'Strict should result in 1 == 1.0 --> false');
@@ -59,7 +59,7 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
             return $value;
         };
 
-        $filter = filters\equals('value', $strategy);
+        $filter = Filters::equals('value', $strategy);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('value', 'key'));
     }
@@ -71,12 +71,12 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \InvalidArgumentException
+     * @expectedException \TypeError
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy, $strict)
     {
-        filters\equals($expected, $strategy, $strict);
+        Filters::equals($expected, $strategy, $strict);
     }
 
     /**

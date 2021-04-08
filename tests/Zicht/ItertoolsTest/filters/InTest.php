@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
-use Zicht\Itertools;
+use Zicht\Itertools\util\Filters;
+use function Zicht\Itertools\iterable;
 
 class InTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $filter = filters\in(['a', 'b', 'c']);
+        $filter = Filters::in(['a', 'b', 'c']);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('b'));
         $this->assertFalse($filter('e'));
@@ -26,7 +26,7 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrategy()
     {
-        $filter = filters\in(['a', 'b', 'c'], 'prop');
+        $filter = Filters::in(['a', 'b', 'c'], 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => 'b']));
         $this->assertFalse($filter(['hello world']));
@@ -38,12 +38,12 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function testStrict()
     {
-        $filter = filters\in([1, 2, 3], null, false);
+        $filter = Filters::in([1, 2, 3], null, false);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(1), 'Non-strict should result in 1 == 1 --> true');
         $this->assertTrue($filter(1.0), 'Non-strict should result in 1 == 1.0 --> true');
 
-        $filter = filters\in([1, 2, 3], null, true);
+        $filter = filters::in([1, 2, 3], null, true);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(1), 'Strict should result in 1 == 1 --> true');
         $this->assertFalse($filter(1.0), 'Strict should result in 1 == 1.0 --> false');
@@ -54,7 +54,7 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function testHaystackIsNull()
     {
-        $filter = filters\in(null);
+        $filter = Filters::in(null);
         $this->assertInstanceOf('\Closure', $filter);
         foreach ([null, 1, 'a'] as $value) {
             $this->assertFalse($filter($value));
@@ -68,7 +68,7 @@ class InTest extends \PHPUnit_Framework_TestCase
      */
     public function testDuplicateKeyInHaystack()
     {
-        $filter = filters\in(Itertools\chain(['a', 'b', 'c'], ['d', 'e', 'f']));
+        $filter = Filters::in(iterable(['a', 'b', 'c'])->chain(['d', 'e', 'f']));
         $this->assertInstanceOf('\Closure', $filter);
         foreach (['a', 'b', 'c', 'd', 'e', 'f'] as $value) {
             $this->assertTrue($filter($value));
@@ -86,7 +86,7 @@ class InTest extends \PHPUnit_Framework_TestCase
             return $value;
         };
 
-        $filter = filters\in(['value'], $strategy);
+        $filter = Filters::in(['value'], $strategy);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter('value', 'key'));
     }
@@ -98,12 +98,12 @@ class InTest extends \PHPUnit_Framework_TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($haystack, $strategy, $strict)
     {
-        filters\in($haystack, $strategy, $strict);
+        Filters::in($haystack, $strategy, $strict);
     }
 
     /**
@@ -122,9 +122,11 @@ class InTest extends \PHPUnit_Framework_TestCase
             // $strict must be a boolean
             [['keystack'], null, null],
             [['keystack'], null, []],
-            [['keystack'], null, 42],
-            [['keystack'], null, 1.5],
-            [['keystack'], null, 'invalid'],
+
+            // Because we are now using `bool $strict` type annotation, int, float, and string parameters are converted to a boolean.  Thanks php...
+//            [['keystack'], null, 42],
+//            [['keystack'], null, 1.5],
+//            [['keystack'], null, 'invalid'],
         ];
     }
 }

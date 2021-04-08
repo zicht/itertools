@@ -15,12 +15,15 @@ class ZipIterator extends \MultipleIterator implements FiniteIterableInterface
     /** @var int */
     private $key;
 
-    public function __construct()
+    /**
+     * @param array[]|string[]|\Iterator[] ...$iterables
+     */
+    public function __construct(...$iterables)
     {
         parent::__construct(\MultipleIterator::MIT_NEED_ALL | \MultipleIterator::MIT_KEYS_NUMERIC);
-        foreach (func_get_args() as $iterable) {
+        foreach ($iterables as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
+                throw new \TypeError(sprintf('Not all arguments are iterators'));
             }
             $this->attachIterator($iterable);
         }

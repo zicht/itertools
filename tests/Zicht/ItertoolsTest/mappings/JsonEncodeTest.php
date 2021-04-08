@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class JsonEncodeTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +35,7 @@ class JsonEncodeTest extends \PHPUnit_Framework_TestCase
             '{"0":null,"1":1,"2":1.14,"3":"Hello World"}',
         ];
 
-        $closure = mappings\json_encode();
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::jsonEncode();
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 }

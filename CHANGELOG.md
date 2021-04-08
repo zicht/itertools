@@ -12,6 +12,10 @@ Nothing so far
 ### Added
 - Added support for php 8.
 - Added support for Twig 3.
+### Changed
+- The argument to `iterable()` is no longer required, instead,
+  an empty iterator is made when no arguments are given.
+- The first argument of `->reduce()` is now a required closure.
 ### Removed
 - Removed support for php 5.
 - Removed support for Twig 1.
