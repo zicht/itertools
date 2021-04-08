@@ -21,6 +21,7 @@ Common operations include:
 In order to use the available itertools filters/functions via Twig, simply add this service definition in your `services.xml`
 ```php
 <service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
+    <!-- optionally arguments can be supplied to (1) change the name and (2) disable the legacy api -->
     <tag name="twig.extension"/>
 </service>
 ```

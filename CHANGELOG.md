@@ -16,6 +16,23 @@ Nothing so far
 - Removed support for php 5.
 - Removed support for Twig 1.
 - Removed everything marked deprecated in the previous major release.
+- Removed the option to enable or disable the legacy Twig filters and functions.
+
+## 2.15.0 - 2021-04-08
+### Added
+- Support for changing the name in Twig
+- Enable or disable the legacy Twig filters and functions
+
+When the `zicht/framework-extra-bundle` is used to load the Twig extension,
+the following allows you to configure these properties.
+
+  ```yaml
+  zicht_framework_extra:
+    itertools:
+        twig_name: it                   # use `it` (default)
+        twig_enable_legacy_api: true    # enable legacy api (default)
+  ```
+
 
 ## 2.14.0 - 2021-03-25
 ### Changed
