@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Interfaces;
@@ -15,11 +15,11 @@ interface ReduceInterface
     /**
      * Reduce an iterator to a single value
      *
-     * @param string|\Closure $closure
+     * @param \Closure $closure
      * @param mixed $initializer
      * @return mixed
      *
      * @see Itertools\lib\Traits\ReduceTrait::reduce
      */
-    public function reduce($closure = 'add', $initializer = null);
+    public function reduce(\Closure $closure, $initializer = null);
 }

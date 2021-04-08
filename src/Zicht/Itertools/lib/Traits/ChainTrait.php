@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 // phpcs:disable Zicht.Commenting.FunctionComment.ExtraParamComment
@@ -8,6 +8,7 @@
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ChainIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait ChainTrait
 {
@@ -27,19 +28,19 @@ trait ChainTrait
      * > iter\iterable('ABC', 'DEF')->chain()
      * A B C D E F
      *
-     * @param array|string|\Iterator $iterable
-     * @param array|string|\Iterator $iterable2
+     * @param array[]|string[]|\Iterator[] $iterables
      * @return null|ChainIterator
      */
-    public function chain(/* $iterable, $iterable2, ... */)
+    public function chain(...$iterables)
     {
         if ($this instanceof \Iterator) {
             $iterables = array_map(
-                '\Zicht\Itertools\conversions\mixed_to_iterator',
+                function ($iterable) {
+                    return Conversions::mixedToIterator($iterable);
+                },
                 func_get_args()
             );
-            $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');
-            return $reflectorClass->newInstanceArgs(array_merge([$this], $iterables));
+            return new ChainIterator($this, ...$iterables);
         }
 
         return null;

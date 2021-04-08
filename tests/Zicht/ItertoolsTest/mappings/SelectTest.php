@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStrategiesArray()
     {
-        $closure = mappings\select([]);
+        $closure = Mappings::select([]);
         $this->assertEquals([], $closure(null, 0));
         $this->assertEquals([], $closure([], 0));
         $this->assertEquals([], $closure('foo', 0));
@@ -27,7 +27,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyStrategiesObject()
     {
-        $closure = mappings\select((object)[]);
+        $closure = Mappings::select((object)[]);
         $this->assertEquals((object)[], $closure(null, 0));
         $this->assertEquals((object)[], $closure([], 0));
         $this->assertEquals((object)[], $closure('foo', 0));
@@ -114,12 +114,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         };
 
         // Test for array
-        $closure = mappings\select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
-        $closure = mappings\select((object)['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['data' => null, 'id' => 'Identifier', 'desc' => 'Value.Description', 'comp' => $compute]);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
     }
 
     /**
@@ -159,21 +159,21 @@ class SelectTest extends \PHPUnit_Framework_TestCase
 
         // Test for array
         // Test *without* using the $strategy = 'field'
-        $closure = mappings\select(['-b-' => 'field.b']);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'field.b']);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test using the $strategy = 'field'
-        $closure = mappings\select(['-b-' => 'b'], 'field');
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'b'], 'field');
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
         // Test *without* using the $strategy = 'field'
-        $closure = mappings\select((object)['-b-' => 'field.b']);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['-b-' => 'field.b']);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
 
         // Test using the $strategy = 'field'
-        $closure = mappings\select((object)['-b-' => 'b'], 'field');
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['-b-' => 'b'], 'field');
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
     }
 
     public function testDiscardNullParameter()
@@ -206,12 +206,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ];
 
         // Test for array
-        $closure = mappings\select(['-b-' => 'b']);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'b']);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
-        $closure = mappings\select((object)['-b-' => 'b']);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['-b-' => 'b']);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
 
         // Test *with* the $discardNull option
         $expected = [
@@ -222,12 +222,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ];
 
         // Test for array
-        $closure = mappings\select(['-b-' => 'b'], null, true);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'b'], null, true);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
-        $closure = mappings\select((object)['-b-' => 'b'], null, true);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['-b-' => 'b'], null, true);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
     }
 
     public function testDiscardEmptyParameter()
@@ -260,12 +260,12 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ];
 
         // Test for array
-        $closure = mappings\select(['-b-' => 'b']);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'b']);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
-        $closure = mappings\select((object)['-b-' => 'b']);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select((object)['-b-' => 'b']);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
 
         // test *with* the $discardEmpty option
         $expected = [
@@ -276,49 +276,11 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ];
 
         // Test for array
-        $closure = mappings\select(['-b-' => 'b'], null, false, true);
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::select(['-b-' => 'b'], null, false, true);
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
 
         // Test for object
-        $closure = mappings\select((object)['-b-' => 'b'], null, false, true);
-        $this->assertEquals(array_map($toObject, $expected), Itertools\map($closure, $data)->toArray());
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param array $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testGetMapping(array $arguments, array $data, array $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\mappings\get_mapping', $arguments);
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param array $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testDeprecatedGetMapping(array $arguments, array $data, array $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\mappings\getMapping', $arguments);
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->toArray());
-    }
-
-    /**
-     * Provides tests
-     *
-     * @return array
-     */
-    public function goodSequenceProvider()
-    {
-        return [
-            [['select', ['a']], [['a' => 1]], [[1]]],
-        ];
+        $closure = Mappings::select((object)['-b-' => 'b'], null, false, true);
+        $this->assertEquals(array_map($toObject, $expected), iterable($data)->map($closure)->toArray());
     }
 }

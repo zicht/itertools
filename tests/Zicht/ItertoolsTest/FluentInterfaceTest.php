@@ -1,11 +1,11 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest;
 
-use Zicht\Itertools;
+use function Zicht\Itertools\iterable;
 
 class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
 
         // get iterable
         $originalData = $expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-        $iterator = Itertools\iterable($expected);
+        $iterator = iterable($expected);
         $this->assertInstanceOf('\Zicht\Itertools\lib\IterableIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
 
@@ -46,12 +46,7 @@ class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
         # todo: add more!
 
         // entire chain in one go
-        $iterator = Itertools\chain($originalData)->map($multiply)->filter($isSmall)->sorted();
-        $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
-        $this->assertEquals($expected, $iterator->toArray());
-
-        // entire chain written without the chaining feature
-        $iterator = Itertools\sorted(null, Itertools\filter($isSmall, Itertools\map($multiply, Itertools\chain($originalData))));
+        $iterator = iterable($originalData)->map($multiply)->filter($isSmall)->sorted();
         $this->assertInstanceOf('\Zicht\Itertools\lib\SortedIterator', $iterator);
         $this->assertEquals($expected, $iterator->toArray());
     }
