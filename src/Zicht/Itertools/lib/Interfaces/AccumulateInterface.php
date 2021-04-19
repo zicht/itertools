@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Interfaces;
@@ -15,10 +15,10 @@ interface AccumulateInterface
     /**
      * Returns an iterator that containing accumulated elements
      *
-     * @param string|\Closure $closure
+     * @param \Closure $closure
      * @return Itertools\lib\AccumulateIterator
      *
      * @see Itertools\lib\Traits\AccumulateTrait::accumulate
      */
-    public function accumulate($closure = 'add');
+    public function accumulate(\Closure $closure);
 }

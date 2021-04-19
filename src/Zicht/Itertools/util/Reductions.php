@@ -1,11 +1,9 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\util;
-
-use Zicht\Itertools;
 
 class Reductions
 {
@@ -119,31 +117,5 @@ class Reductions
             }
             return \join($glue, [$a, $b]);
         };
-    }
-
-    /**
-     * @deprecated please use the reduction functions directly, will be removed in version 3.0
-     * @param string $name
-     * @param null $default
-     * @return \Closure|null
-     */
-    public static function getReduction($name, $default = null)
-    {
-        switch ($name) {
-            case 'add':
-                return self::add();
-            case 'sub':
-                return self::sub();
-            case 'mul':
-                return self::mul();
-            case 'min':
-                return self::min();
-            case 'max':
-                return self::max();
-            case 'join':
-                return self::join();
-            default:
-                return $default;
-        }
     }
 }

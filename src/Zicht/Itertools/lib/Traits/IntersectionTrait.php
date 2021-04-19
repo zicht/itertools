@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\IntersectionIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait IntersectionTrait
 {
@@ -22,8 +22,8 @@ trait IntersectionTrait
         if ($this instanceof \Iterator) {
             return new IntersectionIterator(
                 $this,
-                conversions\mixed_to_iterator($iterable),
-                conversions\mixed_to_value_getter($strategy)
+                Conversions::mixedToIterator($iterable),
+                Conversions::mixedToValueGetter($strategy)
             );
         }
 

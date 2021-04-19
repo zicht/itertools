@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\ItertoolsTest\Traits;
@@ -38,7 +38,7 @@ class KeysTest extends \PHPUnit_Framework_TestCase
             ],
             // duplicate keys
             [
-                Itertools\chain(['a' => -1, 'b' => -2, 'c' => -3], ['a' => 1, 'b' => 2, 'c' => 3]),
+                Itertools\iterable(['a' => -1, 'b' => -2, 'c' => -3])->chain(['a' => 1, 'b' => 2, 'c' => 3]),
                 ['a', 'b', 'c', 'a', 'b', 'c'],
             ],
         ];

@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Interfaces;
@@ -23,5 +23,5 @@ interface GroupByInterface
      *
      * @see Itertools\lib\Traits\GroupByTrait::groupBy
      */
-    public function groupBy($strategy, $sort = true);
+    public function groupBy($strategy, bool $sort = true);
 }

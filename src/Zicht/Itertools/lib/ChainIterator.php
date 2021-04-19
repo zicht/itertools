@@ -1,24 +1,24 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
+use Zicht\Itertools\util\Conversions;
 
 class ChainIterator extends \AppendIterator implements FiniteIterableInterface
 {
     use FiniteIterableTrait;
 
-    public function __construct()
+    public function __construct(...$iterables)
     {
         parent::__construct();
-        foreach (func_get_args() as $iterable) {
+        foreach ($iterables as $iterable) {
             if (!$iterable instanceof \Iterator) {
-                throw new \InvalidArgumentException(sprintf('Not all arguments are iterators'));
+                throw new \TypeError('Not all arguments are iterators');
             }
             $this->append($iterable);
         }
@@ -31,6 +31,6 @@ class ChainIterator extends \AppendIterator implements FiniteIterableInterface
      */
     public function extend($iterable)
     {
-        parent::append(conversions\mixed_to_iterator($iterable));
+        parent::append(Conversions::mixedToIterator($iterable));
     }
 }

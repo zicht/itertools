@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright Zicht Online <http://zicht.nl>
+ * @copyright Zicht Online <https://www.zicht.nl>
  */
 
 namespace Zicht\Itertools\lib\Interfaces;
@@ -22,5 +22,5 @@ interface SortedInterface
      *
      * @see Itertools\lib\Traits\SortedTrait::sorted
      */
-    public function sorted($strategy = null, $reverse = false);
+    public function sorted($strategy = null, bool $reverse = false);
 }
