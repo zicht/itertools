@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\filters;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools;
+use Zicht\Itertools\util\Conversions;
 use Zicht\Itertools\util\Filters;
 
 /**
@@ -78,7 +78,7 @@ function not_in($haystack, $strategy = null, $strict = false)
     if (!is_array($haystack)) {
         $haystack = Itertools\iterable($haystack)->values();
     }
-    $strategy = conversions\mixed_to_value_getter($strategy);
+    $strategy = Conversions::mixedToValueGetter($strategy);
     return function ($value, $key = null) use ($haystack, $strategy, $strict) {
         return !in_array($strategy($value, $key), $haystack, $strict);
     };

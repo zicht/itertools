@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\SortedIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait SortedTrait
 {
@@ -43,7 +43,7 @@ trait SortedTrait
 
         if ($this instanceof \Iterator) {
             return new SortedIterator(
-                conversions\mixed_to_value_getter($strategy),
+                Conversions::mixedToValueGetter($strategy),
                 $this,
                 $reverse
             );

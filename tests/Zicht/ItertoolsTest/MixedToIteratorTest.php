@@ -14,7 +14,7 @@ class MixedToTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodArgument(array $arguments, array $expected)
     {
-        $iterator = call_user_func_array('\Zicht\Itertools\mixedToIterator', $arguments);
+        $iterator = call_user_func_array('\Zicht\Itertools\util\Conversions::mixedToIterator', $arguments);
         $this->assertInstanceOf('\Iterator', $iterator);
 
         foreach ($expected as $key => $value) {
@@ -68,7 +68,7 @@ class MixedToTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadArguments(array $arguments)
     {
-        call_user_func_array('\Zicht\Itertools\mixedToIterator', $arguments);
+        call_user_func_array('\Zicht\Itertools\util\Conversions::mixedToIterator', $arguments);
     }
 
     /**

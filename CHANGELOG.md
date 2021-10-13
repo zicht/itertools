@@ -12,6 +12,7 @@ Nothing so far
 ### Added
 - Added support for php 8.
 - Added support for Twig 3.
+- Added PSR-4 autoloading.
 ### Removed
 - Removed support for php 5.
 - Removed support for Twig 1.

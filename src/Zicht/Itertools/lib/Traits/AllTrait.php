@@ -5,7 +5,7 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
+use Zicht\Itertools\util\Conversions;
 
 trait AllTrait
 {
@@ -27,7 +27,7 @@ trait AllTrait
     public function all($strategy = null)
     {
         if ($this instanceof \Iterator) {
-            $strategy = conversions\mixed_to_value_getter($strategy);
+            $strategy = Conversions::mixedToValueGetter($strategy);
 
             foreach ($this as $item) {
                 $tempVarPhp54 = call_user_func($strategy, $item);

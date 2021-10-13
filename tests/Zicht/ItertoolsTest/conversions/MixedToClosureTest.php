@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools\conversions;
+use Zicht\Itertools\util\Conversions;
 
 class MixedToClosureTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +25,7 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
      */
     public function testNull()
     {
-        $result = conversions\mixed_to_closure(null);
+        $result = Conversions::mixedToClosure(null);
         $this->assertTrue(is_callable($result));
 
         // behaves like the identity function
@@ -39,7 +39,7 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
      */
     public function testArray()
     {
-        $result = conversions\mixed_to_closure([MixedToClosureTest::class, 'callMePlease']);
+        $result = Conversions::mixedToClosure([MixedToClosureTest::class, 'callMePlease']);
         $this->assertTrue(is_callable($result));
         $this->assertEquals('Thanks for calling', $result('Thanks for calling'));
     }
@@ -52,7 +52,7 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
         $func = function () {
             return 'this is me';
         };
-        $result = conversions\mixed_to_closure($func);
+        $result = Conversions::mixedToClosure($func);
         $this->assertEquals($func, $result);
     }
 
@@ -63,6 +63,6 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidClosure()
     {
-        conversions\mixed_to_closure(123);
+        Conversions::mixedToClosure(123);
     }
 }

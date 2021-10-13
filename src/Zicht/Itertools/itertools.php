@@ -41,62 +41,6 @@ use Zicht\Itertools\reductions;
 use Zicht\Itertools\util\Conversions;
 
 /**
- * Transforms anything into an \Iterator or throws an \InvalidArgumentException
- *
- * @param array|string|\Iterator $iterable
- * @return \Iterator
- * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToIterator, will be removed in version 3.0
- */
-function mixedToIterator($iterable) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
-{
-    return Conversions::mixedToIterator($iterable);
-}
-
-/**
- * Try to transforms something into a \Closure
- *
- * @param null|\Closure $closure
- * @return \Closure
- * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToClosure, will be removed in version 3.0
- */
-function mixedToClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
-{
-    return Conversions::mixedToClosure($closure);
-}
-
-/**
- * Try to transforms something into a \Closure that gets a value from $strategy
- *
- * @param null|string|\Closure $strategy
- * @return \Closure
- * @deprecated Use \Zicht\Itertools\util\Conversions::mixedToValueGetter, will be removed in version 3.0
- */
-function mixedToValueGetter($strategy) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
-{
-    return Conversions::mixedToValueGetter($strategy);
-}
-
-/**
- * Try to transform something into a \Closure
- *
- * @param string|\Closure $closure
- * @return \Closure
- * @deprecated Will be removed in version 3.0, no replacement will be needed
- */
-function mixedToOperationClosure($closure) // phpcs:ignore Zicht.NamingConventions.Functions.GlobalNaming
-{
-    if (is_string($closure)) {
-        $closure = reductions\get_reduction($closure, $closure);
-    }
-
-    if (!($closure instanceof \Closure)) {
-        throw new \InvalidArgumentException('Argument $closure must be a \Closure or string (i.e. "add", "join", etc)');
-    }
-
-    return $closure;
-}
-
-/**
  * Make an iterator that returns accumulated sums
  *
  * If the optional $closure argument is supplied, it should be a string:

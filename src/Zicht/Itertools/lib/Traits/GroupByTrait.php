@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait GroupByTrait
 {
@@ -54,7 +54,7 @@ trait GroupByTrait
 
         if ($this instanceof \Iterator) {
             return new GroupbyIterator(
-                conversions\mixed_to_value_getter($strategy),
+                Conversions::mixedToValueGetter($strategy),
                 $sort ? $this->sorted($strategy) : $this
             );
         }

@@ -35,7 +35,7 @@ trait ChainTrait
     {
         if ($this instanceof \Iterator) {
             $iterables = array_map(
-                '\Zicht\Itertools\conversions\mixed_to_iterator',
+                '\Zicht\Itertools\util\Conversions::mixedToIterator',
                 func_get_args()
             );
             $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ChainIterator');

@@ -5,9 +5,9 @@
 
 namespace Zicht\Itertools\lib;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\Traits\FiniteIterableTrait;
+use Zicht\Itertools\util\Conversions;
 
 class ChainIterator extends \AppendIterator implements FiniteIterableInterface
 {
@@ -31,6 +31,6 @@ class ChainIterator extends \AppendIterator implements FiniteIterableInterface
      */
     public function extend($iterable)
     {
-        parent::append(conversions\mixed_to_iterator($iterable));
+        parent::append(Conversions::mixedToIterator($iterable));
     }
 }
