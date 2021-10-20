@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class CountableTest extends \PHPUnit_Framework_TestCase
+class CountableTest extends TestCase
 {
     /**
      * Test that the trait returns the proper type

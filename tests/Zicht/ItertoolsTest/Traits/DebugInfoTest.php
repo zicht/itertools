@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 
-class DebugInfoTest extends \PHPUnit_Framework_TestCase
+class DebugInfoTest extends TestCase
 {
     public function testSimple()
     {

@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\BadToArrayObject;
 
-class ToArrayTest extends \PHPUnit_Framework_TestCase
+class ToArrayTest extends TestCase
 {
     /**
      * @param mixed $iterable

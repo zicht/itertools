@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\CountIterator;
 
-class CountTest extends \PHPUnit_Framework_TestCase
+class CountTest extends TestCase
 {
     /**
      * @param integer $start

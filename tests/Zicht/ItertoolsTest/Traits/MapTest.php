@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class MapTest extends \PHPUnit_Framework_TestCase
+class MapTest extends TestCase
 {
     /**
      * Test without the optional $keyFunc argument for the MapIterator

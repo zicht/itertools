@@ -6,10 +6,11 @@
 namespace Zicht\ItertoolsTest\conversions;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Conversions;
 use Zicht\ItertoolsTest\Dummies\DummyTraversable;
 
-class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
+class MixedToIteratorTest extends TestCase
 {
     /**
      * Test NULL input

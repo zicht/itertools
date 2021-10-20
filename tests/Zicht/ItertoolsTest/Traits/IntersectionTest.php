@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 use function Zicht\Itertools\iterable;
 
-class IntersectionTest extends \PHPUnit_Framework_TestCase
+class IntersectionTest extends TestCase
 {
     /**
      * Test that the trait returns the proper type

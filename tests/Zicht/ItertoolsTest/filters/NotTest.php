@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 
-class NotTest extends \PHPUnit_Framework_TestCase
+class NotTest extends TestCase
 {
     /**
      * Simple not equals test

@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class CollapseTest extends \PHPUnit_Framework_TestCase
+class CollapseTest extends TestCase
 {
     /**
      * @param mixed $iterable

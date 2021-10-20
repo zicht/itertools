@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\conversions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Conversions;
 
-class MixedToClosureTest extends \PHPUnit_Framework_TestCase
+class MixedToClosureTest extends TestCase
 {
     /**
      * This method should be called during the testArray test

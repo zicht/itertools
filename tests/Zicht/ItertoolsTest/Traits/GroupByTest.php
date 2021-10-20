@@ -5,13 +5,14 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\GroupedIterator;
 use Zicht\Itertools\util\Mappings;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 use function Zicht\Itertools\iterable;
 
-class GroupByTest extends \PHPUnit_Framework_TestCase
+class GroupByTest extends TestCase
 {
     /**
      * Test what happens when grouping without sorting the input

@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 
-class ArrayAccessTest extends \PHPUnit_Framework_TestCase
+class ArrayAccessTest extends TestCase
 {
     /**
      * Test that the trait, when applied to a non-iterator, returns null

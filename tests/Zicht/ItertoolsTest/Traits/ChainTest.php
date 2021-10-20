@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\ChainIterator;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class ChainTest extends \PHPUnit_Framework_TestCase
+class ChainTest extends TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -19,7 +20,7 @@ class ChainTest extends \PHPUnit_Framework_TestCase
         $iterator = iterable()->chain(...$arguments);
         $this->assertInstanceOf('\Zicht\Itertools\lib\ChainIterator', $iterator);
         $this->assertEquals(sizeof($expectedKeys), sizeof($expectedValues));
-        $this->assertEquals(sizeof($expectedKeys), sizeof($iterator), $iterator);
+        $this->assertEquals(sizeof($expectedKeys), sizeof($iterator));
         $this->assertEquals(sizeof($expectedKeys), iterator_count($iterator));
         $iterator->rewind();
 

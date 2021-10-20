@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Mappings;
 use Zicht\ItertoolsTest\Dummies\ToStringObject;
 use function Zicht\Itertools\iterable;
 
-class StringTest extends \PHPUnit_Framework_TestCase
+class StringTest extends TestCase
 {
     public function test()
     {

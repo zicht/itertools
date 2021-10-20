@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class ReduceTest extends \PHPUnit_Framework_TestCase
+class ReduceTest extends TestCase
 {
     /**
      * @param array $iterable

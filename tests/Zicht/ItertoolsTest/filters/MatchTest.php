@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 
-class MatchTest extends \PHPUnit_Framework_TestCase
+class MatchTest extends TestCase
 {
     /**
      * Simple match test

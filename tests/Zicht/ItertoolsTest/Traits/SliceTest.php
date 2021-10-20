@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\CountIterator;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class SliceTest extends \PHPUnit_Framework_TestCase
+class SliceTest extends TestCase
 {
     /**
      * Test using the infinite count iterable

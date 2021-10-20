@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 
-class ItemsTest extends \PHPUnit_Framework_TestCase
+class ItemsTest extends TestCase
 {
     /**
      * @param mixed $iterable

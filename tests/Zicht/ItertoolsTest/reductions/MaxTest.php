@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
 
-class MaxTest extends \PHPUnit_Framework_TestCase
+class MaxTest extends TestCase
 {
     /**
      * @param array $data

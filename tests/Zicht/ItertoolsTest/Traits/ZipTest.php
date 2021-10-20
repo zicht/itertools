@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class ZipTest extends \PHPUnit_Framework_TestCase
+class ZipTest extends TestCase
 {
     /**
      * @dataProvider goodSequenceProvider

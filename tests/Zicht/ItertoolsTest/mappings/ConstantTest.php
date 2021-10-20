@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Mappings;
 use function Zicht\Itertools\iterable;
 
-class ConstantTest extends \PHPUnit_Framework_TestCase
+class ConstantTest extends TestCase
 {
     /**
      * Simple test

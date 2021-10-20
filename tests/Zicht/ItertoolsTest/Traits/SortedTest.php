@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class SortedTest extends \PHPUnit_Framework_TestCase
+class SortedTest extends TestCase
 {
     /**
      * Ensure that the sorting value is computed exactly once per element

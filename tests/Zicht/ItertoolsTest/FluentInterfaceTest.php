@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest;
 
+use PHPUnit\Framework\TestCase;
 use function Zicht\Itertools\iterable;
 
-class FluentInterfaceTest extends \PHPUnit_Framework_TestCase
+class FluentInterfaceTest extends TestCase
 {
     public function test()
     {

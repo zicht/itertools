@@ -5,9 +5,10 @@
 /**
 namespace Zicht\ItertoolsTest;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 
-class RepeatTest extends \PHPUnit_Framework_TestCase
+class RepeatTest extends TestCase
 {
 // todo: probably introduce a RepeatTrait and test that
 // https://github.com/zicht/itertools/blob/release/2.x/src/Zicht/Itertools/itertools.php#L423
