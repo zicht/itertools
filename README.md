@@ -491,5 +491,6 @@ Or in Twig:
 {{ dump(data|it.collapse) }}
 ```
 
-# Maintainer
+# Maintainer(s)
 * Boudewijn Schoon <boudewijn@zicht.nl>
+* Virginia Meijer <virginia@zicht.nl>
