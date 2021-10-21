@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class ZipTest extends \PHPUnit_Framework_TestCase
+class ZipTest extends TestCase
 {
     /**
      * @dataProvider goodSequenceProvider
@@ -78,20 +79,20 @@ class ZipTest extends \PHPUnit_Framework_TestCase
     }
 
 //    /**
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentToFunction(array $arguments)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        call_user_func_array('\Zicht\Itertools\zip', $arguments);
 //    }
 //
 //    /**
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentToIterator(array $arguments)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
 //        $reflectorClass->newInstanceArgs($arguments);
 //    }

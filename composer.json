@@ -5,7 +5,7 @@
         "actions": "act -P ubuntu-latest=shivammathur/node:latest",
         "lint": "phpcs -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/src/Zicht --extensions=php -p --parallel=$(nproc)",
         "lint-fix": "phpcbf -s src/Zicht/ tests/Zicht/ --standard=vendor/zicht/standards-php/src/Zicht --extensions=php --parallel=$(nproc)",
-        "test": "phpunit --configuration phpunit.xml.dist && coverage-check coverage.xml 100"
+        "test": "phpunit --configuration phpunit.xml.dist && coverage-check coverage.xml 90"
     },
     "description": "A collection of functions that mirror the Python itertools library",
     "authors": [
@@ -16,7 +16,7 @@
     ],
     "require-dev": {
         "doctrine/collections": "^1.3",
-        "phpunit/phpunit": "4.*",
+        "phpunit/phpunit": "^9",
         "rregeer/phpunit-coverage-check": "^0.1",
         "twig/twig": "^2.0 || ^3.0",
         "zicht/standards-php": "^4.0"

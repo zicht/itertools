@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\CountIterator;
 
-class CountTest extends \PHPUnit_Framework_TestCase
+class CountTest extends TestCase
 {
     /**
      * @param integer $start
@@ -97,11 +98,12 @@ class CountTest extends \PHPUnit_Framework_TestCase
     /**
      * @param mixed $start
      * @param mixed $step
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($start, $step)
     {
+        $this->expectException(\Error::class);
         new CountIterator($start, $step);
     }
 

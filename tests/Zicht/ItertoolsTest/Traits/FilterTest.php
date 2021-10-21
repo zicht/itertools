@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class FilterTest extends \PHPUnit_Framework_TestCase
+class FilterTest extends TestCase
 {
     /**
      * @dataProvider goodSequenceProviderWithoutStrategy
@@ -148,11 +149,12 @@ class FilterTest extends \PHPUnit_Framework_TestCase
      * Test filter using invalid arguments
      *
      * @param mixed $strategy
-     * @expectedException \TypeError
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($strategy)
     {
+        $this->expectException(\TypeError::class);
         iterable([1, 2, 3])->filter($strategy);
     }
 

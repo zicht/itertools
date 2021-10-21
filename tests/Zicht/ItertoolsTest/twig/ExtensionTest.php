@@ -5,6 +5,7 @@
 
 namespace Zicht\ItertoolsTest\twig;
 
+use PHPUnit\Framework\TestCase;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
@@ -13,7 +14,7 @@ use Zicht\Itertools\util\Filters;
 use Zicht\Itertools\util\Mappings;
 use Zicht\Itertools\util\Reductions;
 
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ExtensionTest extends TestCase
 {
     /** @var Extension */
     protected $extension;
@@ -21,7 +22,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

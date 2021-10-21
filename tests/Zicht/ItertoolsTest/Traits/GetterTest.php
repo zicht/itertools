@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 
-class GetterTest extends \PHPUnit_Framework_TestCase
+class GetterTest extends TestCase
 {
     public function testHas()
     {

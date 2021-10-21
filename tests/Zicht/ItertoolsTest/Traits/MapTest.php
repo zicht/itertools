@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\MapIterator;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class MapTest extends \PHPUnit_Framework_TestCase
+class MapTest extends TestCase
 {
     /**
      * Test without the optional $keyFunc argument for the MapIterator
@@ -228,19 +229,17 @@ class MapTest extends \PHPUnit_Framework_TestCase
 //    /**
 //     * @param mixed $closure
 //     * @param mixed $iterable
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentsToFunction($closure, $iterable)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        call_user_func_array('\Zicht\Itertools\map', [$closure, $iterable]);
 //    }
 //
-//    /**
-//     * @expectedException \InvalidArgumentException
-//     */
 //    public function testBadArgumentToIterator()
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        new MapIterator(
 //            function () {
 //            },

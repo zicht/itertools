@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 
-class MatchTest extends \PHPUnit_Framework_TestCase
+class MatchTest extends TestCase
 {
     /**
      * Simple match test
@@ -54,11 +55,11 @@ class MatchTest extends \PHPUnit_Framework_TestCase
      * @param mixed $expected
      * @param mixed $strategy
      *
-     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy)
     {
+        $this->expectException(\Error::class);
         Filters::match($expected, $strategy);
     }
 

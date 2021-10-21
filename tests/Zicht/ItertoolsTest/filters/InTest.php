@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 use function Zicht\Itertools\iterable;
 
-class InTest extends \PHPUnit_Framework_TestCase
+class InTest extends TestCase
 {
     /**
      * Simple instanceof test
@@ -98,11 +99,11 @@ class InTest extends \PHPUnit_Framework_TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($haystack, $strategy, $strict)
     {
+        $this->expectException(\Error::class);
         Filters::in($haystack, $strategy, $strict);
     }
 

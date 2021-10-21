@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\conversions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Conversions;
 
-class MixedToClosureTest extends \PHPUnit_Framework_TestCase
+class MixedToClosureTest extends TestCase
 {
     /**
      * This method should be called during the testArray test
@@ -56,11 +57,10 @@ class MixedToClosureTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Unsupported type should result in an exception
-     *
-     * @expectedException \Error
      */
     public function testInvalidClosure()
     {
+        $this->expectException(\Error::class);
         Conversions::mixedToClosure(123);
     }
 }

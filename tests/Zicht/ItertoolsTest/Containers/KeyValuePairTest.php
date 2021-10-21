@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\Containers\KeyValuePair;
 
-class KeyValuePairTest extends \PHPUnit_Framework_TestCase
+class KeyValuePairTest extends TestCase
 {
     /**
      * Tests several ways to access the key and value
@@ -38,11 +39,10 @@ class KeyValuePairTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Calling OffsetGet with an unknown offset should raise an InvalidArgumentException
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetGet()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         $pair->offsetGet('invalid');
     }
@@ -68,10 +68,10 @@ class KeyValuePairTest extends \PHPUnit_Framework_TestCase
     /**
      * Calling offsetSet with an unknown offset should raise an InvalidArgumentException
      *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetSet()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         $pair->offsetSet('invalid', 'value');
     }
@@ -96,11 +96,10 @@ class KeyValuePairTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Calling offsetUnset with an unknown offset should raise an InvalidArgumentException
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetUnset()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         unset($pair['invalid']);
     }

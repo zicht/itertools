@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class SortedTest extends \PHPUnit_Framework_TestCase
+class SortedTest extends TestCase
 {
     /**
      * Ensure that the sorting value is computed exactly once per element
@@ -223,11 +224,11 @@ class SortedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->sorted(...$arguments);
     }
 

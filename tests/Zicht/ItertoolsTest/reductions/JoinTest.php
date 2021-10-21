@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
 
-class JoinTest extends \PHPUnit_Framework_TestCase
+class JoinTest extends TestCase
 {
     /**
      * @param string $glue
@@ -42,10 +43,10 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      * @param mixed $glue
      *
      * @dataProvider badGlueProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidGlue($glue)
     {
+        $this->expectException(\InvalidArgumentException::class);
         Reductions::join($glue);
     }
 
@@ -70,10 +71,10 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::join();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

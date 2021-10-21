@@ -5,9 +5,10 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 
-class EqualsTest extends \PHPUnit_Framework_TestCase
+class EqualsTest extends TestCase
 {
     /**
      * Simple equals test
@@ -71,11 +72,11 @@ class EqualsTest extends \PHPUnit_Framework_TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \TypeError
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy, $strict)
     {
+        $this->expectException(\TypeError::class);
         Filters::equals($expected, $strategy, $strict);
     }
 

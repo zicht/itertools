@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class UniqueTest extends \PHPUnit_Framework_TestCase
+class UniqueTest extends TestCase
 {
     /**
      * @param iterable $data
@@ -137,11 +138,12 @@ class UniqueTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param null|string|\Closure $strategy Optional
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($strategy)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->unique($strategy);
     }
 

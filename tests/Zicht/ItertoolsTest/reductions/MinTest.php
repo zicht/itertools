@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
 
-class MinTest extends \PHPUnit_Framework_TestCase
+class MinTest extends TestCase
 {
     /**
      * @param array $data
@@ -48,10 +49,10 @@ class MinTest extends \PHPUnit_Framework_TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::min();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

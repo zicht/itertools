@@ -6,10 +6,11 @@
 namespace Zicht\ItertoolsTest\conversions;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Conversions;
 use Zicht\ItertoolsTest\Dummies\DummyTraversable;
 
-class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
+class MixedToIteratorTest extends TestCase
 {
     /**
      * Test NULL input
@@ -68,11 +69,10 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Unsupported type should result in an exception
-     *
-     * @expectedException \Error
      */
     public function testInvalidIterator()
     {
+        $this->expectException(\Error::class);
         Conversions::mixedToIterator(false);
     }
 }

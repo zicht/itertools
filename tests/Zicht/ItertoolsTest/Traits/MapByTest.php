@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 use function Zicht\Itertools\iterable;
 
-class MapByTest extends \PHPUnit_Framework_TestCase
+class MapByTest extends TestCase
 {
     /**
      * @param array $data
@@ -124,11 +125,11 @@ class MapByTest extends \PHPUnit_Framework_TestCase
     /**
      * Test mapBy using invalid arguments
      *
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->mapBy(...$arguments);
     }
 

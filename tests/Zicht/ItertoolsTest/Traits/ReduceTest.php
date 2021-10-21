@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class ReduceTest extends \PHPUnit_Framework_TestCase
+class ReduceTest extends TestCase
 {
     /**
      * @param array $iterable
@@ -52,11 +53,12 @@ class ReduceTest extends \PHPUnit_Framework_TestCase
      * @param mixed $iterable
      * @param mixed $closure
      * @param mixed $default
-     * @expectedException \TypeError
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($iterable, $closure, $default)
     {
+        $this->expectException(\TypeError::class);
         iterable($iterable)->reduce($closure, $default);
     }
 

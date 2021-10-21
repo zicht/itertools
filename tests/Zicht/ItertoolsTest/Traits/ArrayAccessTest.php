@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 
-class ArrayAccessTest extends \PHPUnit_Framework_TestCase
+class ArrayAccessTest extends TestCase
 {
     /**
      * Test that the trait, when applied to a non-iterator, returns null
@@ -44,20 +45,16 @@ class ArrayAccessTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('default', $iterable->offsetGet(3, 'default'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testOffsetSet()
     {
+        $this->expectException(\RuntimeException::class);
         $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetSet(0, 1);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testOffsetUnset()
     {
+        $this->expectException(\RuntimeException::class);
         $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetUnset(0);
     }

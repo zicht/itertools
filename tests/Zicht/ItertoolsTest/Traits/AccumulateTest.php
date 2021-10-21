@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class AccumulateTest extends \PHPUnit_Framework_TestCase
+class AccumulateTest extends TestCase
 {
     /**
      * @param mixed $iterable
@@ -123,11 +124,12 @@ class AccumulateTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param mixed $func
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($func)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->accumulate($func);
     }
 

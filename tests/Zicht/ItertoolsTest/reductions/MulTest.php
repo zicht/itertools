@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Reductions;
 use function Zicht\Itertools\iterable;
 
-class MulTest extends \PHPUnit_Framework_TestCase
+class MulTest extends TestCase
 {
     /**
      * @param array $data
@@ -45,10 +46,10 @@ class MulTest extends \PHPUnit_Framework_TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::mul();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

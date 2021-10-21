@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\util\Filters;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
-class TypeTest extends \PHPUnit_Framework_TestCase
+class TypeTest extends TestCase
 {
     /**
      * Simple instanceof test

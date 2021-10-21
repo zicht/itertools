@@ -5,10 +5,11 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class FirstTest extends \PHPUnit_Framework_TestCase
+class FirstTest extends TestCase
 {
     /**
      * @param array $data
@@ -101,11 +102,11 @@ class FirstTest extends \PHPUnit_Framework_TestCase
     }
 
 //    /**
-//     * @expectedException \Error
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgument(array $arguments)
 //    {
+//        $this->expectException(\Error::class);
 //        iterable([1, 2, 3])->first(...$arguments);
 //    }
 //

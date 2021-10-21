@@ -5,11 +5,12 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
+use PHPUnit\Framework\TestCase;
 use Zicht\Itertools\lib\CountIterator;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
 use function Zicht\Itertools\iterable;
 
-class SliceTest extends \PHPUnit_Framework_TestCase
+class SliceTest extends TestCase
 {
     /**
      * Test using the infinite count iterable
@@ -247,11 +248,11 @@ class SliceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\TypeError::class);
         iterable([1, 2, 3])->slice(...$arguments);
     }
 
@@ -263,11 +264,9 @@ class SliceTest extends \PHPUnit_Framework_TestCase
     public function badArgumentProvider()
     {
         return [
-            ['must-be-integer'],
-            [null],
-            [1.0],
-            [0, 'must-be-integer'],
-            [0, 1.0],
+            [['must-be-integer']],
+            [[null]],
+            [[0, 'must-be-integer']],
         ];
     }
 
