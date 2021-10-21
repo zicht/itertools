@@ -57,11 +57,10 @@ class MixedToClosureTest extends TestCase
 
     /**
      * Unsupported type should result in an exception
-     *
-     * @expectedException \Error
      */
     public function testInvalidClosure()
     {
+        $this->expectException(\Error::class);
         Conversions::mixedToClosure(123);
     }
 }

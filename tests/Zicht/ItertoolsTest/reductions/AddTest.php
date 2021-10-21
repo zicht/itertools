@@ -46,10 +46,10 @@ class AddTest extends TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::add();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

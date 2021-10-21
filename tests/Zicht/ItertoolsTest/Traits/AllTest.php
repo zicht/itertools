@@ -126,11 +126,11 @@ class AllTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $data)
     {
+        $this->expectException(\InvalidArgumentException::class);
         iterable($data)->all();
     }
 

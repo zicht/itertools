@@ -43,10 +43,10 @@ class JoinTest extends TestCase
      * @param mixed $glue
      *
      * @dataProvider badGlueProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidGlue($glue)
     {
+        $this->expectException(\InvalidArgumentException::class);
         Reductions::join($glue);
     }
 
@@ -71,10 +71,10 @@ class JoinTest extends TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::join();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

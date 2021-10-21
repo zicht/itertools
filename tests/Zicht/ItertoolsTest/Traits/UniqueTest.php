@@ -138,11 +138,12 @@ class UniqueTest extends TestCase
 
     /**
      * @param null|string|\Closure $strategy Optional
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($strategy)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->unique($strategy);
     }
 

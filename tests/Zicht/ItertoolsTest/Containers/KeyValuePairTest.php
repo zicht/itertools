@@ -39,11 +39,10 @@ class KeyValuePairTest extends TestCase
 
     /**
      * Calling OffsetGet with an unknown offset should raise an InvalidArgumentException
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetGet()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         $pair->offsetGet('invalid');
     }
@@ -69,10 +68,10 @@ class KeyValuePairTest extends TestCase
     /**
      * Calling offsetSet with an unknown offset should raise an InvalidArgumentException
      *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetSet()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         $pair->offsetSet('invalid', 'value');
     }
@@ -97,11 +96,10 @@ class KeyValuePairTest extends TestCase
 
     /**
      * Calling offsetUnset with an unknown offset should raise an InvalidArgumentException
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidOffsetUnset()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $pair = new KeyValuePair('foo', 'bar');
         unset($pair['invalid']);
     }

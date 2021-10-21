@@ -79,20 +79,20 @@ class ZipTest extends TestCase
     }
 
 //    /**
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentToFunction(array $arguments)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        call_user_func_array('\Zicht\Itertools\zip', $arguments);
 //    }
 //
 //    /**
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentToIterator(array $arguments)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
 //        $reflectorClass->newInstanceArgs($arguments);
 //    }

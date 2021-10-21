@@ -45,20 +45,16 @@ class ArrayAccessTest extends TestCase
         $this->assertEquals('default', $iterable->offsetGet(3, 'default'));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testOffsetSet()
     {
+        $this->expectException(\RuntimeException::class);
         $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetSet(0, 1);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testOffsetUnset()
     {
+        $this->expectException(\RuntimeException::class);
         $iterable = Itertools\iterable([1, 2, 3]);
         $iterable->offsetUnset(0);
     }

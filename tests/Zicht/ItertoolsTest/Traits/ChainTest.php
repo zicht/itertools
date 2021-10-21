@@ -162,20 +162,21 @@ class ChainTest extends TestCase
 
     /**
      * @param mixed $arguments
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgumentInFunction($arguments)
     {
+        $this->expectException(\Error::class);
         iterable()->chain(...$arguments);
     }
 
     /**
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgumentToIterator(array $arguments)
     {
+        $this->expectException(\Error::class);
         new ChainIterator(...$arguments);
     }
 

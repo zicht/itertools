@@ -69,11 +69,10 @@ class MixedToIteratorTest extends TestCase
 
     /**
      * Unsupported type should result in an exception
-     *
-     * @expectedException \Error
      */
     public function testInvalidIterator()
     {
+        $this->expectException(\Error::class);
         Conversions::mixedToIterator(false);
     }
 }

@@ -53,11 +53,12 @@ class ReduceTest extends TestCase
      * @param mixed $iterable
      * @param mixed $closure
      * @param mixed $default
-     * @expectedException \TypeError
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($iterable, $closure, $default)
     {
+        $this->expectException(\TypeError::class);
         iterable($iterable)->reduce($closure, $default);
     }
 

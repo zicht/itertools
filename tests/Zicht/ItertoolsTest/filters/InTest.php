@@ -99,11 +99,11 @@ class InTest extends TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($haystack, $strategy, $strict)
     {
+        $this->expectException(\Error::class);
         Filters::in($haystack, $strategy, $strict);
     }
 

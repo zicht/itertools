@@ -224,11 +224,11 @@ class SortedTest extends TestCase
     }
 
     /**
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->sorted(...$arguments);
     }
 

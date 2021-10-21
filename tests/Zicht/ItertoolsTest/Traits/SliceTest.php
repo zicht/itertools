@@ -248,11 +248,11 @@ class SliceTest extends TestCase
     }
 
     /**
-     * @expectedException \Error
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\TypeError::class);
         iterable([1, 2, 3])->slice(...$arguments);
     }
 
@@ -264,11 +264,9 @@ class SliceTest extends TestCase
     public function badArgumentProvider()
     {
         return [
-            ['must-be-integer'],
-            [null],
-            [1.0],
-            [0, 'must-be-integer'],
-            [0, 1.0],
+            [['must-be-integer']],
+            [[null]],
+            [[0, 'must-be-integer']],
         ];
     }
 

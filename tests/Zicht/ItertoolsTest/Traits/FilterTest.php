@@ -149,11 +149,12 @@ class FilterTest extends TestCase
      * Test filter using invalid arguments
      *
      * @param mixed $strategy
-     * @expectedException \TypeError
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($strategy)
     {
+        $this->expectException(\TypeError::class);
         iterable([1, 2, 3])->filter($strategy);
     }
 

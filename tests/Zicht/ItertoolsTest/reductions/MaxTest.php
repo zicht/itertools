@@ -49,10 +49,10 @@ class MaxTest extends TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::max();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

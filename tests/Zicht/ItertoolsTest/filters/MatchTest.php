@@ -55,11 +55,11 @@ class MatchTest extends TestCase
      * @param mixed $expected
      * @param mixed $strategy
      *
-     * @expectedException \Error
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy)
     {
+        $this->expectException(\Error::class);
         Filters::match($expected, $strategy);
     }
 

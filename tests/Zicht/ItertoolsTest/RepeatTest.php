@@ -60,11 +60,12 @@ class RepeatTest extends TestCase
     /**
      * @param mixed $object
      * @param mixed $times
-     * @expectedException \InvalidArgumentException
+     *
      * @dataProvider badArgumentProvider
      */
 //    public function testBadArgument($object, $times)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        Itertools\repeat($object, $times);
 //    }
 

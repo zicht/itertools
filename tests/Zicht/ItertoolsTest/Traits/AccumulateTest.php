@@ -124,11 +124,12 @@ class AccumulateTest extends TestCase
 
     /**
      * @param mixed $func
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($func)
     {
+        $this->expectException(\Error::class);
         iterable([1, 2, 3])->accumulate($func);
     }
 

@@ -112,11 +112,11 @@ class AnyTest extends TestCase
     }
 
     /**
-     * @expectedException \TypeError
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument(array $arguments)
     {
+        $this->expectException(\TypeError::class);
         iterable([1, 2, 3])->any(...$arguments);
     }
 

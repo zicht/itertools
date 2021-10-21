@@ -46,10 +46,10 @@ class MulTest extends TestCase
      * @param mixed $b
      *
      * @dataProvider badArgumentProvider
-     * @expectedException \InvalidArgumentException
      */
     public function testInvalidArguments($a, $b)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $closure = Reductions::mul();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);

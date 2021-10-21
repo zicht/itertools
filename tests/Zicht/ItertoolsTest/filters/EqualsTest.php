@@ -72,11 +72,11 @@ class EqualsTest extends TestCase
      * @param mixed $strategy
      * @param mixed $strict
      *
-     * @expectedException \TypeError
      * @dataProvider invalidArgumentExceptionProvider
      */
     public function testInvalidArgumentException($expected, $strategy, $strict)
     {
+        $this->expectException(\TypeError::class);
         Filters::equals($expected, $strategy, $strict);
     }
 

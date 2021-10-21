@@ -229,19 +229,17 @@ class MapTest extends TestCase
 //    /**
 //     * @param mixed $closure
 //     * @param mixed $iterable
-//     * @expectedException \InvalidArgumentException
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgumentsToFunction($closure, $iterable)
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        call_user_func_array('\Zicht\Itertools\map', [$closure, $iterable]);
 //    }
 //
-//    /**
-//     * @expectedException \InvalidArgumentException
-//     */
 //    public function testBadArgumentToIterator()
 //    {
+//        $this->expectException(\InvalidArgumentException::class);
 //        new MapIterator(
 //            function () {
 //            },

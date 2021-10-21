@@ -98,11 +98,12 @@ class CountTest extends TestCase
     /**
      * @param mixed $start
      * @param mixed $step
-     * @expectedException \Error
+     *
      * @dataProvider badArgumentProvider
      */
     public function testBadArgument($start, $step)
     {
+        $this->expectException(\Error::class);
         new CountIterator($start, $step);
     }
 

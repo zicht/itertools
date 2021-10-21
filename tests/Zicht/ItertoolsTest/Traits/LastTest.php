@@ -102,11 +102,11 @@ class LastTest extends TestCase
     }
 
 //    /**
-//     * @expectedException \Error
 //     * @dataProvider badArgumentProvider
 //     */
 //    public function testBadArgument(array $arguments)
 //    {
+//        $this->expectException(\Error::class);
 //        call_user_func_array('\Zicht\Itertools\last', $arguments);
 //    }
 //
