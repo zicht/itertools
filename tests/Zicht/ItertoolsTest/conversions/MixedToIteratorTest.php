@@ -3,10 +3,10 @@
  * @copyright Zicht Online <https://zicht.nl>
  */
 
-namespace Zicht\ItertoolsTest\mappings;
+namespace Zicht\ItertoolsTest\conversions;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Zicht\Itertools\conversions;
+use Zicht\Itertools\util\Conversions;
 use Zicht\ItertoolsTest\Dummies\DummyTraversable;
 
 class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +16,7 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testNull()
     {
-        $result = conversions\mixed_to_iterator(null);
+        $result = Conversions::mixedToIterator(null);
         $this->assertEquals([], iterator_to_array($result));
     }
 
@@ -25,7 +25,7 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testArray()
     {
-        $result = conversions\mixed_to_iterator([1, 2, 3]);
+        $result = Conversions::mixedToIterator([1, 2, 3]);
         $this->assertEquals([1, 2, 3], iterator_to_array($result));
     }
 
@@ -34,7 +34,7 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testString()
     {
-        $result = conversions\mixed_to_iterator('Foo');
+        $result = Conversions::mixedToIterator('Foo');
         $this->assertEquals(['F', 'o', 'o'], iterator_to_array($result));
     }
 
@@ -43,7 +43,7 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testCollection()
     {
-        $result = conversions\mixed_to_iterator(new ArrayCollection([1, 2, 3]));
+        $result = Conversions::mixedToIterator(new ArrayCollection([1, 2, 3]));
         $this->assertEquals([1, 2, 3], iterator_to_array($result));
     }
 
@@ -52,7 +52,7 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTraversable()
     {
-        $result = conversions\mixed_to_iterator(new DummyTraversable([1, 2, 3]));
+        $result = Conversions::mixedToIterator(new DummyTraversable([1, 2, 3]));
         $this->assertEquals([1, 2, 3], iterator_to_array($result));
     }
 
@@ -62,17 +62,17 @@ class MixedToIteratorTest extends \PHPUnit_Framework_TestCase
     public function testIterator()
     {
         $iterator = new \IteratorIterator(new \ArrayIterator([1, 2, 3]));
-        $result = conversions\mixed_to_iterator($iterator);
+        $result = Conversions::mixedToIterator($iterator);
         $this->assertEquals($iterator, $result);
     }
 
     /**
      * Unsupported type should result in an exception
      *
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Error
      */
     public function testInvalidIterator()
     {
-        conversions\mixed_to_iterator(false);
+        Conversions::mixedToIterator(false);
     }
 }

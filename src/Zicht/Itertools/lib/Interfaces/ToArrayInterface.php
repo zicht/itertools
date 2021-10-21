@@ -15,9 +15,7 @@ interface ToArrayInterface
     /**
      * Returns an unsafe array build from this iterator
      *
-     * @return array
-     *
      * @see Itertools\lib\Traits\ToArrayTrait::toArray
      */
-    public function toArray();
+    public function toArray(): array;
 }

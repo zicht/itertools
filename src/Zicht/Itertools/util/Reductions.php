@@ -5,16 +5,12 @@
 
 namespace Zicht\Itertools\util;
 
-use Zicht\Itertools;
-
 class Reductions
 {
     /**
      * Returns a closure that adds two numbers together
-     *
-     * @return \Closure
      */
-    public static function add()
+    public static function add(): \Closure
     {
         return function ($a, $b) {
             if (!is_numeric($a)) {
@@ -29,10 +25,8 @@ class Reductions
 
     /**
      * Returns a closure that subtracts one number from another
-     *
-     * @return \Closure
      */
-    public static function sub()
+    public static function sub(): \Closure
     {
         return function ($a, $b) {
             if (!is_numeric($a)) {
@@ -47,10 +41,8 @@ class Reductions
 
     /**
      * Returns a closure that multiplies two numbers
-     *
-     * @return \Closure
      */
-    public static function mul()
+    public static function mul(): \Closure
     {
         return function ($a, $b) {
             if (!is_numeric($a)) {
@@ -65,10 +57,8 @@ class Reductions
 
     /**
      * Returns a closure that returns the smallest of two numbers
-     *
-     * @return \Closure
      */
-    public static function min()
+    public static function min(): \Closure
     {
         return function ($a, $b) {
             if (!(is_numeric($a) || $a instanceof \DateTime)) {
@@ -83,10 +73,8 @@ class Reductions
 
     /**
      * Returns a closure that returns the largest of two numbers
-     *
-     * @return \Closure
      */
-    public static function max()
+    public static function max(): \Closure
     {
         return function ($a, $b) {
             if (!(is_numeric($a) || $a instanceof \DateTime)) {
@@ -119,31 +107,5 @@ class Reductions
             }
             return \join($glue, [$a, $b]);
         };
-    }
-
-    /**
-     * @deprecated please use the reduction functions directly, will be removed in version 3.0
-     * @param string $name
-     * @param null $default
-     * @return \Closure|null
-     */
-    public static function getReduction($name, $default = null)
-    {
-        switch ($name) {
-            case 'add':
-                return self::add();
-            case 'sub':
-                return self::sub();
-            case 'mul':
-                return self::mul();
-            case 'min':
-                return self::min();
-            case 'max':
-                return self::max();
-            case 'join':
-                return self::join();
-            default:
-                return $default;
-        }
     }
 }

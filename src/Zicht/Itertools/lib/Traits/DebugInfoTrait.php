@@ -11,9 +11,8 @@ trait DebugInfoTrait
      * This method is called by var_dump() when dumping an object to get the properties that should be shown.
      *
      * @link http://php.net/manual/en/language.oop5.magic.php#language.oop5.magic.debuginfo
-     * @return array
      */
-    public function __debugInfo() // phpcs:ignore Zicht.NamingConventions.Functions.MethodNaming
+    public function __debugInfo(): array // phpcs:ignore Zicht.NamingConventions.Functions.MethodNaming
     {
         $duplicateKeys = [];
         $info = ['__length__' => 0];

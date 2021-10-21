@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\FilterIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait FilterTrait
 {
@@ -20,10 +20,9 @@ trait FilterTrait
     public function filter($strategy = null)
     {
         if ($this instanceof \Iterator) {
-            $strategy = conversions\mixed_to_value_getter($strategy);
+            $strategy = Conversions::mixedToValueGetter($strategy);
             $isValid = function ($value, $key) use ($strategy) {
-                $tempVarPhp54 = $strategy($value, $key);
-                return !empty($tempVarPhp54);
+                return !empty($strategy($value, $key));
             };
 
             return new FilterIterator($isValid, $this);

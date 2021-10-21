@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\Traits;
 
-use Zicht\Itertools;
 use Zicht\ItertoolsTest\Dummies\NonIterator;
+use function Zicht\Itertools\iterable;
 
 class CountableTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,8 +15,8 @@ class CountableTest extends \PHPUnit_Framework_TestCase
      */
     public function testReturnType()
     {
-        $itetable = Itertools\iterable([1, 2, 3]);
-        $this->assertEquals(3, $itetable->count());
+        $iterable = iterable([1, 2, 3]);
+        $this->assertEquals(3, $iterable->count());
     }
 
     /**

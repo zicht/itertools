@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\MapByIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait MapByTrait
 {
@@ -39,7 +39,7 @@ trait MapByTrait
     {
         if ($this instanceof \Iterator) {
             return new MapByIterator(
-                conversions\mixed_to_value_getter($strategy),
+                Conversions::mixedToValueGetter($strategy),
                 $this
             );
         }

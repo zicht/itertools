@@ -8,6 +8,7 @@
 namespace Zicht\Itertools\lib\Traits;
 
 use Zicht\Itertools\lib\ZipIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait ZipTrait
 {
@@ -23,16 +24,17 @@ trait ZipTrait
      * > zip([1, 2, 3], ['a', 'b', 'c'])
      * [1, 'a'] [2, 'b'] [3, 'c']
      *
-     * @param array|string|\Iterator $iterable
-     * @param array|string|\Iterator $iterable2
+     * @param array[]|string[]|\Iterator[] ...$iterables
      * @return ZipIterator
      */
-    public function zip(/* $iterable, $iterable2, ... */)
+    public function zip(...$iterables)
     {
         if ($this instanceof \Iterator) {
             $iterables = array_map(
-                '\Zicht\Itertools\conversions\mixed_to_iterator',
-                func_get_args()
+                function ($iterable) {
+                    return Conversions::mixedToIterator($iterable);
+                },
+                $iterables
             );
             $reflectorClass = new \ReflectionClass('\Zicht\Itertools\lib\ZipIterator');
             return $reflectorClass->newInstanceArgs(array_merge([$this], $iterables));

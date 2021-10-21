@@ -21,11 +21,6 @@ class DifferenceIterator extends \FilterIterator implements FiniteIterableInterf
     /** @var mixed[] */
     private $excludes;
 
-    /**
-     * @param \Iterator $iterable
-     * @param \Iterator $excludesIterable
-     * @param \Closure $func
-     */
     public function __construct(\Iterator $iterable, \Iterator $excludesIterable, \Closure $func)
     {
         $this->func = $func;

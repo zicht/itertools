@@ -16,10 +16,8 @@ trait CycleTrait
      *
      * > iterable('ABCD')->cycle()
      * A B C D A B C D A B C D ...
-     *
-     * @return CycleIterator
      */
-    public function cycle()
+    public function cycle(): ?CycleIterator
     {
         if ($this instanceof \Iterator) {
             return new CycleIterator($this);

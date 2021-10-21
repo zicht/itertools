@@ -12,9 +12,6 @@ class CollapseIterator extends \IteratorIterator implements FiniteIterableInterf
 {
     use FiniteIterableTrait;
 
-    /**
-     * @param \Iterator $iterable
-     */
     public function __construct(\Iterator $iterable)
     {
         $data = [];

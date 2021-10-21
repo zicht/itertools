@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
+use Zicht\Itertools\util\Filters;
 use Zicht\ItertoolsTest\Dummies\SimpleObject;
 
 class TypeTest extends \PHPUnit_Framework_TestCase
@@ -15,7 +15,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        $filter = filters\type('Zicht\ItertoolsTest\Dummies\SimpleObject');
+        $filter = Filters::type('Zicht\ItertoolsTest\Dummies\SimpleObject');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(new SimpleObject('test')));
         $this->assertFalse($filter('Hello world'));
@@ -26,7 +26,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
      */
     public function testProperty()
     {
-        $filter = filters\type('\Zicht\ItertoolsTest\Dummies\SimpleObject', 'prop');
+        $filter = Filters::type('\Zicht\ItertoolsTest\Dummies\SimpleObject', 'prop');
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(['prop' => new SimpleObject('test')]));
         $this->assertFalse($filter('Hello world'));
@@ -45,7 +45,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
             return $value;
         };
 
-        $filter = filters\type('Zicht\ItertoolsTest\Dummies\SimpleObject', $strategy);
+        $filter = Filters::type('Zicht\ItertoolsTest\Dummies\SimpleObject', $strategy);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter(new SimpleObject('test'), 'key'));
     }

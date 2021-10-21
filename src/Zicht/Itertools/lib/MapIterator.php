@@ -18,9 +18,6 @@ class MapIterator extends \MultipleIterator implements FiniteIterableInterface
     /** @var \Closure */
     private $keyFunc;
 
-    /**
-     * @param \Closure $valueFunc
-     */
     public function __construct(\Closure $valueFunc /* [\Closure $keyFunc], \Iterator $iterable1, [\Iterator $iterable2, [...]] */)
     {
         parent::__construct(\MultipleIterator::MIT_NEED_ALL | \MultipleIterator::MIT_KEYS_NUMERIC);
@@ -54,7 +51,7 @@ class MapIterator extends \MultipleIterator implements FiniteIterableInterface
      * @param array $keysAndValues
      * @return mixed
      */
-    protected function genericKeysToKey($keysAndValues)
+    protected function genericKeysToKey(array $keysAndValues)
     {
         $keys = array_splice($keysAndValues, 0, count($keysAndValues) / 2);
 

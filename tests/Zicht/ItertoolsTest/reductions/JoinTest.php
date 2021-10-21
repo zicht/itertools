@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\reductions;
 
-use Zicht\Itertools;
-use Zicht\Itertools\reductions;
+use Zicht\Itertools\util\Reductions;
+use function Zicht\Itertools\iterable;
 
 class JoinTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,9 +19,9 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testGoodArguments($glue, array $data, $expected)
     {
-        $closure = reductions\join($glue);
+        $closure = Reductions::join($glue);
         $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
+        $this->assertEquals($expected, iterable($data)->reduce($closure));
     }
 
     /**
@@ -46,7 +46,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidGlue($glue)
     {
-        reductions\join($glue);
+        Reductions::join($glue);
     }
 
     /**
@@ -74,7 +74,7 @@ class JoinTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidArguments($a, $b)
     {
-        $closure = reductions\join();
+        $closure = Reductions::join();
         $this->assertInstanceOf('\Closure', $closure);
         $closure($a, $b);
     }
@@ -102,46 +102,6 @@ class JoinTest extends \PHPUnit_Framework_TestCase
             ['foo', 1.0],
             ['foo', [1, 2, 3]],
             ['foo', (object)[1, 2, 3]],
-        ];
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param mixed $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testGetReduction(array $arguments, array $data, $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\reductions\get_reduction', $arguments);
-        $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
-    }
-
-    /**
-     * @param array $arguments
-     * @param array $data
-     * @param mixed $expected
-     *
-     * @dataProvider goodSequenceProvider
-     */
-    public function testDeprecatedGetReduction(array $arguments, array $data, $expected)
-    {
-        $closure = call_user_func_array('\Zicht\Itertools\reductions\getReduction', $arguments);
-        $this->assertInstanceOf('\Closure', $closure);
-        $this->assertEquals($expected, Itertools\iterable($data)->reduce($closure));
-    }
-
-    /**
-     * Provides tests
-     *
-     * @return array
-     */
-    public function goodSequenceProvider()
-    {
-        return [
-            [['join'], ['a', 'B', 'c'], 'aBc'],
         ];
     }
 }

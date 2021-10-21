@@ -23,10 +23,6 @@ class AccumulateIterator implements FiniteIterableInterface
     /** @var mixed */
     protected $value;
 
-    /**
-     * @param \Iterator $iterable
-     * @param \Closure $func
-     */
     public function __construct(\Iterator $iterable, \Closure $func)
     {
         $this->iterable = $iterable;

@@ -5,8 +5,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class CacheTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,8 +26,8 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         $expected = $data;
 
-        $closure = mappings\cache(null);
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::cache(null);
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 
     /**
@@ -52,7 +52,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         $expected = [42, 43, 42];
 
-        $closure = mappings\cache('value', 'key');
-        $this->assertEquals($expected, Itertools\iterable($data)->map($closure)->values());
+        $closure = Mappings::cache('value', 'key');
+        $this->assertEquals($expected, iterable($data)->map($closure)->values());
     }
 }

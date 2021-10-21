@@ -21,11 +21,6 @@ class IntersectionIterator extends \FilterIterator implements FiniteIterableInte
     /** @var mixed[] */
     private $includes;
 
-    /**
-     * @param \Iterator $iterable
-     * @param \Iterator $includesIterator
-     * @param \Closure $func
-     */
     public function __construct(\Iterator $iterable, \Iterator $includesIterator, \Closure $func)
     {
         $this->func = $func;

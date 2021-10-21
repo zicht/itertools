@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\DifferenceIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait DifferenceTrait
 {
@@ -22,8 +22,8 @@ trait DifferenceTrait
         if ($this instanceof \Iterator) {
             return new DifferenceIterator(
                 $this,
-                conversions\mixed_to_iterator($iterable),
-                conversions\mixed_to_value_getter($strategy)
+                Conversions::mixedToIterator($iterable),
+                Conversions::mixedToValueGetter($strategy)
             );
         }
 

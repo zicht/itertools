@@ -5,8 +5,8 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\conversions;
 use Zicht\Itertools\lib\GroupbyIterator;
+use Zicht\Itertools\util\Conversions;
 
 trait GroupByTrait
 {
@@ -46,15 +46,11 @@ trait GroupByTrait
      * @param bool $sort
      * @return GroupbyIterator
      */
-    public function groupBy($strategy, $sort = true)
+    public function groupBy($strategy, bool $sort = true)
     {
-        if (!is_bool($sort)) {
-            throw new \InvalidArgumentException('Argument $sort must be a boolean');
-        }
-
         if ($this instanceof \Iterator) {
             return new GroupbyIterator(
-                conversions\mixed_to_value_getter($strategy),
+                Conversions::mixedToValueGetter($strategy),
                 $sort ? $this->sorted($strategy) : $this
             );
         }

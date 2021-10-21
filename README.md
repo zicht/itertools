@@ -18,12 +18,11 @@ Common operations include:
 - [reducing](#reducing): `accumulate`, `collapse`, and `reduce`
 
 ## Usage
-In order to use the available itertools filters/functions via Twig, simply add this service definition in your `services.xml`
-```php
-<service id="zicht_itertools_twig_extension" class="Zicht\Itertools\twig\Extension">
-    <!-- optionally arguments can be supplied to (1) change the name and (2) disable the legacy api -->
-    <tag name="twig.extension"/>
-</service>
+In order to use the available itertools filters/functions via Twig, simply add this service definition in your `config/services.yaml`
+
+```yaml
+Zicht\Itertools\twig\Extension:
+  tags: ['twig.extension']
 ```
 
 ## Scripts
@@ -130,9 +129,7 @@ is used to obtain a value from the elements in the collection.  The
     ```php
     use function Zicht\Itertools\iterable;
 
-    $getDouble = function($value, $key) {
-        return 2 * $value;
-    };
+    $getDouble = fn($value, $key) => 2 * $value;
     $result = iterable($numbers)->map($getDouble);
     var_dump($result);
     // {0: 2, 1: 6, 2: 4, 3: 10, 4: 8}
@@ -212,9 +209,7 @@ in `$vehicles`:
 ```php
 use function Zicht\Itertools\iterable;
 
-$getTitle = function ($value, $key) {
-    return sprintf('%s with %s wheels', $value['type'], $value['wheels']);
-};
+$getTitle = fn($value, $key) => sprintf('%s with %s wheels', $value['type'], $value['wheels']);
 $titles = iterable($vehicles)->map($getTitle);
 var_dump($titles);
 // {0: 'car with 4 wheels', ..., 3: 'car with 8 wheels'}
@@ -273,9 +268,7 @@ through:
 ```php
 use function Zicht\Itertools\iterable;
 
-$isExpensive = function($value, $key) {
-    return $value['price'] >= 10000;
-};
+$isExpensive = fn($value, $key) => $value['price'] >= 10000;
 $expensiveTypes = iterable($vehicles)->filter($isExpensive)->map('type');
 var_dump($expensiveTypes);
 // {1: 'car', 9: 'car'}
@@ -359,9 +352,7 @@ example:
 ```php
 use function Zicht\Itertools\iterable;
 
-$getLower = function ($value, $key) {
-    return strtolower($value);
-};
+$getLower = fn($value, $key) => strtolower($value);
 $ordered = iterable($words)->sorted($getLower);
 var_dump($ordered);
 // {3: 'Bland', 1: 'Goonies', 2: 'oven', 0: 'Useful', 4: 'notorious'};
@@ -437,7 +428,8 @@ Or in Twig:
 In the above example, the default closure that is used looks like this:
 
 ```php
-function add($a, $b) {
+public static function add($a, $b): \Closure
+{
     return $a + $b;
 }
 ```
@@ -446,7 +438,7 @@ Given that `$numbers` consists of the elements {1, 3, 2, 5, 4}, the
 `add` closure is called four times:
 
 ```php
-$sum = add(add(add(add(1, 3), 2), 5), 4);
+$sum = Reductions::add(Reductions::add(Reductions::add(Reductions::add((1, 3), 2), 5), 4));
 var_dump($sum);
 // 15
 ```

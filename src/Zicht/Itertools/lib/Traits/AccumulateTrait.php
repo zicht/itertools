@@ -5,7 +5,6 @@
 
 namespace Zicht\Itertools\lib\Traits;
 
-use Zicht\Itertools\reductions;
 use Zicht\Itertools\lib\AccumulateIterator;
 
 trait AccumulateTrait
@@ -17,22 +16,18 @@ trait AccumulateTrait
      * add, sub, mul, min, or max.  Or it can be a Closure taking two
      * arguments that will be used to instead of addition.
      *
-     * > iter\iterable([1,2,3,4,5])->accumulate()
+     * > iter\iterable([1,2,3,4,5])->accumulate(Reductions::add())
      * 1 3 6 10 15
      *
      * > iter\iterable(['One', 'Two', 'Three'])->accumulate(function ($a, $b) { return $a . $b; })
      * 'One' 'OneTwo' 'OneTwoThree'
      *
-     * @param string|\Closure $closure
-     * @return null|AccumulateIterator
+     * @param \Closure $closure
      */
-    public function accumulate($closure = 'add')
+    public function accumulate(\Closure $closure): ?AccumulateIterator
     {
         if ($this instanceof \Iterator) {
-            return new AccumulateIterator(
-                $this,
-                $closure instanceof \Closure ? $closure : reductions\get_reduction($closure)
-            );
+            return new AccumulateIterator($this, $closure);
         }
 
         return null;

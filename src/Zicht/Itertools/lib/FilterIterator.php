@@ -15,10 +15,6 @@ class FilterIterator extends \FilterIterator implements FiniteIterableInterface
     /** @var \Closure */
     private $func;
 
-    /**
-     * @param \Closure $func
-     * @param \Iterator $iterable
-     */
     public function __construct(\Closure $func, \Iterator $iterable)
     {
         $this->func = $func;

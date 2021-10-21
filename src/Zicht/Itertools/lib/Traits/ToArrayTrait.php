@@ -19,10 +19,8 @@ trait ToArrayTrait
      * - $iterable->keys(),
      * - $iterable->values(), or
      * - $iterable->items()
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         if ($this instanceof \Traversable) {
             $array = iterator_to_array($this);

@@ -7,8 +7,8 @@
 
 namespace Zicht\ItertoolsTest\mappings;
 
-use Zicht\Itertools;
-use Zicht\Itertools\mappings;
+use Zicht\Itertools\util\Mappings;
+use function Zicht\Itertools\iterable;
 
 class LowerTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,7 +26,7 @@ class LowerTest extends \PHPUnit_Framework_TestCase
 
         $expected = ['foo', 'key 1' => 'bar', 'key 2' => 'moo', 'milk'];
 
-        $closure = mappings\lower();
-        $this->assertEquals($expected, Itertools\map($closure, $data)->toArray());
+        $closure = Mappings::lower();
+        $this->assertEquals($expected, iterable($data)->map($closure)->toArray());
     }
 }

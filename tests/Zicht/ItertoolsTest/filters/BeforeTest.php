@@ -5,7 +5,7 @@
 
 namespace Zicht\ItertoolsTest\filters;
 
-use Zicht\Itertools\filters;
+use Zicht\Itertools\util\Filters;
 
 class BeforeTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,7 @@ class BeforeTest extends \PHPUnit_Framework_TestCase
      */
     public function testAccept($expected, $input, $orEqual = false)
     {
-        $filter = filters\before($expected, null, $orEqual);
+        $filter = Filters::before($expected, null, $orEqual);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertTrue($filter($input));
     }
@@ -57,7 +57,7 @@ class BeforeTest extends \PHPUnit_Framework_TestCase
      */
     public function testReject($expected, $input)
     {
-        $filter = filters\before($expected);
+        $filter = Filters::before($expected);
         $this->assertInstanceOf('\Closure', $filter);
         $this->assertFalse($filter($input));
     }

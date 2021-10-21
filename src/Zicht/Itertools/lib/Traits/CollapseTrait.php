@@ -11,10 +11,8 @@ trait CollapseTrait
 {
     /**
      * Collapse a two dimensional iterator into a one dimensional iterator
-     *
-     * @return CollapseIterator
      */
-    public function collapse()
+    public function collapse(): ?CollapseIterator
     {
         if ($this instanceof \Iterator) {
             return new CollapseIterator($this);

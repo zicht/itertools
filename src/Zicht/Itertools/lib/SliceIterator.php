@@ -21,12 +21,7 @@ class SliceIterator extends \IteratorIterator implements FiniteIterableInterface
     /** @var null|int */
     private $end;
 
-    /**
-     * @param \Iterator $iterable
-     * @param int $start
-     * @param null|int $end
-     */
-    public function __construct(\Iterator $iterable, $start, $end = null)
+    public function __construct(\Iterator $iterable, int $start = 0, ?int $end = null)
     {
         if ($start < 0 || $end < 0) {
             $length = iterator_count($iterable);
