@@ -23,16 +23,16 @@
     },
     "minimum-stability": "stable",
     "autoload": {
-        "psr-0": {
-            "Zicht": "src/"
+        "psr-4": {
+            "Zicht\\Itertools\\": "src/Zicht/Itertools/"
         },
         "files": [
             "src/Zicht/Itertools/itertools.php"
         ]
     },
     "autoload-dev": {
-        "psr-0": {
-            "Zicht": "tests/"
+        "psr-4": {
+            "Zicht\\ItertoolsTest\\": "tests/Zicht/ItertoolsTest/"
         }
     },
     "require": {

@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
-## 3.0.0 - [unreleased]
+## 3.0.1 - 2021-11-18
+### Changed
+- Replaced PSR-0 autoloading in favor of PSR-4.
+- Added upgrade guide for migrating itertools from 2.x to 3.0 
+
+## 3.0.0 - 2021-10-21
 ### Added
 - Added support for php 8.
 - Added support for Twig 3.
