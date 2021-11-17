@@ -19,6 +19,7 @@ interface InfiniteIterableInterface extends
     FirstInterface,
     MapByInterface,
     MapInterface,
+    RepeatInterface,
     SliceInterface,
     ZipInterface
 {
