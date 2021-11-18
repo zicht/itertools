@@ -11,6 +11,7 @@ trait InfiniteIterableTrait
     use FirstTrait;
     use MapByTrait;
     use MapTrait;
+    use RepeatTrait;
     use SliceTrait;
     use ZipTrait;
 }
