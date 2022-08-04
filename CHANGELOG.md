@@ -8,10 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added|Changed|Deprecated|Removed|Fixed|Security
 Nothing so far
 
+## 3.0.2 - 2022-08-04
+### Added
+- Prevent segfaults and exceptions due to debugging info
+
 ## 3.0.1 - 2021-11-18
 ### Changed
 - Replaced PSR-0 autoloading in favor of PSR-4.
-- Added upgrade guide for migrating itertools from 2.x to 3.0 
+- Added upgrade guide for migrating itertools from 2.x to 3.0
 
 ## 3.0.0 - 2021-10-21
 ### Added
