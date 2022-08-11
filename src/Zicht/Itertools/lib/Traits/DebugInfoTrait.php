@@ -14,6 +14,11 @@ trait DebugInfoTrait
      */
     public function __debugInfo(): array // phpcs:ignore Zicht.NamingConventions.Functions.MethodNaming
     {
+        // It seems this method, under unknown circumstances, produces segfaults and exceptions in PHP 8
+        if (PHP_MAJOR_VERSION >= 8) {
+            return ['__Debug info has been disabled on PHP 8 due to segfaults'];
+        }
+
         $duplicateKeys = [];
         $info = ['__length__' => 0];
         if ($this instanceof \Traversable) {

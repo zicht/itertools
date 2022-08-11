@@ -10,6 +10,9 @@ use Zicht\Itertools;
 
 class DebugInfoTest extends TestCase
 {
+    /**
+     * @requires PHP < 8
+     */
     public function testSimple()
     {
         $iterable = Itertools\iterable([1, 2, 3]);
@@ -22,6 +25,9 @@ class DebugInfoTest extends TestCase
         $this->assertEquals($expected, $iterable->__debugInfo());
     }
 
+    /**
+     * @requires PHP < 8
+     */
     public function testDuplicateKeys()
     {
         $iterable = Itertools\iterable([1, 2, 3])->chain([4, 5, 6]);
