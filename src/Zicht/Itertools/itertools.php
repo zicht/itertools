@@ -5,6 +5,7 @@
 
 namespace Zicht\Itertools;
 
+use Doctrine\Common\Collections\Collection;
 use Zicht\Itertools\lib\Interfaces\FiniteIterableInterface;
 use Zicht\Itertools\lib\IterableIterator;
 use Zicht\Itertools\util\Conversions;
@@ -14,7 +15,7 @@ use Zicht\Itertools\util\Conversions;
  *
  * > iterable([1, 2, 3])->filter(...)->map(...)->first(...)
  *
- * @param array|string|\Iterator $iterable
+ * @param array|string|Collection|\Iterator|iterable $iterable
  * @return FiniteIterableInterface
  */
 function iterable($iterable = null)
